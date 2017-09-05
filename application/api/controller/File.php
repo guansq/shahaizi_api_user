@@ -6,10 +6,10 @@
  * Time: 10:55
  */
 namespace app\api\controller;
-
-class File extends BaseController{
+use think\Controller;
+class File extends Controller{
     /**
-     * @api      {POST} /file/uploadImg  上传图片
+     * @api      {POST} index.php?a=A/file/uploadImg  上传图片
      * @apiName  uploadImg
      * @apiGroup File
      * @apiHeader {String} authorization-token           token.
@@ -20,9 +20,9 @@ class File extends BaseController{
         $file = $this->request->file('file');
 
         if(empty($file)){
-            returnJson(4001);
+            returnJson(-1,'文件不能为空');
         }
-        $rule = ['size' => 1024*1024*5, 'ext' => 'jpg,gif,png,jpeg'];
+        $rule = ['size' => 1024*1024*20, 'ext' => 'jpg,gif,png,jpeg'];
         validateFile($file, $rule);
         $logic = model('File', 'logic');
         returnJson($logic->uploadImg($file,$this->loginUser));

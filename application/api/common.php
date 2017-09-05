@@ -52,3 +52,30 @@ function createSign($sendData){
     $skArr = explode('_',config('app_access_key'));
     return $desClass->strEnc($arrOrder,$skArr[0],$skArr[1],$skArr[2]);//签名
 }
+
+/**
+ * Auther: WILL<314112362@qq.com>
+ * Time: 2017-3-20 17:51:09
+ * Describe: 校验文件
+ * @return bool
+ */
+if(!function_exists('validateFile')){
+    function validateFile($files = [], $rule = ['size' => 1024*1024*20]){
+        if(empty($files)){
+            returnJson(4001, '缺少文件');
+        }
+        if(is_array($files)){
+            foreach($files as $file){
+                $validate = $file->check($rule);
+                if(!$validate){
+                    returnJson(4002, '', $file->getError());
+                }
+            }
+            return true;
+        }
+        if(!$files->check($rule)){
+            returnJson(4002, '', $files->getError());
+        }
+        return true;
+    }
+}

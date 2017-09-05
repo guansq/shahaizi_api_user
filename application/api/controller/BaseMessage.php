@@ -16,7 +16,7 @@ class BaseMessage extends Base{
     /**
      * @api      {POST} /index/sendCaptcha  发送验证码done
      * @apiName  sendCaptcha
-     * @apiGroup Index
+     * @apiGroup Common
      * @apiParam {String} mobile   手机号.
      * @apiParam {String} opt      验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定手机号.
      */

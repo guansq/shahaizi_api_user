@@ -233,10 +233,10 @@ class User extends Base {
         //是否开启注册验证码机制
         if(check_mobile($username)){
             //校验验证码
-            /*$result = MsgService::verifyCaptcha($username,'reg',$code);
+            $result = MsgService::verifyCaptcha($username,'reg',$code);
             if($result['code'] != 2000){
                 returnJson(-1,'验证码输入有误');
-            }*/
+            }
             //$res = $this->userLogic->check_validate_code($code, $username  , $type , $session_id , $scene);
             //if($res['status'] != 1) exit(json_encode($res));
         }
@@ -250,8 +250,78 @@ class User extends Base {
         exit(json_encode($data));
     }
 
-    /*
-     * 获取用户信息
+    /**
+     * @api      {POST} index.php?m=Api&c=User&a=userInfo   获取用户信息done
+     * @apiName  info
+     * @apiGroup User
+     * @apiParam {String}   token           token.
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+    {
+    "status": 1,
+    "msg": "获取成功",
+    "result": {
+    "user_id": 146,
+    "email": "",
+    "password": "90600d68b0f56d90c4c34284d8dfd138",
+    "sex": 0,
+    "birthday": 0,
+    "user_money": "0.00",
+    "frozen_money": "0.00",
+    "distribut_money": "0.00",
+    "pay_points": "0.0000",
+    "address_id": 0,
+    "reg_time": 1504596640,
+    "last_login": 1504602255,
+    "last_ip": "",
+    "qq": "",
+    "mobile": "18451847701",
+    "mobile_validated": 1,
+    "oauth": "",
+    "openid": null,
+    "unionid": null,
+    "head_pic": null,
+    "province": 0,
+    "city": 0,
+    "district": 0,
+    "email_validated": 0,
+    "nickname": "18451847701",
+    "level": 1,
+    "discount": "1.00",
+    "total_amount": "0.00",
+    "is_lock": 0,
+    "is_distribut": 1,
+    "first_leader": 0,
+    "second_leader": 0,
+    "third_leader": 0,
+    "fourth_leader": null,
+    "fifth_leader": null,
+    "sixth_leader": null,
+    "seventh_leader": null,
+    "token": "a279c833cebe5fb963ccba311e27c394",
+    "address": null,
+    "pay_passwd": null,
+    "pre_pay_points": "0.0000",
+    "optional": "0.0000",
+    "vipid": 0,
+    "paypoint": "0.00",
+    "coupon_count": 0,
+    "collect_count": 0,
+    "focus_count": 0,
+    "visit_count": 0,
+    "return_count": 0,
+    "waitPay": 0,
+    "waitSend": 0,
+    "waitReceive": 0,
+    "order_count": 0,
+    "message_count": 0,
+    "comment_count": 0,
+    "uncomment_count": 0,
+    "serve_comment_count": 0,
+    "cart_goods_num": 0
+    }
+    }
+     *
      */
     public function userInfo(){
         //$user_id = I('user_id/d');
@@ -286,8 +356,19 @@ class User extends Base {
         }
     }
 
-    /*
-     * 修改用户密码
+
+    /**
+     * @api      {POST} index.php?m=Api&c=User&a=password   修改用户密码done
+     * @apiName  password
+     * @apiGroup User
+     * @apiParam {String}   token           token.
+     * @apiSuccessExample {json} Success-Response:
+     *           Http/1.1   200 OK
+    {
+    "status": 1,
+    "msg": "密码修改成功",
+    "result": ""
+    }
      */
     public function password(){
         if(IS_POST){
@@ -371,26 +452,34 @@ class User extends Base {
 
         $this->ajaxReturn(['status'=>1, 'msg'=>'更改成功']);
     }
-    
+
+
     /**
-     * @add by wangqh APP端忘记密码
-     * 忘记密码
+     * @api      {POST} index.php?m=Api&c=User&a=forgetPassword   忘记密码done
+     * @apiName  forgetPassword
+     * @apiGroup User
+     * @apiSuccessExample {json} Success-Response:
+     *           Http/1.1   200 OK
+    {
+    "status": 1,
+    "msg": "密码已重置,请重新登录",
+    }
      */
     public function forgetPassword()
     {
         $password = I('password');
         $mobile = I('mobile', 'invalid');
-        $consignee = I('consignee', '');
-        
+        //$consignee = I('consignee', '');
+        $code = I('code');
+
         $user = M('users')->where("mobile",$mobile)->find();
         if (!$user) {
             $this->ajaxReturn(['status'=>-1,'msg'=>'该手机号码没有关联账户']);
         } else {
-            $consignees = M('order')->where('user_id', $user['user_id'])->column('consignee');
-            if ($consignees) {
-                if (!in_array($consignee, $consignees)) {
-                    $this->ajaxReturn(['status'=>-1, 'msg'=>'历史收货人错误！']);
-                }
+            //校验验证码
+            $result = MsgService::verifyCaptcha($mobile,'resetpwd',$code);
+            if($result['code'] != 2000){
+                returnJson(-1,'验证码输入有误');
             }
             //修改密码
             M('users')->where("user_id",$user['user_id'])->save(array('password'=>$password));

@@ -62,7 +62,7 @@ class UsersLogic extends Model
         $user = M('users')->where("mobile='{$username}' OR email='{$username}'")->find();
         if (!$user) {
             $result = array('status'=>-1,'msg'=>'账号不存在!');
-        } elseif (encrypt($password) != $user['password']) {
+        } elseif ($password != $user['password']) {
             $result = array('status'=>-2,'msg'=>'密码错误!');
         } elseif ($user['is_lock'] == 1) {
             $result = array('status'=>-3,'msg'=>'账号异常已被锁定！！！');
@@ -219,7 +219,7 @@ class UsersLogic extends Model
         if(get_user_info($username,1)||get_user_info($username,2))
             return array('status'=>-1,'msg'=>'账号已存在','result'=>'');
 
-        $map['password'] = encrypt($password);
+        $map['password'] = $password;
         $map['reg_time'] = time();
         $map['first_leader'] = cookie('first_leader'); // 推荐人id
         // 如果找到他老爸还要找他爷爷他祖父等
