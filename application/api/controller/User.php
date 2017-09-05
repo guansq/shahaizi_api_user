@@ -20,6 +20,7 @@ use app\common\logic\UsersLogic;
 use app\common\logic\CommentLogic;
 use app\common\logic\CouponLogic;
 use think\Page;
+use service\MsgService;
 
 class User extends Base {
     public $userLogic;
@@ -30,10 +31,57 @@ class User extends Base {
     public function  __construct() {   
         parent::__construct();
         $this->userLogic = new UsersLogic();
-    } 
+    }
 
     /**
-     *  登录
+     * @api      {POST} index.php?m=Api&c=User&a=login     用户登录
+     * @apiName  login
+     * @apiGroup User
+     * @apiParam {String} username          用户名.
+     * @apiParam {String} password          密码.
+     * @apiParam {String} unique_id         手机端唯一标识 类似web pc端sessionid.
+     * @apiParam {String} pushToken         消息推送token.
+     * @apiParam {String} capache         图形验证码.
+     * @apiParam {String} push_id         推送id，相当于第三方的reg_id.
+     * @apiSuccessExample {json}    Success-Response:
+     *           Http/1.1   200 OK
+    {
+    "status": 1,
+    "msg": "登陆成功",
+    "result": {
+    "user_id": "1",
+    "email": "398145059@qq.com",
+    "password": "e10adc3949ba59abbe56e057f20f883e",
+    "sex": "1",
+    "birthday": "2015-12-30",
+    "user_money": "9999.39",
+    "frozen_money": "0.00",
+    "pay_points": "5281",
+    "address_id": "3",
+    "reg_time": "1245048540",
+    "last_login": "1444134213",
+    "last_ip": "127.0.0.1",
+    "qq": "3981450598",
+    "mobile": "13800138000",
+    "mobile_validated": "0",
+    "oauth": "",
+    "openid": null,
+    "head_pic": "/Public/upload/head_pic/2015/12-28/56812d56854d0.jpg",
+    "province": "19",
+    "city": "236",
+    "district": "2339",
+    "email_validated": "1",
+    "nickname": "的广泛地"
+    "token": "9f3de86be794f81cdfa5ff3f30b99257"        // 用于 app 登录
+    }
+    }
+     * @apiErrorExample {json}  Error-Response:
+     *           Http/1.1   404 NOT FOUND
+    {
+    "status": -1,
+    "msg": "请填写账号或密码",
+    "result": ""
+    }
      */
     public function login()
     {
@@ -106,8 +154,73 @@ class User extends Base {
     }
 
     /**
-     * 用户注册
-     */
+     * @api     {POST} /index.php?m=Api&c=User&a=reg            用户注册
+     * @apiName   reg
+     * @apiGroup  User
+     * @apiParam {String} username         手机号/用户名.
+     * @apiParam {String} password         密码
+     * @apiParam {String} [code]           手机短信验证码
+     * @apiParam {String} [push_id]        推送id，相当于第三方的reg_id
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 OK
+    {
+    "status": 1,
+    "msg": "注册成功",
+    "result": {
+    "user_id": 146,
+    "email": "",
+    "password": "90600d68b0f56d90c4c34284d8dfd138",
+    "sex": 0,
+    "birthday": 0,
+    "user_money": "0.00",
+    "frozen_money": "0.00",
+    "distribut_money": "0.00",
+    "pay_points": "0.0000",
+    "address_id": 0,
+    "reg_time": 1504596640,
+    "last_login": 1504596640,
+    "last_ip": "",
+    "qq": "",
+    "mobile": "18451847701",
+    "mobile_validated": 1,
+    "oauth": "",
+    "openid": null,
+    "unionid": null,
+    "head_pic": null,
+    "province": 0,
+    "city": 0,
+    "district": 0,
+    "email_validated": 0,
+    "nickname": "18451847701",
+    "level": 1,
+    "discount": "1.00",
+    "total_amount": "0.00",
+    "is_lock": 0,
+    "is_distribut": 1,
+    "first_leader": 0,
+    "second_leader": 0,
+    "third_leader": 0,
+    "fourth_leader": null,
+    "fifth_leader": null,
+    "sixth_leader": null,
+    "seventh_leader": null,
+    "token": "c34ba58aec24003f0abec19ae2688c86",
+    "address": null,
+    "pay_passwd": null,
+    "pre_pay_points": "0.0000",
+    "optional": "0.0000",
+    "vipid": 0,
+    "paypoint": "0.00"
+    }
+    }
+     * @apiErrorExample {json} Error-Response:
+     *     HTTP/1.1 404 Not Found
+    {
+    "status": -1,
+    "msg": "账号已存在",
+    "result": ""
+    }
+    */
     public function reg(){
         $username = I('post.username','');
         $password = I('post.password','');
@@ -119,9 +232,14 @@ class User extends Base {
 
         //是否开启注册验证码机制
         if(check_mobile($username)){
-           $res = $this->userLogic->check_validate_code($code, $username  , $type , $session_id , $scene);
-            if($res['status'] != 1) exit(json_encode($res));
-        }        
+            //校验验证码
+            /*$result = MsgService::verifyCaptcha($username,'reg',$code);
+            if($result['code'] != 2000){
+                returnJson(-1,'验证码输入有误');
+            }*/
+            //$res = $this->userLogic->check_validate_code($code, $username  , $type , $session_id , $scene);
+            //if($res['status'] != 1) exit(json_encode($res));
+        }
         $data = $this->userLogic->reg($username,$password , $password, $push_id);
         if($data['status'] == 1){
             $cartLogic = new CartLogic();

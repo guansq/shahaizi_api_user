@@ -15,14 +15,14 @@ return [
     // 数据库类型
     'type'           => 'mysql',
     // 服务器地址
-    'hostname'       => '192.168.0.200',//'127.0.0.1',//
+    'hostname'       => '10.10.10.9',//'127.0.0.1',//
     // 数据库名
     //'database'       => 'demo_tpshop6',
-    'database'       => 'tpshopbbc2.0',
+    'database'       => 'db_shahaizi',
     // 用户名
-    'username'       => 'root',
+    'username'       => 'shahaizi',
     // 密码
-    'password'       => '',//'a',//
+    'password'       => 'shahz&rui7tke2017',//'a',//
     // 端口
     'hostport'       => '3306',
     // 连接dsn
@@ -32,7 +32,7 @@ return [
     // 数据库编码默认采用utf8
     'charset'        => 'utf8',
     // 数据库表前缀
-    'prefix'         => 'tp_',
+    'prefix'         => 'ruit_',
     // 数据库调试模式
     'debug'          => true,
     // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)

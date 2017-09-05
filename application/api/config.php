@@ -8,6 +8,7 @@ $home_config = [
 	//默认成功跳转对应的模板文件
 	'dispatch_success_tmpl' => 'public:dispatch_jump', 
 	'API_SECRET_KEY'        =>'www.tp-shop.cn', // app 调用的签名秘钥
+	'app_access_key'        =>'isCrJEctN_cwJqgH3r2rqTx_APNnqk5Epe',
 ];
 
 $html_config = include_once 'html.php';
