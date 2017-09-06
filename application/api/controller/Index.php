@@ -27,7 +27,7 @@ class Index extends Base {
      */
     public function home(){
         //获取轮播图
-        $data = M('ad')->where('pid = 2')->field(array('ad_link','ad_name','ad_code'))->cache(true,TPSHOP_CACHE_TIME)->select();
+        $data = M('ad')->where('pid = 10')->field(array('ad_link','ad_name','ad_code'))->cache(true,TPSHOP_CACHE_TIME)->select();
         //广告地址转换
         foreach($data as $k=>$v){
             if(!strstr($v['ad_link'],'http'))
@@ -43,10 +43,7 @@ class Index extends Base {
         $new_goods = $goodsLogic->getNewGoods();
         $hot_goods = $goodsLogic->getHotGood();
         $result = array(
-            array('name'=>'促销商品','goods_list'=>$promotion_goods),
-            array('name'=>'精品推荐','goods_list'=>$high_quality_goods),
-            array('name'=>'新品上市','goods_list'=>$new_goods),
-            array('name'=>'热销商品','goods_list'=>$hot_goods),
+
         );
         $this->ajaxReturn(array('status'=>1,'msg'=>'获取成功','result'=>array('goods'=>$result,'ad'=>$data)));
     }

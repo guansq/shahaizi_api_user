@@ -33,6 +33,9 @@ class User extends Base {
         $this->userLogic = new UsersLogic();
     }
 
+    public function test(){
+        echo '1111111111111';
+    }
     /**
      * @api      {POST} index.php?m=Api&c=User&a=login     用户登录
      * @apiName  login
@@ -113,8 +116,52 @@ class User extends Base {
         $this->ajaxReturn($data);
     }
     
-    /*
-     * 第三方登录
+    /**
+     * @api {POST}  index.php?m=Api&c=User&a=thirdLogin     第三方登录
+     * @apiName     thirdLogin
+     * @apiGroup    User
+     * @apiParam    {String}      unique_id     第三方唯一标识
+     * @apiParam    {String}      from          来源 wx weibo alipay
+     * @apiParam    {String}      [nickname]    第三方返回昵称
+     * @apiParam    {String}      [head_pic]    头像路径
+     * @apiSuccessExample   {json}  Success-response
+     *      Http/1.1    200 Ok
+     * {
+        * "status": 1,
+        * "msg": "登陆成功",
+        * "result": {
+        * "user_id": "12",
+        * "email": "",
+        * "password": "",
+        * "sex": "0",
+        * "birthday": "0000-00-00",
+        * "user_money": "0.00",
+        * "frozen_money": "0.00",
+        * "pay_points": "0",
+        * "address_id": "0",
+        * "reg_time": "1452331498",
+        * "last_login": "0",
+        * "last_ip": "",
+        * "qq": "",
+        * "mobile": "",
+        * "mobile_validated": "0",
+        * "oauth": "wx",
+        * "openid": "2",
+        * "head_pic": null,
+        * "province": "0",
+        * "city": "0",
+        * "district": "0",
+        * "email_validated": "0",
+        * "nickname": ""
+        * }
+     * }
+     * @apiErrorExample     {json}  Error-response
+     *              Http/1.1    200 OK
+     *   {
+        "status": -1,
+        "msg": "参数有误",
+        "result": ""
+        }
      */
     public function thirdLogin(){
         $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
@@ -234,7 +281,7 @@ class User extends Base {
         if(check_mobile($username)){
             //校验验证码
             $result = MsgService::verifyCaptcha($username,'reg',$code);
-            if($result['code'] != 2000){
+            if($result['status'] != 1){
                 returnJson(-1,'验证码输入有误');
             }
             //$res = $this->userLogic->check_validate_code($code, $username  , $type , $session_id , $scene);
@@ -329,8 +376,19 @@ class User extends Base {
         exit(json_encode($data));
     }
 
-    /*
-     *更新用户信息
+    /**
+     * @api {POST}  index.php?m=Api&c=User&a=updateUserInfo     更改用户信息
+     * @apiName     updateUserInfo
+     * @apiGroup    User
+     * @apiParam    {String}    [nickname]      昵称
+     * @apiParam    {String}    [qq]            QQ号码
+     * @apiParam    {String}    [head_pic]      头像URL
+     * @apiParam    {String}    [sex]           性别（0 保密 1 男 2 女）
+     * @apiParam    {String}    [birthday]      生日 （2015-01-05）
+     * @apiParam    {String}    [province]      省份ID
+     * @apiParam    {String}    [city]          城市ID
+     * @apiParam    {String}    [district]      地区ID
+     * @apiParam    {String}    token      token
      */
     public function updateUserInfo(){
         if(IS_POST){
@@ -478,7 +536,8 @@ class User extends Base {
         } else {
             //校验验证码
             $result = MsgService::verifyCaptcha($mobile,'resetpwd',$code);
-            if($result['code'] != 2000){
+
+            if($result['status'] != 1){
                 returnJson(-1,'验证码输入有误');
             }
             //修改密码

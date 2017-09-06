@@ -17,7 +17,7 @@ if(!function_exists('resultArray')){
     function resultArray($result = 0, $msg = '', $data = []){
         $code = $result;
         if(is_array($result)){
-            $code = $result['code'];
+            $code = $result['status'];
             $msg = $result['msg'];
             $data = $result['result'];
         }
@@ -25,7 +25,7 @@ if(!function_exists('resultArray')){
             $data = new stdClass();
         }
         $info = [
-            'code' => $code,
+            'status' => $code,
             'msg' => empty($msg) ? '' : $msg,
             'result' => $data
         ];
