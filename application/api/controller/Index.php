@@ -14,6 +14,7 @@
 namespace app\api\controller;
 use app\common\logic\GoodsLogic;
 use app\common\logic\StoreLogic;
+use app\common\logic\HomeLogic;
 use think\Db;
 use think\Page;
 class Index extends Base {
@@ -37,15 +38,9 @@ class Index extends Base {
         }
         //获取大分类
 //        $category_arr = M('goods_category')->where('id in(4,5,7)')->field('id,name')->limit(3)->cache(true,TPSHOP_CACHE_TIME)->select();
-        $goodsLogic = new GoodsLogic();
-        $promotion_goods = $goodsLogic->getPromotionGoods();
-        $high_quality_goods = $goodsLogic->getRecommendGoods();
-        $new_goods = $goodsLogic->getNewGoods();
-        $hot_goods = $goodsLogic->getHotGood();
-        $result = array(
-
-        );
-        $this->ajaxReturn(array('status'=>1,'msg'=>'获取成功','result'=>array('goods'=>$result,'ad'=>$data)));
+        $homeLogic = new HomeLogic();
+        $result = $homeLogic->getHomeInfo();
+        $this->ajaxReturn(array('status'=>1,'msg'=>'获取成功','result'=>array('action'=>$result,'ad'=>$data)));
     }
 
     /**

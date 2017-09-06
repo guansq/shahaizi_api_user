@@ -79,3 +79,13 @@ if(!function_exists('validateFile')){
         return true;
     }
 }
+
+/**
+ * 得到ID的身份信息
+ */
+function getIDType($seller_id){
+    if(empty($seller_id)){
+        return '';
+    }
+    return Db::name('seller')->field('store_id,drv_id,home_id')->find();
+}
