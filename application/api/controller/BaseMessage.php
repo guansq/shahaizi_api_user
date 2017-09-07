@@ -14,7 +14,7 @@ use service\MsgService;
 class BaseMessage extends Base{
 
     /**
-     * @api      {POST} /index/sendCaptcha  发送验证码done
+     * @api      {POST} /index.php?m=Api&c=BaseMessage&a=sendCaptcha  发送验证码done
      * @apiName  sendCaptcha
      * @apiGroup Common
      * @apiParam {String} mobile   手机号.

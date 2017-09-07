@@ -27,6 +27,14 @@ class Index extends Base {
       * @api {GET}   /index.php?m=Api&c=Index&a=home  得到首页相关数据
       * @apiName    home
       * @apiGroup   Index
+      * @apiSuccessExample {json}   Success-Response
+      *             Http/1.1    200 OK
+      * {
+      *     "cover_img" : 缩略图,
+      *     "name" : 姓名,
+      *     "good_num" : 赞数,
+      *     "city" : 地址,
+      * }
       */
     public function home(){
         //获取轮播图

@@ -12,7 +12,7 @@ use think\Request;
 
 class Comment extends BaseController {
     /**
-     * @api {GET}   /comment/commentInfo    获取评论内容
+     * @api {GET}   /comment/commentInfo    获取评论内容（未完成）
      * @apiName     commentInfo
      * @apiGroup    Comment
      * @apiHeader   {String}    authorization-token     token.
@@ -48,7 +48,7 @@ class Comment extends BaseController {
     }
 
     /**
-     * @api {GET}   /comment/sendCommentInfo    发送评论内容
+     * @api {GET}   /comment/sendCommentInfo    发送评论内容（未完成）
      * @apiName     sendCommentInfo
      * @apiGroup    Comment
      * @apiHeader   {String}    authorization-token     token.

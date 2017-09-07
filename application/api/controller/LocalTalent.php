@@ -29,7 +29,7 @@ class LocalTalent {
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=LocalTalent&a=getLocalTalentList     得到达人列表
+     * @api {GET}   /index.php?m=Api&c=LocalTalent&a=getLocalTalentList     得到达人列表（未完成）
      * @apiName     getLocalTalentList
      * @apiGroup    Talent
      * @apiParam    token {String}  token.
@@ -65,7 +65,7 @@ class LocalTalent {
     }
 
     /**
-     * @api {GET}   index.php?m=api&c=LocalTalent&a=getLocalTalentDetail    得到当地达人详情
+     * @api {GET}   /index.php?m=api&c=LocalTalent&a=getLocalTalentDetail    得到当地达人详情（未完成）
      * @apiName getLocalTalentDetail
      * @apiGroup    Talent
      * @apiParam    talent_id {String}  当地达人

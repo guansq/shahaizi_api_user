@@ -10,7 +10,7 @@ namespace app\api\controller;
 
 class Recommend extends BaseController {
     /**
-     * @api {GET}   recommend/showMyRecommInfo      显示我的推荐信息
+     * @api {GET}   /recommend/showMyRecommInfo      显示我的推荐信息（未完成）
      * @apiName     showMyRecommInfo
      * @apiGroup    Recommend
      * @apiHeader   {String}    authorization-token         token.
@@ -24,7 +24,7 @@ class Recommend extends BaseController {
 
 
     /**
-     * @api {GET}   recommend/showMyRecommList      显示我的推荐列表
+     * @api {GET}   /recommend/showMyRecommList      显示我的推荐列表（未完成）
      * @apiName     showMyRecommList
      * @apiGroup    Recommend
      * @apiHeader   {String}    authorization-token         token.

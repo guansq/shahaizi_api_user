@@ -8,7 +8,7 @@
 class DriverPack{
 
     /**
-     * @api {GET}   index.php?m=Api&c=PackLine&a=getLocalLine     得到当地司导
+     * @api {GET}   /index.php?m=Api&c=PackLine&a=getLocalLine     得到当地司导
      * @apiName     getLocalLine
      * @apiGroup    DriverPack
      * @apiSuccessExample {json}    Success-Response
@@ -28,7 +28,7 @@ class DriverPack{
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=DriverPack&a=getDriverDetail 司导详情
+     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getDriverDetail 司导详情
      * @apiName     getDriverDetail
      * @apiGroup    DriverPack
      * @apiParam    drv_id  {String}    司导ID

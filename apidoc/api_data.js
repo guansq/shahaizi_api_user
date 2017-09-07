@@ -2,7 +2,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "/comment/commentInfo",
-    "title": "获取评论内容",
+    "title": "获取评论内容（未完成）",
     "name": "commentInfo",
     "group": "Comment",
     "header": {
@@ -126,7 +126,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "/comment/sendCommentInfo",
-    "title": "发送评论内容",
+    "title": "发送评论内容（未完成）",
     "name": "sendCommentInfo",
     "group": "Comment",
     "header": {
@@ -194,7 +194,7 @@ define({ "api": [
   },
   {
     "type": "POST",
-    "url": "/index/sendCaptcha",
+    "url": "/index.php?m=Api&c=BaseMessage&a=sendCaptcha",
     "title": "发送验证码done",
     "name": "sendCaptcha",
     "group": "Common",
@@ -223,13 +223,13 @@ define({ "api": [
     "groupTitle": "Common",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index/sendCaptcha"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=BaseMessage&a=sendCaptcha"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=DriverPack&a=getDriverDetail",
+    "url": "/index.php?m=Api&c=DriverPack&a=getDriverDetail",
     "title": "司导详情",
     "name": "getDriverDetail",
     "group": "DriverPack",
@@ -259,13 +259,13 @@ define({ "api": [
     "groupTitle": "DriverPack",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=DriverPack&a=getDriverDetail"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=DriverPack&a=getDriverDetail"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=PackLine&a=getLocalLine",
+    "url": "/index.php?m=Api&c=PackLine&a=getLocalLine",
     "title": "得到当地司导",
     "name": "getLocalLine",
     "group": "DriverPack",
@@ -283,14 +283,14 @@ define({ "api": [
     "groupTitle": "DriverPack",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=PackLine&a=getLocalLine"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=PackLine&a=getLocalLine"
       }
     ]
   },
   {
     "type": "POST",
-    "url": "index.php?a=A/file/uploadImg",
-    "title": "上传图片",
+    "url": "/index.php?m=Api&c=File&a=uploadImg",
+    "title": "上传图片（未完成请使用物载天下的上传功能）",
     "name": "uploadImg",
     "group": "File",
     "header": {
@@ -337,7 +337,7 @@ define({ "api": [
     "groupTitle": "File",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?a=A/file/uploadImg"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=File&a=uploadImg"
       }
     ]
   },
@@ -347,6 +347,15 @@ define({ "api": [
     "title": "得到首页相关数据",
     "name": "home",
     "group": "Index",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "            Http/1.1    200 OK\n{\n    \"cover_img\" : 缩略图,\n    \"name\" : 姓名,\n    \"good_num\" : 赞数,\n    \"city\" : 地址,\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "application/api/controller/Index.php",
     "groupTitle": "Index",
@@ -358,8 +367,8 @@ define({ "api": [
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=PackLine&a=getQualityLine",
-    "title": "得到精品路线",
+    "url": "/index.php?m=Api&c=PackLine&a=getQualityLine",
+    "title": "得到精品路线（未完成）",
     "name": "getQualityLine",
     "group": "PackLine",
     "success": {
@@ -376,14 +385,14 @@ define({ "api": [
     "groupTitle": "PackLine",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=PackLine&a=getQualityLine"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=PackLine&a=getQualityLine"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "recommend/showMyRecommInfo",
-    "title": "显示我的推荐信息",
+    "url": "/recommend/showMyRecommInfo",
+    "title": "显示我的推荐信息（未完成）",
     "name": "showMyRecommInfo",
     "group": "Recommend",
     "header": {
@@ -417,14 +426,14 @@ define({ "api": [
     "groupTitle": "Recommend",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comrecommend/showMyRecommInfo"
+        "url": "http://shahaizi.api.user.dev.com/recommend/showMyRecommInfo"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "recommend/showMyRecommList",
-    "title": "显示我的推荐列表",
+    "url": "/recommend/showMyRecommList",
+    "title": "显示我的推荐列表（未完成）",
     "name": "showMyRecommList",
     "group": "Recommend",
     "header": {
@@ -529,14 +538,14 @@ define({ "api": [
     "groupTitle": "Recommend",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comrecommend/showMyRecommList"
+        "url": "http://shahaizi.api.user.dev.com/recommend/showMyRecommList"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "index.php?m=api&c=LocalTalent&a=getLocalTalentDetail",
-    "title": "得到当地达人详情",
+    "url": "/index.php?m=api&c=LocalTalent&a=getLocalTalentDetail",
+    "title": "得到当地达人详情（未完成）",
     "name": "getLocalTalentDetail",
     "group": "Talent",
     "parameter": {
@@ -565,14 +574,14 @@ define({ "api": [
     "groupTitle": "Talent",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=api&c=LocalTalent&a=getLocalTalentDetail"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=api&c=LocalTalent&a=getLocalTalentDetail"
       }
     ]
   },
   {
     "type": "GET",
     "url": "/index.php?m=Api&c=LocalTalent&a=getLocalTalentList",
-    "title": "得到达人列表",
+    "title": "得到达人列表（未完成）",
     "name": "getLocalTalentList",
     "group": "Talent",
     "parameter": {
@@ -613,7 +622,7 @@ define({ "api": [
   },
   {
     "type": "POST",
-    "url": "index.php?m=Api&c=User&a=forgetPassword",
+    "url": "/index.php?m=Api&c=User&a=forgetPassword",
     "title": "忘记密码done",
     "name": "forgetPassword",
     "group": "User",
@@ -631,13 +640,13 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=User&a=forgetPassword"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=forgetPassword"
       }
     ]
   },
   {
     "type": "POST",
-    "url": "index.php?m=Api&c=User&a=userInfo",
+    "url": "/index.php?m=Api&c=User&a=userInfo",
     "title": "获取用户信息done",
     "name": "info",
     "group": "User",
@@ -668,14 +677,14 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=User&a=userInfo"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=userInfo"
       }
     ]
   },
   {
     "type": "POST",
-    "url": "index.php?m=Api&c=User&a=login",
-    "title": "用户登录",
+    "url": "/index.php?m=Api&c=User&a=login",
+    "title": "用户登录done",
     "name": "login",
     "group": "User",
     "parameter": {
@@ -749,13 +758,13 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=User&a=login"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=login"
       }
     ]
   },
   {
     "type": "POST",
-    "url": "index.php?m=Api&c=User&a=password",
+    "url": "/index.php?m=Api&c=User&a=password",
     "title": "修改用户密码done",
     "name": "password",
     "group": "User",
@@ -786,14 +795,14 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=User&a=password"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=password"
       }
     ]
   },
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=reg",
-    "title": "用户注册",
+    "title": "用户注册done",
     "name": "reg",
     "group": "User",
     "parameter": {
@@ -859,8 +868,8 @@ define({ "api": [
   },
   {
     "type": "POST",
-    "url": "index.php?m=Api&c=User&a=thirdLogin",
-    "title": "第三方登录",
+    "url": "/index.php?m=Api&c=User&a=thirdLogin",
+    "title": "第三方登录done（未调试）",
     "name": "thirdLogin",
     "group": "User",
     "parameter": {
@@ -920,14 +929,14 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=User&a=thirdLogin"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=thirdLogin"
       }
     ]
   },
   {
     "type": "POST",
-    "url": "index.php?m=Api&c=User&a=updateUserInfo",
-    "title": "更改用户信息",
+    "url": "/index.php?m=Api&c=User&a=updateUserInfo",
+    "title": "更改用户信息done",
     "name": "updateUserInfo",
     "group": "User",
     "parameter": {
@@ -1004,7 +1013,7 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=User&a=updateUserInfo"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=updateUserInfo"
       }
     ]
   }

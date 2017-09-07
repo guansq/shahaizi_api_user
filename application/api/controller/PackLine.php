@@ -8,7 +8,7 @@
 class PackLine{
 
     /**
-     * @api {GET}   index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线
+     * @api {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线（未完成）
      * @apiName     getQualityLine
      * @apiGroup    PackLine
      * @apiSuccessExample {json}    Success-Response

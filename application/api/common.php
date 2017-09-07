@@ -89,3 +89,7 @@ function getIDType($seller_id){
     }
     return Db::name('seller')->field('store_id,drv_id,home_id')->find();
 }
+
+/**
+ *
+ */

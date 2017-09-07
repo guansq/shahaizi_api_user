@@ -33,11 +33,9 @@ class User extends Base {
         $this->userLogic = new UsersLogic();
     }
 
-    public function test(){
-        echo '1111111111111';
-    }
+
     /**
-     * @api      {POST} index.php?m=Api&c=User&a=login     用户登录
+     * @api      {POST} /index.php?m=Api&c=User&a=login     用户登录done
      * @apiName  login
      * @apiGroup User
      * @apiParam {String} username          用户名.
@@ -117,7 +115,7 @@ class User extends Base {
     }
     
     /**
-     * @api {POST}  index.php?m=Api&c=User&a=thirdLogin     第三方登录
+     * @api {POST}  /index.php?m=Api&c=User&a=thirdLogin     第三方登录done（未调试）
      * @apiName     thirdLogin
      * @apiGroup    User
      * @apiParam    {String}      unique_id     第三方唯一标识
@@ -201,7 +199,7 @@ class User extends Base {
     }
 
     /**
-     * @api     {POST} /index.php?m=Api&c=User&a=reg            用户注册
+     * @api     {POST} /index.php?m=Api&c=User&a=reg            用户注册done
      * @apiName   reg
      * @apiGroup  User
      * @apiParam {String} username         手机号/用户名.
@@ -298,7 +296,7 @@ class User extends Base {
     }
 
     /**
-     * @api      {POST} index.php?m=Api&c=User&a=userInfo   获取用户信息done
+     * @api      {POST} /index.php?m=Api&c=User&a=userInfo   获取用户信息done
      * @apiName  info
      * @apiGroup User
      * @apiParam {String}   token           token.
@@ -377,7 +375,7 @@ class User extends Base {
     }
 
     /**
-     * @api {POST}  index.php?m=Api&c=User&a=updateUserInfo     更改用户信息
+     * @api {POST}  /index.php?m=Api&c=User&a=updateUserInfo     更改用户信息done
      * @apiName     updateUserInfo
      * @apiGroup    User
      * @apiParam    {String}    [nickname]      昵称
@@ -416,7 +414,7 @@ class User extends Base {
 
 
     /**
-     * @api      {POST} index.php?m=Api&c=User&a=password   修改用户密码done
+     * @api      {POST} /index.php?m=Api&c=User&a=password   修改用户密码done
      * @apiName  password
      * @apiGroup User
      * @apiParam {String}   token           token.
@@ -513,7 +511,7 @@ class User extends Base {
 
 
     /**
-     * @api      {POST} index.php?m=Api&c=User&a=forgetPassword   忘记密码done
+     * @api      {POST} /index.php?m=Api&c=User&a=forgetPassword   忘记密码done
      * @apiName  forgetPassword
      * @apiGroup User
      * @apiSuccessExample {json} Success-Response:
