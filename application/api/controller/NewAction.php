@@ -7,7 +7,7 @@
  */
 class NewAction{
 
-    /**
+    /*
      * @api {GET}   index.php?m=Api&c=NewAction&a=getIndexNewAction     得到首页最新消息
      * @apiName getIndexNewAction
      * @apiGroup    Index

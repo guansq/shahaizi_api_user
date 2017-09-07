@@ -343,109 +343,16 @@ define({ "api": [
   },
   {
     "type": "GET",
-    "url": "/index.php?m=Api&c=LocalTalent&a=getIndexLocalTalent",
-    "title": "得到首页当地达人列表",
-    "name": "LocalTalent",
+    "url": "/index.php?m=Api&c=Index&a=home",
+    "title": "得到首页相关数据",
+    "name": "home",
     "group": "Index",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "optional": false,
-            "field": "token",
-            "description": "<p>{String}   token.</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response",
-          "content": "     Http/1.1    200 OK\n{\n     \"talent_id\" :   \"1\",  //视屏ID\n     \"cover_img\" :   \"http://xxxx.jpg\",  //视屏封面图\n     \"name\"      :   \"张三\",  //发布人姓名\n     \"city\" :   \"东京\",  //发布人所在城市\n     \"id_type\" :   \"\",  //身份标签（有几个身份？）\n     \"good_num\" :   \"111\",  //点赞数\n\n}",
-          "type": "json"
-        }
-      ]
-    },
     "version": "0.0.0",
-    "filename": "application/api/controller/LocalTalent.php",
+    "filename": "application/api/controller/Index.php",
     "groupTitle": "Index",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=LocalTalent&a=getIndexLocalTalent"
-      }
-    ]
-  },
-  {
-    "type": "GET",
-    "url": "index.php?m=Api&c=HotGuide&a=getIndexHotGuide",
-    "title": "得到首页热门动态",
-    "name": "getIndexHotGuide",
-    "group": "Index",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "optional": false,
-            "field": "token",
-            "description": "<p>{String}   token.</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response",
-          "content": "     Http/1.1    200 OK\n{\n     \"talent_id\" :   \"1\",  //视屏ID\n     \"cover_img\" :   \"http://xxxx.jpg\",  //视屏封面图\n     \"name\"      :   \"张三\",  //发布人姓名\n     \"city\" :   \"东京\",  //发布人所在城市\n     \"id_type\" :   \"\",  //身份标签（有几个身份？）\n     \"good_num\" :   \"111\",  //点赞数\n\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "application/api/controller/HotGuide.php",
-    "groupTitle": "Index",
-    "sampleRequest": [
-      {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=HotGuide&a=getIndexHotGuide"
-      }
-    ]
-  },
-  {
-    "type": "GET",
-    "url": "index.php?m=Api&c=NewAction&a=getIndexNewAction",
-    "title": "得到首页最新消息",
-    "name": "getIndexNewAction",
-    "group": "Index",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "optional": false,
-            "field": "token",
-            "description": "<p>{String}   token.</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response",
-          "content": "     Http/1.1    200 OK\n{\n     \"talent_id\" :   \"1\",  //视屏ID\n     \"cover_img\" :   \"http://xxxx.jpg\",  //视屏封面图\n     \"title\" :   \"文章标题\",  //文章标题\n     \"name\"      :   \"张三\",  //发布人姓名\n     \"good_num\" :   \"111\",  //点赞数\n\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "application/api/controller/NewAction.php",
-    "groupTitle": "Index",
-    "sampleRequest": [
-      {
-        "url": "http://shahaizi.api.user.dev.comindex.php?m=Api&c=NewAction&a=getIndexNewAction"
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=Index&a=home"
       }
     ]
   },

@@ -7,7 +7,7 @@
  */
 
 class HotGuide{
-    /**
+    /*
      * @api {GET}   index.php?m=Api&c=HotGuide&a=getIndexHotGuide   得到首页热门动态
      * @apiName getIndexHotGuide
      * @apiGroup Index

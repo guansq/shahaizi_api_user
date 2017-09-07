@@ -23,9 +23,11 @@ class Index extends Base {
         return $this->fetch();
     }
 
-     /*
-     * 获取首页数据 (安卓多商已不需要)
-     */
+     /**
+      * @api {GET}   /index.php?m=Api&c=Index&a=home  得到首页相关数据
+      * @apiName    home
+      * @apiGroup   Index
+      */
     public function home(){
         //获取轮播图
         $data = M('ad')->where('pid = 10')->field(array('ad_link','ad_name','ad_code'))->cache(true,TPSHOP_CACHE_TIME)->select();

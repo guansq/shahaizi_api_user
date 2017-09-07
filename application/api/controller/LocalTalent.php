@@ -7,7 +7,7 @@
  */
 class LocalTalent {
 
-    /**
+    /*
      * @api  {GET} /index.php?m=Api&c=LocalTalent&a=getIndexLocalTalent     得到首页当地达人列表
      * @apiName    LocalTalent
      * @apiGroup   Index
