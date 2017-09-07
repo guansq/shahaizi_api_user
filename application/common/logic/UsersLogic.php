@@ -77,11 +77,29 @@ class UsersLogic extends Model
             $data = ['token' => $user['token'], 'last_login' => time()];
             $push_id && $data['push_id'] = $push_id;
             M('users')->where("user_id", $user['user_id'])->save($data);
+            $user['expireTime'] = $user['last_login'] + C('APP_TOKEN_TIME');
             $result = array('status'=>1,'msg'=>'登陆成功','result'=>$user);
         }
         return $result;
     }
 
+    /**
+     * app刷新token
+     */
+
+    public function flash_token($user_id){
+        $user = M('users')->where("user_id='{$user_id}'")->find();
+        if (!$user) {
+            $result = array('status'=>-1,'msg'=>'账号不存在!');
+        }elseif ($user['is_lock'] == 1) {
+            $result = array('status'=>-3,'msg'=>'账号异常已被锁定！！！');
+        }
+        $user['token'] = md5(time().mt_rand(1,999999999));
+        $data = ['token' => $user['token'], 'last_login' => time()];
+        $user['expireTime'] = $user['last_login'] + C('APP_TOKEN_TIME');
+        $result = array('status'=>1,'msg'=>'刷新token成功','result'=>$user);
+        return $result;
+    }
     /*
      * app端登出
      */

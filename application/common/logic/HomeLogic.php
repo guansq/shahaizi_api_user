@@ -27,6 +27,8 @@ class HomeLogic extends Model
             }
             if(!empty($str)){
                 $val['type_info'] = substr($str,0,-1);
+            }else{
+                $val['type_info'] = '';
             }
         }
         foreach($guideList as &$val){
@@ -43,9 +45,11 @@ class HomeLogic extends Model
             }
             if(!empty($str)){
                 $val['type_info'] = substr($str,0,-1);
+            }else{
+                $val['type_info'] = '';
             }
         }
-        foreach($guideList as &$val){
+        foreach($newList as &$val){
             $str = '';
             $type = getIDType($val['seller_id']);
             if(!empty($type['store_id'])){
@@ -59,6 +63,8 @@ class HomeLogic extends Model
             }
             if(!empty($str)){
                 $val['type_info'] = substr($str,0,-1);
+            }else{
+                $val['type_info'] = '';
             }
         }
         return [

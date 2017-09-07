@@ -362,7 +362,7 @@ return [
         '6'=>array('身份验证','尊敬的用户，您的验证码为${code}, 请勿告诉他人.','bind_mobile_sms_enable'),
     ),
     
-    'APP_TOKEN_TIME' => 60 * 60 * 24 * 1000 * 30, //App保持token时间 , 此处为1天
+    'APP_TOKEN_TIME' => 60 * 60 * 24, //App保持token时间 , 此处为1天
     
     'STORE_PRIVILEGE' => array('goods'=>'商品管理','order'=>'订单物流','promtion'=>'促销管理','store'=>'店铺管理',
      				'service'=>'售后服务','charts'=>'统计报表','mesaage'=>'客服消息','seller'=>'账号管理',
@@ -412,4 +412,8 @@ return [
 	'rate_list' => array(0 => 0, 3 => 3, 6 => 6, 7 => 7, 11 => 11, 13 => 13, 17 => 17),
     'buy_year'=>2015,
     'buy_version'=>0,
+    'ACCESSKEY' => 'dmrMa7omgEbJGmsv7vmRtg_g3zt1GjkpiIkWvtkW',//你的accessKey
+    'SECRETKEY' => 'DszNIu8R_0H2T0bXI6He8b2TcPHK0uYBNE94sfbS',//你的secretKey
+    'BUCKET' => 'shahaizi',//上传的空间
+    'DOMAINImage'=>'http://ovwiqces1.bkt.clouddn.com/'//空间绑定的域名
 ];

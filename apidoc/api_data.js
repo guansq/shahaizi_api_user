@@ -545,7 +545,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "/index.php?m=api&c=LocalTalent&a=getLocalTalentDetail",
-    "title": "得到当地达人详情（未完成）",
+    "title": "得到当地达人详情done",
     "name": "getLocalTalentDetail",
     "group": "Talent",
     "parameter": {
@@ -581,7 +581,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "/index.php?m=Api&c=LocalTalent&a=getLocalTalentList",
-    "title": "得到达人列表（未完成）",
+    "title": "得到达人列表  传入p 为 n代表第n页",
     "name": "getLocalTalentList",
     "group": "Talent",
     "parameter": {
@@ -606,7 +606,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response",
-          "content": "     Http/1.1    200 OK\n{\n     \"status\": 1,\n     \"msg\": \"获取成功\",\n     \"result\": [\n         {\n         \"talent_id\" :   \"1\",  //视屏ID\n         \"cover_img\" :   \"http://xxxx.jpg\",  //视屏封面图\n         \"name\"      :   \"张三\",  //发布人姓名\n         \"city\" :   \"东京\",  //发布人所在城市\n         \"id_type\" :   \"\",  //身份标签（有几个身份？）\n         \"good_num\" :   \"111\",  //点赞数\n         },\n         {\n         \"talent_id\" :   \"1\",  //视屏ID\n         \"cover_img\" :   \"http://xxxx.jpg\",  //视屏封面图\n         \"name\"      :   \"张三\",  //发布人姓名\n         \"city\" :   \"东京\",  //发布人所在城市\n         \"id_type\" :   \"\",  //身份标签（有几个身份？）\n         \"good_num\" :   \"111\",  //点赞数\n         }\n     ]\n}",
+          "content": "     Http/1.1    200 OK\n{\n     \"status\": 1,\n     \"msg\": \"获取成功\",\n     \"result\": [\n         {\n         \"talent_id\" :   \"1\",  //当地达人ID\n         \"title\"     :   \"\",//标题\n         \"cover_img\" :   \"http://xxxx.jpg\",  //视屏封面图\n         \"name\"      :   \"张三\",  //发布人姓名\n         \"city\" :   \"东京\",  //发布人所在城市\n         \"type_info\" :   \"\",  //身份标签（有几个身份？）\n         \"good_num\" :   \"111\",  //点赞数\n         },\n         {\n         \"talent_id\" :   \"1\",  //视屏ID\n         \"cover_img\" :   \"http://xxxx.jpg\",  //视屏封面图\n         \"name\"      :   \"张三\",  //发布人姓名\n         \"city\" :   \"东京\",  //发布人所在城市\n         \"type_info\" :   \"\",  //身份标签（有几个身份？）\n         \"good_num\" :   \"111\",  //点赞数\n         }\n     ]\n}",
           "type": "json"
         }
       ]
@@ -617,6 +617,34 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=LocalTalent&a=getLocalTalentList"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=User&a=flashToken",
+    "title": "刷新token（返回信息同login一样）",
+    "name": "flashToken",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=flashToken"
       }
     ]
   },
@@ -739,7 +767,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "      Http/1.1   200 OK\n{\n\"status\": 1,\n\"msg\": \"登陆成功\",\n\"result\": {\n\"user_id\": \"1\",\n\"email\": \"398145059@qq.com\",\n\"password\": \"e10adc3949ba59abbe56e057f20f883e\",\n\"sex\": \"1\",\n\"birthday\": \"2015-12-30\",\n\"user_money\": \"9999.39\",\n\"frozen_money\": \"0.00\",\n\"pay_points\": \"5281\",\n\"address_id\": \"3\",\n\"reg_time\": \"1245048540\",\n\"last_login\": \"1444134213\",\n\"last_ip\": \"127.0.0.1\",\n\"qq\": \"3981450598\",\n\"mobile\": \"13800138000\",\n\"mobile_validated\": \"0\",\n\"oauth\": \"\",\n\"openid\": null,\n\"head_pic\": \"/Public/upload/head_pic/2015/12-28/56812d56854d0.jpg\",\n\"province\": \"19\",\n\"city\": \"236\",\n\"district\": \"2339\",\n\"email_validated\": \"1\",\n\"nickname\": \"的广泛地\"\n\"token\": \"9f3de86be794f81cdfa5ff3f30b99257\"        // 用于 app 登录\n}\n}",
+          "content": "      Http/1.1   200 OK\n{\n\"status\": 1,\n\"msg\": \"登陆成功\",\n    \"result\": {\n    \"user_id\": \"1\",\n    \"email\": \"398145059@qq.com\",\n    \"password\": \"e10adc3949ba59abbe56e057f20f883e\",\n    \"sex\": \"1\",\n    \"birthday\": \"2015-12-30\",\n    \"user_money\": \"9999.39\",\n    \"frozen_money\": \"0.00\",\n    \"pay_points\": \"5281\",\n    \"address_id\": \"3\",\n    \"reg_time\": \"1245048540\",\n    \"last_login\": \"1444134213\",\n    \"last_ip\": \"127.0.0.1\",\n    \"qq\": \"3981450598\",\n    \"mobile\": \"13800138000\",\n    \"mobile_validated\": \"0\",\n    \"oauth\": \"\",\n    \"openid\": null,\n    \"head_pic\": \"/Public/upload/head_pic/2015/12-28/56812d56854d0.jpg\",\n    \"province\": \"19\",\n    \"city\": \"236\",\n    \"district\": \"2339\",\n    \"email_validated\": \"1\",\n    \"nickname\": \"的广泛地\"\n    \"token\": \"9f3de86be794f81cdfa5ff3f30b99257\"        // 用于 app 登录\n    \"expireTime\":\"1245048540\"         //token过期时间\n    }\n}",
           "type": "json"
         }
       ]

@@ -29,17 +29,16 @@ class File{
         //trace($return_data);
 //        dump($data);
         if(empty($return_data)){
-            return resultArray(6001);
+            return resultArray(-1);
         }
         $ossRet = json_decode($return_data,true);
         if(empty($ossRet)){
-            return resultArray(6001,'上传图片错误','');
+            return resultArray(-1,'上传图片错误');
         }
         if($ossRet['code'] !=2000){
-            return resultArray(6001,$ossRet['msg'],'');
+            return resultArray(-1,$ossRet['msg']);
         }
-
-        return resultArray($ossRet);
+        return resultArray(1,$ossRet['msg'],$ossRet['result']);
     }
 
     /**
@@ -54,10 +53,12 @@ class File{
         if(empty($file)){
             return resultArray(4001);
         }
+
         $ossRet = $fileLogic->uploadFile($file);
         if(empty($ossRet) || $ossRet['code'] != 2000){
             return resultArray($ossRet);
         }
+
         return resultArray($ossRet);
     }
 }
