@@ -8,7 +8,7 @@
 namespace app\api\controller;
 use app\common\logic\LocalTalentLogic;
 
-class LocalTalent extends base{
+class LocalTalent extends Base{
 
     public $localLogic;
 

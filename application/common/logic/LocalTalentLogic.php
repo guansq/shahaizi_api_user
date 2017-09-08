@@ -18,7 +18,8 @@ class LocalTalentLogic extends Model{
     public function get_local_list(){
 
         $count = M('article_local_talent')->count();
-        $Page = new Page($count, 2);
+        $Page = new Page($count, 10);
+        echo $Page->totalPages;die;
         $local_list = M('article_local_talent')->order('good_num desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
         foreach($local_list as &$val){
             $str = '';

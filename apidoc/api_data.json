@@ -119,7 +119,7 @@
     "groupTitle": "Comment",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/comment/commentInfo"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/comment/commentInfo"
       }
     ]
   },
@@ -188,7 +188,7 @@
     "groupTitle": "Comment",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/comment/sendCommentInfo"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/comment/sendCommentInfo"
       }
     ]
   },
@@ -223,7 +223,7 @@
     "groupTitle": "Common",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=BaseMessage&a=sendCaptcha"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=BaseMessage&a=sendCaptcha"
       }
     ]
   },
@@ -259,7 +259,7 @@
     "groupTitle": "DriverPack",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=DriverPack&a=getDriverDetail"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=DriverPack&a=getDriverDetail"
       }
     ]
   },
@@ -283,7 +283,7 @@
     "groupTitle": "DriverPack",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=PackLine&a=getLocalLine"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=PackLine&a=getLocalLine"
       }
     ]
   },
@@ -337,7 +337,7 @@
     "groupTitle": "File",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=File&a=uploadImg"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=File&a=uploadImg"
       }
     ]
   },
@@ -361,7 +361,7 @@
     "groupTitle": "Index",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=Index&a=home"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=Index&a=home"
       }
     ]
   },
@@ -385,7 +385,7 @@
     "groupTitle": "PackLine",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=PackLine&a=getQualityLine"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=PackLine&a=getQualityLine"
       }
     ]
   },
@@ -426,7 +426,7 @@
     "groupTitle": "Recommend",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/recommend/showMyRecommInfo"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/recommend/showMyRecommInfo"
       }
     ]
   },
@@ -538,7 +538,7 @@
     "groupTitle": "Recommend",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/recommend/showMyRecommList"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/recommend/showMyRecommList"
       }
     ]
   },
@@ -574,7 +574,7 @@
     "groupTitle": "Talent",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=api&c=LocalTalent&a=getLocalTalentDetail"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=api&c=LocalTalent&a=getLocalTalentDetail"
       }
     ]
   },
@@ -616,7 +616,7 @@
     "groupTitle": "Talent",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=LocalTalent&a=getLocalTalentList"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=LocalTalent&a=getLocalTalentList"
       }
     ]
   },
@@ -644,7 +644,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=flashToken"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=flashToken"
       }
     ]
   },
@@ -668,7 +668,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=forgetPassword"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=forgetPassword"
       }
     ]
   },
@@ -705,7 +705,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=userInfo"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=userInfo"
       }
     ]
   },
@@ -786,7 +786,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=login"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=login"
       }
     ]
   },
@@ -823,7 +823,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=password"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=password"
       }
     ]
   },
@@ -890,7 +890,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=reg"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=reg"
       }
     ]
   },
@@ -957,7 +957,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=thirdLogin"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=thirdLogin"
       }
     ]
   },
@@ -1041,7 +1041,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shahaizi.api.user.dev.com/index.php?m=Api&c=User&a=updateUserInfo"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=updateUserInfo"
       }
     ]
   }

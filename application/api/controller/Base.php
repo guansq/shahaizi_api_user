@@ -24,13 +24,15 @@ class Base extends Controller {
     /**
      * 析构函数
      */
-    function __construct() {       
+    function __construct() {
+        echo '111';die;
+
         parent::__construct();
         if ($_REQUEST['test'] == '1') {
             $test_str = 'POST'.print_r($_POST,true);
             $test_str .= 'GET'.print_r($_GET,true);
-            file_put_contents('a.html', $test_str);            
-        }    
+            file_put_contents('a.html', $test_str);
+        }
         
         $this->checkToken(); // 检查token        
         //$this->user = M('users')->where('user_id', $this->user_id)->find();
