@@ -21,7 +21,7 @@ class File{
         $info = $file->move(ROOT_PATH . 'public' . DS . 'upload');
         //$filePath = ROOT_PATH . 'public' . DS . 'upload'. DS .$info->getSaveName();
         $data = [
-            'rt_appkey' => 'wztx_shipper',
+            'rt_appkey' => '2017ShaHaiZi_uQbJFDUPPUGc6MiN_j99YeHXpb3fsAT0V',
             'file' => '@'.$info->getPathname()
         ];
 
@@ -48,7 +48,7 @@ class File{
      * @param array       $user
      * @return array
      */
-    public function uploadImg(\think\File $file, $user = []){
+    public function uploadImg(\think\File $file){
         $fileLogic = model('File', 'logic');
         if(empty($file)){
             return resultArray(4001);

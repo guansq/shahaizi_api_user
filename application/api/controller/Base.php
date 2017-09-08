@@ -25,7 +25,6 @@ class Base extends Controller {
      * 析构函数
      */
     function __construct() {
-        echo '111';die;
 
         parent::__construct();
         if ($_REQUEST['test'] == '1') {

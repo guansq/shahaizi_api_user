@@ -16,6 +16,7 @@
 namespace app\common\logic;
 
 use think\AjaxPage;
+use think\Page;
 use think\Model;
 use think\Db;
 
@@ -477,5 +478,38 @@ class CommentLogic extends Model
         return ['list'=>$list,'page'=>$show];
     }
 
+    /**
+     * 得到文章评论数
+     */
+    public function getArticleComment($article_id,$type){
+
+        $where = array(
+            'c.is_show' => 1,
+            'c.article_id' => $article_id,
+            'c.parent_id' => 0,
+            'c.img' => ["exp", "!='' and c.img NOT LIKE 'N;%'"],
+            'c.type' => $type,
+            'c.deleted' => 0
+        );
+
+        $count = M('article_comment')->alias('c')->where($where)->count();
+
+        $page = new Page($count, 10);
+        $list = M('article_comment')->alias('c')
+            ->field("u.head_pic,u.nickname,c.add_time,c.spec_key_name,c.content,
+                    c.impression,c.comment_id,c.zan_num,c.is_anonymous,c.reply_num,
+                    c.img,c.parent_id,c.parent_id as seller_comment")
+            ->join('__USERS__ u', 'u.user_id = c.user_id', 'LEFT')
+            ->where($where)
+            ->order("c.add_time desc")
+            ->limit($page->firstRow . ',' . $page->listRows)->select();
+        $reply_logic = new ReplyLogic();
+        foreach ($list as $k => $v) {
+            $list[$k]['img'] = unserialize($v['img']); // 晒单图片
+            $list[$k]['parent_id'] = $reply_logic->getReplyListToArrayByArticle($v['comment_id'], 5);
+            //$list[$k]['seller_comment'] =  Db::name('article_comment')->where(['article_id' => $article_id, 'parent_id' => $list[$k]['comment_id']])->order("add_time desc")->select();
+        }
+        return ['list'=>$list];
+    }
 
 }

@@ -12,7 +12,7 @@ use Qiniu\Storage\BucketManager;
 use Qiniu\Storage\UploadManager;
 class File extends Controller{
     /**
-     * @api      {POST} /index.php?m=Api&c=File&a=uploadImg  上传图片（未完成请使用物载天下的上传功能）
+     * @api      {POST} /index.php?m=Api&c=File&a=uploadImg  上传图片done
      * @apiName  uploadImg
      * @apiGroup File
      * @apiHeader {String} authorization-token           token.
@@ -29,7 +29,7 @@ class File extends Controller{
         validateFile($file, $rule);
         $logic = model('File', 'logic');
 
-        returnJson($logic->uploadImg($file,$this->loginUser));
+        returnJson($logic->uploadImg($file));
     }
 
     /**

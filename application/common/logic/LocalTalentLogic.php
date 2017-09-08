@@ -19,7 +19,7 @@ class LocalTalentLogic extends Model{
 
         $count = M('article_local_talent')->count();
         $Page = new Page($count, 10);
-        echo $Page->totalPages;die;
+        //echo $Page->totalPages;die;
         $local_list = M('article_local_talent')->order('good_num desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
         foreach($local_list as &$val){
             $str = '';
@@ -37,10 +37,11 @@ class LocalTalentLogic extends Model{
                 $val['type_info'] = substr($str,0,-1);
             }
         }
+        $result = ['totalPages' => $Page->totalPages,'list'=>$local_list];
         $return = [
             'status'    =>1,
             'msg'       =>'',
-            'result'    =>$local_list,
+            'result'    =>$result,
         ];
         return $return;
     }
@@ -51,7 +52,7 @@ class LocalTalentLogic extends Model{
     public function get_local_detail($where){
         $info = M('article_local_talent')->where($where)->find();
         if(empty($info)){
-            $this->ajaxReturn(['status'=>-1,'msg'=>'没有改条记录']);
+            $this->ajaxReturn(['status'=>-1,'msg'=>'没有该记录']);
         }
         $str = '';
         $type = getIDType($info['seller_id']);

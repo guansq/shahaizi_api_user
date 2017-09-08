@@ -7,7 +7,8 @@
  */
 namespace app\api\controller;
 
-use app\common\HotLogic;
+use app\common\logic\HotLogic;
+
 class HotGuide extends Base{
     public $hotLogic;
 
@@ -15,15 +16,14 @@ class HotGuide extends Base{
         $this->hotLogic = new HotLogic();
     }
 
-    /*
-     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideList   得到热门动态列表
+    /**
+     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideList   得到热门攻略列表done
      * @apiName getHotGuideList
-     * @apiGroup Index
-     * @apiParam   token {String}   token.
+     * @apiGroup HotGuide
      * @apiSuccessExample   Success-Response
      *      Http/1.1    200 OK
      * {
-     *      "talent_id" :   "1",  //ID
+     *      "guide_id" :   "1",  //ID
      *      "cover_img" :   "http://xxxx.jpg",  //攻略图片
      *      "title"     :   "我得标题很长很长",  //攻略标题
      *      "summary"   :   "这是我的摘要",  //发布人摘要
@@ -35,6 +35,114 @@ class HotGuide extends Base{
      * }
      */
     public function getHotGuideList(){
-        $this->hotLogic->get_hot_list();
+        $return = $this->hotLogic->get_hot_list();
+        $this->ajaxReturn($return);
     }
+
+    /**
+     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideDetail      得到热门攻略详情done
+     * @apiName     getHotGuideDetail
+     * @apiGroup    HotGuide
+     * @apiSuccessExample   Success-Response
+     * Http/1.1 200 OK
+    {
+    "status": 1,
+    "msg": "成功",
+    "result": {
+    "info": {
+    "guide_id": 5,
+    "title": "敲开斜角巷的石砖，探寻巫师们的魔法世界",
+    "cover_img": "https://z0.muscache.com/im/pictures/a35b3599-8a40-4022-8337-6677d9b94f52.jpg?aki_policy=large",
+    "summary": "英国魔法之旅",
+    "user_id": 50,
+    "user_name": "Ning",
+    "city": "英国",
+    "content": "这条约克大教堂不远处的巷子叫The Shambles，是的，就是传说中哈利波特里“斜角巷”的原型。我不是哈迷，但这条巷子当真有味道！这是英国最古老的街道，也是欧洲保存最完好的中世纪街道。虽然人潮汹涌，街道两旁都是各种纪念品商店，但整条街的风情还是显露无疑。古街路面上铺满鹅卵石，街道两边的房子向中间倾斜，房顶几乎相接，外墙乍看之下好像纸糊的一样弱不禁风，实际却已历经成百上千年的岁月。阳光洒过，巷子内留下一片神秘的淡紫蓝色投影，彷佛自成一界，而肉眼看不到的魔法世界就藏匿其中，巫师们的精彩故事正静悄悄上演。",
+    "read_num": 331,
+    "good_num": 46,
+    "status": null,
+    "create_at": 1495296000,
+    "update_at": 1499356800
+    },
+    "comment": [
+    {
+    "head_pic": null,
+    "nickname": "18451847701",
+    "add_time": 1504839306,
+    "spec_key_name": "",
+    "content": "这是我的评论",
+    "impression": null,
+    "comment_id": 1,
+    "zan_num": 100,
+    "is_anonymous": 0,
+    "reply_num": null,
+    "img": [
+    "/public/upload/goods/2016/04-21/57187dbb16571.jpg",
+    "/public/upload/goods/2016/04-21/57187dd92a26f.jpg",
+    "/public/upload/goods/2016/04-21/57187dd8e18e8.jpg"
+    ],
+    "parent_id": [
+    {
+    "reply_id": 1,
+    "comment_id": 1,
+    "parent_id": 0,
+    "content": "one",
+    "user_name": "a",
+    "to_name": "",
+    "deleted": 0,
+    "reply_time": 2017
+    },
+    {
+    "reply_id": 2,
+    "comment_id": 1,
+    "parent_id": 1,
+    "content": "two2",
+    "user_name": "b",
+    "to_name": "a",
+    "deleted": 0,
+    "reply_time": 2017
+    },
+    {
+    "reply_id": 3,
+    "comment_id": 1,
+    "parent_id": 2,
+    "content": "three3",
+    "user_name": "a",
+    "to_name": "b",
+    "deleted": 0,
+    "reply_time": 2017
+    },
+    {
+    "reply_id": 4,
+    "comment_id": 1,
+    "parent_id": 0,
+    "content": "好",
+    "user_name": "",
+    "to_name": "",
+    "deleted": 0,
+    "reply_time": 2017
+    },
+    {
+    "reply_id": 5,
+    "comment_id": 1,
+    "parent_id": 0,
+    "content": "不错",
+    "user_name": "",
+    "to_name": "",
+    "deleted": 0,
+    "reply_time": 2017
+    }
+    ]
+    }
+    ]
+    }
+    }
+     *
+     */
+    public function getHotGuideDetail(){
+        $guide_id = I('guide_id/d', 0);
+        $result = $this->hotLogic->get_hot_detail($guide_id);
+        $this->ajaxReturn($result);
+    }
+
 }

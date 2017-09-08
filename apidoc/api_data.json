@@ -229,6 +229,30 @@
   },
   {
     "type": "GET",
+    "url": "/index.php?m=Api&c=DriverPack&a=getAllDriver",
+    "title": "得到全部司导",
+    "name": "getAllDriver",
+    "group": "DriverPack",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": " Http/1.1    200 OK\n{\n\"seller_id\"   : \"11\",//商家端总ID\n\"drv_id\"   : \"11\",//司导ID\n\"drv_code\"   : \"11\",//司导code\n\"head_pic\" : \"http://xxx.jpg\",//司导图片\n\"seller_name\" : \"司导姓名\",\n\"score\" : \"1\",//星级\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/DriverPack.php",
+    "groupTitle": "DriverPack",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=DriverPack&a=getAllDriver"
+      }
+    ]
+  },
+  {
+    "type": "GET",
     "url": "/index.php?m=Api&c=DriverPack&a=getDriverDetail",
     "title": "司导详情",
     "name": "getDriverDetail",
@@ -264,33 +288,9 @@
     ]
   },
   {
-    "type": "GET",
-    "url": "/index.php?m=Api&c=PackLine&a=getLocalLine",
-    "title": "得到当地司导",
-    "name": "getLocalLine",
-    "group": "DriverPack",
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response",
-          "content": " Http/1.1    200 OK\n{\n\"drv_id\"   : \"11\",//司导ID\n\"head_pic\" : \"http://xxx.jpg\",//司导图片\n\"user_name\" : \"司导姓名\",\n\"comment_level\" : \"1\",//评价等级\n\"local\" : \"\",//位置\n\"level\" : \"\",//等级\n\"grade\" : \"\",//评分\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "application/api/controller/DriverPack.php",
-    "groupTitle": "DriverPack",
-    "sampleRequest": [
-      {
-        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=PackLine&a=getLocalLine"
-      }
-    ]
-  },
-  {
     "type": "POST",
     "url": "/index.php?m=Api&c=File&a=uploadImg",
-    "title": "上传图片（未完成请使用物载天下的上传功能）",
+    "title": "上传图片done",
     "name": "uploadImg",
     "group": "File",
     "header": {
@@ -338,6 +338,54 @@
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=File&a=uploadImg"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=HotGuide&a=getHotGuideDetail",
+    "title": "得到热门攻略详情done",
+    "name": "getHotGuideDetail",
+    "group": "HotGuide",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "Http/1.1 200 OK\n    {\n    \"status\": 1,\n    \"msg\": \"成功\",\n    \"result\": {\n    \"info\": {\n    \"guide_id\": 5,\n    \"title\": \"敲开斜角巷的石砖，探寻巫师们的魔法世界\",\n    \"cover_img\": \"https://z0.muscache.com/im/pictures/a35b3599-8a40-4022-8337-6677d9b94f52.jpg?aki_policy=large\",\n    \"summary\": \"英国魔法之旅\",\n    \"user_id\": 50,\n    \"user_name\": \"Ning\",\n    \"city\": \"英国\",\n    \"content\": \"这条约克大教堂不远处的巷子叫The Shambles，是的，就是传说中哈利波特里“斜角巷”的原型。我不是哈迷，但这条巷子当真有味道！这是英国最古老的街道，也是欧洲保存最完好的中世纪街道。虽然人潮汹涌，街道两旁都是各种纪念品商店，但整条街的风情还是显露无疑。古街路面上铺满鹅卵石，街道两边的房子向中间倾斜，房顶几乎相接，外墙乍看之下好像纸糊的一样弱不禁风，实际却已历经成百上千年的岁月。阳光洒过，巷子内留下一片神秘的淡紫蓝色投影，彷佛自成一界，而肉眼看不到的魔法世界就藏匿其中，巫师们的精彩故事正静悄悄上演。\",\n    \"read_num\": 331,\n    \"good_num\": 46,\n    \"status\": null,\n    \"create_at\": 1495296000,\n    \"update_at\": 1499356800\n    },\n    \"comment\": [\n    {\n    \"head_pic\": null,\n    \"nickname\": \"18451847701\",\n    \"add_time\": 1504839306,\n    \"spec_key_name\": \"\",\n    \"content\": \"这是我的评论\",\n    \"impression\": null,\n    \"comment_id\": 1,\n    \"zan_num\": 100,\n    \"is_anonymous\": 0,\n    \"reply_num\": null,\n    \"img\": [\n    \"/public/upload/goods/2016/04-21/57187dbb16571.jpg\",\n    \"/public/upload/goods/2016/04-21/57187dd92a26f.jpg\",\n    \"/public/upload/goods/2016/04-21/57187dd8e18e8.jpg\"\n    ],\n    \"parent_id\": [\n    {\n    \"reply_id\": 1,\n    \"comment_id\": 1,\n    \"parent_id\": 0,\n    \"content\": \"one\",\n    \"user_name\": \"a\",\n    \"to_name\": \"\",\n    \"deleted\": 0,\n    \"reply_time\": 2017\n    },\n    {\n    \"reply_id\": 2,\n    \"comment_id\": 1,\n    \"parent_id\": 1,\n    \"content\": \"two2\",\n    \"user_name\": \"b\",\n    \"to_name\": \"a\",\n    \"deleted\": 0,\n    \"reply_time\": 2017\n    },\n    {\n    \"reply_id\": 3,\n    \"comment_id\": 1,\n    \"parent_id\": 2,\n    \"content\": \"three3\",\n    \"user_name\": \"a\",\n    \"to_name\": \"b\",\n    \"deleted\": 0,\n    \"reply_time\": 2017\n    },\n    {\n    \"reply_id\": 4,\n    \"comment_id\": 1,\n    \"parent_id\": 0,\n    \"content\": \"好\",\n    \"user_name\": \"\",\n    \"to_name\": \"\",\n    \"deleted\": 0,\n    \"reply_time\": 2017\n    },\n    {\n    \"reply_id\": 5,\n    \"comment_id\": 1,\n    \"parent_id\": 0,\n    \"content\": \"不错\",\n    \"user_name\": \"\",\n    \"to_name\": \"\",\n    \"deleted\": 0,\n    \"reply_time\": 2017\n    }\n    ]\n    }\n    ]\n    }\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/HotGuide.php",
+    "groupTitle": "HotGuide",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=HotGuide&a=getHotGuideDetail"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=HotGuide&a=getHotGuideList",
+    "title": "得到热门攻略列表done",
+    "name": "getHotGuideList",
+    "group": "HotGuide",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "     Http/1.1    200 OK\n{\n     \"guide_id\" :   \"1\",  //ID\n     \"cover_img\" :   \"http://xxxx.jpg\",  //攻略图片\n     \"title\"     :   \"我得标题很长很长\",  //攻略标题\n     \"summary\"   :   \"这是我的摘要\",  //发布人摘要\n     \"name\"      :   \"张三\",  //发布人姓名\n     \"city\" :   \"东京\",  //发布人所在城市\n     \"type_info\" :   \"\",  //身份标签（有几个身份？）\n     \"good_num\" :   \"111\",  //点赞数\n\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/HotGuide.php",
+    "groupTitle": "HotGuide",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=HotGuide&a=getHotGuideList"
       }
     ]
   },

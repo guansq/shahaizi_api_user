@@ -5,26 +5,35 @@
  * Date: 2017/9/4
  * Time: 19:40
  */
-class DriverPack{
+namespace app\api\controller;
+use app\common\logic\DriverLogic;
+
+class DriverPack extends Base{
+
+    public $driverLogic;
+
+    public function __construct(){
+        $this->driverLogic = new DriverLogic();
+    }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=PackLine&a=getLocalLine     得到当地司导
-     * @apiName     getLocalLine
+     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导
+     * @apiName     getAllDriver
      * @apiGroup    DriverPack
      * @apiSuccessExample {json}    Success-Response
      *  Http/1.1    200 OK
      *{
+     * "seller_id"   : "11",//商家端总ID
      * "drv_id"   : "11",//司导ID
+     * "drv_code"   : "11",//司导code
      * "head_pic" : "http://xxx.jpg",//司导图片
-     * "user_name" : "司导姓名",
-     * "comment_level" : "1",//评价等级
-     * "local" : "",//位置
-     * "level" : "",//等级
-     * "grade" : "",//评分
+     * "seller_name" : "司导姓名",
+     * "score" : "1",//星级
      *}
      */
-    public function getLocalLine(){
-
+    public function getAllDriver(){
+        $result = $this->driverLogic->get_driver_list();
+        $this->ajaxReturn($result);
     }
 
     /**
