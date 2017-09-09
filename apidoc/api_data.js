@@ -230,7 +230,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "/index.php?m=Api&c=DriverPack&a=getAllDriver",
-    "title": "得到全部司导",
+    "title": "得到全部司导done",
     "name": "getAllDriver",
     "group": "DriverPack",
     "success": {
@@ -263,8 +263,8 @@ define({ "api": [
           {
             "group": "Parameter",
             "optional": false,
-            "field": "drv_id",
-            "description": "<p>{String}    司导ID</p>"
+            "field": "seller_id",
+            "description": "<p>{String}    商家ID</p>"
           }
         ]
       }
@@ -273,7 +273,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response",
-          "content": "Http/1.1 200 OK\n{\n \"head_pic\" : \"http://xxx.jpg\",//司导头像\n \"putonghua\" : \"\",//普通话\n \"language\" : \"\",//精通外语\n \"putonghua\" : \"\",//东京\n \"putonghua\" : \"\",//职业\n}",
+          "content": "Http/1.1 200 OK\n    {\n    \"status\": 1,\n    \"msg\": \"成功\",\n        \"result\": {\n            \"preson_info\": {    //个人信息\n            \"seller_id\": 17,//商家ID\n            \"drv_id\": 2,//司导ID\n            \"drv_code\": \"20170908-1\",//司导code\n            \"head_pic\": null,//头像\n            \"seller_name\": \"少秋\",//名称\n            \"briefing\": null,//简介\n            \"country\": null,//家乡\n            \"putonghua\": null,//普通话\n            \"language\": null,//外语\n            \"type_info\": \"店主-司导-房东\"//职业\n            }\n        }\n    }",
           "type": "json"
         }
       ]
@@ -284,6 +284,594 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=DriverPack&a=getDriverDetail"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=DriverPack&a=oncePickup",
+    "title": "单次接送done",
+    "name": "oncePickup",
+    "group": "DriverPack",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>（rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "car_type_id",
+            "description": "<p>车型ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "connect",
+            "description": "<p>联系方式</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "drv_code",
+            "description": "<p>指定司导</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "is_have_pack",
+            "description": "<p>是否有行李0没有行李1有行李</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "total_num",
+            "description": "<p>出行总人数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "adult_num",
+            "description": "<p>成人乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "child_num",
+            "description": "<p>儿童乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "remark",
+            "description": "<p>备注</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "start_address",
+            "description": "<p>起始地地址</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "dest_address",
+            "description": "<p>目的地地址</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "user_car_time",
+            "description": "<p>用车时间</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/DriverPack.php",
+    "groupTitle": "DriverPack",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=DriverPack&a=oncePickup"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=DriverPack&a=privateMake",
+    "title": "私人定制done",
+    "name": "privateMake",
+    "group": "DriverPack",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>（rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "car_type_id",
+            "description": "<p>车型ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "connect",
+            "description": "<p>联系方式</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "drv_code",
+            "description": "<p>指定司导</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "is_have_pack",
+            "description": "<p>是否有行李0没有行李1有行李</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "total_num",
+            "description": "<p>出行总人数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "adult_num",
+            "description": "<p>成人乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "child_num",
+            "description": "<p>儿童乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "tour_time",
+            "description": "<p>出行时间</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "end_address",
+            "description": "<p>目的地</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "tour_days",
+            "description": "<p>游玩天数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "tour_person_num",
+            "description": "<p>游玩人数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "tour_favorite",
+            "description": "<p>出行偏好</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "recommend_diner",
+            "description": "<p>推荐餐馆</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "recommend_sleep",
+            "description": "<p>推荐住宿</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/DriverPack.php",
+    "groupTitle": "DriverPack",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=DriverPack&a=privateMake"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=DriverPack&a=receiveAirport",
+    "title": "接机done",
+    "name": "receiveAirport",
+    "group": "DriverPack",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>（rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "car_type_id",
+            "description": "<p>车型ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "connect",
+            "description": "<p>联系方式</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "drv_code",
+            "description": "<p>指定司导</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "is_have_pack",
+            "description": "<p>是否有行李0没有行李1有行李</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "total_num",
+            "description": "<p>出行总人数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "adult_num",
+            "description": "<p>成人乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "child_num",
+            "description": "<p>儿童乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "remark",
+            "description": "<p>备注</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "flt_no",
+            "description": "<p>航班号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "airport_name",
+            "description": "<p>机场名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "dest_address",
+            "description": "<p>送达地点</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "start_time",
+            "description": "<p>出发时间</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/DriverPack.php",
+    "groupTitle": "DriverPack",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=DriverPack&a=receiveAirport"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=DriverPack&a=rentCarByDay",
+    "title": "按天包车游done",
+    "name": "rentCarByDay",
+    "group": "DriverPack",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>（rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "car_type_id",
+            "description": "<p>车型ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "connect",
+            "description": "<p>联系方式</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "drv_code",
+            "description": "<p>指定司导</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "is_have_pack",
+            "description": "<p>是否有行李0没有行李1有行李</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "total_num",
+            "description": "<p>出行总人数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "adult_num",
+            "description": "<p>成人乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "child_num",
+            "description": "<p>儿童乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "remark",
+            "description": "<p>备注</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "dest_address",
+            "description": "<p>目的地地址</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "pack_time",
+            "description": "<p>包车日期</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/DriverPack.php",
+    "groupTitle": "DriverPack",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=DriverPack&a=rentCarByDay"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=DriverPack&a=sendAirport",
+    "title": "送机done",
+    "name": "sendAirport",
+    "group": "DriverPack",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>（rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "car_type_id",
+            "description": "<p>车型ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "connect",
+            "description": "<p>联系方式</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "drv_code",
+            "description": "<p>指定司导</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "is_have_pack",
+            "description": "<p>是否有行李0没有行李1有行李</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "total_num",
+            "description": "<p>出行总人数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "adult_num",
+            "description": "<p>成人乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "child_num",
+            "description": "<p>儿童乘客数</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "remark",
+            "description": "<p>备注</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "flt_no",
+            "description": "<p>航班号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "airport_name",
+            "description": "<p>机场名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "start_address",
+            "description": "<p>出发地点</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "start_time",
+            "description": "<p>出发时间</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/DriverPack.php",
+    "groupTitle": "DriverPack",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=DriverPack&a=sendAirport"
       }
     ]
   },
@@ -392,7 +980,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "/index.php?m=Api&c=Index&a=home",
-    "title": "得到首页相关数据",
+    "title": "得到首页相关数据done",
     "name": "home",
     "group": "Index",
     "success": {
@@ -587,6 +1175,49 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/recommend/showMyRecommList"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "/index.php?m=Api&c=Region&a=getChildCity",
+    "title": "得到地区的子级列表done",
+    "name": "getChildCity",
+    "group": "Region",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "parent_id",
+            "description": "<p>把当前的ID字段座位parent_id传过来</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/Region.php",
+    "groupTitle": "Region",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=Region&a=getChildCity"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "/index.php?m=Api&c=Region&a=getIndexCity",
+    "title": "得到地区的首级列表done",
+    "name": "getIndexCity",
+    "group": "Region",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Region.php",
+    "groupTitle": "Region",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=Region&a=getIndexCity"
       }
     ]
   },

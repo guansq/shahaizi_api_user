@@ -24,7 +24,7 @@ class Index extends Base {
     }
 
      /**
-      * @api {GET}   /index.php?m=Api&c=Index&a=home  得到首页相关数据
+      * @api {GET}   /index.php?m=Api&c=Index&a=home  得到首页相关数据done
       * @apiName    home
       * @apiGroup   Index
       * @apiSuccessExample {json}   Success-Response

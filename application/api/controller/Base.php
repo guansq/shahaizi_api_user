@@ -163,6 +163,7 @@ class Base extends Controller {
                 'message_switch', 'orderConfirm', 'password', 'points', 'points_list', 'recharge_list', 'return_goods','return_goods_info',
                 'return_goods_list','return_goods_status','service_comment','setDefaultAddress','updateUserInfo','upload_headpic','userInfo',
                 'visit_log','withdrawals','withdrawals_list','flashToken'],
+            'driverpack' => ['rentCarByDay','receiveAirport','sendAirport','oncePickup','privateMake'],
         ];
         
         // 保留状态的检查组
