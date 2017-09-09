@@ -91,5 +91,16 @@ function getIDType($seller_id){
 }
 
 /**
- *
+ * 得到司导身份信息
  */
+function getDrvIno($seller_id){
+    if(empty($seller_id)){
+        return '';
+    }
+    $star = Db::name('pack_comment')->where('seller_id',$seller_id)->avg('star');
+    $line = Db::name('pack_line')->where('seller_id',$seller_id)->order('create_at desc')->limit(1)->find();
+    return  [
+        'star' => $star,
+        'line' => $line
+    ];
+}

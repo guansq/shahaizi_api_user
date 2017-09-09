@@ -1027,6 +1027,30 @@ define({ "api": [
   },
   {
     "type": "GET",
+    "url": "/index.php?m=Api&c=PackLine&a=home",
+    "title": "包车定制首页",
+    "name": "home",
+    "group": "PackLine",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "Http/1.1    200 OK\n   {\n   \"status\": 1,\n   \"msg\": \"成功\",\n   \"result\": {\n   \"index\": [\n   {\n   \"id\": 1,\n   \"name\": \"接机\",\n   \"sort\": 1\n   },\n   {\n   \"id\": 2,\n   \"name\": \"送机\",\n   \"sort\": 2\n   },\n   {\n   \"id\": 3,\n   \"name\": \"单次接送\",\n   \"sort\": 3\n   },\n   {\n   \"id\": 4,\n   \"name\": \"快速预订\",\n   \"sort\": 4\n   },\n   {\n   \"id\": 5,\n   \"name\": \"私人定制\",\n   \"sort\": 5\n   },\n   {\n   \"id\": 6,\n   \"name\": \"按天包车游\",\n   \"sort\": 6\n   }\n   ],\n   \"banner\": [\n   {\n   \"ad_link\": \"http://dev.tpshop.cn/index.php/Home/Topic/detail/topic_id/1\",\n   \"ad_name\": \"自定义广告名称\",\n   \"ad_code\": \"/public/upload/ad/2016/09-19/57dfb0fbf3660.jpg\"\n   },\n   {\n   \"ad_link\": \"javascript:void();\",\n   \"ad_name\": \"自定义广告名称\",\n   \"ad_code\": \"/public/upload/ad/2016/09-19/57dfb118f00cd.jpg\"\n   },\n   {\n   \"ad_link\": \"javascript:void();\",\n   \"ad_name\": \"自定义广告名称\",\n   \"ad_code\": \"/public/upload/ad/2016/09-19/57dfb1767a5bb.jpg\"\n   },\n   {\n   \"ad_link\": \"www.baidu.com\",\n   \"ad_name\": \"sec\",\n   \"ad_code\": \"/public/upload/ad/2017/09-06/25123a234d51076968680e09c9d27e8e.jpg\"\n   }\n   ],\n   \"line\": [],\n   \"driver\": [\n   {\n   \"seller_id\": 17,\n   \"head_pic\": null,\n   \"seller_name\": \"少秋\",\n   \"drv_code\": \"20170908-1\",\n   \"province\": 0,\n   \"city\": 0,\n   \"star\": 4,\n   \"line\": null\n   }\n   ]\n   }\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/PackLine.php",
+    "groupTitle": "PackLine",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=PackLine&a=home"
+      }
+    ]
+  },
+  {
+    "type": "GET",
     "url": "/recommend/showMyRecommInfo",
     "title": "显示我的推荐信息（未完成）",
     "name": "showMyRecommInfo",
