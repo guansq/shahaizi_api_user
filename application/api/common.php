@@ -104,3 +104,19 @@ function getDrvIno($seller_id){
         'line' => $line
     ];
 }
+
+/*
+ * 得到评价星级type 6为路线
+ */
+
+function getLineStar($seller_id,$type){
+    if(empty($seller_id)){
+        return '';
+    }
+    $where = [
+        'seller_id' => $seller_id,
+        'type' => $type
+    ];
+    $star = Db::name('pack_comment')->where($where)->avg('star');
+    return $star;
+}

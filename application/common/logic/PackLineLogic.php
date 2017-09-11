@@ -14,7 +14,11 @@ use think\Db;
 class PackLineLogic extends Model{
 
     public function get_pack_line(){
-        return M('pack_line')->field('line_title,line_price,seller_id,content,create_at')->where(['is_comm'=>0])->select();
+        $list = M('pack_line')->field('seller_id,line_id,line_title,cover_img,line_price,seller_id,content,create_at')->where(['is_comm'=>1])->select();
+        foreach($list as &$val){
+            $val['star'] = getLineStar($val['seller_id'],6);
+        }
+        return $list;
     }
 
     public function get_local_drv(){
