@@ -8,6 +8,7 @@
 
 use think\Validate;
 use service\HttpService;
+use service\MsgService;
 use DesUtils\DesUtils;
 use think\Db;
 
@@ -120,3 +121,59 @@ function getLineStar($seller_id,$type){
     $star = Db::name('pack_comment')->where($where)->avg('star');
     return $star;
 }
+
+/*
+ * 发送短信
+ */
+function sendSMS($phone,$content){
+    $msgService = new MsgService();
+    $result = $msgService->sendSms($phone,'【傻孩子APP】'.$content);
+    return $result;
+}
+
+/*
+ * 推送信息 推送给货主为$rt_key='wztx_shipper' 推送给司机为 $rt_key='wztx_driver'
+ */
+function pushInfo($token,$title,$content,$rt_key='wztx_driver',$type='private'){
+    $sendData = [
+        "platform" => "all",
+        "rt_appkey" => $rt_key,
+        "req_time" => time(),
+        "req_action" => 'push',
+        "alert" => $title,
+        "regIds" => $token,
+        //"platform" => "all",
+        "androidNotification" => [
+            "alert" => $title,
+            "title" => $content,
+            "builder_id" => "builder_id",
+            "priority" => 0,
+            "style" => 0,
+            "alert_type" => -1,
+            "extras" => ['type'=>$type]
+        ]
+    ];
+    $desClass = new DesUtils();
+    $arrOrder = $desClass->naturalOrdering([$sendData['rt_appkey'],$sendData['req_time'],$sendData['req_action']]);
+    $skArr = explode('_',config('app_access_key'));
+    $sendData['sign'] = $desClass->strEnc($arrOrder,$skArr[0],$skArr[1],$skArr[2]);//签名
+    $result = HttpService::post(getenv('APP_API_HOME').'push',http_build_query($sendData));
+}
+
+/*
+ * 发送邮件
+ */
+function sendMail($to, $title, $content){
+    $sendData = [
+        'rt_appkey' => 'atw_wg',
+        'fromName' => '安特威物供平台',//发送人名
+        'to' => $to,
+        'subject' => $title,
+        'html' => $content,
+        'from' => 'tan3250204@sina.com',//平台的邮件头
+    ];
+    HttpService::curl(getenv('APP_API_MSG').'SendEmail/sendHtml', $sendData);
+}
+
+
+
