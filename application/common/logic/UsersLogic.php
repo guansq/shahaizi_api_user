@@ -210,7 +210,7 @@ class UsersLogic extends Model
      * @param $password2 确认密码
      * @return array
      */
-    public function reg($username,$password,$password2,$push_id = 0){
+    public function reg($username,$password,$password2,$push_id = 0,$countroy_code=0){
     	$is_validated = 0 ;
         if(check_email($username)){
             $is_validated = 1;
@@ -222,6 +222,7 @@ class UsersLogic extends Model
             $is_validated = 1;
             $map['mobile_validated'] = 1;
             $map['nickname'] = $map['mobile'] = $username; //手机注册
+            $map['countroy_code'] = $countroy_code;//国家地区编码
         }
 
         if($is_validated != 1)

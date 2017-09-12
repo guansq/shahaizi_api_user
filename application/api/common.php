@@ -166,57 +166,21 @@ function pushInfo($token,$title,$content,$rt_key='wztx_driver',$type='private'){
  */
 function sendMail($to, $title, $content){
     $sendData = [
-        'rt_appkey' => 'atw_wg',
-        'fromName' => '安特威物供平台',//发送人名
+        'rt_appkey' => '2017ShaHaiZi_uQbJFDUPPUGc6MiN_j99YeHXpb3fsAT0V',
+        "req_time" => time(),
+        "req_action" => 'sendHtml',
+        'fromName' => '傻孩子APP',//发送人名
         'to' => $to,
         'subject' => $title,
         'html' => $content,
         'from' => 'tan3250204@sina.com',//平台的邮件头
     ];
-    HttpService::curl(getenv('APP_API_MSG').'SendEmail/sendHtml', $sendData);
-}
-
-
-
-/**
- * 获取某个文章分类的 儿子 孙子  重子重孙 的 id
- * @param type $cat_id
- */
-function getCityGrandson($cat_id)
-{
-    $GLOBALS['CityGrandson'] = array();
-    $GLOBALS['city_id_arr'] = array();
-    // 先把自己的id 保存起来
-    //$city = M('region_new')->where(['parent_id'=>$cat_id])->find();
-    //$GLOBALS['CityGrandson'][] = $city;
-    // 把整张表找出来
-    $GLOBALS['city_arr'] = M('region_new')->select();
-    // 先把所有儿子找出来
-    $son_arr = M('region_new')->where("parent_id", $cat_id)->select();
-    foreach ($son_arr as $k => $v) {//_id
-        getCityGrandson2($v);//通过分类
-    }
-    $$GLOBALS['CityGrandson'] = array_unique($GLOBALS['CityGrandson']);
-    return $GLOBALS['CityGrandson'];
-}
-
-/**
- * 递归调用找到 重子重孙
- * @param type $cat_id
- */
-function getCityGrandson2($info)
-{
-
-    $GLOBALS['CityGrandson'][] = $info;
-    foreach ($GLOBALS['city_arr'] as $k => $v) {
-
-
-    }
-}
-
-function getCityGrandson3($info)
-{
-    dump($info);
+    $desClass = new DesUtils();
+    $arrOrder = $desClass->naturalOrdering([$sendData['rt_appkey'],$sendData['req_time'],$sendData['req_action']]);
+    $skArr = explode('_',config('app_access_key'));
+    $sendData['sign'] = $desClass->strEnc($arrOrder,$skArr[0],$skArr[1],$skArr[2]);//签名
+    $result = HttpService::post('http://mps.ruitukeji.com/SendEmail/sendHtml',http_build_query($sendData));
+    return json_decode($result,true);
 }
 
 

@@ -278,6 +278,41 @@ define({ "api": [
     ]
   },
   {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=BaseMessage&a=sendMailCaptcha",
+    "title": "发送邮件验证码",
+    "name": "sendMailCaptcha",
+    "group": "Common",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>邮箱</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "opt",
+            "description": "<p>验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定手机号.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/BaseMessage.php",
+    "groupTitle": "Common",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=BaseMessage&a=sendMailCaptcha"
+      }
+    ]
+  },
+  {
     "type": "GET",
     "url": "index.php?m=Api&c=Config&a=getCountryNumber",
     "title": "得到国家区号done",
@@ -1468,6 +1503,62 @@ define({ "api": [
   },
   {
     "type": "POST",
+    "url": "/index.php?m=Api&c=User&a=bindMail",
+    "title": "绑定用户邮箱（开发中）",
+    "name": "bindMail",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>绑定邮箱</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=bindMail"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=User&a=bindPhone",
+    "title": "绑定手机（开发中）",
+    "name": "bindPhone",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mobile",
+            "description": "<p>绑定手机号</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=bindPhone"
+      }
+    ]
+  },
+  {
+    "type": "POST",
     "url": "/index.php?m=Api&c=User&a=flashToken",
     "title": "刷新token（返回信息同login一样）",
     "name": "flashToken",
@@ -1541,7 +1632,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 1,\n\"msg\": \"获取成功\",\n\"result\": {\n\"user_id\": 146,\n\"email\": \"\",\n\"password\": \"90600d68b0f56d90c4c34284d8dfd138\",\n\"sex\": 0,\n\"birthday\": 0,\n\"user_money\": \"0.00\",\n\"frozen_money\": \"0.00\",\n\"distribut_money\": \"0.00\",\n\"pay_points\": \"0.0000\",\n\"address_id\": 0,\n\"reg_time\": 1504596640,\n\"last_login\": 1504602255,\n\"last_ip\": \"\",\n\"qq\": \"\",\n\"mobile\": \"18451847701\",\n\"mobile_validated\": 1,\n\"oauth\": \"\",\n\"openid\": null,\n\"unionid\": null,\n\"head_pic\": null,\n\"province\": 0,\n\"city\": 0,\n\"district\": 0,\n\"email_validated\": 0,\n\"nickname\": \"18451847701\",\n\"level\": 1,\n\"discount\": \"1.00\",\n\"total_amount\": \"0.00\",\n\"is_lock\": 0,\n\"is_distribut\": 1,\n\"first_leader\": 0,\n\"second_leader\": 0,\n\"third_leader\": 0,\n\"fourth_leader\": null,\n\"fifth_leader\": null,\n\"sixth_leader\": null,\n\"seventh_leader\": null,\n\"token\": \"a279c833cebe5fb963ccba311e27c394\",\n\"address\": null,\n\"pay_passwd\": null,\n\"pre_pay_points\": \"0.0000\",\n\"optional\": \"0.0000\",\n\"vipid\": 0,\n\"paypoint\": \"0.00\",\n\"coupon_count\": 0,\n\"collect_count\": 0,\n\"focus_count\": 0,\n\"visit_count\": 0,\n\"return_count\": 0,\n\"waitPay\": 0,\n\"waitSend\": 0,\n\"waitReceive\": 0,\n\"order_count\": 0,\n\"message_count\": 0,\n\"comment_count\": 0,\n\"uncomment_count\": 0,\n\"serve_comment_count\": 0,\n\"cart_goods_num\": 0\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 1,\n\"msg\": \"获取成功\",\n\"result\": {\n    \"user_id\": 146,\n    \"email\": \"\",\n    \"password\": \"90600d68b0f56d90c4c34284d8dfd138\",\n    \"sex\": 0,\n    \"birthday\": 0,\n    \"user_money\": \"0.00\",\n    \"frozen_money\": \"0.00\",\n    \"distribut_money\": \"0.00\",\n    \"pay_points\": \"0.0000\",\n    \"address_id\": 0,\n    \"reg_time\": 1504596640,\n    \"last_login\": 1504602255,\n    \"last_ip\": \"\",\n    \"qq\": \"\",\n    \"mobile\": \"18451847701\",\n    \"mobile_validated\": 1,\n    \"oauth\": \"\",\n    \"openid\": null,\n    \"unionid\": null,\n    \"head_pic\": null,\n    \"province\": 0,\n    \"city\": 0,\n    \"district\": 0,\n    \"email_validated\": 0,\n    \"nickname\": \"18451847701\",\n    \"level\": 1,\n    \"discount\": \"1.00\",\n    \"total_amount\": \"0.00\",\n    \"is_lock\": 0,\n    \"is_distribut\": 1,\n    \"first_leader\": 0,\n    \"second_leader\": 0,\n    \"third_leader\": 0,\n    \"fourth_leader\": null,\n    \"fifth_leader\": null,\n    \"sixth_leader\": null,\n    \"seventh_leader\": null,\n    \"token\": \"a279c833cebe5fb963ccba311e27c394\",\n    \"address\": null,\n    \"pay_passwd\": null,\n    \"pre_pay_points\": \"0.0000\",\n    \"optional\": \"0.0000\",\n    \"vipid\": 0,\n    \"paypoint\": \"0.00\",\n    \"coupon_count\": 0,\n    \"collect_count\": 0,\n    \"focus_count\": 0,\n    \"visit_count\": 0,\n    \"return_count\": 0,\n    \"waitPay\": 0,\n    \"waitSend\": 0,\n    \"waitReceive\": 0,\n    \"order_count\": 0,\n    \"message_count\": 0,\n    \"comment_count\": 0,\n    \"uncomment_count\": 0,\n    \"serve_comment_count\": 0,\n    \"cart_goods_num\": 0\n}\n}",
           "type": "json"
         }
       ]
@@ -1687,21 +1778,35 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "username",
-            "description": "<p>手机号/用户名.</p>"
+            "description": "<p>手机号（未加国家区号的手机号）/邮件名.</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
             "field": "password",
-            "description": "<p>密码</p>"
+            "description": "<p>密码加密方式：md5(TPSHOP密码)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>phone 为手机/mail为邮件</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "countroy_code",
+            "description": "<p>国家代码编号</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": true,
             "field": "code",
-            "description": "<p>手机短信验证码</p>"
+            "description": "<p>手机短信验证码或邮箱验证码</p>"
           },
           {
             "group": "Parameter",
@@ -1717,7 +1822,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n\"status\": 1,\n\"msg\": \"注册成功\",\n\"result\": {\n\"user_id\": 146,\n\"email\": \"\",\n\"password\": \"90600d68b0f56d90c4c34284d8dfd138\",\n\"sex\": 0,\n\"birthday\": 0,\n\"user_money\": \"0.00\",\n\"frozen_money\": \"0.00\",\n\"distribut_money\": \"0.00\",\n\"pay_points\": \"0.0000\",\n\"address_id\": 0,\n\"reg_time\": 1504596640,\n\"last_login\": 1504596640,\n\"last_ip\": \"\",\n\"qq\": \"\",\n\"mobile\": \"18451847701\",\n\"mobile_validated\": 1,\n\"oauth\": \"\",\n\"openid\": null,\n\"unionid\": null,\n\"head_pic\": null,\n\"province\": 0,\n\"city\": 0,\n\"district\": 0,\n\"email_validated\": 0,\n\"nickname\": \"18451847701\",\n\"level\": 1,\n\"discount\": \"1.00\",\n\"total_amount\": \"0.00\",\n\"is_lock\": 0,\n\"is_distribut\": 1,\n\"first_leader\": 0,\n\"second_leader\": 0,\n\"third_leader\": 0,\n\"fourth_leader\": null,\n\"fifth_leader\": null,\n\"sixth_leader\": null,\n\"seventh_leader\": null,\n\"token\": \"c34ba58aec24003f0abec19ae2688c86\",\n\"address\": null,\n\"pay_passwd\": null,\n\"pre_pay_points\": \"0.0000\",\n\"optional\": \"0.0000\",\n\"vipid\": 0,\n\"paypoint\": \"0.00\"\n}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n\"status\": 1,\n\"msg\": \"注册成功\",\n\"result\": {\n    \"user_id\": 146,\n    \"email\": \"\",\n    \"password\": \"90600d68b0f56d90c4c34284d8dfd138\",\n    \"sex\": 0,\n    \"birthday\": 0,\n    \"user_money\": \"0.00\",\n    \"frozen_money\": \"0.00\",\n    \"distribut_money\": \"0.00\",\n    \"pay_points\": \"0.0000\",\n    \"address_id\": 0,\n    \"reg_time\": 1504596640,\n    \"last_login\": 1504596640,\n    \"last_ip\": \"\",\n    \"qq\": \"\",\n    \"mobile\": \"18451847701\",\n    \"mobile_validated\": 1,\n    \"oauth\": \"\",\n    \"openid\": null,\n    \"unionid\": null,\n    \"head_pic\": null,\n    \"province\": 0,\n    \"city\": 0,\n    \"district\": 0,\n    \"email_validated\": 0,\n    \"nickname\": \"18451847701\",\n    \"level\": 1,\n    \"discount\": \"1.00\",\n    \"total_amount\": \"0.00\",\n    \"is_lock\": 0,\n    \"is_distribut\": 1,\n    \"first_leader\": 0,\n    \"second_leader\": 0,\n    \"third_leader\": 0,\n    \"fourth_leader\": null,\n    \"fifth_leader\": null,\n    \"sixth_leader\": null,\n    \"seventh_leader\": null,\n    \"token\": \"c34ba58aec24003f0abec19ae2688c86\",\n    \"address\": null,\n    \"pay_passwd\": null,\n    \"pre_pay_points\": \"0.0000\",\n    \"optional\": \"0.0000\",\n    \"vipid\": 0,\n    \"paypoint\": \"0.00\"\n}\n}",
           "type": "json"
         }
       ]

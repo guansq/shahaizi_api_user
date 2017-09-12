@@ -98,9 +98,11 @@ class MsgService extends Model{
         }
     }
 
-    const ISENDURL='http://222.73.117.140:8044/mt';//单发接口
+    const ISENDURL='http://222.73.117.140:8044/mt';//单发短信接口
     const IQUERYURL='http://222.73.117.140:8044/bi';
-    const BAT_SENDURL='http://222.73.117.140:8044/batchmt'; //群发接口
+    const BAT_SENDURL='http://222.73.117.140:8044/batchmt'; //群发短信接口
+
+    const RUITUSERVICE = 'http://pushmsg.ruitukeji.com/';//睿途科技的发送邮件网关
 
     private $_sendUrl='';               // 发送短信接口url
     private $_queryBalanceUrl='';   // 查询余额接口url
@@ -163,6 +165,7 @@ class MsgService extends Model{
                 return ['status' => -1, 'msg' => '请在60s之后重新请求该接口'];
             }else{
                 $updateData = [
+                    'is_check' => 0,//更改状态为未验证过的验证码
                     'code' => $code,
                     'update_at' => time()
                 ];
@@ -195,7 +198,7 @@ class MsgService extends Model{
         );
         $param='un='.$this->_un.'&pw='.$this->_pw.'&sm='.urlencode($content).'&da='.$phone.'&rd='.$isreport.'&rf=2&tf=3';
         if($isbatch){
-            $url=ChuanglanSMS::BAT_SENDURL.'?'.$param;//群发接口
+            $url=MsgService::BAT_SENDURL.'?'.$param;//群发接口
         }else{
             $url=MsgService::ISENDURL.'?'.$param;//单发接口
         }
@@ -210,7 +213,7 @@ class MsgService extends Model{
     }
 
     /*
-     * 验证码验证
+     * 短信验证码验证
      */
     public function verifyInterCaptcha($mobile, $opt,$captcha){
         $where = [
@@ -220,6 +223,7 @@ class MsgService extends Model{
         ];
         //验证码有效时间300s 5分钟
         $info = M('sms_info')->where($where)->find();
+        //dump($info);die;
         if(empty($info)){
             return ['status'=>-1,'msg'=>'验证码验证出错'];
         }else{
@@ -228,6 +232,11 @@ class MsgService extends Model{
                 return ['status'=>-1,'msg'=>'该验证码已失效'];
             }
         }
+        //判断是否已验证
+        if($info['is_check']){
+            return ['status'=>-1,'msg'=>'请不要重复验证'];
+        }
+        M('sms_info')->where($where)->update(['is_check'=>1]);
         return ['status'=>1,'msg'=>'验证成功'];
     }
 
@@ -264,4 +273,80 @@ class MsgService extends Model{
         return $result;
     }
     /* ========== 功能模块 ========== */
+
+    /*
+     * 发送邮件 发送多个邮件通过 ;隔开
+     */
+    public function sendMailCaptcha($mail, $type, $content, $code){
+
+        //进行存入数据库
+        $saveData = [
+            'mail' => $mail,
+            'channel' => 1,//渠道
+            'code' => $code,
+            'type' => $type,
+            'update_at' => time(),
+            'create_at' => time(),
+        ];
+        $where = [
+            'mail' => $mail,
+            'type' => $type,
+        ];
+        $info = M('sms_info')->where($where)->find();
+
+        if(empty($info)){
+            M('sms_info')->save($saveData);
+        }else{
+            //判断是否在60s之内更新的
+            $time = time();
+            if(($time - $info['update_at']) < 60){//当前更新的时间间隔小于60
+                return ['status' => -1, 'msg' => '请在60s之后重新请求该接口'];
+            }else{
+                $updateData = [
+                    'is_check' => 0,//更改状态为未验证过的验证码
+                    'code' => $code,
+                    'update_at' => time()
+                ];
+                M('sms_info')->where($where)->update($updateData);//更新该表
+            }
+        }
+        //进行发送邮件操作
+        $result = sendMail($mail,'傻孩子APP用户操作信息',$content);
+        //dump($result);die;
+        if($result['code'] == 2000){//发送成功
+            return ['status' => 1, 'msg' => '发送成功'];
+        }else{
+            return ['status' => -1, 'msg' => '发送失败'];
+        }
+    }
+
+    /*
+     * 发送邮件验证码校验
+     */
+
+    public function verifyMailCaptcha($mail, $opt,$captcha){
+        $where = [
+            'mail' => $mail,
+            'channel' => 1,//1为发送邮件
+            'type' => $opt,
+            'code' => $captcha,
+        ];
+        //验证码有效时间300s 5分钟
+        $info = M('sms_info')->where($where)->find();
+        //dump($info);die;
+        if(empty($info)){
+            return ['status'=>-1,'msg'=>'验证码验证出错'];
+        }else{
+            $time = time();
+            if(($time - $info['update_at']) > 300){
+                return ['status'=>-1,'msg'=>'该验证码已失效'];
+            }
+        }
+        //判断是否已验证
+        if($info['is_check']){
+            return ['status'=>-1,'msg'=>'请不要重复验证'];
+        }
+        M('sms_info')->where($where)->update(['is_check'=>1]);
+        return ['status'=>1,'msg'=>'验证成功'];
+    }
 }

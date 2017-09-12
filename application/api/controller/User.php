@@ -210,50 +210,35 @@ class User extends Base {
         $this->ajaxReturn($data);
     }
 
-    /*
-     * 邮箱验证
+    /**
+     * @api     {POST}  /index.php?m=Api&c=User&a=bindPhone     绑定手机（开发中）
+     * @apiName     bindPhone
+     * @apiGroup    User
+     * @apiParam    {String}    mobile      绑定手机号
      */
-    public function email_validate()
-    {
-        $userLogic = new UsersLogic();
-        $user_info = M('users')->where('user_id', $this->user_id)->find();
-        $step = I('get.step', 1);
-        if (IS_POST) {
-            $email = I('post.email');
-            $old_email = I('post.old_email'); //旧邮箱
-            $code = I('post.code');
-            $info = session('validate_code');
-            if (!$info)
-                $this->error('非法操作');
-            if ($info['time'] < time()) {
-                session('validate_code', null);
-                $this->error('验证超时，请重新验证');
-            }
-            //检查原邮箱是否正确
-            if ($user_info['email_validated'] == 1 && $old_email != $user_info['email'])
-                $this->error('原邮箱匹配错误');
-            //验证邮箱和验证码
-            if ($info['sender'] == $email && $info['code'] == $code) {
-                session('validate_code', null);
-                if (!$userLogic->update_email_mobile($email, $this->user_id))
-                    $this->error('邮箱已存在');
-                $this->success('绑定成功', U('Home/User/index'));
-                exit;
-            }
-            $this->error('邮箱验证码不匹配');
-        }
-        $this->assign('step', $step);
-        $this->assign('user_info', $user_info);
-        return $this->fetch();
+    public function bindPhone(){
+
+    }
+
+    /**
+     * @api     {POST}  /index.php?m=Api&c=User&a=bindMail      绑定用户邮箱（开发中）
+     * @apiName     bindMail
+     * @apiGroup    User
+     * @apiParam    {String}    mail        绑定邮箱
+     */
+    public function bindMail(){
+
     }
 
     /**
      * @api     {POST} /index.php?m=Api&c=User&a=reg            用户注册done
      * @apiName   reg
      * @apiGroup  User
-     * @apiParam {String} username         手机号/用户名.
-     * @apiParam {String} password         密码
-     * @apiParam {String} [code]           手机短信验证码
+     * @apiParam {String} username         手机号（未加国家区号的手机号）/邮件名.
+     * @apiParam {String} password         密码加密方式：md5(TPSHOP密码)
+     * @apiParam {String} type             phone 为手机/mail为邮件
+     * @apiParam {String} [countroy_code]    国家代码编号
+     * @apiParam {String} [code]           手机短信验证码或邮箱验证码
      * @apiParam {String} [push_id]        推送id，相当于第三方的reg_id
      * @apiSuccessExample {json} Success-Response:
      *     HTTP/1.1 200 OK
@@ -261,50 +246,50 @@ class User extends Base {
     "status": 1,
     "msg": "注册成功",
     "result": {
-    "user_id": 146,
-    "email": "",
-    "password": "90600d68b0f56d90c4c34284d8dfd138",
-    "sex": 0,
-    "birthday": 0,
-    "user_money": "0.00",
-    "frozen_money": "0.00",
-    "distribut_money": "0.00",
-    "pay_points": "0.0000",
-    "address_id": 0,
-    "reg_time": 1504596640,
-    "last_login": 1504596640,
-    "last_ip": "",
-    "qq": "",
-    "mobile": "18451847701",
-    "mobile_validated": 1,
-    "oauth": "",
-    "openid": null,
-    "unionid": null,
-    "head_pic": null,
-    "province": 0,
-    "city": 0,
-    "district": 0,
-    "email_validated": 0,
-    "nickname": "18451847701",
-    "level": 1,
-    "discount": "1.00",
-    "total_amount": "0.00",
-    "is_lock": 0,
-    "is_distribut": 1,
-    "first_leader": 0,
-    "second_leader": 0,
-    "third_leader": 0,
-    "fourth_leader": null,
-    "fifth_leader": null,
-    "sixth_leader": null,
-    "seventh_leader": null,
-    "token": "c34ba58aec24003f0abec19ae2688c86",
-    "address": null,
-    "pay_passwd": null,
-    "pre_pay_points": "0.0000",
-    "optional": "0.0000",
-    "vipid": 0,
-    "paypoint": "0.00"
+        "user_id": 146,
+        "email": "",
+        "password": "90600d68b0f56d90c4c34284d8dfd138",
+        "sex": 0,
+        "birthday": 0,
+        "user_money": "0.00",
+        "frozen_money": "0.00",
+        "distribut_money": "0.00",
+        "pay_points": "0.0000",
+        "address_id": 0,
+        "reg_time": 1504596640,
+        "last_login": 1504596640,
+        "last_ip": "",
+        "qq": "",
+        "mobile": "18451847701",
+        "mobile_validated": 1,
+        "oauth": "",
+        "openid": null,
+        "unionid": null,
+        "head_pic": null,
+        "province": 0,
+        "city": 0,
+        "district": 0,
+        "email_validated": 0,
+        "nickname": "18451847701",
+        "level": 1,
+        "discount": "1.00",
+        "total_amount": "0.00",
+        "is_lock": 0,
+        "is_distribut": 1,
+        "first_leader": 0,
+        "second_leader": 0,
+        "third_leader": 0,
+        "fourth_leader": null,
+        "fifth_leader": null,
+        "sixth_leader": null,
+        "seventh_leader": null,
+        "token": "c34ba58aec24003f0abec19ae2688c86",
+        "address": null,
+        "pay_passwd": null,
+        "pre_pay_points": "0.0000",
+        "optional": "0.0000",
+        "vipid": 0,
+        "paypoint": "0.00"
     }
     }
      * @apiErrorExample {json} Error-Response:
@@ -317,6 +302,8 @@ class User extends Base {
     */
     public function reg(){
         $username = I('post.username','');
+        $countroy_code = I('post.countroy_code','');//国家代码
+        $send_phone = $countroy_code.$username;
         $password = I('post.password','');
         $code = I('post.code');        
         $type = I('type','phone');
@@ -324,18 +311,23 @@ class User extends Base {
         $scene = I('scene' , 1);
         $push_id = I('post.push_id' , '');
 
-        //是否开启注册验证码机制
-        if(check_mobile($username)){
+        //是否开启注册验证码机制 check_mobile($username)
+        $msgService = new MsgService();
+        if($type == 'phone'){
             //校验验证码
-            $msgService = new MsgService();
-            $result = $msgService->verifyInterCaptcha($username,'reg',$code);
+            $result = $msgService->verifyInterCaptcha($send_phone,'reg',$code);
             if($result['status'] != 1){
-                returnJson(-1,'验证码输入有误');
+                returnJson(-1,$result['msg']);
             }
-            $res = $this->userLogic->check_validate_code($code, $username  , $type , $session_id , $scene);
-            if($res['status'] != 1) exit(json_encode($res));
+        }else{
+            //验证邮箱Code
+            $result = $msgService->verifyMailCaptcha($username,'reg',$code);
+            if($result['status'] != 1){
+                returnJson(-1,$result['msg']);
+            }
         }
-        $data = $this->userLogic->reg($username,$password , $password, $push_id);
+
+        $data = $this->userLogic->reg($username,$password , $password, $push_id,$countroy_code);
         if($data['status'] == 1){
             $cartLogic = new CartLogic();
             $cartLogic->setUserId($data['result']['user_id']);
@@ -356,64 +348,64 @@ class User extends Base {
     "status": 1,
     "msg": "获取成功",
     "result": {
-    "user_id": 146,
-    "email": "",
-    "password": "90600d68b0f56d90c4c34284d8dfd138",
-    "sex": 0,
-    "birthday": 0,
-    "user_money": "0.00",
-    "frozen_money": "0.00",
-    "distribut_money": "0.00",
-    "pay_points": "0.0000",
-    "address_id": 0,
-    "reg_time": 1504596640,
-    "last_login": 1504602255,
-    "last_ip": "",
-    "qq": "",
-    "mobile": "18451847701",
-    "mobile_validated": 1,
-    "oauth": "",
-    "openid": null,
-    "unionid": null,
-    "head_pic": null,
-    "province": 0,
-    "city": 0,
-    "district": 0,
-    "email_validated": 0,
-    "nickname": "18451847701",
-    "level": 1,
-    "discount": "1.00",
-    "total_amount": "0.00",
-    "is_lock": 0,
-    "is_distribut": 1,
-    "first_leader": 0,
-    "second_leader": 0,
-    "third_leader": 0,
-    "fourth_leader": null,
-    "fifth_leader": null,
-    "sixth_leader": null,
-    "seventh_leader": null,
-    "token": "a279c833cebe5fb963ccba311e27c394",
-    "address": null,
-    "pay_passwd": null,
-    "pre_pay_points": "0.0000",
-    "optional": "0.0000",
-    "vipid": 0,
-    "paypoint": "0.00",
-    "coupon_count": 0,
-    "collect_count": 0,
-    "focus_count": 0,
-    "visit_count": 0,
-    "return_count": 0,
-    "waitPay": 0,
-    "waitSend": 0,
-    "waitReceive": 0,
-    "order_count": 0,
-    "message_count": 0,
-    "comment_count": 0,
-    "uncomment_count": 0,
-    "serve_comment_count": 0,
-    "cart_goods_num": 0
+        "user_id": 146,
+        "email": "",
+        "password": "90600d68b0f56d90c4c34284d8dfd138",
+        "sex": 0,
+        "birthday": 0,
+        "user_money": "0.00",
+        "frozen_money": "0.00",
+        "distribut_money": "0.00",
+        "pay_points": "0.0000",
+        "address_id": 0,
+        "reg_time": 1504596640,
+        "last_login": 1504602255,
+        "last_ip": "",
+        "qq": "",
+        "mobile": "18451847701",
+        "mobile_validated": 1,
+        "oauth": "",
+        "openid": null,
+        "unionid": null,
+        "head_pic": null,
+        "province": 0,
+        "city": 0,
+        "district": 0,
+        "email_validated": 0,
+        "nickname": "18451847701",
+        "level": 1,
+        "discount": "1.00",
+        "total_amount": "0.00",
+        "is_lock": 0,
+        "is_distribut": 1,
+        "first_leader": 0,
+        "second_leader": 0,
+        "third_leader": 0,
+        "fourth_leader": null,
+        "fifth_leader": null,
+        "sixth_leader": null,
+        "seventh_leader": null,
+        "token": "a279c833cebe5fb963ccba311e27c394",
+        "address": null,
+        "pay_passwd": null,
+        "pre_pay_points": "0.0000",
+        "optional": "0.0000",
+        "vipid": 0,
+        "paypoint": "0.00",
+        "coupon_count": 0,
+        "collect_count": 0,
+        "focus_count": 0,
+        "visit_count": 0,
+        "return_count": 0,
+        "waitPay": 0,
+        "waitSend": 0,
+        "waitReceive": 0,
+        "order_count": 0,
+        "message_count": 0,
+        "comment_count": 0,
+        "uncomment_count": 0,
+        "serve_comment_count": 0,
+        "cart_goods_num": 0
     }
     }
      *
@@ -582,8 +574,11 @@ class User extends Base {
         if (!$user) {
             $this->ajaxReturn(['status'=>-1,'msg'=>'该手机号码没有关联账户']);
         } else {
+            $sendphone = $user['countroy_code'].$mobile;
+            //echo $sendphone;die;
             //校验验证码
-            $result = MsgService::verifyCaptcha($mobile,'resetpwd',$code);
+            $msgClass = new MsgService();
+            $result = $msgClass->verifyInterCaptcha($sendphone,'resetpwd',$code);
 
             if($result['status'] != 1){
                 returnJson(-1,'验证码输入有误');
