@@ -243,6 +243,41 @@
     ]
   },
   {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=BaseMessage&a=sendInterCaptcha",
+    "title": "发送国际验证码",
+    "name": "sendInterCaptcha",
+    "group": "Common",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mobile",
+            "description": "<p>手机号.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "opt",
+            "description": "<p>验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定手机号.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/BaseMessage.php",
+    "groupTitle": "Common",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=BaseMessage&a=sendInterCaptcha"
+      }
+    ]
+  },
+  {
     "type": "GET",
     "url": "index.php?m=Api&c=Config&a=getCountryNumber",
     "title": "得到国家区号done",
@@ -1081,6 +1116,69 @@
   },
   {
     "type": "GET",
+    "url": "/index.php?m=Api&c=getPackOrder&a=getPackOrder",
+    "title": "得到包车订单列表（未完成）",
+    "name": "getPackOrder",
+    "group": "PackOrder",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>订单状态 0未支付 1待派单 2待接单 3进行中（待开始、待确认） 4待评价 5已完成</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/PackOrder.php",
+    "groupTitle": "PackOrder",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=getPackOrder&a=getPackOrder"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "/index.php?m=Api&c=PackOrder&a=getPackOrderDetail",
+    "title": "得到包车订单详情（未完成）",
+    "name": "getPackOrderDetail",
+    "group": "PackOrder",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/PackOrder.php",
+    "groupTitle": "PackOrder",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=PackOrder&a=getPackOrderDetail"
+      }
+    ]
+  },
+  {
+    "type": "GET",
     "url": "/recommend/showMyRecommInfo",
     "title": "显示我的推荐信息（未完成）",
     "name": "showMyRecommInfo",
@@ -1234,8 +1332,23 @@
   },
   {
     "type": "GET",
+    "url": "/index.php?m=Api&c=Region&a=getAllCity",
+    "title": "得到国内全部城市（一级全部返回）done",
+    "name": "getAllCity",
+    "group": "Region",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Region.php",
+    "groupTitle": "Region",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=Region&a=getAllCity"
+      }
+    ]
+  },
+  {
+    "type": "GET",
     "url": "/index.php?m=Api&c=Region&a=getChildCity",
-    "title": "得到地区的子级列表done",
+    "title": "得到国外地区的子级列表done",
     "name": "getChildCity",
     "group": "Region",
     "parameter": {
@@ -1263,7 +1376,7 @@
   {
     "type": "GET",
     "url": "/index.php?m=Api&c=Region&a=getIndexCity",
-    "title": "得到地区的首级列表done",
+    "title": "得到国外地区的首级列表done",
     "name": "getIndexCity",
     "group": "Region",
     "version": "0.0.0",

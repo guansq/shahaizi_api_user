@@ -18,4 +18,41 @@ class RegionLogic extends Model{
         $result = M('region_new')->where($where)->select();
         return $result;
     }
+
+    /*
+     * 得到所有城市信息
+     */
+    public function get_all_city(){
+        $allCity = M('region')->where(['level'=>['in','1,2']])->select();
+        return $allCity;
+
+    }
+
+    public function index(){
+        $allCity = M('region_new')->select();
+        $result = $this->tree($allCity);
+        return $result;
+    }
+
+    public function tree($data,$pid=0){
+        $child = array();
+        foreach($data as $k => $v){
+            if($v['parent_id'] == $pid){
+                $child[] = $v;
+            }
+        }
+
+        if(empty($child)){
+            return null;
+        }
+
+        foreach($child as $ke => $vo){
+            $current_child = $this->tree($data,$vo['id']);
+            if($current_child){
+                $child[$ke]['child'] = $current_child;
+            }
+        }
+        return $child;
+    }
+
 }

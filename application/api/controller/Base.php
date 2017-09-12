@@ -164,6 +164,7 @@ class Base extends Controller {
                 'return_goods_list','return_goods_status','service_comment','setDefaultAddress','updateUserInfo','upload_headpic','userInfo',
                 'visit_log','withdrawals','withdrawals_list','flashToken'],
             'driverpack' => ['rentCarByDay','receiveAirport','sendAirport','oncePickup','privateMake'],
+            'packorder' => ['getPackOrder'],
         ];
         
         // 保留状态的检查组

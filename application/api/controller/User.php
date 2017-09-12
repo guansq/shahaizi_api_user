@@ -210,6 +210,43 @@ class User extends Base {
         $this->ajaxReturn($data);
     }
 
+    /*
+     * 邮箱验证
+     */
+    public function email_validate()
+    {
+        $userLogic = new UsersLogic();
+        $user_info = M('users')->where('user_id', $this->user_id)->find();
+        $step = I('get.step', 1);
+        if (IS_POST) {
+            $email = I('post.email');
+            $old_email = I('post.old_email'); //旧邮箱
+            $code = I('post.code');
+            $info = session('validate_code');
+            if (!$info)
+                $this->error('非法操作');
+            if ($info['time'] < time()) {
+                session('validate_code', null);
+                $this->error('验证超时，请重新验证');
+            }
+            //检查原邮箱是否正确
+            if ($user_info['email_validated'] == 1 && $old_email != $user_info['email'])
+                $this->error('原邮箱匹配错误');
+            //验证邮箱和验证码
+            if ($info['sender'] == $email && $info['code'] == $code) {
+                session('validate_code', null);
+                if (!$userLogic->update_email_mobile($email, $this->user_id))
+                    $this->error('邮箱已存在');
+                $this->success('绑定成功', U('Home/User/index'));
+                exit;
+            }
+            $this->error('邮箱验证码不匹配');
+        }
+        $this->assign('step', $step);
+        $this->assign('user_info', $user_info);
+        return $this->fetch();
+    }
+
     /**
      * @api     {POST} /index.php?m=Api&c=User&a=reg            用户注册done
      * @apiName   reg
@@ -290,12 +327,13 @@ class User extends Base {
         //是否开启注册验证码机制
         if(check_mobile($username)){
             //校验验证码
-            $result = MsgService::verifyCaptcha($username,'reg',$code);
+            $msgService = new MsgService();
+            $result = $msgService->verifyInterCaptcha($username,'reg',$code);
             if($result['status'] != 1){
                 returnJson(-1,'验证码输入有误');
             }
-            //$res = $this->userLogic->check_validate_code($code, $username  , $type , $session_id , $scene);
-            //if($res['status'] != 1) exit(json_encode($res));
+            $res = $this->userLogic->check_validate_code($code, $username  , $type , $session_id , $scene);
+            if($res['status'] != 1) exit(json_encode($res));
         }
         $data = $this->userLogic->reg($username,$password , $password, $push_id);
         if($data['status'] == 1){
