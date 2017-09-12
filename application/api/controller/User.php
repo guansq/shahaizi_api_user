@@ -553,9 +553,12 @@ class User extends Base {
 
 
     /**
-     * @api      {POST} /index.php?m=Api&c=User&a=forgetPassword   忘记密码done
+     * @api      {POST} /index.php?m=Api&c=User&a=forgetPassword   忘记密码通过短信done
      * @apiName  forgetPassword
      * @apiGroup User
+     * @apiParam {String}   mobile      手机号
+     * @apiParam {String}   password    加密后的密码
+     * @apiParam {String}   code    验证码
      * @apiSuccessExample {json} Success-Response:
      *           Http/1.1   200 OK
     {
@@ -579,6 +582,46 @@ class User extends Base {
             //校验验证码
             $msgClass = new MsgService();
             $result = $msgClass->verifyInterCaptcha($sendphone,'resetpwd',$code);
+
+            if($result['status'] != 1){
+                returnJson(-1,'验证码输入有误');
+            }
+            //修改密码
+            M('users')->where("user_id",$user['user_id'])->save(array('password'=>$password));
+            $this->ajaxReturn(['status'=>1,'msg'=>'密码已重置,请重新登录']);
+        }
+    }
+
+    /**
+     * @api      {POST} /index.php?m=Api&c=User&a=forgetPasswordByMail   忘记密码通过邮箱done
+     * @apiName  forgetPasswordByMail
+     * @apiGroup User
+     * @apiParam {String}   mail      邮箱号
+     * @apiParam {String}   password    加密后的密码
+     * @apiParam {String}   code    验证码
+     * @apiSuccessExample {json} Success-Response:
+     *           Http/1.1   200 OK
+    {
+    "status": 1,
+    "msg": "密码已重置,请重新登录",
+    }
+     */
+    public function forgetPasswordByMail()
+    {
+        $password = I('password');
+        $mail = I('mail');
+        if(!check_email($mail)){
+            $this->ajaxReturn(['status'=>-1,'msg'=>'请输入合法的邮箱']);
+        }
+        $code = I('code');
+
+        $user = M('users')->where("email",$mail)->find();
+        if (!$user) {
+            $this->ajaxReturn(['status'=>-1,'msg'=>'该邮箱没有关联账户']);
+        } else {
+            //校验验证码
+            $msgClass = new MsgService();
+            $result = $msgClass->verifyMailCaptcha($mail,'resetpwd',$code);
 
             if($result['status'] != 1){
                 returnJson(-1,'验证码输入有误');
