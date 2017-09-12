@@ -210,7 +210,7 @@ define({ "api": [
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=BaseMessage&a=sendCaptcha",
-    "title": "发送验证码done",
+    "title": "发送验证码（国内废除）",
     "name": "sendCaptcha",
     "group": "Common",
     "parameter": {
@@ -245,7 +245,7 @@ define({ "api": [
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=BaseMessage&a=sendInterCaptcha",
-    "title": "发送国际验证码",
+    "title": "发送国际验证码done",
     "name": "sendInterCaptcha",
     "group": "Common",
     "parameter": {
@@ -280,7 +280,7 @@ define({ "api": [
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=BaseMessage&a=sendMailCaptcha",
-    "title": "发送邮件验证码",
+    "title": "发送邮件验证码done",
     "name": "sendMailCaptcha",
     "group": "Common",
     "parameter": {
@@ -1503,9 +1503,9 @@ define({ "api": [
   },
   {
     "type": "POST",
-    "url": "/index.php?m=Api&c=User&a=bindMail",
-    "title": "绑定用户邮箱（开发中）",
-    "name": "bindMail",
+    "url": "/index.php?m=Api&c=User&a=BindMail",
+    "title": "绑定用户邮箱done",
+    "name": "BindMail",
     "group": "User",
     "parameter": {
       "fields": {
@@ -1514,8 +1514,22 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "mail",
             "description": "<p>绑定邮箱</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>绑定邮箱code</p>"
           }
         ]
       }
@@ -1525,14 +1539,14 @@ define({ "api": [
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=bindMail"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=BindMail"
       }
     ]
   },
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=bindPhone",
-    "title": "绑定手机（开发中）",
+    "title": "绑定手机done",
     "name": "bindPhone",
     "group": "User",
     "parameter": {
@@ -1542,8 +1556,29 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "mobile",
             "description": "<p>绑定手机号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "countroy_code",
+            "description": "<p>绑定国家的区号</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "code",
+            "description": "<p>绑定手机code</p>"
           }
         ]
       }
@@ -1987,6 +2022,76 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=thirdLogin"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=User&a=unBindMail",
+    "title": "解除绑定用户邮箱（开发中）",
+    "name": "unBindMail",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mail",
+            "description": "<p>绑定邮箱</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=unBindMail"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=User&a=unBindPhone",
+    "title": "解除绑定手机（开发中）",
+    "name": "unBindPhone",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mobile",
+            "description": "<p>绑定手机号</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=unBindPhone"
       }
     ]
   },

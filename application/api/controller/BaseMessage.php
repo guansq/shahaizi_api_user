@@ -15,7 +15,7 @@ use service\HttpService;
 class BaseMessage extends Base{
 
     /**
-     * @api      {POST} /index.php?m=Api&c=BaseMessage&a=sendCaptcha  发送验证码done
+     * @api      {POST} /index.php?m=Api&c=BaseMessage&a=sendCaptcha  发送验证码（国内废除）
      * @apiName  sendCaptcha
      * @apiGroup Common
      * @apiParam {String} mobile   手机号.
@@ -33,7 +33,7 @@ class BaseMessage extends Base{
     }
 
     /**
-     * @api      {POST} /index.php?m=Api&c=BaseMessage&a=sendInterCaptcha  发送国际验证码
+     * @api      {POST} /index.php?m=Api&c=BaseMessage&a=sendInterCaptcha  发送国际验证码done
      * @apiName  sendInterCaptcha
      * @apiGroup Common
      * @apiParam {String} mobile   手机号.
@@ -74,7 +74,7 @@ class BaseMessage extends Base{
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=BaseMessage&a=sendMailCaptcha    发送邮件验证码
+     * @api {POST}  /index.php?m=Api&c=BaseMessage&a=sendMailCaptcha    发送邮件验证码done
      * @apiName     sendMailCaptcha
      * @apiGroup    Common
      * @apiParam    {String}    mail    邮箱
