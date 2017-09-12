@@ -23,7 +23,7 @@ class RegionLogic extends Model{
      * 得到所有城市信息
      */
     public function get_all_city(){
-        $allCity = M('region')->where(['level'=>['in','1,2']])->select();
+        $allCity = M('region_new')->where(['level'=>['in','3,4'],'parent_id'=>3426])->select();
         return $allCity;
 
     }
@@ -55,4 +55,17 @@ class RegionLogic extends Model{
         return $child;
     }
 
+    /*
+     * 得到热门城市
+     */
+    public function get_hot_city($id){
+        return M('region_new')->where(['is_hot'=>1,'parent_id'=>$id])->select();
+    }
+
+    /*
+     * 搜索城市
+     */
+    public function search_city($name){
+        return M('region_new')->where(['name'=>['like',"%{$name}%"]])->select();
+    }
 }

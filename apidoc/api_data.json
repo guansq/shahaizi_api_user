@@ -1368,7 +1368,7 @@
   {
     "type": "GET",
     "url": "/index.php?m=Api&c=Region&a=getAllCity",
-    "title": "得到国内全部城市（一级全部返回）done",
+    "title": "得到国内全部城市（省市信息）done",
     "name": "getAllCity",
     "group": "Region",
     "version": "0.0.0",
@@ -1410,6 +1410,34 @@
   },
   {
     "type": "GET",
+    "url": "/index.php?m=Api&c=Region&a=getChildHotCity",
+    "title": "得到子热门城市",
+    "name": "getChildHotCity",
+    "group": "Region",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>父级城市ID</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/Region.php",
+    "groupTitle": "Region",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=Region&a=getChildHotCity"
+      }
+    ]
+  },
+  {
+    "type": "GET",
     "url": "/index.php?m=Api&c=Region&a=getIndexCity",
     "title": "得到国外地区的首级列表done",
     "name": "getIndexCity",
@@ -1420,6 +1448,34 @@
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=Region&a=getIndexCity"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "/index.php?m=Api&c=Region&a=searchCity",
+    "title": "搜索城市",
+    "name": "searchCity",
+    "group": "Region",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>城市名称</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/Region.php",
+    "groupTitle": "Region",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=Region&a=searchCity"
       }
     ]
   },

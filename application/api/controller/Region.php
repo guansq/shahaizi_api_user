@@ -37,7 +37,7 @@ class Region extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCity  得到国内全部城市（一级全部返回）done
+     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCity  得到国内全部城市（省市信息）done
      * @apiName     getAllCity
      * @apiGroup    Region
      */
@@ -55,6 +55,32 @@ class Region extends Base{
     public function getAllCityInArr(){
         $regionLogic = new RegionLogic();
         $result = $regionLogic->index();
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+    }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getChildHotCity     得到子热门城市
+     * @apiName     getChildHotCity
+     * @apiGroup    Region
+     * @apiParam    {String}    id  父级城市ID
+     */
+    public function getChildHotCity(){
+        $id = I('id');
+        $regionLogic = new RegionLogic();
+        $result = $regionLogic->get_hot_city($id);
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+    }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=searchCity      搜索城市
+     * @apiName     searchCity
+     * @apiGroup    Region
+     * @apiParam    {String}    name    城市名称
+     */
+    public function searchCity(){
+        $name = I('name');
+        $regionLogic = new RegionLogic();
+        $result = $regionLogic->search_city($name);
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }
 }

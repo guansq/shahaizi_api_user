@@ -275,7 +275,7 @@ class User extends Base {
         if(!check_email($mail)){
             $this->ajaxReturn(['status'=>-1,'msg'=>'请填写正确的邮箱']);
         }
-        $user = M('users')->field('mobile, nickname')->where(['mail' => $mail])->find();
+        $user = M('users')->field('mobile, nickname')->where(['email' => $mail])->find();
         if(!empty($user)){
             $this->ajaxReturn(['status'=>-1,'msg'=>'该邮箱已被绑定']);
         }
