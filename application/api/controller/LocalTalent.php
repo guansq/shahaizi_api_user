@@ -38,7 +38,7 @@ class LocalTalent extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=LocalTalent&a=getLocalTalentList     得到达人列表  传入p 为 n代表第n页
+     * @api {GET}   /index.php?m=Api&c=LocalTalent&a=getLocalTalentList     得到达人列表  传入p 为 n代表第n页 done  管少秋
      * @apiName     getLocalTalentList
      * @apiGroup    Talent
      * @apiParam    token {String}  token.
@@ -76,7 +76,7 @@ class LocalTalent extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=api&c=LocalTalent&a=getLocalTalentDetail    得到当地达人详情done
+     * @api {GET}   /index.php?m=api&c=LocalTalent&a=getLocalTalentDetail    得到当地达人详情done  管少秋
      * @apiName getLocalTalentDetail
      * @apiGroup    Talent
      * @apiParam    talent_id {String}  当地达人

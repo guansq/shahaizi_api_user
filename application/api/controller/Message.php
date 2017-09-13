@@ -69,9 +69,9 @@ class Message extends Base
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=Message&a=getMessageList    得到消息列表（未完成）
+     * @api {GET}   /index.php?m=Api&c=Message&a=getMessageList    得到消息列表（未完成）wxx
      * @apiName     getMessageList
-     * @apiGroup    Config
+     * @apiGroup    Message
      *
      */
     public function getMessageList(){
@@ -80,9 +80,9 @@ class Message extends Base
 
 
     /**
-     * @api {GET}   index.php?m=Api&c=Message&a=getMessageDetail    得到消息详情（未完成）
+     * @api {GET}   /index.php?m=Api&c=Message&a=getMessageDetail    得到消息详情（未完成）wxx
      * @apiName     getMessageDetail
-     * @apiGroup    Config
+     * @apiGroup    Message
      *
      */
     public function getMessageDetail(){

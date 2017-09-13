@@ -19,7 +19,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done
+     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
      * @apiName     getAllDriver
      * @apiGroup    DriverPack
      * @apiSuccessExample {json}    Success-Response
@@ -39,7 +39,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getDriverDetail 司导详情
+     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getDriverDetail 司导详情 (待完成) 管少秋
      * @apiName     getDriverDetail
      * @apiGroup    DriverPack
      * @apiParam    seller_id  {String}    商家ID
@@ -93,7 +93,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=rentCarByDay    按天包车游done
+     * @api {POST}  /index.php?m=Api&c=DriverPack&a=rentCarByDay    按天包车游done  管少秋
      * @apiName     rentCarByDay
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -132,7 +132,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=receiveAirport    接机done
+     * @api {POST}  /index.php?m=Api&c=DriverPack&a=receiveAirport    接机done 管少秋
      * @apiName     receiveAirport
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -174,7 +174,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=sendAirport    送机done
+     * @api {POST}  /index.php?m=Api&c=DriverPack&a=sendAirport    送机done 管少秋
      * @apiName     sendAirport
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -216,7 +216,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=oncePickup    单次接送done
+     * @api {POST}  /index.php?m=Api&c=DriverPack&a=oncePickup    单次接送done 管少秋
      * @apiName     oncePickup
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -256,7 +256,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=privateMake    私人定制done
+     * @api {POST}  /index.php?m=Api&c=DriverPack&a=privateMake    私人定制done 管少秋
      * @apiName     privateMake
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.

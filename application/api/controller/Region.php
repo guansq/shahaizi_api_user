@@ -12,7 +12,7 @@ use app\common\logic\RegionLogic;
 class Region extends Base{
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=getIndexCity     得到国外地区的首级列表done
+     * @api {GET}   /index.php?m=Api&c=Region&a=getIndexCity     得到国外地区的首级列表done  管少秋
      * @apiName     getIndexCity
      * @apiGroup    Region
      */
@@ -24,7 +24,7 @@ class Region extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=getChildCity     得到国外地区的子级列表done
+     * @api {GET}   /index.php?m=Api&c=Region&a=getChildCity     得到国外地区的子级列表done    管少秋
      * @apiName     getChildCity
      * @apiGroup    Region
      * @apiParam    {Number}    parent_id       把当前的ID字段座位parent_id传过来
@@ -37,7 +37,7 @@ class Region extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCity  得到国内全部城市（省市信息）done
+     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCity  得到国内全部城市（省市信息）done  管少秋
      * @apiName     getAllCity
      * @apiGroup    Region
      */
@@ -48,7 +48,7 @@ class Region extends Base{
     }
 
     /*
-     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCityInArr  得到国际城市 无限级信息done
+     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCityInArr  得到国际城市 无限级信息done   管少秋
      * @apiName     getAllCityInArr
      * @apiGroup    Region
      */
@@ -59,7 +59,7 @@ class Region extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=getChildHotCity     得到子热门城市
+     * @api {GET}   /index.php?m=Api&c=Region&a=getChildHotCity     得到子热门城市done     管少秋
      * @apiName     getChildHotCity
      * @apiGroup    Region
      * @apiParam    {String}    id  父级城市ID
@@ -72,7 +72,7 @@ class Region extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=searchCity      搜索城市
+     * @api {GET}   /index.php?m=Api&c=Region&a=searchCity      搜索城市done    管少秋
      * @apiName     searchCity
      * @apiGroup    Region
      * @apiParam    {String}    name    城市名称

@@ -27,17 +27,17 @@ class Config extends Base{
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=Config&a=getEmergencyCall    得到紧急电话（待完成）
-     * @apiName     getEmergencyCall
+     * @api {GET}   /index.php?m=Api&c=Config&a=getAllConfig    得到所有配置 wxx
+     * @apiName     getAllConfig
      * @apiGroup    Config
      *
      */
-    public function getEmergencyCall(){
+    public function getAllConfig(){
 
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=Config&a=aboutUs    关于我们（待完成）
+     * @api {GET}   /index.php?m=Api&c=Config&a=aboutUs    关于我们 h5页面 wxx
      * @apiName     aboutUs
      * @apiGroup    Config
      *
@@ -47,7 +47,7 @@ class Config extends Base{
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=Config&a=helpCenter    帮助中心（待完成）
+     * @api {GET}   /index.php?m=Api&c=Config&a=helpCenter    帮助中心 h5页面 wxx
      * @apiName     helpCenter
      * @apiGroup    Config
      *
@@ -55,4 +55,16 @@ class Config extends Base{
     public function helpCenter(){
 
     }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Config&a=feedBack    提交意见反馈 wxx
+     * @apiName     feedBack
+     * @apiGroup    Config
+     *
+     */
+    public function feedBack(){
+
+    }
+
+
 }

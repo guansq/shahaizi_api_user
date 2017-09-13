@@ -12,7 +12,7 @@ use Qiniu\Storage\BucketManager;
 use Qiniu\Storage\UploadManager;
 class File extends Controller{
     /**
-     * @api      {POST} /index.php?m=Api&c=File&a=uploadImg  上传图片done
+     * @api      {POST} /index.php?m=Api&c=File&a=uploadImg  上传图片done 管少秋
      * @apiName  uploadImg
      * @apiGroup File
      * @apiHeader {String} authorization-token           token.

@@ -75,7 +75,7 @@ class Wxpay extends Base
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=Wxpay&a=dopay    得到微信签名并下单
+     * @api {GET}   /index.php?m=Api&c=Wxpay&a=dopay    得到微信签名并下单（待调试） wxx
      * @apiName     dopay
      * @apiGroup    Pay
      *

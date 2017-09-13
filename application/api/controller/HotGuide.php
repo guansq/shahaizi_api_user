@@ -17,7 +17,7 @@ class HotGuide extends Base{
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideList   得到热门攻略列表done
+     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideList   得到热门攻略列表done  管少秋
      * @apiName getHotGuideList
      * @apiGroup HotGuide
      * @apiSuccessExample   Success-Response
@@ -40,7 +40,7 @@ class HotGuide extends Base{
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideDetail      得到热门攻略详情done
+     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideDetail      得到热门攻略详情done   管少秋
      * @apiName     getHotGuideDetail
      * @apiGroup    HotGuide
      * @apiSuccessExample   Success-Response

@@ -11,7 +11,7 @@ use app\common\logic\PackLineLogic;
 class PackLine extends Base{
 
     /**
-     * @api {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线（未完成）
+     * @api {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线（未完成） 管少秋
      * @apiName     getQualityLine
      * @apiGroup    PackLine
      * @apiSuccessExample {json}    Success-Response
@@ -30,7 +30,7 @@ class PackLine extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=PackLine&a=home  包车定制首页
+     * @api {GET}   /index.php?m=Api&c=PackLine&a=home  包车定制首页  done    管少秋
      * @apiName     home
      * @apiGroup    PackLine
      * @apiSuccessExample {json}    Success-Response

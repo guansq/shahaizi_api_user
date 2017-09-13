@@ -61,7 +61,7 @@ class Payment extends Base
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=Payment&a=alipay_sign    得到支付宝签名
+     * @api {GET}   /index.php?m=Api&c=Payment&a=alipay_sign    得到支付宝签名（待调试） wxx
      * @apiName     alipay_sign
      * @apiGroup    Pay
      *

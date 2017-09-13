@@ -13,7 +13,7 @@ use app\common\logic\CarLogic;
 class Car extends Base{
 
     /**
-     * @api {GET}  /index.php?m=Api&c=Car&a=getCarInfo  得到system_car信息
+     * @api {GET}  /index.php?m=Api&c=Car&a=getCarInfo  得到system_car信息done 管少秋
      * @apiName     getCarInfo
      * @apiGroup    Car
      *

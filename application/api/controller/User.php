@@ -35,7 +35,7 @@ class User extends Base {
 
 
     /**
-     * @api      {POST} /index.php?m=Api&c=User&a=login     用户登录done
+     * @api      {POST} /index.php?m=Api&c=User&a=login     用户登录done  管少秋
      * @apiName  login
      * @apiGroup User
      * @apiParam {String} username          用户名.
@@ -106,7 +106,7 @@ class User extends Base {
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=User&a=flashToken    刷新token（返回信息同login一样）
+     * @api {POST}  /index.php?m=Api&c=User&a=flashToken    刷新token（返回信息同login一样） done 管少秋
      * @apiName flashToken
      * @apiGroup    User
      * @apiParam    {String}    token   token.
@@ -127,7 +127,7 @@ class User extends Base {
     }
     
     /**
-     * @api {POST}  /index.php?m=Api&c=User&a=thirdLogin     第三方登录done（未调试）
+     * @api {POST}  /index.php?m=Api&c=User&a=thirdLogin     第三方登录done（未调试） 管少秋
      * @apiName     thirdLogin
      * @apiGroup    User
      * @apiParam    {String}      unique_id     第三方唯一标识
@@ -252,7 +252,7 @@ class User extends Base {
         $this->ajaxReturn(['status'=>1,'msg'=>'绑定成功']);
     }
     /**
-     * @api     {POST}  /index.php?m=Api&c=User&a=unBindPhone     解除绑定手机（开发中）
+     * @api     {POST}  /index.php?m=Api&c=User&a=unBindPhone     更改绑定手机（开发中） 管少秋
      * @apiName     unBindPhone
      * @apiGroup    User
      * @apiParam    {String}    token       token
@@ -301,7 +301,7 @@ class User extends Base {
     }
 
     /**
-     * @api     {POST}  /index.php?m=Api&c=User&a=unBindMail      解除绑定用户邮箱（开发中）
+     * @api     {POST}  /index.php?m=Api&c=User&a=unBindMail      解除绑定用户邮箱（开发中） 管少秋
      * @apiName     unBindMail
      * @apiGroup    User
      * @apiParam    {String}    token       token
@@ -312,7 +312,7 @@ class User extends Base {
     }
 
     /**
-     * @api     {POST} /index.php?m=Api&c=User&a=reg            用户注册done
+     * @api     {POST} /index.php?m=Api&c=User&a=reg            用户注册done  管少秋
      * @apiName   reg
      * @apiGroup  User
      * @apiParam {String} username         手机号（未加国家区号的手机号）/邮件名.
@@ -498,7 +498,7 @@ class User extends Base {
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=User&a=updateUserInfo     更改用户信息done
+     * @api {POST}  /index.php?m=Api&c=User&a=updateUserInfo     更改用户信息done  管少秋
      * @apiName     updateUserInfo
      * @apiGroup    User
      * @apiParam    {String}    [nickname]      昵称
@@ -537,7 +537,7 @@ class User extends Base {
 
 
     /**
-     * @api      {POST} /index.php?m=Api&c=User&a=password   修改用户密码done
+     * @api      {POST} /index.php?m=Api&c=User&a=password   修改用户密码done 管少秋
      * @apiName  password
      * @apiGroup User
      * @apiParam {String}   token           token.
@@ -634,7 +634,7 @@ class User extends Base {
 
 
     /**
-     * @api      {POST} /index.php?m=Api&c=User&a=forgetPassword   忘记密码通过短信done
+     * @api      {POST} /index.php?m=Api&c=User&a=forgetPassword   忘记密码通过短信done  管少秋
      * @apiName  forgetPassword
      * @apiGroup User
      * @apiParam {String}   mobile      手机号
@@ -674,7 +674,7 @@ class User extends Base {
     }
 
     /**
-     * @api      {POST} /index.php?m=Api&c=User&a=forgetPasswordByMail   忘记密码通过邮箱done
+     * @api      {POST} /index.php?m=Api&c=User&a=forgetPasswordByMail   忘记密码通过邮箱done  管少秋
      * @apiName  forgetPasswordByMail
      * @apiGroup User
      * @apiParam {String}   mail      邮箱号
@@ -714,7 +714,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试） wxx
      * @apiName     getAddressList
      * @apiGroup    User
      *
@@ -743,7 +743,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=addAddress    收货地址添加（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=addAddress    收货地址添加（待调试）wxx
      * @apiName     addAddress
      * @apiGroup    User
      *
@@ -756,7 +756,7 @@ class User extends Base {
         exit(json_encode($data));
     }
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=del_address    收货地址删除（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=del_address    收货地址删除（待调试） wxx
      * @apiName     del_address
      * @apiGroup    User
      *
@@ -787,7 +787,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试） wxx
      * @apiName     setDefaultAddress
      * @apiGroup    User
      *
@@ -803,7 +803,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=getCouponList    得到优惠券列表（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=getCouponList    得到优惠券列表（待调试） 管少秋
      * @apiName     getCouponList
      * @apiGroup    User
      *
@@ -900,7 +900,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=getGoodsCollect    我的收藏路线（待完成）
+     * @api {GET}   index.php?m=Api&c=User&a=getGoodsCollect    我的收藏路线（待完成） 管少秋
      * @apiName     getGoodsCollect
      * @apiGroup    User
      *
@@ -1025,7 +1025,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=account    我的钱包（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=account    我的钱包（待调试） wxx
      * @apiName     account
      * @apiGroup    User
      *
@@ -1090,7 +1090,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=withdrawals_list    提现列表（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=withdrawals_list    提现列表（待调试） wxx
      * @apiName     withdrawals_list
      * @apiGroup    User
      *
@@ -1117,7 +1117,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=withdrawals    申请提现（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=withdrawals    申请提现（待调试） 管少秋
      * @apiName     withdrawals
      * @apiGroup    User
      *
@@ -1160,7 +1160,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=points    我的钱包明细（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=points    我的钱包明细（待调试） wxx
      * @apiName     points
      * @apiGroup    User
      *
@@ -1287,7 +1287,7 @@ class User extends Base {
 
         $this->ajaxReturn(['status' => 1, 'msg' => '获取成功', 'result' => $messages]);
     }
-    
+
     /**
      * 获取消息
      */
@@ -1394,7 +1394,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=recharge_list    充值记录（待调试）
+     * @api {GET}   index.php?m=Api&c=User&a=recharge_list    充值记录（待调试） wxx
      * @apiName     recharge_list
      * @apiGroup    User
      *
