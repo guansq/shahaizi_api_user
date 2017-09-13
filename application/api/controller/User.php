@@ -755,6 +755,7 @@ class User extends Base {
         $data = $this->userLogic->add_address($this->user_id,$address_id,I('post.')); // 获取用户信息
         exit(json_encode($data));
     }
+
     /**
      * @api {GET}   /index.php?m=Api&c=User&a=del_address    收货地址删除（待调试） wxx
      * @apiName     del_address
@@ -785,6 +786,7 @@ class User extends Base {
         else
            exit(json_encode(array('status'=>1,'msg'=>'删除失败','result'=>''))); 
     }
+
 
     /**
      * @api {GET}   /index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试） wxx

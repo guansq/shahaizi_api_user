@@ -1867,6 +1867,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "type": "GET",
     "url": "/index.php?m=Api&c=User&a=del_address",
     "title": "收货地址删除（待调试） wxx",
@@ -1882,6 +1883,8 @@
     ]
   },
   {
+=======
+>>>>>>> 1de8e4913405b67a7f8621b6b52e20ae4b310ec7
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=flashToken",
     "title": "刷新token（返回信息同login一样） done 管少秋",
@@ -2013,6 +2016,7 @@
   },
   {
     "type": "GET",
+<<<<<<< HEAD
     "url": "/index.php?m=Api&c=User&a=getAddressList",
     "title": "收货地址列表（待调试） wxx",
     "name": "getAddressList",
@@ -2031,6 +2035,11 @@
     "url": "/index.php?m=Api&c=User&a=getGoodsCollect",
     "title": "我的收藏路线（待完成） 管少秋",
     "name": "getGoodsCollect",
+=======
+    "url": "index.php?m=Api&c=User&a=getCouponList",
+    "title": "得到优惠券列表（待调试） 管少秋",
+    "name": "getCouponList",
+>>>>>>> 1de8e4913405b67a7f8621b6b52e20ae4b310ec7
     "group": "User",
     "version": "0.0.0",
     "filename": "application/api/controller/User.php",
@@ -2366,6 +2375,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "type": "GET",
     "url": "/index.php?m=Api&c=User&a=setDefaultAddress",
     "title": "设置默认收货地址（待调试） wxx",
@@ -2381,6 +2391,8 @@
     ]
   },
   {
+=======
+>>>>>>> 1de8e4913405b67a7f8621b6b52e20ae4b310ec7
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=thirdLogin",
     "title": "第三方登录done（未调试） 管少秋",
