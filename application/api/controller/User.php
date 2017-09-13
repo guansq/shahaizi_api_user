@@ -713,8 +713,8 @@ class User extends Base {
         }
     }
 
-    /**
-     * @api {GET}   index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试） wxx
+    /*
+     * @api {GET}   index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试）
      * @apiName     getAddressList
      * @apiGroup    User
      *
@@ -755,8 +755,10 @@ class User extends Base {
         $data = $this->userLogic->add_address($this->user_id,$address_id,I('post.')); // 获取用户信息
         exit(json_encode($data));
     }
-    /**
-     * @api {GET}   index.php?m=Api&c=User&a=del_address    收货地址删除（待调试） wxx
+
+
+    /*
+     * @api {GET}   index.php?m=Api&c=User&a=del_address    收货地址删除（待调试）
      * @apiName     del_address
      * @apiGroup    User
      *
@@ -786,8 +788,8 @@ class User extends Base {
            exit(json_encode(array('status'=>1,'msg'=>'删除失败','result'=>''))); 
     }
 
-    /**
-     * @api {GET}   index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试） wxx
+    /*
+     * @api {GET}   index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试）
      * @apiName     setDefaultAddress
      * @apiGroup    User
      *

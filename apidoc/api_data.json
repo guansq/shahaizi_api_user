@@ -1800,21 +1800,6 @@
     ]
   },
   {
-    "type": "GET",
-    "url": "index.php?m=Api&c=User&a=del_address",
-    "title": "收货地址删除（待调试） wxx",
-    "name": "del_address",
-    "group": "User",
-    "version": "0.0.0",
-    "filename": "application/api/controller/User.php",
-    "groupTitle": "User",
-    "sampleRequest": [
-      {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=del_address"
-      }
-    ]
-  },
-  {
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=flashToken",
     "title": "刷新token（返回信息同login一样） done 管少秋",
@@ -1941,21 +1926,6 @@
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=forgetPasswordByMail"
-      }
-    ]
-  },
-  {
-    "type": "GET",
-    "url": "index.php?m=Api&c=User&a=getAddressList",
-    "title": "收货地址列表（待调试） wxx",
-    "name": "getAddressList",
-    "group": "User",
-    "version": "0.0.0",
-    "filename": "application/api/controller/User.php",
-    "groupTitle": "User",
-    "sampleRequest": [
-      {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=getAddressList"
       }
     ]
   },
@@ -2252,21 +2222,6 @@
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=reg"
-      }
-    ]
-  },
-  {
-    "type": "GET",
-    "url": "index.php?m=Api&c=User&a=setDefaultAddress",
-    "title": "设置默认收货地址（待调试） wxx",
-    "name": "setDefaultAddress",
-    "group": "User",
-    "version": "0.0.0",
-    "filename": "application/api/controller/User.php",
-    "groupTitle": "User",
-    "sampleRequest": [
-      {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=setDefaultAddress"
       }
     ]
   },
