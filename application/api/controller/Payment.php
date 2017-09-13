@@ -59,7 +59,13 @@ class Payment extends Base
             echo "fail"; //验证失败         
         }
     }
- 
+
+    /**
+     * @api {GET}   index.php?m=Api&c=Payment&a=alipay_sign    得到支付宝签名
+     * @apiName     alipay_sign
+     * @apiGroup    Pay
+     *
+     */
     public function alipay_sign()
     {
         $orderSn = input('post.order_sn', '');

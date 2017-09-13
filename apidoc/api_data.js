@@ -314,6 +314,21 @@ define({ "api": [
   },
   {
     "type": "GET",
+    "url": "index.php?m=Api&c=Config&a=aboutUs",
+    "title": "关于我们（待完成）",
+    "name": "aboutUs",
+    "group": "Config",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Config.php",
+    "groupTitle": "Config",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Config&a=aboutUs"
+      }
+    ]
+  },
+  {
+    "type": "GET",
     "url": "index.php?m=Api&c=Config&a=getCountryNumber",
     "title": "得到国家区号done",
     "name": "getCountryNumber",
@@ -324,6 +339,66 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Config&a=getCountryNumber"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=Config&a=getEmergencyCall",
+    "title": "得到紧急电话（待完成）",
+    "name": "getEmergencyCall",
+    "group": "Config",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Config.php",
+    "groupTitle": "Config",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Config&a=getEmergencyCall"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=Message&a=getMessageDetail",
+    "title": "得到消息详情（未完成）",
+    "name": "getMessageDetail",
+    "group": "Config",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Message.php",
+    "groupTitle": "Config",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Message&a=getMessageDetail"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=Message&a=getMessageList",
+    "title": "得到消息列表（未完成）",
+    "name": "getMessageList",
+    "group": "Config",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Message.php",
+    "groupTitle": "Config",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Message&a=getMessageList"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=Config&a=helpCenter",
+    "title": "帮助中心（待完成）",
+    "name": "helpCenter",
+    "group": "Config",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Config.php",
+    "groupTitle": "Config",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Config&a=helpCenter"
       }
     ]
   },
@@ -1214,6 +1289,36 @@ define({ "api": [
   },
   {
     "type": "GET",
+    "url": "index.php?m=Api&c=Payment&a=alipay_sign",
+    "title": "得到支付宝签名",
+    "name": "alipay_sign",
+    "group": "Pay",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Payment.php",
+    "groupTitle": "Pay",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Payment&a=alipay_sign"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=Wxpay&a=dopay",
+    "title": "得到微信签名并下单",
+    "name": "dopay",
+    "group": "Pay",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Wxpay.php",
+    "groupTitle": "Pay",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Wxpay&a=dopay"
+      }
+    ]
+  },
+  {
+    "type": "GET",
     "url": "/recommend/showMyRecommInfo",
     "title": "显示我的推荐信息（未完成）",
     "name": "showMyRecommInfo",
@@ -1481,6 +1586,21 @@ define({ "api": [
   },
   {
     "type": "GET",
+    "url": "index.php?m=Api&c=Share&a=sharePage",
+    "title": "进行页面分享（未完成）",
+    "name": "sharePage",
+    "group": "Share",
+    "version": "0.0.0",
+    "filename": "application/api/controller/Share.php",
+    "groupTitle": "Share",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=Share&a=sharePage"
+      }
+    ]
+  },
+  {
+    "type": "GET",
     "url": "/index.php?m=api&c=LocalTalent&a=getLocalTalentDetail",
     "title": "得到当地达人详情done",
     "name": "getLocalTalentDetail",
@@ -1600,6 +1720,225 @@ define({ "api": [
     ]
   },
   {
+    "type": "GET",
+    "url": "index.php?m=Api&c=NewAction&a=doAttention",
+    "title": "进行关注（未完成）",
+    "name": "doAttention",
+    "group": "UserCenter",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "token",
+            "description": "<p>{String}   token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/NewAction.php",
+    "groupTitle": "UserCenter",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=NewAction&a=doAttention"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=NewAction&a=getCollGuideList",
+    "title": "个人页面收藏动态展示（未完成）",
+    "name": "getCollGuideList",
+    "group": "UserCenter",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "token",
+            "description": "<p>{String}   token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/NewAction.php",
+    "groupTitle": "UserCenter",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=NewAction&a=getCollGuideList"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=NewAction&a=getCollNewActionList",
+    "title": "个人页面收藏动态展示（未完成）",
+    "name": "getCollNewActionList",
+    "group": "UserCenter",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "token",
+            "description": "<p>{String}   token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/NewAction.php",
+    "groupTitle": "UserCenter",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=NewAction&a=getCollNewActionList"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=NewAction&a=getIndexNewAction",
+    "title": "得到首页最新消息（未完成）",
+    "name": "getIndexNewAction",
+    "group": "UserCenter",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "token",
+            "description": "<p>{String}   token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/NewAction.php",
+    "groupTitle": "UserCenter",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=NewAction&a=getIndexNewAction"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=NewAction&a=getMyGuideList",
+    "title": "个人页面攻略展示（未完成）",
+    "name": "getMyGuideList",
+    "group": "UserCenter",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "token",
+            "description": "<p>{String}   token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/NewAction.php",
+    "groupTitle": "UserCenter",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=NewAction&a=getMyGuideList"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=NewAction&a=getMyNewActionList",
+    "title": "个人页面动态展示（未完成）",
+    "name": "getMyNewActionList",
+    "group": "UserCenter",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "token",
+            "description": "<p>{String}   token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/NewAction.php",
+    "groupTitle": "UserCenter",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=NewAction&a=getMyNewActionList"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=NewAction&a=publishNewAction",
+    "title": "发布新动态（未完成）",
+    "name": "publishNewAction",
+    "group": "UserCenter",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "optional": false,
+            "field": "token",
+            "description": "<p>{String}   token.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/NewAction.php",
+    "groupTitle": "UserCenter",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=NewAction&a=publishNewAction"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=account",
+    "title": "我的钱包（待调试）",
+    "name": "account",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=account"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=addAddress",
+    "title": "收货地址添加（待调试）",
+    "name": "addAddress",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=addAddress"
+      }
+    ]
+  },
+  {
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=bindPhone",
     "title": "绑定手机done",
@@ -1645,6 +1984,21 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=bindPhone"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=del_address",
+    "title": "收货地址删除（待调试）",
+    "name": "del_address",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=del_address"
       }
     ]
   },
@@ -1775,6 +2129,51 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=forgetPasswordByMail"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=getAddressList",
+    "title": "收货地址列表（待调试）",
+    "name": "getAddressList",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=getAddressList"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=getCouponList",
+    "title": "得到优惠券列表（待调试）",
+    "name": "getCouponList",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=getCouponList"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=getGoodsCollect",
+    "title": "我的收藏路线（待完成）",
+    "name": "getGoodsCollect",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=getGoodsCollect"
       }
     ]
   },
@@ -1934,6 +2333,36 @@ define({ "api": [
     ]
   },
   {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=points",
+    "title": "我的钱包明细（待调试）",
+    "name": "points",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=points"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=recharge_list",
+    "title": "充值记录（待调试）",
+    "name": "recharge_list",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=recharge_list"
+      }
+    ]
+  },
+  {
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=reg",
     "title": "用户注册done",
@@ -2011,6 +2440,21 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=reg"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=setDefaultAddress",
+    "title": "设置默认收货地址（待调试）",
+    "name": "setDefaultAddress",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=setDefaultAddress"
       }
     ]
   },
@@ -2232,6 +2676,36 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=updateUserInfo"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=withdrawals",
+    "title": "申请提现（待调试）",
+    "name": "withdrawals",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=withdrawals"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "index.php?m=Api&c=User&a=withdrawals_list",
+    "title": "提现列表（待调试）",
+    "name": "withdrawals_list",
+    "group": "User",
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=withdrawals_list"
       }
     ]
   }

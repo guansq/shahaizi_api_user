@@ -7,23 +7,77 @@
  */
 class NewAction{
 
-    /*
-     * @api {GET}   index.php?m=Api&c=NewAction&a=getIndexNewAction     得到首页最新消息
+    /**
+     * @api {GET}   index.php?m=Api&c=NewAction&a=getIndexNewAction     得到首页最新消息（未完成）
      * @apiName getIndexNewAction
-     * @apiGroup    Index
+     * @apiGroup    UserCenter
      * @apiParam   token {String}   token.
-     * @apiSuccessExample   Success-Response
-     *      Http/1.1    200 OK
-     * {
-     *      "talent_id" :   "1",  //视屏ID
-     *      "cover_img" :   "http://xxxx.jpg",  //视屏封面图
-     *      "title" :   "文章标题",  //文章标题
-     *      "name"      :   "张三",  //发布人姓名
-     *      "good_num" :   "111",  //点赞数
-     *
-     * }
      */
     public function getIndexNewAction(){
 
     }
+
+
+    /**
+     * @api {GET}   index.php?m=Api&c=NewAction&a=publishNewAction     发布新动态（未完成）
+     * @apiName     publishNewAction
+     * @apiGroup    UserCenter
+     * @apiParam   token {String}   token.
+     */
+    public function publishNewAction(){
+
+    }
+
+    /**
+     * @api {GET}   index.php?m=Api&c=NewAction&a=getMyNewActionList     个人页面动态展示（未完成）
+     * @apiName     getMyNewActionList
+     * @apiGroup    UserCenter
+     * @apiParam   token {String}   token.
+     */
+    public function getMyNewActionList(){
+
+    }
+
+    /**
+     * @api {GET}   index.php?m=Api&c=NewAction&a=getCollNewActionList     个人页面收藏动态展示（未完成）
+     * @apiName     getCollNewActionList
+     * @apiGroup    UserCenter
+     * @apiParam   token {String}   token.
+     */
+    public function getCollNewActionList(){
+
+    }
+
+
+    /**
+     * @api {GET}   index.php?m=Api&c=NewAction&a=getMyGuideList     个人页面攻略展示（未完成）
+     * @apiName     getMyGuideList
+     * @apiGroup    UserCenter
+     * @apiParam   token {String}   token.
+     */
+    public function getMyGuideList(){
+
+    }
+
+    /**
+     * @api {GET}   index.php?m=Api&c=NewAction&a=getCollGuideList     个人页面收藏动态展示（未完成）
+     * @apiName     getCollGuideList
+     * @apiGroup    UserCenter
+     * @apiParam   token {String}   token.
+     */
+    public function getCollGuideList(){
+
+    }
+
+
+    /**
+     * @api {GET}   index.php?m=Api&c=NewAction&a=doAttention     进行关注（未完成）
+     * @apiName     doAttention
+     * @apiGroup    UserCenter
+     * @apiParam   token {String}   token.
+     */
+    public function doAttention(){
+
+    }
+
 }

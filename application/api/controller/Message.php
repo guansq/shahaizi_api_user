@@ -67,4 +67,25 @@ class Message extends Base
         M('user_message')->where(['message_id' => $message_id, 'user_id' => $this->user_id])->update(['status' => 1]);
         $this->ajaxReturn(['status' => 1, 'msg' => '设置成功']);
     }
+
+    /**
+     * @api {GET}   index.php?m=Api&c=Message&a=getMessageList    得到消息列表（未完成）
+     * @apiName     getMessageList
+     * @apiGroup    Config
+     *
+     */
+    public function getMessageList(){
+
+    }
+
+
+    /**
+     * @api {GET}   index.php?m=Api&c=Message&a=getMessageDetail    得到消息详情（未完成）
+     * @apiName     getMessageDetail
+     * @apiGroup    Config
+     *
+     */
+    public function getMessageDetail(){
+
+    }
 }

@@ -714,7 +714,10 @@ class User extends Base {
     }
 
     /**
-     * 获取收货地址
+     * @api {GET}   index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试）
+     * @apiName     getAddressList
+     * @apiGroup    User
+     *
      */
     public function getAddressList()
     {
@@ -739,8 +742,11 @@ class User extends Base {
         $this->ajaxReturn(array('status'=>1,'msg'=>'获取成功','result'=>$address));
     }
 
-    /*
-     * 添加地址
+    /**
+     * @api {GET}   index.php?m=Api&c=User&a=addAddress    收货地址添加（待调试）
+     * @apiName     addAddress
+     * @apiGroup    User
+     *
      */
     public function addAddress(){
         //$user_id = I('user_id/d',0);
@@ -749,8 +755,11 @@ class User extends Base {
         $data = $this->userLogic->add_address($this->user_id,$address_id,I('post.')); // 获取用户信息
         exit(json_encode($data));
     }
-    /*
-     * 地址删除
+    /**
+     * @api {GET}   index.php?m=Api&c=User&a=del_address    收货地址删除（待调试）
+     * @apiName     del_address
+     * @apiGroup    User
+     *
      */
     public function del_address(){
         $id = I('id/d');
@@ -776,9 +785,12 @@ class User extends Base {
         else
            exit(json_encode(array('status'=>1,'msg'=>'删除失败','result'=>''))); 
     }
-    
-    /*
-     * 设置默认收货地址
+
+    /**
+     * @api {GET}   index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试）
+     * @apiName     setDefaultAddress
+     * @apiGroup    User
+     *
      */
     public function setDefaultAddress() {
 //        $user_id = I('user_id/d',0);
@@ -790,8 +802,11 @@ class User extends Base {
         exit(json_encode(array('status'=>1,'msg'=>'操作成功','result'=>'')));
     }
 
-    /*
-     * 获取优惠券列表
+    /**
+     * @api {GET}   index.php?m=Api&c=User&a=getCouponList    得到优惠券列表（待调试）
+     * @apiName     getCouponList
+     * @apiGroup    User
+     *
      */
     public function getCouponList()
     {
@@ -883,9 +898,12 @@ class User extends Base {
         } 
         $this->ajaxReturn(['status' => 1, 'msg' => '获取成功', 'result' => $returnCouponList]);
     }
-    
-    /*
-     * 获取商品收藏列表
+
+    /**
+     * @api {GET}   index.php?m=Api&c=User&a=getGoodsCollect    我的收藏路线（待完成）
+     * @apiName     getGoodsCollect
+     * @apiGroup    User
+     *
      */
     public function getGoodsCollect()
     {
@@ -1005,9 +1023,12 @@ class User extends Base {
         }
         $this->ajaxReturn(['status' => 1, 'msg' => '操作成功', 'result' => $post['head_pic']]);
     }
-    
-    /*
-     * 账户资金
+
+    /**
+     * @api {GET}   index.php?m=Api&c=User&a=account    我的钱包（待调试）
+     * @apiName     account
+     * @apiGroup    User
+     *
      */
     public function account(){
         
@@ -1067,10 +1088,12 @@ class User extends Base {
         $json_arr = array('status' => 1, 'msg' => '获取成功', 'result' => $store_list);
         exit(json_encode($json_arr));
     }
-    
+
     /**
-     * 申请提现记录列表网页
-     * @return type
+     * @api {GET}   index.php?m=Api&c=User&a=withdrawals_list    提现列表（待调试）
+     * @apiName     withdrawals_list
+     * @apiGroup    User
+     *
      */
     public function withdrawals_list()
     {
@@ -1092,9 +1115,12 @@ class User extends Base {
         }
         return $this->fetch();
     }
-    
+
     /**
-     * 申请提现
+     * @api {GET}   index.php?m=Api&c=User&a=withdrawals    申请提现（待调试）
+     * @apiName     withdrawals
+     * @apiGroup    User
+     *
      */
     public function withdrawals()
     {
@@ -1132,9 +1158,12 @@ class User extends Base {
         }
         $this->ajaxReturn($json_arr);
     }
-    
+
     /**
-     * 账户明细
+     * @api {GET}   index.php?m=Api&c=User&a=points    我的钱包明细（待调试）
+     * @apiName     points
+     * @apiGroup    User
+     *
      */
     public function points()
     {
@@ -1363,10 +1392,12 @@ class User extends Base {
         }
         return $this->fetch();
     }
-    
+
     /**
-     * 充值记录网页
-     * @return type
+     * @api {GET}   index.php?m=Api&c=User&a=recharge_list    充值记录（待调试）
+     * @apiName     recharge_list
+     * @apiGroup    User
+     *
      */
     public function recharge_list()
     {
