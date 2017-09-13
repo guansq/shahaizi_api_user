@@ -27,6 +27,7 @@ class Index extends Base {
       * @api {GET}   /index.php?m=Api&c=Index&a=home  得到首页相关数据done  管少秋
       * @apiName    home
       * @apiGroup   Index
+      * @apiParam   {String}    city    城市名
       * @apiSuccessExample {json}   Success-Response
       *             Http/1.1    200 OK
       * {
@@ -37,6 +38,7 @@ class Index extends Base {
       * }
       */
     public function home(){
+        $city = I('city','');
         //获取轮播图
         $data = M('ad')->where('pid = 10')->field(array('ad_link','ad_name','ad_code'))->cache(true,TPSHOP_CACHE_TIME)->select();
         //广告地址转换
@@ -49,7 +51,7 @@ class Index extends Base {
         //获取大分类
 //        $category_arr = M('goods_category')->where('id in(4,5,7)')->field('id,name')->limit(3)->cache(true,TPSHOP_CACHE_TIME)->select();
         $homeLogic = new HomeLogic();
-        $result = $homeLogic->getHomeInfo();
+        $result = $homeLogic->getHomeInfo($city);
         $this->ajaxReturn(array('status'=>1,'msg'=>'获取成功','result'=>array('action'=>$result,'ad'=>$data)));
     }
 
