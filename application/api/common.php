@@ -184,3 +184,29 @@ function sendMail($to, $title, $content){
 }
 
 
+
+/*
+ * 时间的处理
+ */
+function shzDate($time){
+    if(empty($time)){
+        return $time;
+    }
+    return strval(date('Y-m-d H:i:s',$time));
+}
+
+/*
+ * 金钱的处理-->统一后两位小数点
+ */
+function shzMoney($num,$ispre = false){
+    $num = $num > 0 ? $num : 0;
+    //number_format(10000, 2, '.', '')
+    $formattedNum = number_format($num, 2,'.', '') ;
+    if($ispre){
+        return '¥'.$formattedNum;
+    }else{
+        return strval($formattedNum);
+    }
+}
+
+
