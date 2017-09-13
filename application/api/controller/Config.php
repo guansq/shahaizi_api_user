@@ -16,7 +16,7 @@ class Config extends Base{
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=Config&a=getCountryNumber    得到国家区号done
+     * @api {GET}   index.php?m=Api&c=Config&a=getCountryNumber    得到国家区号done  管少秋
      * @apiName     getCountryNumber
      * @apiGroup    Config
      *

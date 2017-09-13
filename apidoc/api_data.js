@@ -209,43 +209,8 @@ define({ "api": [
   },
   {
     "type": "POST",
-    "url": "/index.php?m=Api&c=BaseMessage&a=sendCaptcha",
-    "title": "发送验证码（国内废除）",
-    "name": "sendCaptcha",
-    "group": "Common",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "mobile",
-            "description": "<p>手机号.</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "opt",
-            "description": "<p>验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定手机号.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "application/api/controller/BaseMessage.php",
-    "groupTitle": "Common",
-    "sampleRequest": [
-      {
-        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=BaseMessage&a=sendCaptcha"
-      }
-    ]
-  },
-  {
-    "type": "POST",
     "url": "/index.php?m=Api&c=BaseMessage&a=sendInterCaptcha",
-    "title": "发送国际验证码done",
+    "title": "发送国际验证码done  管少秋",
     "name": "sendInterCaptcha",
     "group": "Common",
     "parameter": {
@@ -280,7 +245,7 @@ define({ "api": [
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=BaseMessage&a=sendMailCaptcha",
-    "title": "发送邮件验证码done",
+    "title": "发送邮件验证码done  管少秋",
     "name": "sendMailCaptcha",
     "group": "Common",
     "parameter": {
@@ -360,7 +325,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "index.php?m=Api&c=Config&a=getCountryNumber",
-    "title": "得到国家区号done",
+    "title": "得到国家区号done  管少秋",
     "name": "getCountryNumber",
     "group": "Config",
     "version": "0.0.0",
@@ -1527,7 +1492,7 @@ define({ "api": [
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=BindMail",
-    "title": "绑定用户邮箱done",
+    "title": "绑定用户邮箱done  管少秋",
     "name": "BindMail",
     "group": "User",
     "parameter": {
@@ -1788,7 +1753,7 @@ define({ "api": [
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=bindPhone",
-    "title": "绑定手机done",
+    "title": "绑定手机done  管少秋",
     "name": "bindPhone",
     "group": "User",
     "parameter": {
@@ -2027,7 +1992,7 @@ define({ "api": [
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=userInfo",
-    "title": "获取用户信息done",
+    "title": "获取用户信息done  管少秋",
     "name": "info",
     "group": "User",
     "parameter": {
@@ -2529,7 +2494,7 @@ define({ "api": [
   {
     "type": "GET",
     "url": "index.php?m=Api&c=User&a=withdrawals",
-    "title": "申请提现（待调试） 管少秋",
+    "title": "申请提现（待调试） wxx",
     "name": "withdrawals",
     "group": "User",
     "version": "0.0.0",

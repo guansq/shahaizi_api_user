@@ -211,7 +211,7 @@ class User extends Base {
     }
 
     /**
-     * @api     {POST}  /index.php?m=Api&c=User&a=bindPhone     绑定手机done
+     * @api     {POST}  /index.php?m=Api&c=User&a=bindPhone     绑定手机done  管少秋
      * @apiName     bindPhone
      * @apiGroup    User
      * @apiParam    {String}    token       token
@@ -262,7 +262,7 @@ class User extends Base {
 
     }
     /**
-     * @api     {POST}  /index.php?m=Api&c=User&a=BindMail      绑定用户邮箱done
+     * @api     {POST}  /index.php?m=Api&c=User&a=BindMail      绑定用户邮箱done  管少秋
      * @apiName     BindMail
      * @apiGroup    User
      * @apiParam    {String}    token       token
@@ -419,7 +419,7 @@ class User extends Base {
     }
 
     /**
-     * @api      {POST} /index.php?m=Api&c=User&a=userInfo   获取用户信息done
+     * @api      {POST} /index.php?m=Api&c=User&a=userInfo   获取用户信息done  管少秋
      * @apiName  info
      * @apiGroup User
      * @apiParam {String}   token           token.
@@ -1117,7 +1117,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=withdrawals    申请提现（待调试） 管少秋
+     * @api {GET}   index.php?m=Api&c=User&a=withdrawals    申请提现（待调试） wxx
      * @apiName     withdrawals
      * @apiGroup    User
      *
