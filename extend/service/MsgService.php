@@ -175,8 +175,7 @@ class MsgService extends Model{
         //echo $time - $info['update_at'];die;
         $result = $this->_request($url);
         $result = json_decode($result,true);
-        //dump($result);die;
-        if($result['success']){//发送成功
+        if($result['success'] == 'success'){//发送成功
             return ['status' => 1, 'msg' => '发送成功'];
         }else{
             return ['status' => -1, 'msg' => '发送失败'];

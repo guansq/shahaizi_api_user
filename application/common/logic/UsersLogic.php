@@ -493,13 +493,13 @@ class UsersLogic extends Model
      * $type:查询类型 0:未使用，1:已使用，2:已过期
      * $order_money: 订单总额，筛选出大于等于总额的优惠券，0代表不加此筛选条件
      */
-    public function get_coupon($user_id, $type = 0, $orderBy = null, $belone = 0, $store_id = 0, $order_money = 0)
+    public function get_coupon($user_id, $type = 0, $orderBy = null, $belone = 0, $store_id = 0, $order_money = 0,$model_type = 1)
     {
         $activityLogic = new ActivityLogic;
-        $count = $activityLogic->getUserCouponNum($user_id, $type, $orderBy, $belone, $store_id, $order_money);
+        $count = $activityLogic->getUserCouponNum($user_id, $type, $orderBy, $belone, $store_id, $order_money,$model_type);
         
         $page = new Page($count, 10);
-        $list = $activityLogic->getUserCouponList($page->firstRow, $page->listRows, $user_id, $type, $orderBy, $belone, $store_id, $order_money);
+        $list = $activityLogic->getUserCouponList($page->firstRow, $page->listRows, $user_id, $type, $orderBy, $belone, $store_id, $order_money,$model_type);
 
         $return['status'] = 1;
         $return['msg'] = '获取成功';

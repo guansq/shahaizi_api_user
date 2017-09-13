@@ -714,7 +714,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试） wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试） wxx
      * @apiName     getAddressList
      * @apiGroup    User
      *
@@ -743,7 +743,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=addAddress    收货地址添加（待调试）wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=addAddress    收货地址添加（待调试）wxx
      * @apiName     addAddress
      * @apiGroup    User
      *
@@ -756,7 +756,7 @@ class User extends Base {
         exit(json_encode($data));
     }
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=del_address    收货地址删除（待调试） wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=del_address    收货地址删除（待调试） wxx
      * @apiName     del_address
      * @apiGroup    User
      *
@@ -787,7 +787,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试） wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试） wxx
      * @apiName     setDefaultAddress
      * @apiGroup    User
      *
@@ -803,11 +803,67 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=getCouponList    得到优惠券列表（待调试） 管少秋
-     * @apiName     getCouponList
+     * @api {GET}   /index.php?m=Api&c=User&a=getPackCouponList    得到优惠券列表 done 管少秋
+     * @apiName     getPackCouponList
      * @apiGroup    User
-     *
+     * @apiParam    {String}    token           token
+     * @apiParam    {String}    model_type      模块类型 0为包车模块1为商城模块2为民宿模块
+     * @apiParam    {String}    type            发放类型 0下单赠送 1 按用户发放 2 免费领取 3 线下发放
+     * @apiParam    {Number}    [store_id]      传入包车模块所对应发放优惠券人的drv_id store_id home_id
+     * @apiSuccessExample   {json}      Success-Response
+     *  Http/1.1    200     OK
+     * {
+     * "status": 1,
+     * "msg": "获取成功",
+     * "result": [
+        * {
+        * "id": 63,
+        * "cid": 25,
+        * "type": 0,
+        * "uid": 60,
+        * "order_id": 0,
+        * "get_order_id": null,
+        * "use_time": 0,
+        * "code": "",
+        * "send_time": 1477566074,
+        * "store_id": 1,
+        * "status": 0,
+        * "deleted": 0,
+        * "drv_id": null,
+        * "model_type": 0,
+        * "home_id": null,
+        * "name": "TPshop100元券",//满899减掉100
+        * "use_type": 0,
+        * "money": "100.00",
+        * "use_start_time": 1477497600,
+        * "use_end_time": 1536835755,
+        * "condition": "899.00"
+        * },
+    * ]
+    * }
      */
+    public function getPackCouponList()
+    {
+        if (!$this->user_id) {
+            $this->ajaxReturn(['status'=>-1, 'msg'=>'还没登录', 'result'=>'']);
+        }
+
+        $store_id = I('get.store_id', 0);
+        $type = I('get.type', 0);
+        $order_money = I('get.order_money', 0);
+        $model_type = I('get.model_type',1);
+        $data = $this->userLogic->get_coupon($this->user_id, $type, null, 0, $store_id, $order_money,$model_type);
+        unset($data['show']);
+        if($model_type == 1){
+            $coupon['limit_store'] = '商城专属';
+        }elseif($model_type == 0){
+            $coupon['limit_store'] = '包车专属';
+        }elseif($model_type == 2){
+            $coupon['limit_store'] = '房源专属';
+        }
+        $this->ajaxReturn($data);
+    }
+
     public function getCouponList()
     {
         if (!$this->user_id) {
@@ -900,7 +956,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=getGoodsCollect    我的收藏路线（待完成） 管少秋
+     * @api {GET}   /index.php?m=Api&c=User&a=getGoodsCollect    我的收藏路线（待完成） 管少秋
      * @apiName     getGoodsCollect
      * @apiGroup    User
      *
@@ -1025,7 +1081,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=account    我的钱包（待调试） wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=account    我的钱包（待调试） wxx
      * @apiName     account
      * @apiGroup    User
      *
@@ -1090,7 +1146,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=withdrawals_list    提现列表（待调试） wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=withdrawals_list    提现列表（待调试） wxx
      * @apiName     withdrawals_list
      * @apiGroup    User
      *
@@ -1117,7 +1173,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=withdrawals    申请提现（待调试） wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=withdrawals    申请提现（待调试） wxx
      * @apiName     withdrawals
      * @apiGroup    User
      *
@@ -1160,7 +1216,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=points    我的钱包明细（待调试） wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=points    我的钱包明细（待调试） wxx
      * @apiName     points
      * @apiGroup    User
      *
@@ -1394,7 +1450,7 @@ class User extends Base {
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=User&a=recharge_list    充值记录（待调试） wxx
+     * @api {GET}   /index.php?m=Api&c=User&a=recharge_list    充值记录（待调试） wxx
      * @apiName     recharge_list
      * @apiGroup    User
      *

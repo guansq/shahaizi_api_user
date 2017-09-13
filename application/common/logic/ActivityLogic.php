@@ -108,6 +108,56 @@ class ActivityLogic extends Model
             'coupon_list' => $coupon_list,
         ];
     }
+
+    /**
+     * 获取优惠券查询对象
+     * $model_type  0为包车模块1为商城模块2为民宿模块
+     * $store_id   store_id    drv_id    home_id //可能为这三个ID
+     */
+    public function getNewCouponQuery($queryType, $user_id,$type = 0, $orderBy = null,$belone = 0, $store_id = 0,$order_money = 0, $model_type = 0){
+        $where['l.uid'] = $user_id;
+        $where['l.deleted'] = 0;
+        $where['l.status'] = 1;
+        //查询条件
+        if(empty($type)){
+            //未使用
+            $where['c.use_end_time'] = array('gt', time());
+            $where['c.status'] = 1;
+            $where['l.status'] = 0;
+        } elseif ($type == 1){
+            //已使用
+            $where['l.order_id'] = array('gt', 0);
+            $where['l.use_time'] = array('gt', 0);
+        } elseif ($type ==2){
+            $where['c.use_end_time'] = array('lt',time());
+        }
+
+        if ($orderBy == 'use_end_time') {
+            //即将过期
+            $order['c.use_end_time'] = 'asc';
+        } elseif ($orderBy == 'send_time') {
+            //最近到账
+            $where['l.send_time'] = array('lt',time());
+            $order['l.send_time'] = 'desc';
+        } elseif (empty($orderBy)) {
+            $order = array('l.send_time' => 'DESC', 'l.use_time');
+        }
+
+        $condition = floatval($order_money) ? ' AND c.condition <= '.$order_money : '';
+
+        $query = M('coupon_list')->alias('l')
+            ->join('__COUPON__ c','l.cid = c.id'.$condition)
+            ->where($where)
+            ->where(function($query) use ($belone, $store_id, $model_type) {
+                    $query->where("l.model_type", $model_type);
+            });
+
+        if ($queryType != 0) {
+            $query = $query->field('l.*,c.name,c.use_type,c.money,c.use_start_time,c.use_end_time,c.condition')
+                ->order($order);
+        }
+        return $query;
+    }
     
     /**
      * 获取优惠券查询对象
@@ -177,18 +227,18 @@ class ActivityLogic extends Model
     /**
      * 获取优惠券数目
      */
-    public function getUserCouponNum($user_id, $type = 0, $orderBy = null, $belone = 0, $store_id = 0, $order_money = 0)
+    public function getUserCouponNum($user_id, $type = 0, $orderBy = null, $belone = 0, $store_id = 0, $order_money = 0, $model_type = 1)
     {
-        $query = $this->getCouponQuery(0, $user_id, $type, $orderBy, $belone, $store_id, $order_money);
+        $query = $this->getNewCouponQuery(0, $user_id, $type, $orderBy, $belone, $store_id, $order_money, $model_type);
         return $query->count();
     }
     
     /**
      * 获取用户优惠券列表
      */
-    public function getUserCouponList($firstRow, $listRows, $user_id, $type = 0, $orderBy = null, $belone = 0, $store_id = 0, $order_money = 0)
+    public function getUserCouponList($firstRow, $listRows, $user_id, $type = 0, $orderBy = null, $belone = 0, $store_id = 0, $order_money = 0, $model_type = 1)
     {
-        $query = $this->getCouponQuery(1, $user_id, $type, $orderBy, $belone, $store_id, $order_money);
+        $query = $this->getNewCouponQuery(1, $user_id, $type, $orderBy, $belone, $store_id, $order_money, $model_type);
         return $query->limit($firstRow, $listRows)->select();
     }
     

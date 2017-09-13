@@ -1230,6 +1230,15 @@
         ]
       }
     },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "Http/1.1     200 OK\n    {\n    \"status\": 1,\n    \"msg\": \"成功\",\n    \"result\": {\n        \"totalPages\": 1,\n        \"list\": [\n            {\n            \"order_sn\": \"201709091232\",\n            \"seller_id\": 19,\n            \"status\": 5,\n            \"title\": \"自由女神+华尔街+三一教堂+归零地+帝国大厦 包车两日游，纽约往返\",\n            \"customer_name\": \"西班牙\",\n            \"drv_name\": \"醉生梦死\",\n            \"create_at\": 1504858382,\n            \"drv_phone\": null,\n            \"total_price\": 100,\n            \"real_price\": \"100.00\"\n            },\n            {\n            \"order_sn\": \"201709091232\",\n            \"seller_id\": 20,\n            \"status\": 0,\n            \"title\": \"自由女神+华尔街+三一教堂+归零地+帝国大厦 包车两日游，纽约往返\",\n            \"customer_name\": \"西班牙\",\n            \"drv_name\": \"醉生梦死\",\n            \"create_at\": 1504858382,\n            \"drv_phone\": null,\n            \"total_price\": 100,\n            \"real_price\": \"100.00\"\n            },\n        ]\n    }\n    }",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "application/api/controller/PackOrder.php",
     "groupTitle": "PackOrder",
@@ -1242,7 +1251,7 @@
   {
     "type": "POST",
     "url": "/index.php?m=Api&c=PackOrder&a=getPackOrderDetail",
-    "title": "得到包车订单详情（未完成） 管少秋",
+    "title": "得到包车订单详情done 管少秋",
     "name": "getPackOrderDetail",
     "group": "PackOrder",
     "parameter": {
@@ -1254,6 +1263,64 @@
             "optional": false,
             "field": "token",
             "description": "<p>token.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "air_id",
+            "description": "<p>订单ID</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": "Http/1.1     200 OK\n    \"result\": {\n        \"air_id\": 16,\n        \"order_sn\": \"201709091232\",\n        \"user_id\": 60,\n        \"seller_id\": 19,\n        \"allot_seller_id\": \",18,19,20,\",\n        \"customer_name\": \"西班牙\",\n        \"customer_phone\": 1322222222,\n        \"use_car_adult\": 10,\n        \"use_car_children\": null,\n        \"work_at\": 22,\n        \"work_pointlng\": 123.021,\n        \"work_pointlat\": 36.25,\n        \"work_address\": \"江苏省苏州市\",\n        \"dest_pointlng\": 125.236,\n        \"dest_pointlat\": 36.23,\n        \"dest_address\": \"英格兰\",\n        \"status\": 5,\n        \"pay_way\": 1,\n        \"total_price\": 100,\n        \"real_price\": \"100.00\",\n        \"is_pay\": 1,\n        \"pay_time\": 1505119625,\n        \"start_time\": 1508688000,\n        \"end_time\": 1505119723,\n        \"add_time_long\": null,\n        \"add_recharge\": null,\n        \"add_reason\": null,\n        \"drv_name\": \"醉生梦死\",\n        \"drv_id\": 3,\n        \"drv_code\": \"121540215\",\n        \"req_car_id\": 11245,\n        \"req_car_type\": \"大众桑塔纳\",\n        \"con_car_id\": 1,\n        \"con_car_type\": \"2\",\n        \"con_car_seat_num\": null,\n        \"type\": 1,\n        \"flt_no\": \"\",\n        \"mile_length\": 100,\n        \"discount_id\": 23,\n        \"user_message\": \"\",\n        \"create_at\": 1504858382,\n        \"update_at\": 1504858382,\n        \"title\": \"自由女神+华尔街+三一教堂+归零地+帝国大厦 包车两日游，纽约往返\",\n        \"is_use_car\": 1,\n        \"remark\": null,\n        \"drv_phone\": null\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/PackOrder.php",
+    "groupTitle": "PackOrder",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=PackOrder&a=getPackOrderDetail"
+      }
+    ]
+  },
+  {
+    "type": "POST",
+    "url": "/index.php?m=Api&c=PackOrder&a=payPackOrderByBalance",
+    "title": "通过余额支付订单   管少秋",
+    "name": "payPackOrderByBalance",
+    "group": "PackOrder",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "air_id",
+            "description": "<p>订单ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "price",
+            "description": "<p>优惠后的金额</p>"
           }
         ]
       }
@@ -1263,7 +1330,7 @@
     "groupTitle": "PackOrder",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=PackOrder&a=getPackOrderDetail"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=PackOrder&a=payPackOrderByBalance"
       }
     ]
   },
@@ -1722,7 +1789,7 @@
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=account",
+    "url": "/index.php?m=Api&c=User&a=account",
     "title": "我的钱包（待调试） wxx",
     "name": "account",
     "group": "User",
@@ -1731,13 +1798,13 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=account"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=account"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=addAddress",
+    "url": "/index.php?m=Api&c=User&a=addAddress",
     "title": "收货地址添加（待调试）wxx",
     "name": "addAddress",
     "group": "User",
@@ -1746,7 +1813,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=addAddress"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=addAddress"
       }
     ]
   },
@@ -1801,7 +1868,7 @@
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=del_address",
+    "url": "/index.php?m=Api&c=User&a=del_address",
     "title": "收货地址删除（待调试） wxx",
     "name": "del_address",
     "group": "User",
@@ -1810,7 +1877,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=del_address"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=del_address"
       }
     ]
   },
@@ -1946,7 +2013,7 @@
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=getAddressList",
+    "url": "/index.php?m=Api&c=User&a=getAddressList",
     "title": "收货地址列表（待调试） wxx",
     "name": "getAddressList",
     "group": "User",
@@ -1955,28 +2022,13 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=getAddressList"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=getAddressList"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=getCouponList",
-    "title": "得到优惠券列表（待调试） 管少秋",
-    "name": "getCouponList",
-    "group": "User",
-    "version": "0.0.0",
-    "filename": "application/api/controller/User.php",
-    "groupTitle": "User",
-    "sampleRequest": [
-      {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=getCouponList"
-      }
-    ]
-  },
-  {
-    "type": "GET",
-    "url": "index.php?m=Api&c=User&a=getGoodsCollect",
+    "url": "/index.php?m=Api&c=User&a=getGoodsCollect",
     "title": "我的收藏路线（待完成） 管少秋",
     "name": "getGoodsCollect",
     "group": "User",
@@ -1985,7 +2037,65 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=getGoodsCollect"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=getGoodsCollect"
+      }
+    ]
+  },
+  {
+    "type": "GET",
+    "url": "/index.php?m=Api&c=User&a=getPackCouponList",
+    "title": "得到优惠券列表 done 管少秋",
+    "name": "getPackCouponList",
+    "group": "User",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>token</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "model_type",
+            "description": "<p>模块类型 0为包车模块1为商城模块2为民宿模块</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "type",
+            "description": "<p>发放类型 0下单赠送 1 按用户发放 2 免费领取 3 线下发放</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "store_id",
+            "description": "<p>传入包车模块所对应发放优惠券人的drv_id store_id home_id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response",
+          "content": " Http/1.1    200     OK\n{\n\"status\": 1,\n\"msg\": \"获取成功\",\n\"result\": [\n{\n\"id\": 63,\n\"cid\": 25,\n\"type\": 0,\n\"uid\": 60,\n\"order_id\": 0,\n\"get_order_id\": null,\n\"use_time\": 0,\n\"code\": \"\",\n\"send_time\": 1477566074,\n\"store_id\": 1,\n\"status\": 0,\n\"deleted\": 0,\n\"drv_id\": null,\n\"model_type\": 0,\n\"home_id\": null,\n\"name\": \"TPshop100元券\",\n\"use_type\": 0,\n\"money\": \"100.00\",\n\"use_start_time\": 1477497600,\n\"use_end_time\": 1536835755,\n\"condition\": \"899.00\"\n},\n]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "application/api/controller/User.php",
+    "groupTitle": "User",
+    "sampleRequest": [
+      {
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=getPackCouponList"
       }
     ]
   },
@@ -2146,7 +2256,7 @@
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=points",
+    "url": "/index.php?m=Api&c=User&a=points",
     "title": "我的钱包明细（待调试） wxx",
     "name": "points",
     "group": "User",
@@ -2155,13 +2265,13 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=points"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=points"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=recharge_list",
+    "url": "/index.php?m=Api&c=User&a=recharge_list",
     "title": "充值记录（待调试） wxx",
     "name": "recharge_list",
     "group": "User",
@@ -2170,7 +2280,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=recharge_list"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=recharge_list"
       }
     ]
   },
@@ -2257,7 +2367,7 @@
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=setDefaultAddress",
+    "url": "/index.php?m=Api&c=User&a=setDefaultAddress",
     "title": "设置默认收货地址（待调试） wxx",
     "name": "setDefaultAddress",
     "group": "User",
@@ -2266,7 +2376,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=setDefaultAddress"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=setDefaultAddress"
       }
     ]
   },
@@ -2493,7 +2603,7 @@
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=withdrawals",
+    "url": "/index.php?m=Api&c=User&a=withdrawals",
     "title": "申请提现（待调试） wxx",
     "name": "withdrawals",
     "group": "User",
@@ -2502,13 +2612,13 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=withdrawals"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=withdrawals"
       }
     ]
   },
   {
     "type": "GET",
-    "url": "index.php?m=Api&c=User&a=withdrawals_list",
+    "url": "/index.php?m=Api&c=User&a=withdrawals_list",
     "title": "提现列表（待调试） wxx",
     "name": "withdrawals_list",
     "group": "User",
@@ -2517,7 +2627,7 @@
     "groupTitle": "User",
     "sampleRequest": [
       {
-        "url": "http://shz.api.user.ruitukeji.cn:8502index.php?m=Api&c=User&a=withdrawals_list"
+        "url": "http://shz.api.user.ruitukeji.cn:8502/index.php?m=Api&c=User&a=withdrawals_list"
       }
     ]
   }
