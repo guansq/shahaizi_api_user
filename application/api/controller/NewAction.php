@@ -8,7 +8,7 @@
 class NewAction{
 
     /**
-     * @api {GET}   index.php?m=Api&c=NewAction&a=getIndexNewAction     得到首页最新消息（未完成） wxx
+     * @api {GET}   index.php?m=Api&c=NewAction&a=getIndexNewAction     个人中心（未完成） wxx
      * @apiName getIndexNewAction
      * @apiGroup    UserCenter
      * @apiParam   token {String}   token.
