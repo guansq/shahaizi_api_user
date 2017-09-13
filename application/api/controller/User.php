@@ -713,8 +713,8 @@ class User extends Base {
         }
     }
 
-    /**
-     * @api {GET}   /index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试） wxx
+    /*
+     * @api {GET}   index.php?m=Api&c=User&a=getAddressList    收货地址列表（待调试）
      * @apiName     getAddressList
      * @apiGroup    User
      *
@@ -742,8 +742,8 @@ class User extends Base {
         $this->ajaxReturn(array('status'=>1,'msg'=>'获取成功','result'=>$address));
     }
 
-    /**
-     * @api {GET}   /index.php?m=Api&c=User&a=addAddress    收货地址添加（待调试）wxx
+    /*
+     * @api {GET}   index.php?m=Api&c=User&a=addAddress    收货地址添加（待调试）wxx
      * @apiName     addAddress
      * @apiGroup    User
      *
@@ -756,8 +756,9 @@ class User extends Base {
         exit(json_encode($data));
     }
 
-    /**
-     * @api {GET}   /index.php?m=Api&c=User&a=del_address    收货地址删除（待调试） wxx
+
+    /*
+     * @api {GET}   index.php?m=Api&c=User&a=del_address    收货地址删除（待调试）
      * @apiName     del_address
      * @apiGroup    User
      *
@@ -787,9 +788,8 @@ class User extends Base {
            exit(json_encode(array('status'=>1,'msg'=>'删除失败','result'=>''))); 
     }
 
-
-    /**
-     * @api {GET}   /index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试） wxx
+    /*
+     * @api {GET}   index.php?m=Api&c=User&a=setDefaultAddress    设置默认收货地址（待调试）
      * @apiName     setDefaultAddress
      * @apiGroup    User
      *
@@ -1082,8 +1082,8 @@ class User extends Base {
         $this->ajaxReturn(['status' => 1, 'msg' => '操作成功', 'result' => $post['head_pic']]);
     }
 
-    /**
-     * @api {GET}   /index.php?m=Api&c=User&a=account    我的钱包（待调试） wxx
+    /*
+     * @api         {GET}   index.php?m=Api&c=User&a=account    我的钱包（待调试） wxx
      * @apiName     account
      * @apiGroup    User
      *
@@ -1147,8 +1147,8 @@ class User extends Base {
         exit(json_encode($json_arr));
     }
 
-    /**
-     * @api {GET}   /index.php?m=Api&c=User&a=withdrawals_list    提现列表（待调试） wxx
+    /*
+     * @api {GET}   /index.php/Api/User/_list    提现列表（待调试） wxx
      * @apiName     withdrawals_list
      * @apiGroup    User
      *
@@ -1402,6 +1402,16 @@ class User extends Base {
     }
     
     /**
+     * @api {GET}   /index.php/Api/User/accountList    账号明显(todo) wxx
+     * @apiName     withdrawals_list
+     * @apiGroup    User
+     *
+     */
+    public function accountList(){
+       return $this->account();
+    }
+
+    /**
      * 账户明细列表网页
      * @return type
      */
@@ -1451,30 +1461,6 @@ class User extends Base {
         return $this->fetch();
     }
 
-    /**
-     * @api {GET}   /index.php?m=Api&c=User&a=recharge_list    充值记录（待调试） wxx
-     * @apiName     recharge_list
-     * @apiGroup    User
-     *
-     */
-    public function recharge_list()
-    {
-        $is_json = I('is_json', 0); //json数据请求
-    	$usersLogic = new UsersLogic;
-    	$result= $usersLogic->get_recharge_log($this->user_id);  //充值记录
-    	
-        if ($is_json) {
-            $this->ajaxReturn(['status' => 1, 'msg' => '获取成功', 'result' => $result['result']]);
-        }
-        
-        $this->assign('page', $result['show']);
-    	$this->assign('lists', $result['result']);
-    	if (I('is_ajax')) {
-    		return $this->fetch('ajax_recharge_list');
-    	}
-    	return $this->fetch();
-    }
-    
     /**
      * 物流网页
      * @return type
