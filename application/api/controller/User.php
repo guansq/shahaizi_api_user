@@ -252,14 +252,45 @@ class User extends Base {
         $this->ajaxReturn(['status'=>1,'msg'=>'绑定成功']);
     }
     /**
-     * @api     {POST}  /index.php?m=Api&c=User&a=unBindPhone     更改绑定手机（开发中） 管少秋
-     * @apiName     unBindPhone
+     * @api     {POST}  /index.php?m=Api&c=User&a=changeBindPhone     更改绑定手机   done 管少秋
+     * @apiName     changeBindPhone
      * @apiGroup    User
      * @apiParam    {String}    token       token
-     * @apiParam    {String}    mobile      绑定手机号
+     * @apiParam    {String}    mobile      新手机号
+     * @apiParam    {Number}    code        需要验证的验证码
      */
-    public function unBindPhone(){
-
+    public function changeBindPhone(){
+        $code = I('code');
+        $mobile = I('mobile');
+        $old_mobile = $this->user['mobile'];
+        if($old_mobile == $mobile){
+            $this->ajaxReturn(['status'=>-1,'msg'=>'当前改绑的手机号与绑定的手机号相同']);
+        }
+        $user = M('users')->field('mobile, nickname')->where(['mobile' => $mobile])->find();
+        if(empty($user)){
+            $countroy_code = $this->user['countroy_code'];
+            $sendphone = $countroy_code.$mobile;
+            //校验code
+            $msgService = new MsgService();
+            $result = $msgService->verifyInterCaptcha($sendphone,'bind',$code);
+            if($result['status'] != 1){
+                $this->ajaxReturn(['status'=>-1,'msg'=>$result['msg']]);
+            }
+            $where = [
+                'user_id' => $this->user_id
+            ];
+            $updateData = [
+                'mobile' => $mobile,
+                'mobile_validated' => 1
+            ];
+            $result = M('users')->where($where)->update($updateData);
+            if($result === false){
+                $this->ajaxReturn(['status'=>-1,'msg'=>'绑定失败']);
+            }
+            $this->ajaxReturn(['status'=>1,'msg'=>'绑定成功']);
+        }else{
+            $this->ajaxReturn(['status'=>-1,'msg'=>'该手机号已被绑定']);
+        }
     }
     /**
      * @api     {POST}  /index.php?m=Api&c=User&a=BindMail      绑定用户邮箱done  管少秋
@@ -270,7 +301,7 @@ class User extends Base {
      * @apiParam    {String}    code        绑定邮箱code
      */
     public function bindMail(){
-        //看该手机号是否被别人绑定
+        //看该邮箱号是否被别人绑定
         $mail = I('mail');
         if(!check_email($mail)){
             $this->ajaxReturn(['status'=>-1,'msg'=>'请填写正确的邮箱']);
@@ -301,14 +332,42 @@ class User extends Base {
     }
 
     /**
-     * @api     {POST}  /index.php?m=Api&c=User&a=unBindMail      解除绑定用户邮箱（开发中） 管少秋
-     * @apiName     unBindMail
+     * @api     {POST}  /index.php?m=Api&c=User&a=changeBindMail      更改绑定用户邮箱  done 管少秋
+     * @apiName     changeBindMail
      * @apiGroup    User
      * @apiParam    {String}    token       token
-     * @apiParam    {String}    mail        绑定邮箱
+     * @apiParam    {String}    mail        更改绑定的邮箱
+     * @apiParam    {Number}    code        绑定邮箱code
      */
-    public function unBindMail(){
-
+    public function changeBindMail(){
+        //看该邮箱号是否被别人绑定
+        $mail = I('mail');
+        if(!check_email($mail)){
+            $this->ajaxReturn(['status'=>-1,'msg'=>'请填写正确的邮箱']);
+        }
+        $user = M('users')->field('mobile, nickname')->where(['email' => $mail])->find();
+        if(!empty($user)){
+            $this->ajaxReturn(['status'=>-1,'msg'=>'该邮箱已被绑定']);
+        }
+        $code = I('code');
+        //校验code
+        $msgService = new MsgService();
+        $result = $msgService->verifyMailCaptcha($mail,'bind',$code);
+        if($result['status'] != 1){
+            $this->ajaxReturn(['status'=>-1,'msg'=>$result['msg']]);
+        }
+        $where = [
+            'user_id' => $this->user_id
+        ];
+        $updateData = [
+            'mail' => $mail,
+            'mail_validated' => 1
+        ];
+        $result = M('users')->where($where)->update($updateData);
+        if($result === false){
+            $this->ajaxReturn(['status'=>-1,'msg'=>'绑定失败']);
+        }
+        $this->ajaxReturn(['status'=>1,'msg'=>'绑定成功']);
     }
 
     /**
