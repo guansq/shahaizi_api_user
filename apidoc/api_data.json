@@ -1867,7 +1867,6 @@
     ]
   },
   {
-<<<<<<< HEAD
     "type": "GET",
     "url": "/index.php?m=Api&c=User&a=del_address",
     "title": "收货地址删除（待调试） wxx",
@@ -1883,8 +1882,6 @@
     ]
   },
   {
-=======
->>>>>>> 1de8e4913405b67a7f8621b6b52e20ae4b310ec7
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=flashToken",
     "title": "刷新token（返回信息同login一样） done 管少秋",
@@ -2016,7 +2013,6 @@
   },
   {
     "type": "GET",
-<<<<<<< HEAD
     "url": "/index.php?m=Api&c=User&a=getAddressList",
     "title": "收货地址列表（待调试） wxx",
     "name": "getAddressList",
@@ -2035,11 +2031,6 @@
     "url": "/index.php?m=Api&c=User&a=getGoodsCollect",
     "title": "我的收藏路线（待完成） 管少秋",
     "name": "getGoodsCollect",
-=======
-    "url": "index.php?m=Api&c=User&a=getCouponList",
-    "title": "得到优惠券列表（待调试） 管少秋",
-    "name": "getCouponList",
->>>>>>> 1de8e4913405b67a7f8621b6b52e20ae4b310ec7
     "group": "User",
     "version": "0.0.0",
     "filename": "application/api/controller/User.php",
@@ -2094,7 +2085,7 @@
       "examples": [
         {
           "title": "Success-Response",
-          "content": " Http/1.1    200     OK\n{\n\"status\": 1,\n\"msg\": \"获取成功\",\n\"result\": [\n{\n\"id\": 63,\n\"cid\": 25,\n\"type\": 0,\n\"uid\": 60,\n\"order_id\": 0,\n\"get_order_id\": null,\n\"use_time\": 0,\n\"code\": \"\",\n\"send_time\": 1477566074,\n\"store_id\": 1,\n\"status\": 0,\n\"deleted\": 0,\n\"drv_id\": null,\n\"model_type\": 0,\n\"home_id\": null,\n\"name\": \"TPshop100元券\",\n\"use_type\": 0,\n\"money\": \"100.00\",\n\"use_start_time\": 1477497600,\n\"use_end_time\": 1536835755,\n\"condition\": \"899.00\"\n},\n]\n}",
+          "content": " Http/1.1    200     OK\n{\n\"status\": 1,\n\"msg\": \"获取成功\",\n\"result\": [\n{\n\"id\": 63,\n\"cid\": 25,\n\"type\": 0,\n\"uid\": 60,\n\"order_id\": 0,\n\"get_order_id\": null,\n\"use_time\": 0,\n\"code\": \"\",\n\"send_time\": 1477566074,\n\"store_id\": 1,\n\"status\": 0,\n\"deleted\": 0,\n\"drv_id\": null,\n\"model_type\": 0,\n\"home_id\": null,\n\"name\": \"TPshop100元券\",//满899减掉100\n\"use_type\": 0,\n\"money\": \"100.00\",\n\"use_start_time\": 1477497600,\n\"use_end_time\": 1536835755,\n\"condition\": \"899.00\"\n},\n]\n}",
           "type": "json"
         }
       ]
@@ -2375,7 +2366,6 @@
     ]
   },
   {
-<<<<<<< HEAD
     "type": "GET",
     "url": "/index.php?m=Api&c=User&a=setDefaultAddress",
     "title": "设置默认收货地址（待调试） wxx",
@@ -2391,8 +2381,6 @@
     ]
   },
   {
-=======
->>>>>>> 1de8e4913405b67a7f8621b6b52e20ae4b310ec7
     "type": "POST",
     "url": "/index.php?m=Api&c=User&a=thirdLogin",
     "title": "第三方登录done（未调试） 管少秋",

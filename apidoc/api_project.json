@@ -23,12 +23,8 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-<<<<<<< HEAD
-    "time": "2017-09-13T10:56:52.974Z",
-=======
-    "time": "2017-09-13T07:50:37.303Z",
->>>>>>> 1de8e4913405b67a7f8621b6b52e20ae4b310ec7
+    "time": "2017-09-13T11:05:16.542Z",
     "url": "http://apidocjs.com",
-    "version": "0.17.5"
+    "version": "0.17.6"
   }
 }
