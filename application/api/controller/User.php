@@ -1298,15 +1298,15 @@ class User extends Base{
 
 
     /**
-     * @api         {GET}   /index.php/api/user/recharge  我的钱包-充值（doing） wxx
+     * @api         {GET}   /index.php/api/user/recharge  我的钱包-充值(done) wxx
      * @apiDescription  用户充值获取调起支付需要的参数
      * @apiName     recharge
      * @apiGroup    User
      * @apiParam  {string} token    token.
      * @apiParam  {string=wx,zfb} payWay    支付方式.
      * @apiParam  {number{0.01-10000}} amount  充值金额.
-     * @apiSuccess {String} aliPayParams 调起支付宝支付需要的参数.
-     * @apiSuccess {String} wxPayParams 调起支付宝支付需要的参数.
+     * @apiSuccess {string} aliPayParams 调起支付宝支付需要的参数.
+     * @apiSuccess {object} wxPayParams 调起支付宝支付需要的参数.
      * @apiSuccessExample {json} 成功获取支付宝参数:
      *  {
      *      "status": 1,

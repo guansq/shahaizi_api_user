@@ -18,6 +18,7 @@ namespace app\api\logic;
 use app\common\logic\UsersLogic as CommonUserLogic;
 use payment\alipay\Alipay;
 use payment\alipay\AlipayOpenCommon;
+use payment\wxpay\WxPay;
 
 
 /**
@@ -47,21 +48,28 @@ class UserLogic extends CommonUserLogic{
 
         $result = [];
         if($reqParams['payWay'] == 'zfb'){
-            // todo 传参
+            // todo 联调成功后 优化代码
             $aliPayParams = $this->aliPay($paymentParams);
             $result =['aliPayParams'=>$aliPayParams];
         }elseif($reqParams['payWay'] == 'wx'){
-            $result = $this->wxPay($paymentParams);
+            $wxPayParams = $this->wxPay($paymentParams);
+            $result =['wxPayParams'=>$wxPayParams];
         }
 
         return resultArray(2000, '', $result);
     }
 
 
+    /** FIXME
+     * Author: WILL<314112362@qq.com>
+     * Describe: 支付宝支付
+     * @param $paymentParams
+     * @return array|bool|string
+     */
     public function aliPay($paymentParams){
 
         $bizContentArr = [
-            "subject" => 'TODO睿途科技/流量达人',
+            "subject" => 'FIXME睿途科技',
             "out_trade_no" => $paymentParams['orderSn'],
             "product_code" => "QUICK_MSECURITY_PAY",
             "timeout_express" => '90m',
@@ -95,6 +103,19 @@ class UserLogic extends CommonUserLogic{
         $request->setBizContent($bizContent);
         $urlParams = $alipay->execute($request);
         return $urlParams;
+    }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe: 微信支付
+     * @param $paymentParams
+     */
+    private function wxPay($paymentParams){
+        $order["order_id"] = $paymentParams['orderSn'];
+        $order["wxbody"] = 'FIXME 睿途科技';
+        $order["attach"] = json_encode($paymentParams['extend']);
+        $wxPay = new WxPay();
+        return $wxPay->dopay($order);
     }
 
 }
