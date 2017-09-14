@@ -85,6 +85,14 @@ if(!function_exists('returnJson')){
     }
 }
 
+if(!function_exists("dd")){
+    function dd($obj){
+        var_dump($obj);
+        die();
+    }
+
+}
+
 /*
  * 生成签名
  */
@@ -249,5 +257,6 @@ function shzMoney($num,$ispre = false){
         return strval($formattedNum);
     }
 }
+
 
 
