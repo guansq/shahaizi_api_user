@@ -134,13 +134,52 @@ class PackOrder extends Base{
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token
      * @apiParam    {Number}    air_id  订单ID
-     * @apiParam    {Number}    real_price   优惠后的真实价格
+     * @apiParam    {Float}    [real_price]   优惠的价格
+     * @apiParam    {Number}    [coupon_id]   优惠券ID 无优惠券传空进来
      */
     public function payPackOrderByBalance(){
+        //判断订单是否在有效期内 有效付款时间24小时
         //判断用户
         $air_id = I('air_id');
+        $pack_order = M('pack_order')->where(array('air_id' => $air_id,'status'=>0))->find();//订单详情
+        $time = time();
+        if(empty($pack_order)){
+            $this->ajaxReturn(['status'=>-1,'msg'=>'该订单不可进行付款操作']);
+        }
+        if($time - $pack_order['create_at'] > 86400){//超过一天
+            $this->ajaxReturn(['status'=>-1,'msg'=>'该订单已超时']);
+        }
+        $coupon_id = I('coupon_id');
+        $discount_price = 0;//优惠价格
+        //$real_price = 0;//真实价格
+        if(!empty($coupon_id)){
+            //通过优惠券去判断需要优惠的价格
+            $where = [
+                'l.id' => $coupon_id,
+                'l.uid' => $this->user_id,
+                'l.model_type' => 0, //代表包车订单
+                'c.condition' => ['lt',$pack_order['total_price']],//订单金额 要 大于优惠券的条件
+                'c.status' => 1,//是否可使用
+                'l.status' => 0,
+                'c.use_start_time' => ['lt',$time],//是否开始 开始时间小于当前时间
+                'c.use_end_time' => ['gt',$time]//是否过期    过期时间大于当前时间
+            ];
+            $coupon_info = M('coupon_list')->field('l.id,c.*')->alias('l')->join('__COUPON__ c','l.cid = c.id')->where($where)->find();//找出优惠券
+            if(empty($coupon_info)){
+                $this->ajaxReturn(['status'=>-1,'msg'=>'该优惠券不满足条件']);
+            }
+            $discount_price = $coupon_info['money'];
+        }
+        $real_price = $pack_order['total_price'] - $discount_price;//真实价格
+        //平台的dump($pack_order);die;
+    }
 
-        $order = M('order')->where(array('order_id' => $air_id,'pay_status'=>1))->find();//订单详情
-        echo 'test';
+    /**
+     * @api {POST}  /index.php?m=Api&c=PackOrder&a=createOrder      生成订单
+     * @apiName     createOrder
+     * @apiGroup    PackOrder
+     */
+    public function createOrder(){
+
     }
 }

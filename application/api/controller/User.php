@@ -567,9 +567,10 @@ class User extends Base{
      * @apiParam    {String}    [head_pic]      头像URL
      * @apiParam    {String}    [sex]           性别（0 保密 1 男 2 女）
      * @apiParam    {String}    [birthday]      生日 （2015-01-05）
-     * @apiParam    {String}    [province]      省份ID
-     * @apiParam    {String}    [city]          城市ID
-     * @apiParam    {String}    [district]      地区ID
+     * @apiParam    {String}    is_update_address     是否修改省市区   0 不修改   1   修改
+     * @apiParam    {String}    [province]      省份
+     * @apiParam    {String}    [city]          城市
+     * @apiParam    {String}    [district]      地区
      * @apiParam    {String}    token      token
      */
     public function updateUserInfo(){
@@ -582,14 +583,19 @@ class User extends Base{
             I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
             I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
             I('post.head_pic') ? $post['head_pic'] = I('post.head_pic') : false; //头像地址
-            I('post.sex') ? $post['sex'] = I('post.sex') : false;  // 性别
+            if(in_array(I('post.sex'),[0,1,2])){
+                $post['sex'] = I('post.sex');
+            }
             I('post.birthday') ? $post['birthday'] = strtotime(I('post.birthday')) : false;  // 生日
-            I('post.province') ? $post['province'] = I('post.province') : false;  //省份
-            I('post.city') ? $post['city'] = I('post.city') : false;  // 城市
-            I('post.district') ? $post['district'] = I('post.district') : false;  //地区
+            if(I('post.is_update_address')){
+                $post['province'] = I('post.province');  //省份
+                $post['city'] = I('post.city');  // 城市
+                $post['district'] = I('post.district');  //地区
+            }
+
             I('post.email') ? $post['email'] = I('post.email') : false;
             I('post.mobile') ? $post['mobile'] = I('post.mobile') : false;
-
+            //dump($post);die;
             if(!$this->userLogic->update_info($this->user_id, $post)){
                 exit(json_encode(array('status' => -1, 'msg' => '更新失败', 'result' => '')));
             }
