@@ -17,7 +17,7 @@ class HotGuide extends Base{
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideList   得到热门攻略列表done  管少秋
+     * @api {GET}   /index.php?m=Api&c=HotGuide&a=getHotGuideList   得到热门攻略列表done  管少秋
      * @apiName getHotGuideList
      * @apiGroup HotGuide
      * @apiSuccessExample   Success-Response
@@ -40,7 +40,7 @@ class HotGuide extends Base{
     }
 
     /**
-     * @api {GET}   index.php?m=Api&c=HotGuide&a=getHotGuideDetail      得到热门攻略详情done   管少秋
+     * @api {GET}   /index.php?m=Api&c=HotGuide&a=getHotGuideDetail      得到热门攻略详情done   管少秋
      * @apiName     getHotGuideDetail
      * @apiGroup    HotGuide
      * @apiSuccessExample   Success-Response
@@ -99,36 +99,6 @@ class HotGuide extends Base{
     "content": "two2",
     "user_name": "b",
     "to_name": "a",
-    "deleted": 0,
-    "reply_time": 2017
-    },
-    {
-    "reply_id": 3,
-    "comment_id": 1,
-    "parent_id": 2,
-    "content": "three3",
-    "user_name": "a",
-    "to_name": "b",
-    "deleted": 0,
-    "reply_time": 2017
-    },
-    {
-    "reply_id": 4,
-    "comment_id": 1,
-    "parent_id": 0,
-    "content": "好",
-    "user_name": "",
-    "to_name": "",
-    "deleted": 0,
-    "reply_time": 2017
-    },
-    {
-    "reply_id": 5,
-    "comment_id": 1,
-    "parent_id": 0,
-    "content": "不错",
-    "user_name": "",
-    "to_name": "",
     "deleted": 0,
     "reply_time": 2017
     }

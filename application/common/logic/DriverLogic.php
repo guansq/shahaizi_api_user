@@ -102,7 +102,7 @@ class DriverLogic extends Model{
      * 我的车辆
      */
     public function get_my_car(){
-
+        //$where = [];
     }
 
     /**
