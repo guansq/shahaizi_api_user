@@ -1360,6 +1360,7 @@ class User extends Base{
         return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
     }
 
+
     /**
      * @api         {GET}   /index.php/api/user/recharge  我的钱包-充值（todo） wxx
      * @apiDescription  用户充值获取调起支付需要的参数

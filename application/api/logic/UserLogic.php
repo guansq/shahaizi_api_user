@@ -45,7 +45,6 @@ class UserLogic extends CommonUserLogic{
                 'orderSn' => $orderSn
             ]
         ];
-
         $result = [];
         if($reqParams['payWay'] == 'zfb'){
             $aliPayParams = $this->aliPay($paymentParams);
@@ -53,6 +52,8 @@ class UserLogic extends CommonUserLogic{
         }elseif($reqParams['payWay'] == 'wx'){
             $wxPayParams = $this->wxPay($paymentParams);
             $result =['wxPayParams'=>$wxPayParams];
+        }else{
+            return resultArray(4000, '不支持的支付方式');
         }
         return resultArray(2000, '', $result);
     }
@@ -64,7 +65,7 @@ class UserLogic extends CommonUserLogic{
      * @param $paymentParams
      * @return array|bool|string
      */
-    public function aliPay($paymentParams){
+    private function aliPay($paymentParams){
 
         $bizContentArr = [
             "subject" => 'FIXME睿途科技',
@@ -94,7 +95,7 @@ class UserLogic extends CommonUserLogic{
         $alipay->format = "json";
         $alipay->charset = "UTF-8";
         $request = new AlipayOpenCommon();
-        $url = U("Api/Callback/alipay", '', false, true);
+        $url = U("Api/Payment/alipayNotify", '', false, true);
         $request->setNotifyUrl($url);
         $request->setApiMethodName("alipay.trade.app.pay");
 
