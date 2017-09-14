@@ -1302,9 +1302,9 @@ class User extends Base{
      * @apiName     recharge
      * @apiGroup    User
      * @apiParam  {string=wx,zfb} payWay    支付方式.
+     * @apiParam  {string=wx,zfb} payWay    支付方式.
      * @apiParam  {number{0.01-10000}} amount  充值金额.
      * @apiSuccess {String} xx xxx.
-     *
      */
     public function recharge(){
         $reqParams = $this->getReqParams(['payWay','amount']);
@@ -1313,8 +1313,8 @@ class User extends Base{
             'amount'=>'between:0.01,10000'
         ];
         $this->validateParams($reqParams,$rule);
-
-        return $this->returnJson(2000,'',$reqParams);
+        $userLogic = new \app\api\logic\UsersLogic();
+        return $this->returnJson($userLogic->getRechargeParams($reqParams));
     }
 
     /**

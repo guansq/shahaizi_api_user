@@ -259,7 +259,7 @@ class Base extends Controller {
      */
     function validateParams($params = [], $rule = []){
         if(empty($params)){
-            return $this->returnJson(4001, '缺少必要参数.');
+            return $this->returnJson(-1, '缺少必要参数.');
         }
         if(empty($rule)){
             foreach($params as $k => $v){
@@ -270,7 +270,7 @@ class Base extends Controller {
         if($validate->check($params)){
             return true;
         }
-       return $this->returnJson(4002, '', $validate->getError());
+       return $this->returnJson(-1, '', $validate->getError());
     }
 
     /**
@@ -282,6 +282,7 @@ class Base extends Controller {
      */
     protected function returnJson($ret=0, $msg=null, $result=null){
         $ret = resultArray($ret, $msg, $result);
+        $ret['status'] = $ret['status'] ==2000 ? 1:-1;
         header('Content-type:application/json; charset=utf-8');
         header("Access-Control-Allow-Origin: *");
         exit(json_encode($ret));
