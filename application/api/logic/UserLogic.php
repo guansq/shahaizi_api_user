@@ -45,10 +45,11 @@ class UserLogic extends CommonUserLogic{
             ]
         ];
 
-        $result =[];
+        $result = [];
         if($reqParams['payWay'] == 'zfb'){
             // todo 传参
-            $result = $this->aliPay($paymentParams);
+            $aliPayParams = $this->aliPay($paymentParams);
+            $result =['aliPayParams'=>$aliPayParams];
         }elseif($reqParams['payWay'] == 'wx'){
             $result = $this->wxPay($paymentParams);
         }
@@ -92,8 +93,8 @@ class UserLogic extends CommonUserLogic{
         $request->setApiMethodName("alipay.trade.app.pay");
 
         $request->setBizContent($bizContent);
-        return $alipay->execute($request);
-
+        $urlParams = $alipay->execute($request);
+        return $urlParams;
     }
 
 }
