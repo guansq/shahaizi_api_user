@@ -1307,7 +1307,8 @@ class User extends Base{
      *
      */
     public function recharge(){
-        returnJson(2000);
+        $reqParams = $this->getReqParams();
+        return $this->returnJson(2000,'',$reqParams);
     }
 
     /**
@@ -1612,4 +1613,6 @@ class User extends Base{
         }
         $this->ajaxReturn(['status' => 1, 'msg' => '获取成功', 'result' => $user_sys_message]);
     }
+
+
 }

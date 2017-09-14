@@ -224,4 +224,39 @@ class Base extends Controller {
         header("Access-Control-Allow-Origin: *");
         exit(json_encode($data, JSON_UNESCAPED_UNICODE));
     }
+
+    /**
+     * 获得请求参参数
+     */
+    protected function getReqParams($keys = []){
+        $params = input("param.");
+        $ret = [];
+        //        if(empty($params)){
+        //            return [];
+        //        }
+
+        if(empty($keys)){
+            return $params;
+        }
+
+        foreach($keys as $k => $v){
+            if(is_numeric($k)){ // 一维数组
+                $ret[$v] = array_key_exists($v, $params) ? $params[$v] : '';
+                continue;
+            }
+            $ret[$k] = array_key_exists($k, $params) ? $params[$k] : (empty($v) ? '' : $v);
+        }
+
+        return $ret;
+    }
+
+    protected function returnJson($ret, $msg, $result){
+        $ret = resultArray($ret, $msg, $result);
+        header('Content-type:application/json; charset=utf-8');
+        header("Access-Control-Allow-Origin: *");
+        exit(json_encode($ret));
+    }
+
+
+
 }
