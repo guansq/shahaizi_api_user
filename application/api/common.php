@@ -251,4 +251,13 @@ function shzMoney($num,$ispre = false){
     }
 }
 
+/*
+ * 得到省市区
+ */
+
+function getCityName($id){
+    $name = M('region')->where('id',$id)->value('name');
+    return $name;
+}
+
 
