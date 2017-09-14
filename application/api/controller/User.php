@@ -1307,7 +1307,13 @@ class User extends Base{
      *
      */
     public function recharge(){
-        $reqParams = $this->getReqParams();
+        $reqParams = $this->getReqParams(['payWay','amount']);
+        $rule =[
+            'payWay'=>'in:wx,zfb',
+            'amount'=>'between:0.01,10000'
+        ];
+        $this->validateParams($reqParams,$rule);
+
         return $this->returnJson(2000,'',$reqParams);
     }
 
