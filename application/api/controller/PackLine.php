@@ -26,13 +26,17 @@ class PackLine extends Base{
      *}
      */
     public function getQualityLine(){
-
+        //精选路线
+        $packLogic = new PackLineLogic();
+        $line = $packLogic->get_pack_line();
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$line]);
     }
 
     /**
      * @api {GET}   /index.php?m=Api&c=PackLine&a=home  包车定制首页  done    管少秋
      * @apiName     home
      * @apiGroup    PackLine
+     * @apiParam    {String}    city    城市
      * @apiSuccessExample {json}    Success-Response
      *  Http/1.1    200 OK
     {
@@ -126,4 +130,5 @@ class PackLine extends Base{
         ];
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$home]);
     }
+
 }

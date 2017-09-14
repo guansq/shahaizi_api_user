@@ -15,12 +15,16 @@ class LocalTalentLogic extends Model{
     /*
      * 得到当地达人列表
      */
-    public function get_local_list(){
-
-        $count = M('article_local_talent')->count();
+    public function get_local_list($city){
+        if(empty($city)){
+            $where = [];
+        }else{
+            $where = ['city'=>['like',"%{$city}%"]];
+        }
+        $count = M('article_local_talent')->where($where)->count();
         $Page = new Page($count, 10);
         //echo $Page->totalPages;die;
-        $local_list = M('article_local_talent')->order('good_num desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $local_list = M('article_local_talent')->where($where)->order('good_num desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
         foreach($local_list as &$val){
             $str = '';
             $type = getIDType($val['seller_id']);

@@ -134,10 +134,12 @@ class PackOrder extends Base{
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token
      * @apiParam    {Number}    air_id  订单ID
-     * @apiParam    {Number}    price   优惠后的金额
+     * @apiParam    {Number}    real_price   优惠后的真实价格
+     * @apiParam    {Number}    is_use      是否使用优惠券
      */
     public function payPackOrderByBalance(){
-
+        //判断用户
+        echo 'test';
     }
 
 

@@ -41,8 +41,9 @@ class LocalTalent extends Base{
      * @api {GET}   /index.php?m=Api&c=LocalTalent&a=getLocalTalentList     得到达人列表  传入p 为 n代表第n页 done  管少秋
      * @apiName     getLocalTalentList
      * @apiGroup    Talent
-     * @apiParam    token {String}  token.
-     * @apiParam    [p] {String}    第几页，默认1
+     * @apiParam    {String}    token  token.
+     * @apiParam    {String}    [p]    第几页，默认1
+     * @apiParam    {String}    city    城市名称
      * @apiSuccessExample   Success-Response
      *      Http/1.1    200 OK
      * {
@@ -71,7 +72,8 @@ class LocalTalent extends Base{
      *
      */
     public function getLocalTalentList(){
-        $list = $this->localLogic->get_local_list();
+        $city = I('city','');
+        $list = $this->localLogic->get_local_list($city);
         $this->ajaxReturn($list);
     }
 
