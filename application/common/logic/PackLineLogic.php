@@ -26,6 +26,7 @@ class PackLineLogic extends Model{
         $drv = M('seller')->field('seller_id,head_pic,seller_name,drv_code,province,city')->where(['is_driver'=>1])->select();
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
+
             $val['star'] = $result['star'];
             $val['line'] = $result['line'];
         }
