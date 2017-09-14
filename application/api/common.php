@@ -140,7 +140,8 @@ function getDrvIno($seller_id){
         return '';
     }
     $star = Db::name('pack_comment')->where('seller_id',$seller_id)->avg('star');
-    $line = Db::name('pack_line')->where('seller_id',$seller_id)->order('create_at desc')->limit(1)->find();
+    $line = Db::name('pack_line')->field('line_title')->where('seller_id',$seller_id)->order('create_at desc')->limit(1)->find();
+    $line = empty($line) ? '' : $line['line_title'];
     return  [
         'star' => $star,
         'line' => $line

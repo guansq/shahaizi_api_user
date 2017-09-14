@@ -13,12 +13,14 @@ class HotGuide extends Base{
     public $hotLogic;
 
     public function __construct(){
+        parent::__construct();
         $this->hotLogic = new HotLogic();
     }
 
     /**
      * @api {GET}   /index.php?m=Api&c=HotGuide&a=getHotGuideList   得到热门攻略列表done  管少秋
      * @apiName getHotGuideList
+     * @apiParam    {String}    p   页数
      * @apiGroup HotGuide
      * @apiSuccessExample   Success-Response
      *      Http/1.1    200 OK
@@ -43,6 +45,7 @@ class HotGuide extends Base{
      * @api {GET}   /index.php?m=Api&c=HotGuide&a=getHotGuideDetail      得到热门攻略详情done   管少秋
      * @apiName     getHotGuideDetail
      * @apiGroup    HotGuide
+     * @apiParam    {String}    guide_id        热门攻略详情ID
      * @apiSuccessExample   Success-Response
      * Http/1.1 200 OK
     {

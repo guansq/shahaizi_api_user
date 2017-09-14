@@ -14,9 +14,10 @@ use think\Db;
 class PackLineLogic extends Model{
 
     public function get_pack_line(){
-        $list = M('pack_line')->field('seller_id,line_id,line_title,cover_img,line_price,seller_id,content,create_at')->where(['is_comm'=>1])->select();
+        $list = M('pack_line')->field('seller_id,line_id,line_title,cover_img,line_price,seller_id,line_detail,create_at')->where(['is_comm'=>1])->select();
         foreach($list as &$val){
             $val['star'] = getLineStar($val['seller_id'],6);
+            $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
         }
         return $list;
     }

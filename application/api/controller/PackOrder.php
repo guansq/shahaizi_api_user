@@ -135,12 +135,12 @@ class PackOrder extends Base{
      * @apiParam    {String}    token   token
      * @apiParam    {Number}    air_id  订单ID
      * @apiParam    {Number}    real_price   优惠后的真实价格
-     * @apiParam    {Number}    is_use      是否使用优惠券
      */
     public function payPackOrderByBalance(){
         //判断用户
+        $air_id = I('air_id');
+
+        $order = M('order')->where(array('order_id' => $air_id,'pay_status'=>1))->find();//订单详情
         echo 'test';
     }
-
-
 }

@@ -120,6 +120,9 @@ class PackLine extends Base{
         //精选路线
         $packLogic = new PackLineLogic();
         $line = $packLogic->get_pack_line();
+        foreach($line as &$val){
+            unset($val['line_detail']);
+        }
         //当地司导
         $driver = $packLogic->get_local_drv();
         $home = [

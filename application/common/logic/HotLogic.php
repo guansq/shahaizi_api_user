@@ -42,7 +42,7 @@ class HotLogic extends Model{
     public function get_hot_detail($guide_id){
         $info = M('article_hot_guide')->where(['guide_id'=>$guide_id])->find();
         if(empty($info)){
-            $this->ajaxReturn(['status'=>-1,'msg'=>'没有该记录']);
+            return ['status'=>-1,'msg'=>'没有该记录'];
         }
         $commentLogic = new CommentLogic();
         $commentList = $commentLogic->getArticleComment($guide_id,1);
