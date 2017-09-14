@@ -48,19 +48,17 @@ class UserLogic extends CommonUserLogic{
 
         $result = [];
         if($reqParams['payWay'] == 'zfb'){
-            // todo 联调成功后 优化代码
             $aliPayParams = $this->aliPay($paymentParams);
             $result =['aliPayParams'=>$aliPayParams];
         }elseif($reqParams['payWay'] == 'wx'){
             $wxPayParams = $this->wxPay($paymentParams);
             $result =['wxPayParams'=>$wxPayParams];
         }
-
         return resultArray(2000, '', $result);
     }
 
 
-    /** FIXME
+    /**   todo 联调成功后 优化代码
      * Author: WILL<314112362@qq.com>
      * Describe: 支付宝支付
      * @param $paymentParams
@@ -105,7 +103,7 @@ class UserLogic extends CommonUserLogic{
         return $urlParams;
     }
 
-    /**
+    /**todo 联调成功后 优化代码
      * Author: WILL<314112362@qq.com>
      * Describe: 微信支付
      * @param $paymentParams
