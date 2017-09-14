@@ -14,6 +14,7 @@
 
 namespace app\api\controller;
 
+use app\api\logic\UserLogic;
 use app\common\logic\CartLogic;
 use app\common\logic\CommentLogic;
 use app\common\logic\CouponLogic;
@@ -1297,11 +1298,11 @@ class User extends Base{
 
 
     /**
-     * @api         {GET}   /index.php/api/user/recharge  我的钱包-充值（todo） wxx
+     * @api         {GET}   /index.php/api/user/recharge  我的钱包-充值（doing） wxx
      * @apiDescription  用户充值获取调起支付需要的参数
      * @apiName     recharge
      * @apiGroup    User
-     * @apiParam  {string=wx,zfb} payWay    支付方式.
+     * @apiParam  {string} token    token.
      * @apiParam  {string=wx,zfb} payWay    支付方式.
      * @apiParam  {number{0.01-10000}} amount  充值金额.
      * @apiSuccess {String} xx xxx.
@@ -1313,8 +1314,8 @@ class User extends Base{
             'amount'=>'between:0.01,10000'
         ];
         $this->validateParams($reqParams,$rule);
-        $userLogic = new \app\api\logic\UsersLogic();
-        return $this->returnJson($userLogic->getRechargeParams($reqParams));
+        $userLogic = new  UserLogic();
+        return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
     }
 
     /**

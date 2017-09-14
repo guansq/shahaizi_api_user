@@ -19,19 +19,28 @@ use app\common\logic\UsersLogic as CommonUserLogic;
 
 
 /**
- * 分类逻辑定义
+ * 用户逻辑定义
  * Class CatsLogic
  * @package common\Logic
  */
-class UsersLogic extends CommonUserLogic{
+class UserLogic extends CommonUserLogic{
 
     /**
      * Author: WILL<314112362@qq.com>
      * Describe:
      * @param $reqParams
      */
-    public function getRechargeParams($reqParams){
-        return resultArray(2000,'',$reqParams);
+    public function getRechargeParams($reqParams, $loginUser){
+
+        $orderSn = "RC$loginUser[user_id]$reqParams[amount]".date('YmdHis').rand(10000, 99999); // 订单编号
+        $extend = [
+            'userId' => $loginUser['user_id'],
+            'amount' => $reqParams['amount'],
+            'orderSn' => $orderSn
+        ];
+
+
+        return resultArray(2000, '', $extend);
     }
 
 }
