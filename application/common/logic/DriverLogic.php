@@ -16,8 +16,8 @@ class DriverLogic extends Model{
     /*
      * 得到司导列表
      */
-    public function get_driver_list(){
-        $where = ['is_driver' => 1, 'drv_id' => ['<>',0]];
+    public function get_driver_list($where){
+
         $count = M('seller')->where($where)->count();
         $Page = new Page($count, 10);
         $list = M('seller')->field('seller_id,drv_id,drv_code,head_pic,seller_name')->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();

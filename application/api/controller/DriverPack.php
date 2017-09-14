@@ -23,6 +23,9 @@ class DriverPack extends Base{
      * @apiName     getAllDriver
      * @apiGroup    DriverPack
      * @apiSuccessExample {json}    Success-Response
+     * @apiParam    {Number}    [partner_num]     伴侣人数
+     * @apiParam    {Number}    [dest_address]     目的地
+     * @apiParam    {Number}    [date]     日期
      *  Http/1.1    200 OK
      *{
      * "seller_id"   : "11",//商家端总ID
@@ -34,8 +37,33 @@ class DriverPack extends Base{
      *}
      */
     public function getAllDriver(){
+        $partner = I('partner_num');
+        $dest_address = I('dest_address');
+        $date = I('date');
+        $where = [];
+        $where['is_driver'] = 1;
+        $where['drv_id'] = ['<>',0];
+        if(!empty($partner)){
+            $map = [
+                1 => 4,
+                2 => 4,
+                3 => 4,
+                4 => 4,
+                5 => 5,
+                6 => 6,
+                7 => 7,
+                8 => 8,
+                9 => 9,
+                10 => 10,
+            ];
+            $num = $map[$partner];//人数座位对应表->取满足的drv_id
+
+
+        }
+
         $result = $this->driverLogic->get_driver_list();
         $this->ajaxReturn($result);
+
     }
 
     /**
