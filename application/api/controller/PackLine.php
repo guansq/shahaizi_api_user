@@ -11,9 +11,12 @@ use app\common\logic\PackLineLogic;
 class PackLine extends Base{
 
     /**
-     * @api {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线（未完成） 管少秋
+     * @api {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线 管少秋
      * @apiName     getQualityLine
      * @apiGroup    PackLine
+     * @apiParam    {String}    [city]    根据城市筛选
+     * @apiParam    {String}    [time]    根据时间筛选   2017-9-14
+     * @apiParam    {Number}    [line_buy_num]    根据时间筛选
      * @apiSuccessExample {json}    Success-Response
      *  Http/1.1    200 OK
      *{
@@ -26,9 +29,17 @@ class PackLine extends Base{
      *}
      */
     public function getQualityLine(){
+        $where = [];
+        $where['is_comm'] = 1;
+        $city = I('city');
+        $time = empty(I('time')) ? '' : strtotime(I('time'));
+        $line_buy_num = I('line_buy_num');
+        !empty($city) && $where['city'] = ['like',"{$city}"];
+        !empty($time) && $where['update_at'] = ['between',[$time,$time+86400]];//更新时间
+        !empty($line_buy_num) && $where['line_buy_num'] = ['egt',$line_buy_num];
         //精选路线
-        $packLogic = new PackLineLogic();
-        $line = $packLogic->get_pack_line();
+        $packLogic = new PackLineLogic($where);
+        $line = $packLogic->get_pack_line($where);
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$line]);
     }
 
@@ -119,7 +130,8 @@ class PackLine extends Base{
         $banner = M('ad')->where('pid = 10')->field(array('ad_link','ad_name','ad_code'))->cache(true,TPSHOP_CACHE_TIME)->select();
         //精选路线
         $packLogic = new PackLineLogic();
-        $line = $packLogic->get_pack_line();
+        $where['is_comm'] = 1;//精品路线
+        $line = $packLogic->get_pack_line($where);
         foreach($line as &$val){
             unset($val['line_detail']);
         }
