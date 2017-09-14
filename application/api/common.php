@@ -13,6 +13,47 @@ use DesUtils\DesUtils;
 use think\Db;
 
 
+
+// 接口返回json 数据
+if(!function_exists('getCodeMsg')){
+    function getCodeMsg($code = 'all'){
+        $CODE_MSG = [
+            0 => '未知错误',
+            2000 => 'SUCCESS',
+            // 客户端异常
+            4000 => '非法请求',
+            4001 => '请求缺少参数',
+            4002 => '请求参数格式错误',
+            4003 => '请求参数格式错误',
+            4004 => '请求的数据为空',
+            // 客户端异常-用户鉴权
+            4010 => '无权访问',
+            4011 => 'token丢失',
+            4012 => 'token无效',
+            4013 => 'token过期',
+            4014 => '账号或密码错误',
+            4015 => '签名校验失败',
+
+            // 服务端端异常
+            5000 => '服务端异常',
+            5001 => '服务端忙',
+            5010 => '代码异常',
+            5020 => '数据库操作异常',
+            5030 => '文件操作异常',
+
+            // 调用第三方接口异常
+            6000 => '调用第三方接口异常',
+        ];
+        if(key_exists($code, $CODE_MSG)){
+            return $CODE_MSG[$code];
+        }
+        if($code == 'all'){
+            return $CODE_MSG;
+        }
+        return '';
+    }
+}
+
 // 返回数组
 if(!function_exists('resultArray')){
     function resultArray($result = 0, $msg = '', $data = []){
@@ -27,7 +68,7 @@ if(!function_exists('resultArray')){
         }
         $info = [
             'status' => $code,
-            'msg' => empty($msg) ? '' : $msg,
+            'msg' => empty($msg) ? getCodeMsg($code) : $msg,
             'result' => $data
         ];
         return $info;

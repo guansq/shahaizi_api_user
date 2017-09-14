@@ -15,6 +15,7 @@ namespace app\api\controller;
 use think\Db;
 use think\Controller;
 use think\Session;
+use think\Validate;
 
 class Base extends Controller {
     public $http_url;
@@ -224,4 +225,68 @@ class Base extends Controller {
         header("Access-Control-Allow-Origin: *");
         exit(json_encode($data, JSON_UNESCAPED_UNICODE));
     }
+
+    /**
+     * 获得请求参参数
+     */
+    protected function getReqParams($keys = []){
+        $params = input("param.");
+        $ret = [];
+        //        if(empty($params)){
+        //            return [];
+        //        }
+
+        if(empty($keys)){
+            return $params;
+        }
+
+        foreach($keys as $k => $v){
+            if(is_numeric($k)){ // 一维数组
+                $ret[$v] = array_key_exists($v, $params) ? $params[$v] : '';
+                continue;
+            }
+            $ret[$k] = array_key_exists($k, $params) ? $params[$k] : (empty($v) ? '' : $v);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Auther: WILL<314112362@qq.com>
+     * Time: 2017-3-20 17:51:09
+     * Describe: 根据指定交易规则校验参数
+     * @return bool
+     */
+    function validateParams($params = [], $rule = []){
+        if(empty($params)){
+            return $this->returnJson(4001, '缺少必要参数.');
+        }
+        if(empty($rule)){
+            foreach($params as $k => $v){
+                $rule[$k] = 'require';
+            }
+        }
+        $validate = new Validate($rule);
+        if($validate->check($params)){
+            return true;
+        }
+       return $this->returnJson(4002, '', $validate->getError());
+    }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe: 返回json数据
+     * @param $ret
+     * @param $msg
+     * @param $result
+     */
+    protected function returnJson($ret=0, $msg=null, $result=null){
+        $ret = resultArray($ret, $msg, $result);
+        header('Content-type:application/json; charset=utf-8');
+        header("Access-Control-Allow-Origin: *");
+        exit(json_encode($ret));
+    }
+
+
+
 }
