@@ -134,7 +134,7 @@ class DriverPack extends Base{
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {String}    car_type_id     车型ID
      * @apiParam    {String}    connect         联系方式
-     * @apiParam    {String}    drv_code        指定司导
+     * @apiParam    {String}    [drv_code]        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
      * @apiParam    {Number}    total_num       出行总人数
      * @apiParam    {Number}    adult_num       成人乘客数
@@ -187,6 +187,10 @@ class DriverPack extends Base{
      * @apiParam    {String}    airport_name       机场名
      * @apiParam    {String}    dest_address       送达地点
      * @apiParam    {String}    start_time       出发时间
+     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function receiveAirport(){
         $data = I('post.');
@@ -229,6 +233,10 @@ class DriverPack extends Base{
      * @apiParam    {String}    airport_name       机场名
      * @apiParam    {String}    start_address       出发地点
      * @apiParam    {String}    start_time       出发时间
+     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function sendAirport(){
         $data = I('post.');
@@ -270,6 +278,10 @@ class DriverPack extends Base{
      * @apiParam    {String}    start_address    起始地地址
      * @apiParam    {String}    dest_address       目的地地址
      * @apiParam    {String}    user_car_time     用车时间
+     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function oncePickup(){
         $data = I('post.');
@@ -313,6 +325,10 @@ class DriverPack extends Base{
      * @apiParam    {String}    tour_favorite       出行偏好
      * @apiParam    {String}    recommend_diner       推荐餐馆
      * @apiParam    {String}    recommend_sleep       推荐住宿
+     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function privateMake(){
         $data = I('post.');
