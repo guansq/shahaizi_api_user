@@ -211,8 +211,10 @@ class PackOrder extends Base{
      * @apiParam    {String}    work_at     服务日期
      * @apiParam    {Number}    work_address     出发地
      * @apiParam    {Number}    dest_address     目的地
-     * @apiParam    {Number}    discount_id     优惠券ID
+     * @apiParam    {Number}    [discount_id]     优惠券ID
      * @apiParam    {String}    total_price     订单总价格
+     * @apiParam    {String}    real_price     优惠后，实际支付的价格
+     * @apiParam    {String}    [user_message]     用户留言
      *
      */
     public function createPackOrder(){
@@ -220,7 +222,7 @@ class PackOrder extends Base{
         $result = $this->validate($data,'PackOrder');
         if($result === true){//验证通过
             //创建订单
-            $this->packLogic->create_pack_order($data);
+            $this->packLogic->create_pack_order($data,$this->user);
         }else{
             $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
         }

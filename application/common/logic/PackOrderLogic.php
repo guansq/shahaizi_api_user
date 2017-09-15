@@ -93,7 +93,40 @@ class PackOrderLogic extends Model{
     /*
      * 生成路线订单
      */
-    public function create_pack_order($data){
-        dump($data);
+    public function create_pack_order($data,$user){
+        //dump($data);die;
+        $order_data = [
+            'order_sn' => $this->get_order_sn(),
+            'user_id' => $user['user_id'],
+            'customer_name' => $data['customer_name'],
+            'customer_phone' => $data['customer_phone'],
+            'use_car_adult' => $data['use_car_adult'],
+            'use_car_children' => $data['use_car_children'],
+            'user_passport' => $data['user_passport'],
+            'user_user_identity' => $data['user_user_identity'],
+            'twenty-four' => $data['twenty-four'],
+            'twenty-six' => $data['twenty-six'],
+            'twenty-eight' => $data['twenty-eight'],
+            'thirty' => $data['thirty'],
+            'work_at' => $data['work_at'],
+            'work_address' => $data['work_address'],
+            'dest_address' => $data['dest_address'],
+            'discount_id' => $data['discount_id'],
+            'total_price' => $data['total_price'],
+            'real_price' => $data['real_price'],
+            'total_price' => $data['total_price'],
+            'status' => 0,
+            'type' => 3,//1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
+            'discount_id' => $data['discount_id'],
+            'user_message' => $data['user_message'],
+            'create_at' => time(),
+            'update_at' => time(),
+        ];
+        $result = M('pack_order')->save($order_data);
+        if($result){
+            return ['status' => 1,'msg' => '成功','result' => ['real_price'=>$data['total_price'],'discount_id'=>$data['discount_id']]];
+        }else{
+            return ['status' => -1,'msg' => '失败'];
+        }
     }
 }

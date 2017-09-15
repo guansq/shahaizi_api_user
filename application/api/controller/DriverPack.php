@@ -143,9 +143,9 @@ class DriverPack extends Base{
      * @apiParam    {String}    remark       备注
      * @apiParam    {String}    dest_address    目的地地址
      * @apiParam    {String}    pack_time       包车日期
-     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
-     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
-     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
      * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function rentCarByDay(){
@@ -189,9 +189,9 @@ class DriverPack extends Base{
      * @apiParam    {String}    airport_name       机场名
      * @apiParam    {String}    dest_address       送达地点
      * @apiParam    {String}    start_time       出发时间
-     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
-     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
-     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
      * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function receiveAirport(){
@@ -236,9 +236,9 @@ class DriverPack extends Base{
      * @apiParam    {String}    airport_name       机场名
      * @apiParam    {String}    start_address       出发地点
      * @apiParam    {String}    start_time       出发时间
-     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
-     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
-     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
      * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function sendAirport(){
@@ -282,9 +282,9 @@ class DriverPack extends Base{
      * @apiParam    {String}    start_address    起始地地址
      * @apiParam    {String}    dest_address       目的地地址
      * @apiParam    {String}    user_car_time     用车时间
-     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
-     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
-     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
      * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function oncePickup(){
@@ -330,9 +330,9 @@ class DriverPack extends Base{
      * @apiParam    {String}    tour_favorite       出行偏好
      * @apiParam    {String}    recommend_diner       推荐餐馆
      * @apiParam    {String}    recommend_sleep       推荐住宿
-     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
-     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
-     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
      * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function privateMake(){
