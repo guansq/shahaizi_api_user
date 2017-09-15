@@ -881,7 +881,7 @@ class User extends Base{
      * @apiGroup    User
      * @apiParam    {String}    token           token
      * @apiParam    {String}    model_type      模块类型 0为包车模块1为商城模块2为民宿模块
-     * @apiParam    {String}    type            发放类型 0下单赠送 1 按用户发放 2 免费领取 3 线下发放
+     * @apiParam    {String}    type            0:未使用，1:已使用，2:已过期
      * @apiParam    {Number}    [store_id]      传入包车模块所对应发放优惠券人的drv_id store_id home_id
      * @apiSuccessExample   {json}      Success-Response
      *  Http/1.1    200     OK

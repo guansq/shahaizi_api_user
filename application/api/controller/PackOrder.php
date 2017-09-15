@@ -216,7 +216,13 @@ class PackOrder extends Base{
      *
      */
     public function createPackOrder(){
+        $data = I('post.');
+        $result = $this->validate($data,'PackOrder');
+        if($result === true){//验证通过
 
+        }else{
+            $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+        }
     }
 
 }
