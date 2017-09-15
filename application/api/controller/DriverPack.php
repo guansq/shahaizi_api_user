@@ -40,6 +40,7 @@ class DriverPack extends Base{
         $partner = I('partner_num');
         $dest_address = I('dest_address');
         $date = I('date');
+        $city = I('dest_address');
         $where = [];
         $where['is_driver'] = 1;
         $where['drv_id'] = ['<>',0];
@@ -57,10 +58,15 @@ class DriverPack extends Base{
                 10 => 10,
             ];
             $num = $map[$partner];//人数座位对应表->取满足的drv_id
-
-
         }
 
+        if(!empty($dest_address)){
+            $where['city'] = ['like',"{$city}"];
+        }
+
+        if(!empty($date)){
+
+        }
         $result = $this->driverLogic->get_driver_list();
         $this->ajaxReturn($result);
 

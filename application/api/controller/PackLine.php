@@ -39,7 +39,7 @@ class PackLine extends Base{
         !empty($line_buy_num) && $where['line_buy_num'] = ['egt',$line_buy_num];
         //精选路线
         $packLogic = new PackLineLogic($where);
-        $line = $packLogic->get_pack_line($where);
+        $line = $packLogic->get_all_pack_line($where);
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$line]);
     }
 
