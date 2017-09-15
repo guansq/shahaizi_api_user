@@ -32,6 +32,7 @@ class PackOrder extends Base{
         "totalPages": 1,
         "list": [
             {
+           “air_id” : 20,
             "order_sn": "201709091232",
             "seller_id": 19,
             "status": 5,
@@ -44,6 +45,7 @@ class PackOrder extends Base{
             "real_price": "100.00"
             },
             {
+            “air_id” : 20,
             "order_sn": "201709091232",
             "seller_id": 20,
             "status": 0,
@@ -198,6 +200,12 @@ class PackOrder extends Base{
      * @apiParam    {Number}    title     路线标题
      * @apiParam    {String}    customer_name     顾客名称
      * @apiParam    {String}    customer_phone     客户的手机号
+     * @apiParam    {String}    user_passport      用户护照
+     * @apiParam    {String}    user_user_identity      用户的身份证
+     * @apiParam    {String}    [twenty-four]      行李箱尺寸
+     * @apiParam    {String}    [twenty-six]      行李箱尺寸
+     * @apiParam    {String}    [twenty-eight]      行李箱尺寸
+     * @apiParam    {String}    [thirty]      行李箱尺寸
      * @apiParam    {Number}    use_car_adult     成人用车人数
      * @apiParam    {Number}    use_car_children     儿童人数
      * @apiParam    {String}    work_at     服务日期
@@ -205,6 +213,7 @@ class PackOrder extends Base{
      * @apiParam    {Number}    dest_address     目的地
      * @apiParam    {Number}    discount_id     优惠券ID
      * @apiParam    {String}    total_price     订单总价格
+     *
      */
     public function createPackOrder(){
 

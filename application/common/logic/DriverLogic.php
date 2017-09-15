@@ -112,7 +112,7 @@ class DriverLogic extends Model{
         $saveData = [
             'type' => $data['type'],
             'user_id' => $user['user_id'],
-            'user_name' => $user['nickname'],
+            'user_name' => $data['user_name'],
             'car_type_id' => $data['car_type_id'],
             'connect' => $data['connect'],
             'drv_code' => $data['drv_code'],

@@ -13,7 +13,7 @@ class PackBase extends Validate{
         'type' => 'require',
         'car_type_id' => 'require',
         'connect' => 'require',
-        //'drv_code' => 'require',
+        'user_name' => 'require',
         'is_have_pack' => 'require',
         'total_num' => 'require',
         'adult_num' => 'require',
@@ -40,7 +40,7 @@ class PackBase extends Validate{
         'type.require'  =>  '请填写包车类型',
         'car_type_id.require' =>  '请填写车型ID',
         'connect.require' =>  '请填写联系方式',
-        //'drv_code.require' =>  '请填写指定司导',
+        'user_name.require' =>  '请填写用户',
         'is_have_pack.require' =>  '请选择是否有行李',
         'total_num.require' =>  '请填写出行总人数',
         'adult_num.require' =>  '请填写成人乘客数',
@@ -64,11 +64,11 @@ class PackBase extends Validate{
     ];
 
     protected $scene = [
-        'rentCarByDay' => ['type','car_type_id','connect','is_have_pack','total_num','adult_num','child_num','dest_address','pack_time'],
-        'receiveAirport' => ['type','car_type_id','connect','is_have_pack','total_num','adult_num','child_num','flt_no','airport_name','dest_address','start_time'],
-        'sendAirport' => ['type','car_type_id','connect','is_have_pack','total_num','adult_num','child_num','flt_no','airport_name','start_address','start_time'],
-        'oncePickup' => ['type','car_type_id','connect','is_have_pack','total_num','adult_num','child_num','start_address','dest_address','user_car_time'],
-        'privateMake' => ['type','car_type_id','connect','is_have_pack','total_num','adult_num','child_num','tour_time','end_address','tour_days','tour_person_num','tour_favorite','recommend_diner','recommend_sleep'],
+        'rentCarByDay' => ['type','car_type_id','user_name','connect','is_have_pack','total_num','adult_num','child_num','dest_address','pack_time'],
+        'receiveAirport' => ['type','car_type_id','user_name','connect','is_have_pack','total_num','adult_num','child_num','flt_no','airport_name','dest_address','start_time'],
+        'sendAirport' => ['type','car_type_id','user_name','connect','is_have_pack','total_num','adult_num','child_num','flt_no','airport_name','start_address','start_time'],
+        'oncePickup' => ['type','car_type_id','user_name','connect','is_have_pack','total_num','adult_num','child_num','start_address','dest_address','user_car_time'],
+        'privateMake' => ['type','car_type_id','user_name','connect','is_have_pack','total_num','adult_num','child_num','tour_time','end_address','tour_days','tour_person_num','tour_favorite','recommend_diner','recommend_sleep'],
         //'add'   =>  ['name','email'],
     ];
 }

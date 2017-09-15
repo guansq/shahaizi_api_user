@@ -339,7 +339,7 @@ function payPackOrder($pack_order,$user_info,$discount_price,$pay_way,$is_coupon
         'type' => 3,
     ];
     M('account_log')->save($account_arr);
-    return ['status' => 1,'msg'=>'成功'];
+    return ['status' => 1,'msg'=>'成功','result'=>['user_money'=>$user['user_money']]];//返回余额
 }
 
 
