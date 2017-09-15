@@ -93,7 +93,7 @@ class PackOrderLogic extends Model{
     /*
      * 生成路线订单
      */
-    public function create_pack_order_by_line(){
-
+    public function create_pack_order($data){
+        dump($data);
     }
 }

@@ -359,4 +359,53 @@ class DriverPack extends Base{
             $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
         }
     }
+
+    /**
+     * @api {POST}  /index.php?m=Api&c=DriverPack&a=getConfig    得到私人定制的配置done 管少秋
+     * @apiName     getConfig
+     * @apiGroup    DriverPack
+     * @apiSuccessExample {json}    Success-Response
+     *  Http/1.1    200 OK
+    {
+        "status": 1,
+        "msg": "成功",
+        "result": {
+        "trip_choose": {    //出行偏好
+            {"id": 1,
+            "name": '吃的地方多一点'},//出行偏好名称
+            {"id": 2,
+            "name": '玩的地方多一点'},//出行偏好名称
+        },
+        "restaurant_choose": {    //餐馆
+            {"id": 1,
+            "name": '北海道大饭店'},//出行偏好名称
+            {"id": 2,
+            "name": '东京热大饭店'},//出行偏好名称
+        },
+        "sleep_choose": {    //个人信息
+            {"id": 1,
+            "name": '札幌大酒店'},//出行偏好名称
+            {"id": 2,
+            "name": '土耳其大宾馆'},//出行偏好名称
+        },
+    }
+    }
+     */
+    public function getConfig(){
+        $result = [
+            'trip_choose' => [
+                ['id' => 1,'name' => '吃的地方多一点'],
+                ['id' => 2,'name' => '玩的地方多一点'],
+            ],
+            'restaurant_choose' => [
+                ['id' => 1,'name' => '北海道大饭店'],
+                ['id' => 2,'name' => '东京热大饭店'],
+            ],
+            'sleep_choose' => [
+                ['id' => 1,'name' => '札幌大酒店'],
+                ['id' => 2,'name' => '土耳其大宾馆'],
+            ],
+        ];
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+    }
 }
