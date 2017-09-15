@@ -22,10 +22,10 @@ class DriverPack extends Base{
      * @api {GET}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
      * @apiName     getAllDriver
      * @apiGroup    DriverPack
-     * @apiSuccessExample {json}    Success-Response
      * @apiParam    {Number}    [partner_num]     伴侣人数
      * @apiParam    {Number}    [dest_address]     目的地
      * @apiParam    {Number}    [date]     日期
+     * @apiSuccessExample {json}    Success-Response
      *  Http/1.1    200 OK
      *{
      * "seller_id"   : "11",//商家端总ID
@@ -77,8 +77,8 @@ class DriverPack extends Base{
      * @apiName     getDriverDetail
      * @apiGroup    DriverPack
      * @apiParam    seller_id  {String}    商家ID
-     * @apiSuccessExample   {json}  Success-Response
-     * Http/1.1 200 OK
+     * @apiSuccessExample {json}    Success-Response
+     *  Http/1.1    200 OK
     {
     "status": 1,
     "msg": "成功",

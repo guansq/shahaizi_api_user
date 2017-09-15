@@ -129,15 +129,16 @@ class PackOrder extends Base{
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=PackOrder&a=payPackOrderByBalance    通过余额支付订单   管少秋
-     * @apiName     payPackOrderByBalance
+     * @api {POST}  /index.php?m=Api&c=PackOrder&a=payPackOrder    支付订单done 余额已好，支付宝,微信支付wxx待调   管少秋
+     * @apiName     payPackOrder
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token
      * @apiParam    {Number}    air_id  订单ID
+     * @apiParam    {String}    pay_way    支付方式 0微信支付 1支付宝支付 2余额支付
      * @apiParam    {Float}    [real_price]   优惠的价格
      * @apiParam    {Number}    [coupon_id]   优惠券ID 无优惠券传空进来
      */
-    public function payPackOrderByBalance(){
+    public function payPackOrder(){
         //判断订单是否在有效期内 有效付款时间24小时
         //判断用户
         $air_id = I('air_id');
@@ -150,8 +151,9 @@ class PackOrder extends Base{
             $this->ajaxReturn(['status'=>-1,'msg'=>'该订单已超时']);
         }
         $coupon_id = I('coupon_id');
+        $pay_way = I('pay_way');//获取支付方式
         $discount_price = 0;//优惠价格
-        //$real_price = 0;//真实价格
+        $is_coupon =false;//优惠券是否可以用
         if(!empty($coupon_id)){
             //通过优惠券去判断需要优惠的价格
             $where = [
@@ -165,13 +167,26 @@ class PackOrder extends Base{
                 'c.use_end_time' => ['gt',$time]//是否过期    过期时间大于当前时间
             ];
             $coupon_info = M('coupon_list')->field('l.id,c.*')->alias('l')->join('__COUPON__ c','l.cid = c.id')->where($where)->find();//找出优惠券
+            //echo $coupon_info;die;->fetchSql(true)
             if(empty($coupon_info)){
                 $this->ajaxReturn(['status'=>-1,'msg'=>'该优惠券不满足条件']);
             }
+            $is_coupon = true;//优惠券可以用
             $discount_price = $coupon_info['money'];
         }
         $real_price = $pack_order['total_price'] - $discount_price;//真实价格
-        //平台的dump($pack_order);die;
+        $user_info = M('users')->where('user_id',$this->user_id)->find();
+        if($pay_way == 2){
+            //进行付款操作----------》
+            ($user_info['user_money'] - $real_price) < 0 && $this->ajaxReturn(['status'=>-1,'msg'=>'抱歉，您的账户余额不足，请使用其他方式付款']);
+        }else{
+            //进行支付宝微信操作
+
+        }
+
+        $result = payPackOrder($pack_order,$user_info,$discount_price,$pay_way,$is_coupon,$coupon_id);//订单信息,用户信息,优惠价格,支付方式,优惠券ID,优惠券是否可以使用
+
+        $this->ajaxReturn($result);
     }
 
     /**
@@ -180,6 +195,6 @@ class PackOrder extends Base{
      * @apiGroup    PackOrder
      */
     public function createOrder(){
-
+        
     }
 }
