@@ -202,9 +202,9 @@ class PackOrder extends Base{
      * @apiParam    {String}    customer_phone     客户的手机号
      * @apiParam    {String}    user_passport      用户护照
      * @apiParam    {String}    user_user_identity      用户的身份证
-     * @apiParam    {String}    [twenty-four]      行李箱尺寸
-     * @apiParam    {String}    [twenty-six]      行李箱尺寸
-     * @apiParam    {String}    [twenty-eight]      行李箱尺寸
+     * @apiParam    {String}    [twenty_four]      行李箱尺寸
+     * @apiParam    {String}    [twenty_six]      行李箱尺寸
+     * @apiParam    {String}    [twenty_eight]      行李箱尺寸
      * @apiParam    {String}    [thirty]      行李箱尺寸
      * @apiParam    {Number}    use_car_adult     成人用车人数
      * @apiParam    {Number}    use_car_children     儿童人数
