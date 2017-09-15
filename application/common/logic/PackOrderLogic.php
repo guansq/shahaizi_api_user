@@ -72,4 +72,28 @@ class PackOrderLogic extends Model{
         }
         return $return;
     }
+
+    /**
+     * 获取订单 order_sn
+     * @return string
+     */
+    public function get_order_sn()
+    {
+        $order_sn = null;
+        // 保证不会有重复订单号存在
+        while(true){
+            $order_sn = date('YmdHis').rand(1000,9999); // 订单编号
+            $order_sn_count = M('pack_order')->where("order_sn = '$order_sn'")->count();
+            if($order_sn_count == 0)
+                break;
+        }
+        return $order_sn;
+    }
+
+    /*
+     * 生成路线订单
+     */
+    public function create_pack_order_by_line(){
+
+    }
 }

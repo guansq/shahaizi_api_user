@@ -142,6 +142,10 @@ class DriverPack extends Base{
      * @apiParam    {String}    remark       备注
      * @apiParam    {String}    dest_address    目的地地址
      * @apiParam    {String}    pack_time       包车日期
+     * @apiParam    {Number}    [twenty-four]     24行李箱尺寸
+     * @apiParam    {Number}    [twenty-six]      26行李箱尺寸
+     * @apiParam    {Number}    [twenty-eight]     28行李箱尺寸
+     * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function rentCarByDay(){
         $data = I('post.');
@@ -230,7 +234,7 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data,'PackBase.sendAirport');
         if($result === true){//验证通过
-            $base_id = $this->driverLogic->send_airport($data,$this->user);
+            $base_id = $this->driverLogic->save_pack_base($data,$this->user);
             $saveData = [
                 'base_id' => $base_id,
                 'flt_no' => $data['flt_no'],
@@ -238,7 +242,7 @@ class DriverPack extends Base{
                 'start_address' => $data['start_address'],
                 'start_time' => $data['start_time'],
             ];
-            $result = $this->driverLogic->receive_airport($saveData);
+            $result = $this->driverLogic->send_airport($saveData);
             if($result){
                 $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
             }else{
@@ -271,14 +275,14 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data,'PackBase.oncePickup');
         if($result === true){//验证通过
-            $base_id = $this->driverLogic->once_pickup($data,$this->user);
+            $base_id = $this->driverLogic->save_pack_base($data,$this->user);
             $saveData = [
                 'base_id' => $base_id,
                 'start_address' => $data['start_address'],
                 'dest_address' => $data['dest_address'],
                 'user_car_time' => $data['user_car_time'],
             ];
-            $result = $this->driverLogic->receive_airport($saveData);
+            $result = $this->driverLogic->once_pickup($saveData);
             if($result){
                 $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
             }else{
@@ -324,7 +328,7 @@ class DriverPack extends Base{
                 'recommend_diner' => $data['recommend_diner'],
                 'recommend_sleep' => $data['recommend_sleep'],
             ];
-            $result = $this->driverLogic->receive_airport($saveData);
+            $result = $this->driverLogic->private_person($saveData);
             if($result){
                 $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
             }else{

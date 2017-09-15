@@ -165,7 +165,7 @@ class Base extends Controller {
                 'return_goods_list','return_goods_status','service_comment','setDefaultAddress','updateUserInfo','upload_headpic','userInfo',
                 'visit_log','withdrawals','withdrawals_list','flashToken','bindPhone','changeBindPhone','bindMail','changeBindMail','payPackOrderByBalance','recharge'],
             'driverpack' => ['rentCarByDay','receiveAirport','sendAirport','oncePickup','privateMake'],
-            'packorder' => ['getPackOrder','getPackOrderDetail','payPackOrderByBalance','createOrder'],
+            'packorder' => ['getPackOrder','getPackOrderDetail','payPackOrderByBalance','createPackOrder'],
         ];
         
         // 保留状态的检查组
