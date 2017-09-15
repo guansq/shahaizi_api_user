@@ -149,7 +149,9 @@ class ActivityLogic extends Model
             ->join('__COUPON__ c','l.cid = c.id'.$condition)
             ->where($where)
             ->where(function($query) use ($belone, $store_id, $model_type) {
-                    $query->where("l.model_type", $model_type);
+                    if($model_type !== 'all'){
+                        $query->where("l.model_type", $model_type);
+                    }
             });
 
         if ($queryType != 0) {
