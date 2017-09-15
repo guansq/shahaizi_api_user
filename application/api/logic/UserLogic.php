@@ -15,7 +15,6 @@
 
 namespace app\api\logic;
 
-use app\common\logic\UsersLogic as CommonUserLogic;
 use payment\alipay\Alipay;
 use payment\alipay\AlipayOpenCommon;
 use payment\wxpay\WxPay;
@@ -26,11 +25,11 @@ use payment\wxpay\WxPay;
  * Class CatsLogic
  * @package common\Logic
  */
-class UserLogic extends CommonUserLogic{
-
+class UserLogic extends BaseLogic{
+    protected $table = 'ruit_users';
     /**
      * Author: WILL<314112362@qq.com>
-     * Describe:
+     * Describe: 获取调起充值支付参数
      * @param $reqParams
      */
     public function getRechargeParams($reqParams, $loginUser){
@@ -48,10 +47,10 @@ class UserLogic extends CommonUserLogic{
         $result = [];
         if($reqParams['payWay'] == 'zfb'){
             $aliPayParams = $this->aliPay($paymentParams);
-            $result =['aliPayParams'=>$aliPayParams];
+            $result = ['aliPayParams' => $aliPayParams];
         }elseif($reqParams['payWay'] == 'wx'){
             $wxPayParams = $this->wxPay($paymentParams);
-            $result =['wxPayParams'=>$wxPayParams];
+            $result = ['wxPayParams' => $wxPayParams];
         }else{
             return resultArray(4000, '不支持的支付方式');
         }
@@ -59,7 +58,28 @@ class UserLogic extends CommonUserLogic{
     }
 
 
-    /**   todo 联调成功后 优化代码
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe: 充值操作
+     */
+    public function doRecharge($userId, $amount,$orderSn){
+        if(!$this->where('user_id', $userId)->setInc('user_money', $amount)){
+            return false;
+        }
+        $accountLogLogic = new AccountLogLogic();
+        $data = [
+            'user_id' => $userId,
+            'user_money' => $amount,
+            'change_time' => time(),
+            'desc' => '充值',
+            'order_sn' => $orderSn,
+            'type' =>  AccountLogLogic::TYPE_RECHANGE,
+        ];
+        return $accountLogLogic->create($data);
+
+    }
+
+    /** todo 联调成功后 优化代码
      * Author: WILL<314112362@qq.com>
      * Describe: 支付宝支付
      * @param $paymentParams
@@ -73,11 +93,10 @@ class UserLogic extends CommonUserLogic{
             "product_code" => "QUICK_MSECURITY_PAY",
             "timeout_express" => '90m',
             "total_amount" => $paymentParams['amount'],
-            "body" => [$paymentParams['extend']]
+            "body" => $paymentParams['extend']
         ];
 
         $bizContent = json_encode($bizContentArr);
-
 
         $plugin = M('plugin')->where(array('type' => 'payment', 'code' => 'alipayMobile'))->find();
         if(!$plugin){
