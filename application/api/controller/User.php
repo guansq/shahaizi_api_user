@@ -1334,14 +1334,27 @@ class User extends Base{
 
 
     /**
-     * @api         {GET}   /index.php?m=Api&c=User&a=points    我的钱包-账号明细（todo） wxx
-     * @apiDescription  我的钱包获取当前登录用的帐号明显
-     * @apiName     points
+     * @api         {GET}   /index.php?m=Api&c=User&a=accountLog   我的钱包-账号明细（todo） wxx
+     * @apiDescription  我的钱包 获取当前登录用的帐号明显 时间倒序排列
      * @apiName     points
      * @apiGroup    User
+     * @apiParam  {string} token    token.
+     * @apiParam  {number} [startTime]    起始时间 时间戳.
+     * @apiParam  {number} [endTime=当前时间]      结束时间 时间戳.
+     * @apiParam  {number=0,1,2,3,4} [type=0]         类型 0=全部 1=充值 2=提现 3=消费 4=退款.
+     * @apiParam  {number} [p=1]        页码.
+     * @apiParam  {number} [pageSize=20]   每页数据量.
+     *
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  当前页码.
+     * @apiSuccess {array} list    列表.
+     * @apiSuccess {number} list.type 类型.
+     * @apiSuccess {string} list.typeName 类型名称.
+     * @apiSuccess {number} list.timeStamp 时间戳.
+     * @apiSuccess {string} list.timeFmt 格式化的时间.
      *
      */
-    public function account(){
+    public function accountLog(){
         $type = I('type', 'all');
         $usersLogic = new UsersLogic;
         $result = $usersLogic->points($this->user_id, $type);

@@ -18,6 +18,7 @@ namespace app\api\logic;
 use payment\alipay\Alipay;
 use payment\alipay\AlipayOpenCommon;
 use payment\wxpay\WxPay;
+use think\Log;
 
 
 /**
@@ -67,13 +68,19 @@ class UserLogic extends BaseLogic{
      * Describe: 充值操作
      */
     public function doRecharge($userId, $amount,$orderSn){
-        if(!$this->where('user_id', $userId)->setInc('user_money', $amount)){
+        $user = $this->where('user_id', $userId)->find();
+        if(empty($user)){
+            trace('充值失败,无效的用户id='.$userId,Log::ERROR);
             return false;
         }
+        $user->user_money += $amount;
+        $user->save();
+
         $accountLogLogic = new AccountLogLogic();
         $data = [
             'user_id' => $userId,
             'user_money' => $amount,
+            'user_balance' => $user->user_money,
             'change_time' => time(),
             'desc' => '充值',
             'order_sn' => $orderSn,

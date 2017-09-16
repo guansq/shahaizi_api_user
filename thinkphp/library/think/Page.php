@@ -49,6 +49,8 @@ class Page{
        // C('VAR_PAGE') && $this->p = C('VAR_PAGE'); //设置分页参数名称
         /* 基础设置 */
         $p = I('get.p');
+        $pageSize = I('get.pageSize');
+        $listRows = empty($pageSize)?$listRows:$pageSize;
         $this->totalRows  = $totalRows; //设置总记录数
         $this->listRows   = $listRows;  //设置每页显示行数
         $this->parameter  = empty($parameter) ? input() : $parameter;
