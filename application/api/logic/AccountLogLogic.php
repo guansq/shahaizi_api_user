@@ -23,11 +23,19 @@ namespace app\api\logic;
  * @package common\Logic
  */
 class AccountLogLogic extends BaseLogic{
+
     protected $table ='ruit_account_log';
 
     const TYPE_RECHANGE = 1;    // 充值
     const TYPE_WITHDRAW = 2;    // 提现
     const TYPE_CONSUME = 3;    // 消费
     const TYPE_REFUND = 4;    // 退款
+    const TYPE_ARR = [
+        0 => '',
+        self::TYPE_RECHANGE => '充值',
+        self::TYPE_WITHDRAW => '提现',
+        self::TYPE_CONSUME => '消费',
+        self::TYPE_REFUND => '退款',
+    ];
 
 }

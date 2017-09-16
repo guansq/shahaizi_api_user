@@ -1334,7 +1334,7 @@ class User extends Base{
 
 
     /**
-     * @api         {GET}   /index.php?m=Api&c=User&a=accountLog   11.钱包-明细 doing wxx
+     * @api         {GET}   /index.php?m=Api&c=User&a=accountLog   11.钱包-明细 ok wxx
      * @apiDescription  我的钱包 获取当前登录用的帐号明显 时间倒序排列
      * @apiName     accountLog
      * @apiGroup    User
@@ -1348,6 +1348,7 @@ class User extends Base{
      * @apiSuccess {number} page        当前页码.
      * @apiSuccess {number} totalPages  总页码数.
      * @apiSuccess {array} list    列表.
+     * @apiSuccess {number} list.id  id.
      * @apiSuccess {number} list.type 类型.
      * @apiSuccess {string} list.typeName 类型名称.
      * @apiSuccess {number} list.timeStamp 变动时间戳.
@@ -1357,9 +1358,50 @@ class User extends Base{
      * @apiSuccess {string} list.remark   备注.
      * @apiSuccess {string} list.orderSn   订单号.
      *
+     * @apiSuccessExample {json} SUCCESS
+     *   {
+     *       "status": 1,
+     *       "msg": "SUCCESS",
+     *       "result": {
+     *           "p": 1,
+     *           "totalPages": 5,
+     *           "list": [
+     *               {
+     *                   "changeMoney": "+0.01",
+     *                   "id": 299,
+     *                   "orderSn": "RC632017091618575865858",
+     *                   "remark": "充值",
+     *                   "timeFmt": "2017.09.16",
+     *                   "timeStamp": 1505559504,
+     *                   "type": 1,
+     *                   "typeName": "充值",
+     *                   "userBalance": "6.05"
+     *               },
+     *               {
+     *                   "changeMoney": "+0.01",
+     *                   "id": 298,
+     *                   "orderSn": "RC632017091616350873728",
+     *                   "remark": "充值",
+     *                   "timeFmt": "2017.09.16",
+     *                   "timeStamp": 1505555947,
+     *                   "type": 1,
+     *                   "typeName": "充值",
+     *                   "userBalance": "0.00"
+     *               }
+     *           ]
+     *       }
+     *   }
+     *
+     *
      */
     public function accountLog(){
-
+        $reqParams = $this->getReqParams(['startTime','endTime','type'=>0]);
+        $rule =[
+            'type'=>'require|in:0,1,2,3,4'
+        ];
+        $this->validateParams($reqParams,$rule);
+        $userLogic = new UserLogic();
+        return $this->returnJson($userLogic->getUserAccountLogPageByTimeAndType($reqParams,$this->user));
     }
 
 

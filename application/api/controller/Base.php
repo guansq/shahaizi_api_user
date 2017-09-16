@@ -329,7 +329,7 @@ class Base extends Controller{
                 $ret[$v] = array_key_exists($v, $params) ? $params[$v] : '';
                 continue;
             }
-            $ret[$k] = array_key_exists($k, $params) ? $params[$k] : (empty($v) ? '' : $v);
+            $ret[$k] = array_key_exists($k, $params) ? $params[$k] : (!isset($v) ? '' : $v);
         }
 
         return $ret;

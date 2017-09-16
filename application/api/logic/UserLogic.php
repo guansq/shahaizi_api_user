@@ -19,7 +19,7 @@ use payment\alipay\Alipay;
 use payment\alipay\AlipayOpenCommon;
 use payment\wxpay\WxPay;
 use think\Log;
-
+use think\Page;
 
 /**
  * 用户逻辑定义
@@ -28,6 +28,7 @@ use think\Log;
  */
 class UserLogic extends BaseLogic{
     protected $table = 'ruit_users';
+
     /**
      * Author: WILL<314112362@qq.com>
      * Describe: 获取调起充值支付参数
@@ -39,7 +40,7 @@ class UserLogic extends BaseLogic{
         $paymentParams = [
             'orderSn' => $orderSn,
             'amount' => $reqParams['amount'],
-            'extend' => urlencode( json_encode([
+            'extend' => urlencode(json_encode([
                 'userId' => $loginUser['user_id'],
                 'amount' => $reqParams['amount'],
                 'orderSn' => $orderSn
@@ -67,10 +68,10 @@ class UserLogic extends BaseLogic{
      * Author: WILL<314112362@qq.com>
      * Describe: 充值操作
      */
-    public function doRecharge($userId, $amount,$orderSn){
+    public function doRecharge($userId, $amount, $orderSn){
         $user = $this->where('user_id', $userId)->find();
         if(empty($user)){
-            trace('充值失败,无效的用户id='.$userId,Log::ERROR);
+            trace('充值失败,无效的用户id='.$userId, Log::ERROR);
             return false;
         }
         $user->user_money += $amount;
@@ -84,7 +85,7 @@ class UserLogic extends BaseLogic{
             'change_time' => time(),
             'desc' => '充值',
             'order_sn' => $orderSn,
-            'type' =>  AccountLogLogic::TYPE_RECHANGE,
+            'type' => AccountLogLogic::TYPE_RECHANGE,
         ];
         return $accountLogLogic->create($data);
 
@@ -104,7 +105,7 @@ class UserLogic extends BaseLogic{
             "timeout_express" => '90m',
             "total_amount" => $paymentParams['amount'],
             "product_code" => "QUICK_MSECURITY_PAY",
-            "passback_params" =>  $paymentParams['extend'], //$paymentParams['extend'],
+            "passback_params" => $paymentParams['extend'], //$paymentParams['extend'],
 
         ];
         $bizContent = json_encode($bizContentArr);
@@ -146,6 +147,81 @@ class UserLogic extends BaseLogic{
         $order["attach"] = json_encode($paymentParams['extend']);
         $wxPay = new WxPay();
         return $wxPay->dopay($order);
+    }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe: 根据用户
+     * @param $reqParams
+     * @param $user
+     *
+     * @success {number} list.id.
+     * @success {number} list.type 类型.
+     * @success {string} list.typeName 类型名称.
+     * @success {number} list.timeStamp 变动时间戳.
+     * @success {string} list.timeFmt 格式化的变动时间.
+     * @success {string} list.changeMoney   变动金额 带+/-.
+     * @success {string} list.userBalance   用户余额.
+     * @success {string} list.remark   备注.
+     * @success {string} list.orderSn   订单号.
+     */
+    public function getUserAccountLogPageByTimeAndType($reqParams, $user){
+        $accountLogLogic = new AccountLogLogic();
+        $fields = [
+            'log_id' => 'id',
+            'type' => 'type',
+            'change_time' => 'timeStamp',
+            'user_money' => 'changeMoney',
+            'user_balance' => 'userBalance',
+            'desc' => 'remark',
+            'order_sn' => 'orderSn',
+        ];
+        $where = ['user_id' => $user['user_id']];
+
+        if(!empty($reqParams['type'])){
+            $where['type'] = $reqParams['type'];
+        }
+        if(!empty($reqParams['startTime'])){
+            $where['change_time'] = ['>=', $reqParams['startTime']];
+        }
+        if(!empty($reqParams['endTime'])){
+            $where['change_time'] = ['<=', $reqParams['endTime']];
+        }
+
+        $count = $accountLogLogic->where($where)->count();
+        if(empty($count)){
+            $ret = [
+                'p' => 1,
+                'totalPages' => 0,
+                'list' => [],
+            ];
+            return resultArray(2000, '', $ret);
+        }
+
+        $page = new Page($count, 10);
+        $list = $accountLogLogic->where($where)
+            ->limit($page->firstRow, $page->listRows)
+            ->order('change_time DESC')
+            ->field($fields)
+            ->select();
+        $retList = [];
+        foreach($list as $item){
+            $item['typeName'] = AccountLogLogic::TYPE_ARR[$item['type']];
+            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['changeMoney'] = $item['changeMoney'] > 0 ? "+$item[changeMoney]" : $item['changeMoney'];
+            $ksortItem = $item->toArray();
+            ksort($ksortItem);
+            $retList [] = $ksortItem;
+        }
+
+        $ret = [
+            'p' => $page->nowPage,
+            'totalPages' => $page->totalPages,
+            'list' => $retList,
+        ];
+        return resultArray(2000, '', $ret);
+
+
     }
 
 }
