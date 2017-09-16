@@ -399,10 +399,10 @@ class Alipay
         $sysParams["method"] = $request->getApiMethodName();
         $sysParams["timestamp"] = date("Y-m-d H:i:s");
         // $sysParams["auth_token"] = $authToken;
-        /*$sysParams["alipay_sdk"] = $this->alipaySdkVersion;
-        $sysParams["terminal_type"] = $request->getTerminalType();
-        $sysParams["terminal_info"] = $request->getTerminalInfo();*/
-        $sysParams["prod_code"] = $request->getProdCode();
+        //$sysParams["alipay_sdk"] = $this->alipaySdkVersion;
+        /*$$sysParams["terminal_type"] = $request->getTerminalType();
+       $sysParams["terminal_info"] = $request->getTerminalInfo();*/
+        //$sysParams["prod_code"] = $request->getProdCode();
         $sysParams["notify_url"] = $request->getNotifyUrl();
         $sysParams["charset"] = $this->postCharset;
 //        $sysParams["app_auth_token"] = $appInfoAuthtoken;
@@ -436,17 +436,17 @@ class Alipay
 
         }
 
-        $sysParams["sign"] = $this->generateSign(array_merge($apiParams, $sysParams), $this->signType);
-        if(!$sysParams["sign"])
+        $totalParams = array_merge($apiParams, $sysParams);
+        ksort($totalParams);
+        $totalParams["sign"] = $this->generateSign($totalParams, $this->signType);
+        if(!$totalParams["sign"])
         {
             jsonReturn(0, "error",'');
         }
-        $totalParams = array_merge($apiParams, $sysParams);
-        ksort($totalParams);
 
         $requestUrl = '';
         foreach ($totalParams as $sysParamKey => $sysParamValue) {
-            $requestUrl .= "$sysParamKey=" . urlencode($this->characet($sysParamValue, $this->postCharset)) . "&";
+            $requestUrl .= "$sysParamKey=" .urlencode($this->characet($sysParamValue, $this->postCharset)) . "&";
         }
 
         $requestUrl = substr($requestUrl, 0, -1);

@@ -34,20 +34,24 @@ class UserLogic extends BaseLogic{
      */
     public function getRechargeParams($reqParams, $loginUser){
 
-        $orderSn = "RC$loginUser[user_id]$reqParams[amount]".date('YmdHis').rand(10000, 99999); // 订单编号
+        $orderSn = "RC{$loginUser['user_id']}".date('YmdHis').rand(10000, 99999); // 订单编号
         $paymentParams = [
             'orderSn' => $orderSn,
             'amount' => $reqParams['amount'],
-            'extend' => [
+            'extend' => urlencode( json_encode([
                 'userId' => $loginUser['user_id'],
                 'amount' => $reqParams['amount'],
                 'orderSn' => $orderSn
-            ]
+            ]))
         ];
+        trace($paymentParams);
+
         $result = [];
         if($reqParams['payWay'] == 'zfb'){
+
             $aliPayParams = $this->aliPay($paymentParams);
             $result = ['aliPayParams' => $aliPayParams];
+            //$result = ['aliPayParams' => 'app_id=2017061607503256&biz_content={"body":"17051335257\u5145\u503c","subject":"\u5145\u503c","out_trade_no":"2017091652991025","timeout_express":"90m","total_amount":"0.01","product_code":"QUICK_MSECURITY_PAY","passback_params":"recharge"}&charset=UTF-8&format=json&method=alipay.trade.app.pay&notify_url=http://wztx.shp.api.zenmechi.cc/callback/alipay_callback&sign_type=RSA2&timestamp=2017-09-16 13:36:36&version=1.0&sign=C3CYMHfeoPjxpg947K25PF76Y7Q5BhA6dI6vdu+iPH2bfaRBkmIExVVG8b2/UqkhNRpY1hO5BJuim5hOrpi003kMIyb9yfao6MyJyQ6LVIqbcNlRTJOAameTqJe6O4oo7jeOq9X+lTWGH+wVwQi3Oz3eiS892ilBUJPnubtwrTpvT/to74M43/mAy5UtdCkiS6XkkO4PmW2YqTHj5/roB6JzbCqOxlPUsZhqlxssS3jyMM8Id1x3yeuP5o65NX5BB73ivSPh03HdV/E3PgtnG7Ni0KVzRUXJdIr2ez4AHh4h80QW8PecZ4aCIA7wGnLrrkkBViOx9S3WQIYhpiy6AQ=='];
         }elseif($reqParams['payWay'] == 'wx'){
             $wxPayParams = $this->wxPay($paymentParams);
             $result = ['wxPayParams' => $wxPayParams];
@@ -86,17 +90,18 @@ class UserLogic extends BaseLogic{
      * @return array|bool|string
      */
     private function aliPay($paymentParams){
-
+        //dd($paymentParams['amount']);
         $bizContentArr = [
             "subject" => 'FIXME睿途科技',
             "out_trade_no" => $paymentParams['orderSn'],
-            "product_code" => "QUICK_MSECURITY_PAY",
             "timeout_express" => '90m',
             "total_amount" => $paymentParams['amount'],
-            "body" => $paymentParams['extend']
-        ];
+            "product_code" => "QUICK_MSECURITY_PAY",
+            "passback_params" =>  $paymentParams['extend'], //$paymentParams['extend'],
 
+        ];
         $bizContent = json_encode($bizContentArr);
+        //dd($bizContent);
 
         $plugin = M('plugin')->where(array('type' => 'payment', 'code' => 'alipayMobile'))->find();
         if(!$plugin){

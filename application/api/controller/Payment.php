@@ -22,43 +22,14 @@ class Payment extends Base{
      * app端发起支付宝,支付宝返回服务器端,  返回到这里
      * http://www.tp-shop.cn/index.php/Api/Payment/alipayNotify
      *
-     * DEBUG: 支付宝支付回调===》
-    DEBUG: Array
-    (
-    [gmt_create] => 2017-08-26 11:28:12
-    [charset] => UTF-8
-    [seller_email] => liuliangdaren@163.com
-    [subject] => 梦龙流量商城订单
-    [sign] => OmaGWm7nImMwrE7GCF8v0aQ2j0Fn/kNlbYIBGCCFpUy4HByvkwfGykqcpL4iAo9tSqK17xrMZh/x3/phug/fFJ0awcsIc3lksi9RLlKdbiKgIU4hOe5lVQUzIaUSjCKyoozJwz5C3Egq69IaL0D5fwSTk/+UGT8F6UTfvIiuyVs=
-    [body] => [{"order_name":"master_order_sn","is_paypoint":0,"user_id":"1013","type":"1"}]
-    [buyer_id] => 2088002055168212
-    [invoice_amount] => 0.01
-    [notify_id] => 3aff1488e77da76d20071ee1912cdf3hme
-    [fund_bill_list] => [{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]
-    [notify_type] => trade_status_sync
-    [trade_status] => TRADE_SUCCESS
-    [receipt_amount] => 0.01
-    [app_id] => 2017052207306091
-    [buyer_pay_amount] => 0.01
-    [sign_type] => RSA
-    [seller_id] => 2088721066079239
-    [gmt_payment] => 2017-08-26 11:28:13
-    [notify_time] => 2017-08-26 11:28:13
-    [version] => 1.0
-    [out_trade_no] => 201708261127521217
-    [total_amount] => 0.01
-    [trade_no] => 2017082621001004210278212823
-    [auth_app_id] => 2017052207306091
-    [buyer_logon_id] => 285***@qq.com
-    [point_amount] => 0.00
-    [time] => 0
-    )
      */
     public function alipayNotify(Request $request ){
         if(!$request->isPost()){
             exit("fail");
         }
         $resp = I("post.");
+        trace('支付宝回调========》');
+        trace($resp);
         $paymentPlugin = M('Plugin')->where("code='alipayMobile' and  type = 'payment' ")->find(); // 找到支付插件的配置
         $config_value = unserialize($paymentPlugin['config_value']); // 配置反序列化
         $alipay_config['partner'] = $config_value['alipay_partner'];//合作身份者id，以2088开头的16位纯数字
@@ -70,9 +41,9 @@ class Payment extends Base{
         $alipayNotify = new \AlipayNotify($alipay_config);
 
         //todo 验证失败
-        // if(!$alipayNotify->verifyNotify()){
-        //     exit("fail"); //验证失败
-        // }
+         if(!$alipayNotify->verifyNotify()){
+             exit("fail"); //验证失败
+         }
 
         $order_sn = $out_trade_no = trim($resp['out_trade_no']); //商户订单号
         $trade_no = $resp['trade_no'];//支付宝交易号
@@ -87,11 +58,13 @@ class Payment extends Base{
         if(substr($order_sn, 0,2) == 'RC'){
             // 充值逻辑
             // $resp['body'] ='{"userId":63,"amount":1,"orderSn":"RC201723443234565432345432"}';
-            $extend = json_decode($resp['body'],true);
+            $extend = json_decode(urldecode($resp['passback_params']),true);
             if(empty($extend)){
                 exit("fail");
             }
             $userLogic = new UserLogic();
+            trace("用户充值 =========》");
+            trace($extend);
             if($userLogic->doRecharge($extend['userId'],$extend['amount'],$order_sn)){
                 exit("success");
             }else{

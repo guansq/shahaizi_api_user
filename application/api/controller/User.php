@@ -22,6 +22,7 @@ use app\common\logic\OrderLogic;
 use app\common\logic\StoreLogic;
 use app\common\logic\UsersLogic;
 use service\MsgService;
+use think\Log;
 use think\Page;
 
 class User extends Base{
@@ -1158,23 +1159,6 @@ class User extends Base{
         $this->ajaxReturn(['status' => 1, 'msg' => '操作成功', 'result' => $post['head_pic']]);
     }
 
-    /*
-     * @api         {GET}   index.php?m=Api&c=User&a=account    我的钱包（待调试） wxx
-     * @apiName     account
-     * @apiGroup    User
-     *
-     */
-    public function account(){
-
-        $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
-        // $user_id = I('user_id/d'); // 用户id
-        //获取账户资金记录
-
-        $data = $this->userLogic->get_account_log($this->user_id, I('get.type'));
-        $account_log = $data['result'];
-        exit(json_encode(array('status' => 1, 'msg' => '获取成功', 'result' => $account_log)));
-    }
-
     /**
      * 申请退货状态
      */
@@ -1289,24 +1273,9 @@ class User extends Base{
         $this->ajaxReturn($json_arr);
     }
 
-    /**
-     * @api         {GET}   /index.php?m=Api&c=User&a=points    我的钱包-账号明细（todo） wxx
-     * @apiName     points
-     * @apiGroup    User
-     *
-     */
-    public function points(){
-        $type = I('type', 'all');
-        $usersLogic = new UsersLogic;
-        $result = $usersLogic->points($this->user_id, $type);
-
-        $json_arr = ['status' => 1, 'msg' => '获取成功', 'result' => $result['account_log']];
-        exit(json_encode($json_arr));
-    }
-
 
     /**
-     * @api         {GET}   /index.php/api/user/recharge  我的钱包-充值(done) wxx
+     * @api         {GET}   /index.php?m=api&c=user&a=recharge  我的钱包-充值(done) wxx
      * @apiDescription  用户充值获取调起支付需要的参数
      * @apiName     recharge
      * @apiGroup    User
@@ -1355,26 +1324,30 @@ class User extends Base{
         $reqParams = $this->getReqParams(['payWay','amount']);
         $rule =[
             'payWay'=>'require|in:wx,zfb',
-            'amount'=>'require|between:0.01,10000'
+            'amount'=>'require|between:0.01,100000000'
         ];
         $this->validateParams($reqParams,$rule);
         $userLogic = new  UserLogic();
+
         return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
     }
 
 
     /**
-     * @api         {GET}   /index.php/api/user/recharge  我的钱包-充值（todo） wxx
-     * @apiDescription  用户充值获取调起支付需要的参数
-     * @apiName     recharge
+     * @api         {GET}   /index.php?m=Api&c=User&a=points    我的钱包-账号明细（todo） wxx
+     * @apiDescription  我的钱包获取当前登录用的帐号明显
+     * @apiName     points
+     * @apiName     points
      * @apiGroup    User
-     * @apiParam  {string=wx,zfb} payWay    支付方式.
-     * @apiParam  {number{0.01-10000}} amount  充值金额.
-     * @apiSuccess {String} xx xxx.
      *
      */
-    public function withdraw(){
-        returnJson(2000);
+    public function account(){
+        $type = I('type', 'all');
+        $usersLogic = new UsersLogic;
+        $result = $usersLogic->points($this->user_id, $type);
+
+        $json_arr = ['status' => 1, 'msg' => '获取成功', 'result' => $result['account_log']];
+        exit(json_encode($json_arr));
     }
 
 
