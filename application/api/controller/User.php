@@ -1354,8 +1354,8 @@ class User extends Base{
     public function recharge(){
         $reqParams = $this->getReqParams(['payWay','amount']);
         $rule =[
-            'payWay'=>'in:wx,zfb',
-            'amount'=>'between:0.01,10000'
+            'payWay'=>'require|in:wx,zfb',
+            'amount'=>'require|between:0.01,10000'
         ];
         $this->validateParams($reqParams,$rule);
         $userLogic = new  UserLogic();
