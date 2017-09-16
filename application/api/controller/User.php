@@ -1275,7 +1275,7 @@ class User extends Base{
 
 
     /**
-     * @api         {GET}   /index.php?m=api&c=user&a=recharge  我的钱包-充值(done) wxx
+     * @api         {GET}   /index.php?m=api&c=user&a=recharge  10.钱包-充值 ok wxx
      * @apiDescription  用户充值获取调起支付需要的参数
      * @apiName     recharge
      * @apiGroup    User
@@ -1334,9 +1334,9 @@ class User extends Base{
 
 
     /**
-     * @api         {GET}   /index.php?m=Api&c=User&a=accountLog   我的钱包-账号明细（todo） wxx
+     * @api         {GET}   /index.php?m=Api&c=User&a=accountLog   11.钱包-明细 doing wxx
      * @apiDescription  我的钱包 获取当前登录用的帐号明显 时间倒序排列
-     * @apiName     points
+     * @apiName     accountLog
      * @apiGroup    User
      * @apiParam  {string} token    token.
      * @apiParam  {number} [startTime]    起始时间 时间戳.
@@ -1346,21 +1346,20 @@ class User extends Base{
      * @apiParam  {number} [pageSize=20]   每页数据量.
      *
      * @apiSuccess {number} page        当前页码.
-     * @apiSuccess {number} totalPages  当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
      * @apiSuccess {array} list    列表.
      * @apiSuccess {number} list.type 类型.
      * @apiSuccess {string} list.typeName 类型名称.
-     * @apiSuccess {number} list.timeStamp 时间戳.
-     * @apiSuccess {string} list.timeFmt 格式化的时间.
+     * @apiSuccess {number} list.timeStamp 变动时间戳.
+     * @apiSuccess {string} list.timeFmt 格式化的变动时间.
+     * @apiSuccess {string} list.changeMoney   变动金额 带+/-.
+     * @apiSuccess {string} list.userBalance   用户余额.
+     * @apiSuccess {string} list.remark   备注.
+     * @apiSuccess {string} list.orderSn   订单号.
      *
      */
     public function accountLog(){
-        $type = I('type', 'all');
-        $usersLogic = new UsersLogic;
-        $result = $usersLogic->points($this->user_id, $type);
 
-        $json_arr = ['status' => 1, 'msg' => '获取成功', 'result' => $result['account_log']];
-        exit(json_encode($json_arr));
     }
 
 
