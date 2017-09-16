@@ -15,6 +15,7 @@
 namespace app\api\controller;
 
 use app\api\logic\UserLogic;
+use payment\alipay\AlipayNotify;
 use think\Request;
 
 class Payment extends Base{
@@ -38,12 +39,13 @@ class Payment extends Base{
         require_once("plugins/payment/alipay/app_notify/lib/alipay_notify.class.php");
 
         //计算得出通知验证结果
-        $alipayNotify = new \AlipayNotify($alipay_config);
+        //$alipayNotify = new AlipayNotify($alipay_config);
 
         //todo 验证失败
-         if(!$alipayNotify->verifyNotify()){
-             exit("fail"); //验证失败
-         }
+        //if(!$alipayNotify->verifyNotify($resp)){
+        //    trace('验证失败');
+        //    exit("fail"); //验证失败
+        //}
 
         $order_sn = $out_trade_no = trim($resp['out_trade_no']); //商户订单号
         $trade_no = $resp['trade_no'];//支付宝交易号
@@ -70,26 +72,10 @@ class Payment extends Base{
             }else{
                 exit("fail");
             };
-        }else{
-            $order_amount = M('order')
-                ->where(['master_order_sn' => $order_sn])
-                ->whereOr(['order_sn' => $order_sn])
-                ->sum('order_amount');
         }
-        if($order_amount != $_POST['price']){
-            exit("fail");
-        } //验证失败
 
-        if($_POST['trade_status'] == 'TRADE_FINISHED'){
-            update_pay_status($order_sn); // 修改订单支付状态
-        }elseif($_POST['trade_status'] == 'TRADE_SUCCESS'){
-            update_pay_status($order_sn); // 修改订单支付状态
-        }
-        M('order')
-            ->where('order_sn', $order_sn)
-            ->whereOr('master_order_sn', $order_sn)
-            ->save(array('pay_code' => 'alipay', 'pay_name' => 'app支付宝'));
-        exit("success");  //  告诉支付宝支付成功 请不要修改或删除
+        //todo 其他支付回到处理
+        exit("fail");
     }
 
 
@@ -100,6 +86,8 @@ class Payment extends Base{
         $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
         $xml = $xml ?: file_get_contents('php://input');
         $result = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+        trace("微信支付回调==============》");
+        trace($result);
         $return_result = 'FAIL';
         file_put_contents('./notify.log', json_encode($result)."\n", FILE_APPEND);
         if($result['return_code'] == 'SUCCESS'){
