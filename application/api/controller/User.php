@@ -1275,7 +1275,7 @@ class User extends Base{
 
 
     /**
-     * @api         {GET}   /index.php?m=api&c=user&a=recharge  10.钱包-充值 ok wxx
+     * @api         {GET}   /index.php?m=api&c=user&a=recharge  10.钱包-充值 !暂停 wxx
      * @apiDescription  用户充值获取调起支付需要的参数
      * @apiName     recharge
      * @apiGroup    User
@@ -1320,17 +1320,17 @@ class User extends Base{
      *   }
      *
      */
-    public function recharge(){
-        $reqParams = $this->getReqParams(['payWay','amount']);
-        $rule =[
-            'payWay'=>'require|in:wx,zfb',
-            'amount'=>'require|between:0.01,100000000'
-        ];
-        $this->validateParams($reqParams,$rule);
-        $userLogic = new  UserLogic();
-
-        return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
-    }
+//    public function recharge(){
+//        $reqParams = $this->getReqParams(['payWay','amount']);
+//        $rule =[
+//            'payWay'=>'require|in:wx,zfb',
+//            'amount'=>'require|between:0.01,100000000'
+//        ];
+//        $this->validateParams($reqParams,$rule);
+//        $userLogic = new  UserLogic();
+//
+//        return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
+//    }
 
 
     /**
