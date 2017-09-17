@@ -41,7 +41,7 @@ class PackLineLogic extends Model{
     }
 
     public function get_local_drv(){
-        $drv = M('seller')->field('seller_id,head_pic,seller_name,drv_code,province,city')->where(['is_driver'=>1])->select();
+        $drv = M('seller')->field('seller_id,head_pic,seller_name,drv_code,province,city,plat_start')->where(['is_driver'=>1])->select();
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
             $val['province'] = getCityName($val['province']);

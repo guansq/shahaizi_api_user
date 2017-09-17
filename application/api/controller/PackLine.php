@@ -21,6 +21,7 @@ class PackLine extends Base{
      *  Http/1.1    200 OK
      *{
      * "line_id" : "11",//线路ID
+     * "seller_id" : "11",//商家ID
      * "cover_img" : "http://xxx.jpg",//线路风景
      * "line_title" : "线路标题",//线路标题
      * "line_sum" : "",//游玩次数
@@ -118,6 +119,7 @@ class PackLine extends Base{
             "province": 0,
             "city": 0,
             "star": 4,
+            "plat_start": 4,
             "line": null
             }
         ]

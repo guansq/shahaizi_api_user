@@ -20,7 +20,7 @@ class DriverLogic extends Model{
 
         $count = M('seller')->where($where)->count();
         $Page = new Page($count, 10);
-        $list = M('seller')->field('seller_id,drv_id,drv_code,head_pic,seller_name')->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $list = M('seller')->field('seller_id,drv_id,drv_code,head_pic,seller_name,plat_start')->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
         if(empty($list)){
             return ['status'=>-1,'msg'=>'没有记录'];
         }
@@ -102,7 +102,7 @@ class DriverLogic extends Model{
      * 我的车辆
      */
     public function get_my_car(){
-        //$where = [];
+        //M('pack_car_info')->field('')->where(['is_state'=>1])->
     }
 
     /**

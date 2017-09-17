@@ -19,10 +19,10 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
+     * @api {POST}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
      * @apiName     getAllDriver
      * @apiGroup    DriverPack
-     * @apiParam    {Number}    [partner_num]     伴侣人数
+     * @apiParam    {Number}    [partner_num]     伴侣人数 根据人数取得符合座位的司机
      * @apiParam    {Number}    [dest_address]     目的地
      * @apiParam    {Number}    [date]     日期
      * @apiSuccessExample {json}    Success-Response
@@ -33,7 +33,8 @@ class DriverPack extends Base{
      * "drv_code"   : "11",//司导code
      * "head_pic" : "http://xxx.jpg",//司导图片
      * "seller_name" : "司导姓名",
-     * "score" : "1",//星级
+     * "star" : "1",//星级
+     * "plat_start" : "1",//平台星级
      *}
      */
     public function getAllDriver(){
@@ -44,7 +45,9 @@ class DriverPack extends Base{
         $where = [];
         $where['is_driver'] = 1;
         $where['drv_id'] = ['<>',0];
-        if(!empty($partner)){
+
+        $whereInfo = [];
+        if(!empty($partner)){//通过伴侣人数去
             $map = [
                 1 => 4,
                 2 => 4,
@@ -58,18 +61,58 @@ class DriverPack extends Base{
                 10 => 10,
             ];
             $num = $map[$partner];//人数座位对应表->取满足的drv_id
+            $result = M('pack_car_info')->where('seat_num',['egt',$num])->select();
+            if(!empty($result)){
+                $seller_arr = array_unique(get_arr_column($result,'seller_id'));
+                $whereInfo[] = $seller_arr;
+            }else{
+                $this->ajaxReturn(['status'=>-1,'msg'=>'没有数据']);
+            }
         }
+
 
         if(!empty($dest_address)){
-            $where['city'] = ['like',"{$city}"];
+            $result = M('pack_line')->where(['city'=>['like',"%{$city}%"]])->select();
+            if(!empty($result)){
+                $dest_arr = array_unique(get_arr_column($result,'seller_id'));
+                $whereInfo[] = $dest_arr;
+            }else{
+                $this->ajaxReturn(['status'=>-1,'msg'=>'没有数据']);
+            }
         }
+
 
         if(!empty($date)){
-
+            $result = M('pack_line')->where(['start_time'=>['egt',$date],'end_time'=>['elt',$date]])->select();
+            if(!empty($result)){
+                $date_arr = array_unique(get_arr_column($result,'seller_id'));
+                $whereInfo[] = $date_arr;
+            }else{
+                $this->ajaxReturn(['status'=>-1,'msg'=>'没有数据']);
+            }
         }
-        $result = $this->driverLogic->get_driver_list();
-        $this->ajaxReturn($result);
+        $result = $this->driverLogic->get_driver_list($where);
 
+        if(!empty($whereInfo)){//3个筛选条件不为空
+            $tmp_arr = [];
+            foreach($whereInfo as $k => $v){
+                if($k == 0){
+                    $tmp_arr = $v;
+                }else{
+                    $tmp_arr = array_intersect($tmp_arr,$v);//符合3个条件的数组
+                }
+            }
+            $all_drv = [];
+            foreach($result['result']['list'] as $val){
+                if(in_array($val['seller_id'],$tmp_arr)){//全部筛选出来的司导 符合 3个条件
+                    $all_drv[] = $val;
+                }
+            }
+            $result['result']['list'] = $all_drv;
+            $this->ajaxReturn($result);
+        }
+
+        $this->ajaxReturn($result);
     }
 
     /**
