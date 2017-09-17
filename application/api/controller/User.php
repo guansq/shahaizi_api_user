@@ -1316,11 +1316,16 @@ class User extends Base{
      * @apiParam  {string}  bankOfDeposit 提现人开户行 当提现方式为银行汇款时此项必填.
      * @apiParam  {string}  [phone] 提现人联系电话.
      *
+     * @apiSuccess  {string}  amount 提现金额.
+     * @apiSuccess  {string}  balance 账号余额.
+     *
      * @apiSuccessExample {json} 提交成功
      *   {
      *       "status": 1,
      *       "msg": "提交成功",
-     *       "result":{}
+     *           "result": {
+     *               "balance": "5.00"
+     *           }
      *   }
      *
      * @apiSuccessExample {json} 提交失败

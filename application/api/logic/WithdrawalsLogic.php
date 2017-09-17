@@ -14,6 +14,7 @@
  */
 
 namespace app\api\logic;
+use think\Log;
 
 
 /**
@@ -49,7 +50,7 @@ class WithdrawalsLogic extends BaseLogic{
      * @param $user
      */
     public function applyWithdrawals($reqParams, $user){
-
+        $userLogic = new UserLogic();
         $count = $this->where('user_id', $user['user_id'])->where('status', self::STATUS_AUDITTING)->count();
         if($count > 0){
             return resultArray(4010, '您有提现申请在处理中。如有疑问请联系客服。');
@@ -65,6 +66,15 @@ class WithdrawalsLogic extends BaseLogic{
             default:
                 $bankName = $reqParams['bankName'];
         }
+
+        $userObj = $userLogic->where('user_id', $user['user_id'])->find();
+        $userObj->user_money -= $reqParams['amount'];
+        $userObj->frozen_money += $reqParams['amount'];
+        if(!$userObj->save()){
+            trace("用户userid=$user[user_id]申请提现,冻结余额失败",Log::ERROR);
+            return resultArray(5010, '提交失败,联系客服!。');
+        };
+
         $data = [
             'user_id' => $user['user_id'],
             'money' => $reqParams['amount'],
@@ -76,11 +86,18 @@ class WithdrawalsLogic extends BaseLogic{
             'status' => self::STATUS_AUDITTING,
             'create_time' => time(),
         ];
-        if($this->create($data)){
-            return resultArray(2000, '提交成功。');
-        }else{
+
+        if(!$this->create($data)){
+            // 创建记录 失败要把余额加回去
+            $userObj->user_money += $reqParams['amount'];
+            $userObj->frozen_money -= $reqParams['amount'];
+            $userObj->save();
             return resultArray(5010, '提交失败,联系客服!。');
         }
+        return resultArray(2000, '提交成功。',[
+            'amount'=>number_format($reqParams['amount'],2),
+            'balance'=>number_format($userObj->user_money,2)
+        ]);
     }
 
 }
