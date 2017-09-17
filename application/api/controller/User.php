@@ -129,7 +129,7 @@ class User extends Base{
     }
 
     /**
-     * @api         {POST}  /index.php?m=Api&c=User&a=thirdLogin     第三方登录done（未调试） 管少秋
+     * @api         {POST}  /index.php?m=Api&c=User&a=thirdLogin     第三方登录done 管少秋
      * @apiName     thirdLogin
      * @apiGroup    User
      * @apiParam    {String}      unique_id     第三方唯一标识

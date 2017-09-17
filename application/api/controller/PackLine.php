@@ -11,7 +11,7 @@ use app\common\logic\PackLineLogic;
 class PackLine extends Base{
 
     /**
-     * @api {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线 管少秋
+     * @api {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线 done 管少秋
      * @apiName     getQualityLine
      * @apiGroup    PackLine
      * @apiParam    {String}    [city]    根据城市筛选
@@ -133,6 +133,7 @@ class PackLine extends Base{
         //精选路线
         $packLogic = new PackLineLogic();
         $where['is_comm'] = 1;//精品路线
+
         $line = $packLogic->get_pack_line($where);
         foreach($line as &$val){
             unset($val['line_detail']);
