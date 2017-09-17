@@ -474,4 +474,42 @@ class DriverPack extends Base{
         ];
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }
+
+    /**
+     * @api {POST}  /index.php?m=Api&c=DriverPack&a=searchDriver    搜索司导done 管少秋
+     * @apiName     searchDriver
+     * @apiGroup    DriverPack
+     * @apiParam    {String}    search  搜索字符
+     * @apiSuccessExample {json}    Success-Response
+    {
+    "status": 1,
+    "msg": "成功",
+    "result": [
+    {
+        "seller_id": 17,
+        "head_pic": null,
+        "seller_name": "少秋",
+        "drv_code": "20170908-1",
+        "province": "朝阳门街道",
+        "city": "建国门街道",
+        "plat_start": null,
+        "star": 4,
+        "line": "我的标题很长很长可以用100年"
+    }
+    ]
+    }
+     */
+    public function searchDriver(){
+
+        $search = I('search');
+        if(empty($search)){
+            $this->ajaxReturn(['status'=>-1,'msg'=>'请输入搜索词']);
+        }
+        $where = [
+            'seller_name|drv_code' => ['like',"%{$search}%"],
+            'is_driver' => 1
+        ];
+        $result = $this->driverLogic->search_driver($where);
+        $this->ajaxReturn($result);
+    }
 }

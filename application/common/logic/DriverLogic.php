@@ -173,4 +173,23 @@ class DriverLogic extends Model{
     public function private_person($saveData){
         return M('pack_base_private')->save($saveData);
     }
+
+    /*
+     * 搜索司导
+     */
+    public function search_driver($where){
+        $drv = M('seller')->field('seller_id,head_pic,seller_name,drv_code,province,city,plat_start')->where($where)->select();
+        foreach($drv as &$val){
+            $result = getDrvIno($val['seller_id']);
+            $val['province'] = getCityName($val['province']);
+            $val['city'] = getCityName($val['city']);
+            $val['star'] = $result['star'];
+            $val['line'] = $result['line'];
+        }
+        if(empty($drv)){
+            return ['status'=>-1,'msg'=>'没有数据'];
+        }else{
+            return ['status'=>1,'msg'=>'成功','result'=>$drv];
+        }
+    }
 }
