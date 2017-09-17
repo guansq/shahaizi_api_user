@@ -152,7 +152,7 @@ class DriverPack extends Base{
         $photo_type = $this->driverLogic->get_my_photo($seller_id);
 
         //我的故事
-        $my_story = $this->driverLogic->get_my_story();
+        $my_story = $this->driverLogic->get_my_story($seller_id);
 
         //我的路线
         $my_line = $this->driverLogic->get_my_line($seller_id);
