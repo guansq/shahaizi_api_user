@@ -115,6 +115,7 @@ class PackOrderLogic extends Model{
             'total_price' => $data['total_price'],
             'real_price' => $data['real_price'],
             'total_price' => $data['total_price'],
+            'remark' => $data['remark'],
             'status' => 0,
             'type' => 3,//1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
             'discount_id' => $data['discount_id'],
@@ -123,8 +124,10 @@ class PackOrderLogic extends Model{
             'update_at' => time(),
         ];
         $result = M('pack_order')->save($order_data);
+
         if($result){
-            return ['status' => 1,'msg' => '成功','result' => ['real_price'=>$data['total_price'],'discount_id'=>$data['discount_id']]];
+            $air_id= $this->getLastInsID();
+            return ['status' => 1,'msg' => '成功','result' => ['real_price'=>$data['total_price'],'discount_id'=>$data['discount_id'],'air_id'=>$air_id]];
         }else{
             return ['status' => -1,'msg' => '失败'];
         }

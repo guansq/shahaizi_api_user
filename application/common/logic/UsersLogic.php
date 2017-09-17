@@ -240,6 +240,7 @@ class UsersLogic extends Model
 
         $map['password'] = $password;
         $map['reg_time'] = time();
+        $map['shz_code'] = get_shz_code();//生成傻孩子号
         $map['first_leader'] = cookie('first_leader'); // 推荐人id
         // 如果找到他老爸还要找他爷爷他祖父等
         if($map['first_leader'])
