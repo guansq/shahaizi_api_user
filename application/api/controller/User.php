@@ -1427,7 +1427,7 @@ class User extends Base{
         if(!$request->isGet()){
             return $this->returnJson();
         }
-        $reqParams = $this->getReqParams(['startTime', 'endTime', 'type' => 0]);
+        $reqParams = $this->getReqParams(['startTime', 'endTime'=>time(), 'type' => 0]);
         $rule = [
             'type' => 'require|in:0,1,2,3,4'
         ];

@@ -182,12 +182,8 @@ class UserLogic extends BaseLogic{
             $where['type'] = $reqParams['type'];
         }
         if(!empty($reqParams['startTime'])){
-            $where['change_time'] = ['>=', $reqParams['startTime']];
+            $where['change_time'] = ['BETWEEN', "$reqParams[startTime],$reqParams[endTime]"];
         }
-        if(!empty($reqParams['endTime'])){
-            $where['change_time'] = ['<=', $reqParams['endTime']];
-        }
-
         $count = $accountLogLogic->where($where)->count();
         if(empty($count)){
             $ret = [
