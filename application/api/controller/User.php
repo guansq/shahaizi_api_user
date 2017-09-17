@@ -22,8 +22,8 @@ use app\common\logic\OrderLogic;
 use app\common\logic\StoreLogic;
 use app\common\logic\UsersLogic;
 use service\MsgService;
-use think\Log;
 use think\Page;
+use think\Request;
 
 class User extends Base{
     public $userLogic;
@@ -589,7 +589,7 @@ class User extends Base{
             I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
             I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
             I('post.head_pic') ? $post['head_pic'] = I('post.head_pic') : false; //头像地址
-            if(in_array(I('post.sex'),[0,1,2])){
+            if(in_array(I('post.sex'), [0, 1, 2])){
                 $post['sex'] = I('post.sex');
             }
             I('post.birthday') ? $post['birthday'] = strtotime(I('post.birthday')) : false;  // 生日
@@ -1242,53 +1242,10 @@ class User extends Base{
     }
 
     /**
-     * @api         {POST}   /index.php?m=Api&c=User&a=withdrawals    我的钱包-申请提现（todo） wxx
-     * @apiName     withdrawals
-     * @apiGroup    User
-     *
-     */
-    public function withdrawals(){
-        $data = I('post.');
-        if(!capache([], SESSION_ID, $data['verify_code'])){
-            $this->ajaxReturn(['status' => -1, 'msg' => "验证码错误"]);
-        }
-
-        $data['user_id'] = $this->user_id;
-        $data['create_time'] = time();
-        $distribut_min = tpCache('basic.min'); // 最少提现额度
-        $distribut_need = tpCache('basic.need'); //满多少才能提
-        if($data['money'] < $distribut_min){
-            $this->ajaxReturn(['status' => -1, 'msg' => '每次最少提现额度'.$distribut_min]);
-        }
-        if($data['money'] > $this->user['user_money']){
-            $this->ajaxReturn(['status' => -1, 'msg' => "你最多可提现{$this->user['user_money']}账户余额."]);
-        }
-        if($this->user['user_money'] < $distribut_need){
-            $this->ajaxReturn(['status' => -1, 'msg' => '账户余额最少达到'.$distribut_need.'才能提现']);
-        }
-
-        $withdrawal = M('withdrawals')->where(array('user_id' => $this->user_id, 'status' => 0))->sum('money');
-        if($this->user['user_money'] < ($withdrawal + $data['money'])){
-            $this->ajaxReturn(['status' => -1, 'msg' => '您有提现申请待处理，本次提现余额不足']);
-        }
-        if(M('withdrawals')->add($data)){
-            $bank['bank_name'] = $data['bank_name'];
-            $bank['bank_card'] = $data['account_bank'];
-            $bank['realname'] = $data['account_name'];
-            M('users')->where(array('user_id' => $this->user_id))->save($bank);
-            $json_arr = array('status' => 1, 'msg' => '提交成功');
-        }else{
-            $json_arr = array('status' => -1, 'msg' => '提交失败,联系客服!');
-        }
-        $this->ajaxReturn($json_arr);
-    }
-
-
-    /**
-     * @api         {GET}   /index.php?m=api&c=user&a=recharge  10.钱包-充值 !暂停 wxx
+     * @api             {GET}   /index.php?m=api&c=user&a=recharge  10.钱包-充值 !暂停 wxx
      * @apiDescription  用户充值获取调起支付需要的参数
-     * @apiName     recharge
-     * @apiGroup    User
+     * @apiName         recharge
+     * @apiGroup        User
      * @apiParam  {string} token    token.
      * @apiParam  {string=wx,zfb} payWay    支付方式.
      * @apiParam  {number{0.01-10000}} amount  充值金额.
@@ -1330,24 +1287,79 @@ class User extends Base{
      *   }
      *
      */
-//    public function recharge(){
-//        $reqParams = $this->getReqParams(['payWay','amount']);
-//        $rule =[
-//            'payWay'=>'require|in:wx,zfb',
-//            'amount'=>'require|between:0.01,100000000'
-//        ];
-//        $this->validateParams($reqParams,$rule);
-//        $userLogic = new  UserLogic();
-//
-//        return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
-//    }
+    // public function recharge(Request $request){
+    //     if(!$request->isGet()){
+    //         return $this->returnJson();
+    //     }
+    //     $reqParams = $this->getReqParams(['payWay','amount']);
+    //     $rule =[
+    //         'payWay'=>'require|in:wx,zfb',
+    //         'amount'=>'require|between:0.01,100000000'
+    //     ];
+    //     $this->validateParams($reqParams,$rule);
+    //     $userLogic = new  UserLogic();
+    //     return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
+    // }
 
 
     /**
-     * @api         {GET}   /index.php?m=Api&c=User&a=accountLog   11.钱包-明细 ok wxx
-     * @apiDescription  我的钱包 获取当前登录用的帐号明显 时间倒序排列
-     * @apiName     accountLog
+     * @api         {POST}   /index.php?m=Api&c=User&a=withdrawals    12.钱包-申请提现 doing wxx
+     * @apiName     withdrawals
      * @apiGroup    User
+     * @apiParam  {string} token    token.
+     * @apiParam  {number}  amount   提现金额 应当小于等于用户余额.
+     * @apiParam  {string=zfb,wx,bank}  withdrawalsWay 提现方式 zfb=支付宝,wx=微信,bank=银行汇款.
+     * @apiParam  {string}  account 提现账户.
+     * @apiParam  {string}  person  提现人姓名.
+     * @apiParam  {string}  depositBank 提现人开户行 当提现方式为银行汇款时此项必填.
+     * @apiParam  {string}  [phone] 提现人联系电话.
+     *
+     */
+    public function withdrawals(Request $request){
+        if(!$request->isPost()){
+            return $this->returnJson();
+        }
+
+        $data = I('post.');
+        if(!capache([], SESSION_ID, $data['verify_code'])){
+            $this->ajaxReturn(['status' => -1, 'msg' => "验证码错误"]);
+        }
+
+        $data['user_id'] = $this->user_id;
+        $data['create_time'] = time();
+        $distribut_min = tpCache('basic.min'); // 最少提现额度
+        $distribut_need = tpCache('basic.need'); //满多少才能提
+        if($data['money'] < $distribut_min){
+            $this->ajaxReturn(['status' => -1, 'msg' => '每次最少提现额度'.$distribut_min]);
+        }
+        if($data['money'] > $this->user['user_money']){
+            $this->ajaxReturn(['status' => -1, 'msg' => "你最多可提现{$this->user['user_money']}账户余额."]);
+        }
+        if($this->user['user_money'] < $distribut_need){
+            $this->ajaxReturn(['status' => -1, 'msg' => '账户余额最少达到'.$distribut_need.'才能提现']);
+        }
+
+        $withdrawal = M('withdrawals')->where(array('user_id' => $this->user_id, 'status' => 0))->sum('money');
+        if($this->user['user_money'] < ($withdrawal + $data['money'])){
+            $this->ajaxReturn(['status' => -1, 'msg' => '您有提现申请待处理，本次提现余额不足']);
+        }
+        if(M('withdrawals')->add($data)){
+            $bank['bank_name'] = $data['bank_name'];
+            $bank['bank_card'] = $data['account_bank'];
+            $bank['realname'] = $data['account_name'];
+            M('users')->where(array('user_id' => $this->user_id))->save($bank);
+            $json_arr = array('status' => 1, 'msg' => '提交成功');
+        }else{
+            $json_arr = array('status' => -1, 'msg' => '提交失败,联系客服!');
+        }
+        $this->ajaxReturn($json_arr);
+    }
+
+    /**
+     * @api             {GET}   /index.php?m=Api&c=User&a=accountLog   11.钱包-明细 ok wxx
+     * @apiDescription  我的钱包 获取当前登录用的帐号明显 时间倒序排列
+     * @apiName         accountLog
+     * @apiGroup        User
      * @apiParam  {string} token    token.
      * @apiParam  {number} [startTime]    起始时间 时间戳.
      * @apiParam  {number} [endTime=当前时间]      结束时间 时间戳.
@@ -1404,14 +1416,17 @@ class User extends Base{
      *
      *
      */
-    public function accountLog(){
-        $reqParams = $this->getReqParams(['startTime','endTime','type'=>0]);
-        $rule =[
-            'type'=>'require|in:0,1,2,3,4'
+    public function accountLog(Request $request){
+        if(!$request->isGet()){
+            return $this->returnJson();
+        }
+        $reqParams = $this->getReqParams(['startTime', 'endTime', 'type' => 0]);
+        $rule = [
+            'type' => 'require|in:0,1,2,3,4'
         ];
-        $this->validateParams($reqParams,$rule);
+        $this->validateParams($reqParams, $rule);
         $userLogic = new UserLogic();
-        return $this->returnJson($userLogic->getUserAccountLogPageByTimeAndType($reqParams,$this->user));
+        return $this->returnJson($userLogic->getUserAccountLogPageByTimeAndType($reqParams, $this->user));
     }
 
 
