@@ -94,15 +94,21 @@ class DriverLogic extends Model{
     /*
      * 我的路线
      */
-    public function get_my_line(){
-
+    public function get_my_line($seller_id){
+        $where = [
+            'seller_id' => $seller_id,
+            'is_del' => 0
+        ];
+        $list = M('pack_line')->field('line_id,cover_img')->where($where)->select();
+        return $list;
     }
 
     /*
      * 我的车辆
      */
-    public function get_my_car(){
-        //M('pack_car_info')->field('')->where(['is_state'=>1])->
+    public function get_my_car($seller_id){
+        $list = M('pack_car_info')->alias('c')->field('c.*,b.name as brand_name,t.car_info')->join('ruit_brand_car b','c.brand_id = b.id')->join('ruit_pack_car_bar t','c.car_type_id = t.id')->where(['is_state'=>1,'seller_id'=>$seller_id])->select();
+        return $list;
     }
 
     /**
