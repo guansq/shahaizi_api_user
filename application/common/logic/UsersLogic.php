@@ -521,7 +521,7 @@ class UsersLogic extends Model
         }else{
             $count = M('goods_collect')->where(array('user_id'=>$user_id))->count('collect_id');
         }
-        $where .= ' AND model_type ='.$model_type;
+        //$where .= ' AND model_type ='.$model_type;
         $page = new Page($count,10);
         $show = $page->show();
         //获取我的收藏列表
@@ -538,6 +538,21 @@ class UsersLogic extends Model
         return $return;
     }
 
+    /**
+     * 获取路线收藏列表
+     */
+    public function get_lines_collect($user_id){
+        $line = M('goods_collect')->where(['user_id'=>$user_id,'model_type'=>0])->column('goods_id');
+        if(empty($line)){
+            return ['status'=>-1,'msg'=>'数据为空'];
+        }
+        $where = implode(',',array_unique($line));
+        $result = get_pack_line(['line_id'=>['in',$where]]);
+        if(empty($result)){
+            return ['status'=>-1,'msg'=>'数据为空'];
+        }
+        return ['status'=>1,'msg'=>'成功','result'=>$result];
+    }
     /**
      * 邮箱或手机绑定
      * @param $email_mobile  邮箱或者手机

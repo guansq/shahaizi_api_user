@@ -248,7 +248,9 @@ class Base extends Controller{
                 'bindMail',
                 'changeBindMail',
                 'payPackOrderByBalance',
-                'recharge'
+                'recharge',
+                'collectLine',
+                'getGoodsCollect'
             ],
             'driverpack' => ['rentCarByDay', 'receiveAirport', 'sendAirport', 'oncePickup', 'privateMake'],
             'packorder' => ['getPackOrder', 'getPackOrderDetail', 'payPackOrderByBalance', 'createPackOrder'],
