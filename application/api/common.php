@@ -342,4 +342,51 @@ function payPackOrder($pack_order,$user_info,$discount_price,$pay_way,$is_coupon
     return ['status' => 1,'msg'=>'成功','result'=>['user_money'=>$user['user_money']]];//返回余额
 }
 
+/*
+ * 修改傻孩子号
+ */
+
+function update_shz_code($user_id,$shz_code){
+    //先判断是否有修改
+    $is_update = M('users')->where('user_id',$user_id)->value('is_update_shz');
+    if(!$is_update){//未修改
+        //查看修改的傻孩子号是否存在
+        $where = [
+            'user_id' => ['neq',$user_id],
+            'shz_code' => $shz_code,
+        ];
+        $shz_code_count = M('users')->where($where)->count();
+        if($shz_code_count === 0){//修改傻孩子号
+            $data = [
+                'is_update_shz' => 1,//修改了傻孩子号
+                'shz_code' => $shz_code
+            ];
+            $result = M('users')->where('user_id',$user_id)->update($data);
+            if($result){
+                return ['status'=>1,'msg'=>'成功'];
+            }
+            return ['status'=>-1,'msg'=>'修改失败'];
+        }
+        return ['status'=>-1,'msg'=>'重复的傻孩子号'];
+    }
+    return ['status'=>-1,'msg'=>'您已经修改过傻孩子号了'];
+}
+
+/**
+ * 获取傻孩子号
+ * @return string
+ */
+function get_shz_code()
+{
+    $shz_code = null;
+    // 保证不会有重复傻孩子号存在
+    while(true){
+        $shz_code = date('YmdHis').rand(1000,9999); // 傻孩子
+        $shz_code_count = M('users')->where("shz_code = '$shz_code'")->count();
+        if($shz_code_count == 0)
+            break;
+    }
+    return $shz_code;
+}
+
 

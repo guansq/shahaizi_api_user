@@ -432,7 +432,8 @@ class User extends Base{
      * "pre_pay_points": "0.0000",
      * "optional": "0.0000",
      * "vipid": 0,
-     * "paypoint": "0.00"
+     * "paypoint": "0.00",
+     * "shz_code" :         //傻孩子号
      * }
      * }
      * @apiErrorExample {json} Error-Response:
@@ -491,49 +492,50 @@ class User extends Base{
      * "status": 1,
      * "msg": "获取成功",
      * "result": {
-     * "user_id": 146,
-     * "email": "",
+     * "user_id": 146,      //用户ID
+     * "email": "",         //用户邮箱
      * "password": "90600d68b0f56d90c4c34284d8dfd138",
-     * "sex": 0,
-     * "birthday": 0,
-     * "user_money": "0.00",
-     * "frozen_money": "0.00",
-     * "distribut_money": "0.00",
-     * "pay_points": "0.0000",
-     * "address_id": 0,
-     * "reg_time": 1504596640,
-     * "last_login": 1504602255,
+     * "sex": 0,            //用户性别 0 保密 1 男 2 女
+     * "birthday": 0,       //用户生日
+     * "birthday": 0,       //用户生日
+     * "user_money": "0.00",    //用户余额
+     * "frozen_money": "0.00",  //冻结金额（忽略）
+     * "distribut_money": "0.00",   //累积分佣金额（忽略）
+     * "pay_points": "0.0000",      //消费积分（忽略）
+     * "address_id": 0,             //（忽略）
+     * "reg_time": 1504596640,      //注册时间
+     * "last_login": 1504602255,    //最后登录时间
      * "last_ip": "",
-     * "qq": "",
-     * "mobile": "18451847701",
-     * "mobile_validated": 1,
-     * "oauth": "",
-     * "openid": null,
+     * "qq": "",                    //qq
+     * "mobile": "18451847701",     //手机
+     * "mobile_validated": 1,       //手机是否验证过了  1验证过了
+     * "oauth": "",                 //第三方来源 wx weibo alipay
+     * "openid": null,              //第三方唯一标示
      * "unionid": null,
-     * "head_pic": null,
-     * "province": 0,
-     * "city": 0,
-     * "district": 0,
-     * "email_validated": 0,
-     * "nickname": "18451847701",
-     * "level": 1,
-     * "discount": "1.00",
-     * "total_amount": "0.00",
-     * "is_lock": 0,
-     * "is_distribut": 1,
-     * "first_leader": 0,
-     * "second_leader": 0,
-     * "third_leader": 0,
-     * "fourth_leader": null,
+     * "head_pic": null,            //头像
+     * "province": 0,               //省
+     * "city": 0,                   //市
+     * "district": 0,               //区
+     * "email_validated": 0,        //邮箱是否验证过了
+     * "nickname": "18451847701",   //用户名
+     * "level": 1,                  //级别
+     * "discount": "1.00",          //会员折扣，默认1不享受
+     * "total_amount": "0.00",      //消费累计额度
+     * "is_lock": 0,                //是否被锁定冻结（忽略）
+     * "is_distribut": 1,           //忽略
+     * "first_leader": 0,           //忽略
+     * "second_leader": 0,          //忽略
+     * "third_leader": 0,           //忽略
+     * "fourth_leader": null,       //忽略
      * "fifth_leader": null,
      * "sixth_leader": null,
      * "seventh_leader": null,
-     * "token": "a279c833cebe5fb963ccba311e27c394",
-     * "address": null,
-     * "pay_passwd": null,
+     * "token": "a279c833cebe5fb963ccba311e27c394",     //token
+     * "address": null,                             //忽略
+     * "pay_passwd": null,                          //忽略
      * "pre_pay_points": "0.0000",
      * "optional": "0.0000",
-     * "vipid": 0,
+     * "vipid": 0,              //VIPID
      * "paypoint": "0.00",
      * "coupon_count": 0,
      * "collect_count": 0,
@@ -548,7 +550,8 @@ class User extends Base{
      * "comment_count": 0,
      * "uncomment_count": 0,
      * "serve_comment_count": 0,
-     * "cart_goods_num": 0
+     * "cart_goods_num": 0,
+     * "shz_code" :         //傻孩子号
      * }
      * }
      *
@@ -572,6 +575,8 @@ class User extends Base{
      * @apiParam    {String}    [province]      省份
      * @apiParam    {String}    [city]          城市
      * @apiParam    {String}    [district]      地区
+     * @apiParam    {String}    [personalized_signature]      个性签名
+     * @apiParam    {String}    [shz_code]      傻孩子号
      * @apiParam    {String}    token      token
      */
     public function updateUserInfo(){
@@ -596,6 +601,11 @@ class User extends Base{
 
             I('post.email') ? $post['email'] = I('post.email') : false;
             I('post.mobile') ? $post['mobile'] = I('post.mobile') : false;
+            if(I('post.shz_code')){
+                //修改傻孩子号
+                $result = update_shz_code($this->user_id,I('post.shz_code'));
+                $this->ajaxReturn($result);
+            }
             //dump($post);die;
             if(!$this->userLogic->update_info($this->user_id, $post)){
                 exit(json_encode(array('status' => -1, 'msg' => '更新失败', 'result' => '')));

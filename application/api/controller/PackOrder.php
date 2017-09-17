@@ -222,7 +222,8 @@ class PackOrder extends Base{
         $result = $this->validate($data,'PackOrder');
         if($result === true){//验证通过
             //创建订单
-            $this->packLogic->create_pack_order($data,$this->user);
+            $result = $this->packLogic->create_pack_order($data,$this->user);
+            $this->ajaxReturn($result);
         }else{
             $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
         }
