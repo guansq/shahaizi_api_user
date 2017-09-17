@@ -15,6 +15,7 @@
 namespace app\api\controller;
 
 use app\api\logic\UserLogic;
+use app\api\logic\WithdrawalsLogic;
 use app\common\logic\CartLogic;
 use app\common\logic\CommentLogic;
 use app\common\logic\CouponLogic;
@@ -604,7 +605,7 @@ class User extends Base{
             I('post.mobile') ? $post['mobile'] = I('post.mobile') : false;
             if(I('post.shz_code')){
                 //修改傻孩子号
-                $result = update_shz_code($this->user_id,I('post.shz_code'));
+                $result = update_shz_code($this->user_id, I('post.shz_code'));
                 $this->ajaxReturn($result);
             }
             //dump($post);die;
@@ -1304,7 +1305,7 @@ class User extends Base{
 
 
     /**
-     * @api         {POST}   /index.php?m=Api&c=User&a=withdrawals    12.钱包-申请提现 doing wxx
+     * @api         {POST}   /index.php?m=Api&c=User&a=withdrawals    12.钱包-申请提现 ok wxx
      * @apiName     withdrawals
      * @apiGroup    User
      * @apiParam  {string} token    token.
@@ -1312,8 +1313,23 @@ class User extends Base{
      * @apiParam  {string=zfb,wx,bank}  withdrawalsWay 提现方式 zfb=支付宝,wx=微信,bank=银行汇款.
      * @apiParam  {string}  account 提现账户.
      * @apiParam  {string}  person  提现人姓名.
-     * @apiParam  {string}  depositBank 提现人开户行 当提现方式为银行汇款时此项必填.
+     * @apiParam  {string}  bankName   提现银行  当提现方式为银行汇款时此项必填.
+     * @apiParam  {string}  bankOfDeposit 提现人开户行 当提现方式为银行汇款时此项必填.
      * @apiParam  {string}  [phone] 提现人联系电话.
+     *
+     * @apiSuccessExample {json} 提交成功
+     *   {
+     *       "status": 1,
+     *       "msg": "提交成功",
+     *       "result":{}
+     *   }
+     *
+     * @apiSuccessExample {json} 提交失败
+     *   {
+     *       "status": -1,
+     *       "msg": "您有提现申请在处理中。如有疑问请联系客服。",
+     *       "result": {}
+     *   }
      *
      */
     public function withdrawals(Request $request){
@@ -1321,39 +1337,20 @@ class User extends Base{
             return $this->returnJson();
         }
 
-        $data = I('post.');
-        if(!capache([], SESSION_ID, $data['verify_code'])){
-            $this->ajaxReturn(['status' => -1, 'msg' => "验证码错误"]);
+        $reqParams = $this->getReqParams(['amount', 'withdrawalsWay', 'account', 'person', 'bankOfDeposit', 'phone']);
+        $userBlance = $this->user['user_money'];
+        $rule = [
+            'amount' => "require|between:0.01,$userBlance",
+            'withdrawalsWay' => "require|in:wx,zfb,bank",
+            'account' => "require",
+            'person' => "require",
+        ];
+        $this->validateParams($reqParams, $rule);
+        if($reqParams['withdrawalsWay'] == 'bank' && (empty($reqParams['bankName']) || empty($reqParams['bankOfDeposit']))){
+            return $this->returnJson(4001, '开户行必须填写。');
         }
-
-        $data['user_id'] = $this->user_id;
-        $data['create_time'] = time();
-        $distribut_min = tpCache('basic.min'); // 最少提现额度
-        $distribut_need = tpCache('basic.need'); //满多少才能提
-        if($data['money'] < $distribut_min){
-            $this->ajaxReturn(['status' => -1, 'msg' => '每次最少提现额度'.$distribut_min]);
-        }
-        if($data['money'] > $this->user['user_money']){
-            $this->ajaxReturn(['status' => -1, 'msg' => "你最多可提现{$this->user['user_money']}账户余额."]);
-        }
-        if($this->user['user_money'] < $distribut_need){
-            $this->ajaxReturn(['status' => -1, 'msg' => '账户余额最少达到'.$distribut_need.'才能提现']);
-        }
-
-        $withdrawal = M('withdrawals')->where(array('user_id' => $this->user_id, 'status' => 0))->sum('money');
-        if($this->user['user_money'] < ($withdrawal + $data['money'])){
-            $this->ajaxReturn(['status' => -1, 'msg' => '您有提现申请待处理，本次提现余额不足']);
-        }
-        if(M('withdrawals')->add($data)){
-            $bank['bank_name'] = $data['bank_name'];
-            $bank['bank_card'] = $data['account_bank'];
-            $bank['realname'] = $data['account_name'];
-            M('users')->where(array('user_id' => $this->user_id))->save($bank);
-            $json_arr = array('status' => 1, 'msg' => '提交成功');
-        }else{
-            $json_arr = array('status' => -1, 'msg' => '提交失败,联系客服!');
-        }
-        $this->ajaxReturn($json_arr);
+        $withdrawalsLogic = new WithdrawalsLogic();
+        return $this->returnJson($withdrawalsLogic->applyWithdrawals($reqParams, $this->user));
     }
 
     /**
