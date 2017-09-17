@@ -513,7 +513,7 @@ class UsersLogic extends Model
      * 获取商品收藏列表
      * @param $user_id  用户id
      */
-    public function get_goods_collect($user_id, $is_prom=-1){
+    public function get_goods_collect($user_id, $is_prom=-1,$model_type = 1){
         $where = '';
         if ($is_prom > 0){
             $where = ' AND prom_id > 0 ';

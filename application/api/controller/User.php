@@ -1044,10 +1044,10 @@ class User extends Base{
      * @api         {GET}   /index.php?m=Api&c=User&a=getGoodsCollect    我的收藏路线（待完成） 管少秋
      * @apiName     getGoodsCollect
      * @apiGroup    User
-     *
+     * @apiParam    {Number}    model_type  模块类型 0为包车模块1为商城模块2为民宿模块
      */
     public function getGoodsCollect(){
-        $data = $this->userLogic->get_goods_collect($this->user_id);
+        $data = $this->userLogic->get_goods_collect($this->user_id,-1,I('model_type',1));
         unset($data['show']);
         unset($data['page']);
         $this->ajaxReturn($data);
