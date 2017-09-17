@@ -513,7 +513,7 @@ class UsersLogic extends Model
      * 获取商品收藏列表
      * @param $user_id  用户id
      */
-    public function get_goods_collect($user_id, $is_prom=-1){
+    public function get_goods_collect($user_id, $is_prom=-1,$model_type = 1){
         $where = '';
         if ($is_prom > 0){
             $where = ' AND prom_id > 0 ';
@@ -521,6 +521,7 @@ class UsersLogic extends Model
         }else{
             $count = M('goods_collect')->where(array('user_id'=>$user_id))->count('collect_id');
         }
+        $where .= ' AND model_type ='.$model_type;
         $page = new Page($count,10);
         $show = $page->show();
         //获取我的收藏列表
