@@ -19,7 +19,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
+     * @api {POST}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
      * @apiName     getAllDriver
      * @apiGroup    DriverPack
      * @apiParam    {Number}    [partner_num]     伴侣人数 根据人数取得符合座位的司机
@@ -33,7 +33,8 @@ class DriverPack extends Base{
      * "drv_code"   : "11",//司导code
      * "head_pic" : "http://xxx.jpg",//司导图片
      * "seller_name" : "司导姓名",
-     * "score" : "1",//星级
+     * "star" : "1",//星级
+     * "plat_start" : "1",//平台星级
      *}
      */
     public function getAllDriver(){

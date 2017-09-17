@@ -119,6 +119,7 @@ class PackLine extends Base{
             "province": 0,
             "city": 0,
             "star": 4,
+            "plat_start": 4,
             "line": null
             }
         ]
