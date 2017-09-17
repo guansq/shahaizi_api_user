@@ -552,7 +552,11 @@ class User extends Base{
      * "uncomment_count": 0,
      * "serve_comment_count": 0,
      * "cart_goods_num": 0,
-     * "shz_code" :         //傻孩子号
+     * "shz_code" :         ,//傻孩子号
+     * "fans_num" :         ,//粉丝数
+     * "attention_num" :         ,//关注
+     * "good_num" :         ,//被赞数
+     * "collection_num" :         ,//被收藏数
      * }
      * }
      *
