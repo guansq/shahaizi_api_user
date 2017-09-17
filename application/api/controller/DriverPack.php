@@ -125,20 +125,41 @@ class DriverPack extends Base{
     {
     "status": 1,
     "msg": "成功",
-        "result": {
-            "preson_info": {    //个人信息
-            "seller_id": 17,//商家ID
-            "drv_id": 2,//司导ID
-            "drv_code": "20170908-1",//司导code
-            "head_pic": null,//头像
-            "seller_name": "少秋",//名称
-            "briefing": null,//简介
-            "country": null,//家乡
-            "putonghua": null,//普通话
-            "language": null,//外语
-            "type_info": "店主-司导-房东"//职业
-            }
+    "result": {
+        "preson_info": {
+            "seller_id": 17,
+            "drv_id": 2,
+            "drv_code": "20170908-1",
+            "head_pic": null,
+            "seller_name": "少秋",
+            "briefing": null,
+            "country": null,
+            "putonghua": null,
+            "language": null,
+            "type_info": "店主-司导-房东"
+        },
+        "comment_info": {
+                "head_pic": null,
+                "nickname": "15151877660",
+                "start_time": 1504839306,
+                "star": 4,
+                "type": 1,
+                "content": "提前联系了很热情定了豪华车，够宽敞"
+        },
+        "photo_type": [],
+        "my_story": [],
+        "my_line": [
+        {
+            "line_id": 1,
+            "cover_img": null
+        },
+        {
+            "line_id": 5,
+            "cover_img": "http://ovwiqces1.bkt.clouddn.com/cee31c276bb2c1ee71391ac799ed78cc.png"
         }
+        ],
+        "my_car": []
+    }
     }
      */
     public function getDriverDetail(){
