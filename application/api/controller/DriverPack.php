@@ -116,7 +116,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getDriverDetail 司导详情 (待完成) 管少秋
+     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getDriverDetail 司导详情 done 管少秋
      * @apiName     getDriverDetail
      * @apiGroup    DriverPack
      * @apiParam    seller_id  {String}    商家ID
@@ -155,16 +155,18 @@ class DriverPack extends Base{
         $my_story = $this->driverLogic->get_my_story();
 
         //我的路线
-        $this->driverLogic->get_my_line();
+        $my_line = $this->driverLogic->get_my_line($seller_id);
 
         //我的车辆
-        $this->driverLogic->get_my_car();
+        $my_car = $this->driverLogic->get_my_car($seller_id);
 
         $result = [
             'preson_info' => $person_info,
             'comment_info' => $comment_info,
             'photo_type' => $photo_type,
             'my_story' => $my_story,
+            'my_line' => $my_line,
+            'my_car' => $my_car,
         ];
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }

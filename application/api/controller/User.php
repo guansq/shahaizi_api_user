@@ -593,6 +593,7 @@ class User extends Base{
                 $post['sex'] = I('post.sex');
             }
             I('post.birthday') ? $post['birthday'] = strtotime(I('post.birthday')) : false;  // 生日
+            I('post.personalized_signature') ? $post['personalized_signature'] = I('post.personalized_signature') : false;  // 个性签名
             if(I('post.is_update_address')){
                 $post['province'] = I('post.province');  //省份
                 $post['city'] = I('post.city');  // 城市
