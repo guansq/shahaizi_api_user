@@ -521,6 +521,7 @@ class UsersLogic extends Model
         }else{
             $count = M('goods_collect')->where(array('user_id'=>$user_id))->count('collect_id');
         }
+        $where .= ' AND model_type ='.$model_type;
         $page = new Page($count,10);
         $show = $page->show();
         //获取我的收藏列表
