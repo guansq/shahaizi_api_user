@@ -129,7 +129,7 @@ class PackLine extends Base{
     public function home(){
         $index = M('pack_index')->order('sort asc')->select();
         //获取轮播图
-        $banner = M('ad')->where('pid = 10')->field(array('ad_link','ad_name','ad_code'))->cache(true,TPSHOP_CACHE_TIME)->select();
+        $banner = M('ad')->where('pid = 10')->field(array('ad_name','ad_code'))->cache(true,TPSHOP_CACHE_TIME)->select();
         //精选路线
         $packLogic = new PackLineLogic();
         $where['is_comm'] = 1;//精品路线

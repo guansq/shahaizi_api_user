@@ -1057,6 +1057,46 @@ class User extends Base{
         $this->ajaxReturn($data);
     }
 
+    /**
+     * @api     {POST}  /index.php?m=Api&c=User&a=collectLine   收藏取消路线操作
+     * @apiName collectLine
+     * @apiGroup    User
+     * @apiParam    {String}    token   token
+     * @apiParam    {String}    line_id 路线ID
+     * @apiParam    {String}    action  收藏collect  取消cancel
+     */
+    public function collectLine(){
+        $data = input();
+        $where = [
+            'user_id' => $this->user_id,
+            'goods_id' => $data['line_id'],
+            'model_type' => 0,
+        ];
+        $count = M('goods_collect')->where($where)->count();
+        if($data['action'] == 'collect'){
+            if($count > 0){
+                $this->ajaxReturn(['status'=>-1,'msg'=>'您已经收藏过该路线了']);
+            }
+            $add = [
+                'user_id' => $this->user_id,
+                'goods_id' => $data['line_id'],
+                'cat_id3' => 0,
+                'add_time' => time(),
+                'model_type' => 0,
+            ];
+            $result = M('goods_collect')->save($add);
+            if(!$result){
+                $this->ajaxReturn(['status'=>-1,'msg'=>'失败']);
+            }
+            $this->ajaxReturn(['status'=>1,'msg'=>'成功']);
+        }else{
+            if($count > 0){
+                $result = M('goods_collect')->where($where)->delete();
+                $this->ajaxReturn(['status'=>1,'msg'=>'成功']);
+            }
+            $this->ajaxReturn(['status'=>-1,'msg'=>'取消收藏失败']);
+        }
+    }
     /*
      * 用户订单列表
      */
