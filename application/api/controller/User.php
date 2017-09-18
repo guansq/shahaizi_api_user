@@ -1547,7 +1547,7 @@ class User extends Base{
 
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=User&a=dynamic   22.我的动态列表 doing wxx
+     * @api             {GET}   /index.php?m=Api&c=User&a=dynamic   22.我的动态列表 ok wxx
      * @apiDescription  获取当前用户的动态列表 时间倒序排列
      * @apiName         getDynamicList
      * @apiGroup        User
@@ -1565,24 +1565,44 @@ class User extends Base{
      * @apiSuccess {number} list.timeStamp  发布时间戳.
      * @apiSuccess {string} list.timeFmt    格式化发布时间.
      * @apiSuccess {number} list.praiseNum  点赞数量.
+     * @apiSuccess {number} list.readNum  阅读量.
      *
      * @apiSuccessExample {json} SUCCESS
-     *   {
-     *       "status": 1,
-     *       "msg": "SUCCESS",
-     *       "result": {
-     *           "p": 1,
-     *           "totalPages": 5,
-     *           "list": [
-     *               {
-     *               },
-     *               {
-     *               }
-     *           ]
-     *       }
-     *   }
+     *  {
+     *      "status": 1,
+     *      "msg": "SUCCESS",
+     *      "result": {
+     *          "p": 1,
+     *          "totalPages": 4,
+     *          "list": [
+     *              {
+     *                  "id": 13,
+     *                  "img": "http://img002.21cnimg.com/photos/album/20150702/m600/2D79154370E073A2BA3CD4D07868861D.jpeg",
+     *                  "title": "小黄人大闹天空",
+     *                  "subTitle": null,
+     *                  "readNum": 0,
+     *                  "praiseNum": 0,
+     *                  "timeStamp": 1505729853,
+     *                  "timeFmt": "2017.09.18"
+     *              },
+     *              {
+     *                  "id": 12,
+     *                  "img": "http://img002.21cnimg.com/photos/album/20150702/m600/2D79154370E073A2BA3CD4D07868861D.jpeg",
+     *                  "title": "小黄人大闹天空",
+     *                  "subTitle": null,
+     *                  "readNum": 0,
+     *                  "praiseNum": 0,
+     *                  "timeStamp": 1505729850,
+     *                  "timeFmt": "2017.09.18"
+     *              }
+     *          ]
+     *      }
+     *  }
+     *
      */
     private function getDynamicList($request){
+        $dynamicLogic = new DynamicLogic();
+        return $this->returnJson($dynamicLogic->getDynamicPageByUserId($this->user_id));
     }
 
     /**

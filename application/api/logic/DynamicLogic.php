@@ -14,7 +14,7 @@
  */
 
 namespace app\api\logic;
-
+use think\Page;
 
 
 /**
@@ -47,5 +47,49 @@ class DynamicLogic extends BaseLogic{
             return resultArray(5020);
         };
         return resultArray(2000);
+    }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Time: ${DAY}
+     * Describe:
+     * @param $user_id
+     * @success {number} list.id     id.
+     * @success {string} list.img    封面图片.
+     * @success {string} list.title  标题.
+     * @success {string} list.subTitle 副标题.
+     * @success {number} list.timeStamp  发布时间戳.
+     * @success {string} list.timeFmt    格式化发布时间.
+     * @success {number} list.praiseNum  点赞数量.
+     * @success {number} list.readNum  阅读量.
+     */
+    public function getDynamicPageByUserId($user_id){
+        $fields = [
+            'act_id'=>'id',
+            'cover_img'=>'img',
+            'title',
+            'summary'=>'subTitle',
+            'read_num'=>'readNum',
+            'good_num'=>'praiseNum',
+            'create_at'=>'timeStamp',
+        ];
+        $count = $this->where('user_id',$user_id)->count();
+        $page = new Page($count);
+        $list = $this->where('user_id',$user_id)
+            ->limit($page->firstRow, $page->listRows)
+            ->order('create_at DESC')
+            ->field($fields)
+            ->select();
+
+        foreach($list as &$item){
+            $item['img']= explode('|',$item['img'])[0];
+            $item['timeFmt']= date('Y.m.d',$item['timeStamp']);
+        }
+        $ret = [
+            'p' => $page->nowPage,
+            'totalPages' => $page->totalPages,
+            'list' => $list,
+        ];
+        return resultArray(2000, '', $ret);
     }
 }
