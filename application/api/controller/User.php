@@ -1733,6 +1733,9 @@ class User extends Base{
      *                  "praiseNum": 0,
      *                  "timeStamp": 1505729853,
      *                  "timeFmt": "2017.09.18"
+     *                  "ownerId": 1,
+     *                  "ownerName": "",
+     *                  "ownerAvatar": ""
      *              },
      *              {
      *                  "id": 12,
@@ -1743,6 +1746,9 @@ class User extends Base{
      *                  "praiseNum": 0,
      *                  "timeStamp": 1505729850,
      *                  "timeFmt": "2017.09.18"
+     *                  "ownerId": 1,
+     *                  "ownerName": "",
+     *                  "ownerAvatar": ""
      *              }
      *          ]
      *      }
