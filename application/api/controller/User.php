@@ -1296,7 +1296,7 @@ class User extends Base{
     }
 
     /**
-     * @api             {GET}   /index.php?m=api&c=user&a=recharge  10.钱包-充值 !暂停 wxx
+     * @api             {GET}   /index.php?m=api&c=user&a=recharge  11.钱包-充值 !暂停 wxx
      * @apiDescription  用户充值获取调起支付需要的参数
      * @apiName         recharge
      * @apiGroup        User
@@ -1411,7 +1411,7 @@ class User extends Base{
     }
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=User&a=accountLog   11.钱包-明细 ok wxx
+     * @api             {GET}   /index.php?m=Api&c=User&a=accountLog   13.钱包-明细 ok wxx
      * @apiDescription  我的钱包 获取当前登录用的帐号明显 时间倒序排列
      * @apiName         accountLog
      * @apiGroup        User
@@ -1544,6 +1544,9 @@ class User extends Base{
      * @apiSuccess {number} readNum    阅读量.
      * @apiSuccess {number} isCollect  是否收藏.
      * @apiSuccess {number} isPraise   是否点赞.
+     * @apiSuccess {number} ownerId    发布人id.
+     * @apiSuccess {number} ownerName  发布人昵称.
+     * @apiSuccess {number} ownerAvatar 发布人头像.
      *
      * @apiSuccessExample {json} SUCCESS
      *  {
@@ -1560,7 +1563,9 @@ class User extends Base{
      *                  "timeStamp": 1505729853,
      *                  "timeFmt": "2017.09.18"
      *                  "isCollect": 0,
-     *                  "isPraise": 1
+     *                  "ownerId": 1,
+     *                  "ownerName": "",
+     *                  "ownerAvatar": ""
      *              }
      *          ]
      *      }
@@ -1573,7 +1578,7 @@ class User extends Base{
         }
         $id = input('id');
         if(empty($id)){
-            return $this->returnJson(4002,'缺少参数id');
+            return $this->returnJson(4002, '缺少参数id');
         }
         $this->checkToken();
         $dynamicLogic = new DynamicLogic();
@@ -1599,8 +1604,9 @@ class User extends Base{
      * @apiSuccess {string} list.subTitle 副标题.
      * @apiSuccess {number} list.timeStamp  发布时间戳.
      * @apiSuccess {string} list.timeFmt    格式化发布时间.
-     * @apiSuccess {number} list.praiseNum  点赞数量.
+     * @apiSuccess {number} list.praiseNum  点赞量.
      * @apiSuccess {number} list.readNum  阅读量.
+     *
      *
      * @apiSuccessExample {json} SUCCESS
      *  {
@@ -1653,31 +1659,42 @@ class User extends Base{
     private function deleteDynamic(Request $request){
         $id = input('id');
         if(empty($id)){
-            return $this->returnJson(4002,'缺少参数id');
+            return $this->returnJson(4002, '缺少参数id');
         }
         $dynamicLogic = new DynamicLogic();
         return $this->returnJson($dynamicLogic->deleteDynamic($id, $this->user_id));
 
     }
 
-    public function strategy(Request $request){
+
+    public function collectDynamic(Request $request){
         if($request->isPost()){
-            return $this->postStrategy($request);
+            return $this->postCollectDynamic($request);
         }
         if($request->isGet()){
-            return $this->getStrategyList($request);
+            return $this->getCollectDynamicList($request);
         }
         if($request->isDelete()){
-            return $this->deleteStrategy($request);
+            return $this->deleteCollectDynamic($request);
         }
-
         return $this->returnJson();
+
     }
 
+    /**
+     * @api             {POST}   /index.php?m=Api&c=User&a=collectDynamic   26.动态收藏 doing wxx
+     * @apiDescription  收藏动态
+     * @apiName         postCollectDynamic
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} id    要收藏的动态id.
+     */
+    private function postCollectDynamic($request){
+    }
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=User&a=collectDynamic   23.我收藏的动态列表 doing wxx
-     * @apiDescription  获取当前用户的动态列表 时间倒序排列
+     * @api             {GET}   /index.php?m=Api&c=User&a=collectDynamic   27.我收藏的动态列表 doing wxx
+     * @apiDescription  获取当前用户收藏的动态列表 时间倒序排列
      * @apiName         getCollectDynamicList
      * @apiGroup        User
      * @apiParam  {string} token    token.
@@ -1693,34 +1710,76 @@ class User extends Base{
      * @apiSuccess {string} list.subTitle 副标题.
      * @apiSuccess {number} list.timeStamp  发布时间戳.
      * @apiSuccess {string} list.timeFmt    格式化发布时间.
-     * @apiSuccess {number} list.praiseNum  点赞数量.
+     * @apiSuccess {number} list.praiseNum  点赞量.
+     * @apiSuccess {number} list.readNum    阅读量.
+     * @apiSuccess {number} list.ownerId    发布人id.
+     * @apiSuccess {number} list.ownerName  发布人昵称.
+     * @apiSuccess {number} list.readAvatar 发布人头像.
      *
      * @apiSuccessExample {json} SUCCESS
-     *   {
-     *       "status": 1,
-     *       "msg": "SUCCESS",
-     *       "result": {
-     *           "p": 1,
-     *           "totalPages": 5,
-     *           "list": [
-     *               {
-     *               },
-     *               {
-     *               }
-     *           ]
-     *       }
-     *   }
+     *  {
+     *      "status": 1,
+     *      "msg": "SUCCESS",
+     *      "result": {
+     *          "p": 1,
+     *          "totalPages": 4,
+     *          "list": [
+     *              {
+     *                  "id": 13,
+     *                  "img": "http://img002.21cnimg.com/photos/album/20150702/m600/2D79154370E073A2BA3CD4D07868861D.jpeg",
+     *                  "title": "小黄人大闹天空",
+     *                  "subTitle": null,
+     *                  "readNum": 0,
+     *                  "praiseNum": 0,
+     *                  "timeStamp": 1505729853,
+     *                  "timeFmt": "2017.09.18"
+     *              },
+     *              {
+     *                  "id": 12,
+     *                  "img": "http://img002.21cnimg.com/photos/album/20150702/m600/2D79154370E073A2BA3CD4D07868861D.jpeg",
+     *                  "title": "小黄人大闹天空",
+     *                  "subTitle": null,
+     *                  "readNum": 0,
+     *                  "praiseNum": 0,
+     *                  "timeStamp": 1505729850,
+     *                  "timeFmt": "2017.09.18"
+     *              }
+     *          ]
+     *      }
+     *  }
+     *
      */
-    private function collectDynamic($request){
-
-
-    }
-
     private function getCollectDynamicList($request){
 
+    }
+    /**
+     * @api             {DELETE}   /index.php?m=Api&c=User&a=collectDynamic   28.动态取消收藏 doing wxx
+     * @apiDescription  取消收藏动态
+     * @apiName         deleteCollectDynamic
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} id    要取消收藏的动态id.
+     */
+    private function deleteCollectDynamic($request){
 
     }
 
+
+
+
+    public function strategy(Request $request){
+        if($request->isPost()){
+            return $this->postStrategy($request);
+        }
+        if($request->isGet()){
+            return $this->getStrategyList($request);
+        }
+        if($request->isDelete()){
+            return $this->deleteStrategy($request);
+        }
+
+        return $this->returnJson();
+    }
 
     /**
      * @api             {POST}   /index.php?m=Api&c=User&a=strategy   31.发布攻略 doing wxx

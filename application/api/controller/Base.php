@@ -215,6 +215,7 @@ class Base extends Controller{
                 'clear_visit_log',
                 'comment',
                 'comment_num',
+                'collectDynamic',
                 'del_address',
                 'del_visit_log',
                 'dynamic',

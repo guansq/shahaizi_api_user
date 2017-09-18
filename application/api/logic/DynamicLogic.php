@@ -61,7 +61,6 @@ class DynamicLogic extends BaseLogic{
      * @success {string} list.subTitle 副标题.
      * @success {number} list.timeStamp  发布时间戳.
      * @success {string} list.timeFmt    格式化发布时间.
-     * @success {number} list.praiseNum  点赞数量.
      * @success {number} list.readNum  阅读量.
      */
     public function getDynamicPageByUserId($user_id){
@@ -71,7 +70,6 @@ class DynamicLogic extends BaseLogic{
             'title',
             'summary' => 'subTitle',
             'read_num' => 'readNum',
-            'good_num' => 'praiseNum',
             'create_at' => 'timeStamp',
         ];
         $count = $this->where('user_id', $user_id)->count();
@@ -85,7 +83,9 @@ class DynamicLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->count();
         }
+
         $ret = [
             'p' => $page->nowPage,
             'totalPages' => $page->totalPages,
@@ -112,11 +112,16 @@ class DynamicLogic extends BaseLogic{
      * @success readNum           阅读量.
      * @success isCollect         是否收藏.
      * @success isPraise          是否点赞.
+     * @success ownerId    发布人id..
+     * @success ownerName  发布人昵称..
+     * @success ownerAvatar 发布人头像..
+     *
      */
     public function getDynamicDetailWithUserId($id, $user_id){
 
         $fields = [
             'act_id' => 'id',
+            'user_id' => 'ownerId',
             'cover_img' => 'img',
             'title',
             'content',
@@ -128,11 +133,17 @@ class DynamicLogic extends BaseLogic{
         if(empty($dynamic)){
             return resultArray(4004, '该动态已经不存在');
         }
+        $user = UserLogic::where('user_id', $dynamic['ownerId'])->find();
+
         $dynamic['timeFmt'] = date('Y.m.d', $dynamic['timeStamp']);
         $dynamic['isCollect'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_DYNAMIC)->where('user_id', $user_id)->count();
         $dynamic['collectNum'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_DYNAMIC)->count();
         $dynamic['isPraise'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->where('user_id', $user_id)->count();
         $dynamic['praiseNum'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->count();
+        $dynamic['ownerName'] =$user['nickname'];
+        $dynamic['ownerAvatar'] = $user['head_pic'] ;
+
+
         return resultArray(2000, '', $dynamic);
     }
 
