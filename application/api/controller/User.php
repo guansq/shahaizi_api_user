@@ -1500,49 +1500,84 @@ class User extends Base{
 
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=User&a=collectDynamic   23.我收藏的动态列表 doing wxx
-     * @apiDescription  获取当前用户的动态列表 时间倒序排列
-     * @apiName         getCollectDynamicList
+     * @api             {POST}   /index.php?m=Api&c=User&a=dynamic   20.发布动态 ok wxx
+     * @apiDescription  发布动态
+     * @apiName         postDynamic
      * @apiGroup        User
-     * @apiParam  {string} token    token.
-     * @apiParam  {number} [p=1]        页码.
-     * @apiParam  {number} [pageSize=20]   每页数据量.
+     * @apiParam {string} token    token.
+     * @apiParam {string} img    封面图片 多张用“|” 分割 ，第一张为默认封面.
+     * @apiParam {string} title  标题.
+     * @apiParam {string} content 内容.
      *
-     * @apiSuccess {number} page        当前页码.
-     * @apiSuccess {number} totalPages  总页码数.
-     * @apiSuccess {array} list         列表.
-     * @apiSuccess {number} list.id     id.
-     * @apiSuccess {string} list.img    封面图片.
-     * @apiSuccess {string} list.title  标题.
-     * @apiSuccess {string} list.subTitle 副标题.
-     * @apiSuccess {number} list.timeStamp  发布时间戳.
-     * @apiSuccess {string} list.timeFmt    格式化发布时间.
-     * @apiSuccess {number} list.praiseNum  点赞数量.
-     *
-     * @apiSuccessExample {json} SUCCESS
-     *   {
-     *       "status": 1,
-     *       "msg": "SUCCESS",
-     *       "result": {
-     *           "p": 1,
-     *           "totalPages": 5,
-     *           "list": [
-     *               {
-     *               },
-     *               {
-     *               }
-     *           ]
-     *       }
-     *   }
      */
-    private function collectDynamic($request){
+    private function postDynamic($request){
 
+        $reqParams = $this->getReqParams(['img', 'title', 'content']);
+        $rule = [
+            'img' => 'require|max:1000',
+            'title' => 'require|max:200',
+            'content' => 'require|max:1000',
+        ];
+        $this->validateParams($reqParams, $rule);
+        $dynamicLogic = new DynamicLogic();
+        return $this->returnJson($dynamicLogic->createDynamic($reqParams, $this->user));
 
     }
 
-    private function getCollectDynamicList($request){
 
-
+    /**
+     * @api             {GET}   /index.php?m=Api&c=User&a=getDynamicDetail   21.动态详情 ok wxx
+     * @apiDescription  动态详情
+     * @apiName         getDynamicDetail
+     * @apiGroup        User
+     * @apiParam  {string} [token]    token.
+     *
+     * @apiSuccess {number} id     id.
+     * @apiSuccess {string} img    图片 多张用“|” 分割.
+     * @apiSuccess {string} title  标题.
+     * @apiSuccess {string} subTitle 副标题.
+     * @apiSuccess {string} content 内容.
+     * @apiSuccess {number} timeStamp  发布时间戳.
+     * @apiSuccess {string} timeFmt    格式化发布时间.
+     * @apiSuccess {number} praiseNum  点赞数量.
+     * @apiSuccess {number} collectNum 收藏数量.
+     * @apiSuccess {number} readNum    阅读量.
+     * @apiSuccess {number} isCollect  是否收藏.
+     * @apiSuccess {number} isPraise   是否点赞.
+     *
+     * @apiSuccessExample {json} SUCCESS
+     *  {
+     *      "status": 1,
+     *      "msg": "SUCCESS",
+     *      "result": {
+     *                  "id": 13,
+     *                  "img": "http://img002.21cnimg.com/photos/album/20150702/m600/2D79154370E073A2BA3CD4D07868861D.jpeg",
+     *                  "title": "小黄人大闹天空",
+     *                  "subTitle": null,
+     *                  "content": "简介：全人类的命运掌握在一小搓勇敢的战士手上，他们驾驶最先进的战斗机，对抗邪恶的侵略力量，保卫自由的太阳系，为未来而战。但是，当盟友变成敌人而敌人成为盟友时，战线和忠诚已经模糊不清，人类开始考虑如何自救。点评：本片由《辛普森一家》动画片的导演尼尔森-辛执导，属于香港和美国合拍的制作，真人和3D结合，美国特效和香港功夫结合，算是有潜力可挖。香港老戏骨刘家辉也亲自上阵，但影片隐隐约约中还能让人感觉到一丝浓浓的山寨气。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。这部魔幻风格的偶像剧把过往电影中的这部魔幻风格的偶像剧把过往电影中的魔幻符号一网打尽，也是最适合接班《饥饿游戏》的电影，但在北美和香港，该片的票房和口碑都只能说一般。",
+     *                  "readNum": 0,
+     *                  "praiseNum": 0,
+     *                  "timeStamp": 1505729853,
+     *                  "timeFmt": "2017.09.18"
+     *                  "isCollect": 0,
+     *                  "isPraise": 1
+     *              }
+     *          ]
+     *      }
+     *  }
+     *
+     */
+    public function getDynamicDetail(Request $request){
+        if(!$request->isGet()){
+            return $this->returnJson();
+        }
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002,'缺少参数id');
+        }
+        $this->checkToken();
+        $dynamicLogic = new DynamicLogic();
+        return $this->returnJson($dynamicLogic->getDynamicDetailWithUserId($id, $this->user_id));
     }
 
 
@@ -1605,31 +1640,6 @@ class User extends Base{
         return $this->returnJson($dynamicLogic->getDynamicPageByUserId($this->user_id));
     }
 
-    /**
-     * @api             {POST}   /index.php?m=Api&c=User&a=dynamic   21.发布动态 ok wxx
-     * @apiDescription  发布动态
-     * @apiName         postDynamic
-     * @apiGroup        User
-     * @apiParam {string} token    token.
-     * @apiParam {string} img    封面图片 多张用“|” 分割 ，第一张为默认封面.
-     * @apiParam {string} title  标题.
-     * @apiParam {string} content 内容.
-     *
-     */
-    private function postDynamic($request){
-
-        $reqParams = $this->getReqParams(['img', 'title', 'content']);
-        $rule = [
-            'img' => 'require|max:1000',
-            'title' => 'require|max:200',
-            'content' => 'require|max:1000',
-        ];
-        $this->validateParams($reqParams, $rule);
-        $dynamicLogic = new DynamicLogic();
-        return $this->returnJson($dynamicLogic->createDynamic($reqParams, $this->user));
-
-    }
-
 
     /**
      * @api             {DELETE}   /index.php?m=Api&c=User&a=dynamic   24.删除动态 doing wxx
@@ -1656,6 +1666,54 @@ class User extends Base{
 
         return $this->returnJson();
     }
+
+
+    /**
+     * @api             {GET}   /index.php?m=Api&c=User&a=collectDynamic   23.我收藏的动态列表 doing wxx
+     * @apiDescription  获取当前用户的动态列表 时间倒序排列
+     * @apiName         getCollectDynamicList
+     * @apiGroup        User
+     * @apiParam  {string} token    token.
+     * @apiParam  {number} [p=1]        页码.
+     * @apiParam  {number} [pageSize=20]   每页数据量.
+     *
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
+     * @apiSuccess {array} list         列表.
+     * @apiSuccess {number} list.id     id.
+     * @apiSuccess {string} list.img    封面图片.
+     * @apiSuccess {string} list.title  标题.
+     * @apiSuccess {string} list.subTitle 副标题.
+     * @apiSuccess {number} list.timeStamp  发布时间戳.
+     * @apiSuccess {string} list.timeFmt    格式化发布时间.
+     * @apiSuccess {number} list.praiseNum  点赞数量.
+     *
+     * @apiSuccessExample {json} SUCCESS
+     *   {
+     *       "status": 1,
+     *       "msg": "SUCCESS",
+     *       "result": {
+     *           "p": 1,
+     *           "totalPages": 5,
+     *           "list": [
+     *               {
+     *               },
+     *               {
+     *               }
+     *           ]
+     *       }
+     *   }
+     */
+    private function collectDynamic($request){
+
+
+    }
+
+    private function getCollectDynamicList($request){
+
+
+    }
+
 
     /**
      * @api             {POST}   /index.php?m=Api&c=User&a=strategy   31.发布攻略 doing wxx
@@ -1728,7 +1786,9 @@ class User extends Base{
      *
      */
     private function deleteStrategy($request){
+
     }
+
 
     /**
      * 验证码获取

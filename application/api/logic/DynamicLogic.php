@@ -14,6 +14,7 @@
  */
 
 namespace app\api\logic;
+
 use think\Page;
 
 
@@ -24,7 +25,7 @@ use think\Page;
  */
 class DynamicLogic extends BaseLogic{
 
-    protected $table ='ruit_article_new_action';
+    protected $table = 'ruit_article_new_action';
 
     /**
      * Author: WILL<314112362@qq.com>
@@ -37,11 +38,11 @@ class DynamicLogic extends BaseLogic{
      */
     public function createDynamic($reqParams, $user){
         $data = [
-        'cover_img' => $reqParams['img'],     // 封面图片 多张用“|” 分割 ，第一张为默认封面.
-        'title' => $reqParams['title'],     // 标题.
-        'content' =>$reqParams['content'],    // 内容.
-        'user_id' =>$user['user_id'],
-        'user_name' =>$user['nickname'],
+            'cover_img' => $reqParams['img'],     // 封面图片 多张用“|” 分割 ，第一张为默认封面.
+            'title' => $reqParams['title'],     // 标题.
+            'content' => $reqParams['content'],    // 内容.
+            'user_id' => $user['user_id'],
+            'user_name' => $user['nickname'],
         ];
         if(!$this->create($data)){
             return resultArray(5020);
@@ -65,25 +66,25 @@ class DynamicLogic extends BaseLogic{
      */
     public function getDynamicPageByUserId($user_id){
         $fields = [
-            'act_id'=>'id',
-            'cover_img'=>'img',
+            'act_id' => 'id',
+            'cover_img' => 'img',
             'title',
-            'summary'=>'subTitle',
-            'read_num'=>'readNum',
-            'good_num'=>'praiseNum',
-            'create_at'=>'timeStamp',
+            'summary' => 'subTitle',
+            'read_num' => 'readNum',
+            'good_num' => 'praiseNum',
+            'create_at' => 'timeStamp',
         ];
-        $count = $this->where('user_id',$user_id)->count();
+        $count = $this->where('user_id', $user_id)->count();
         $page = new Page($count);
-        $list = $this->where('user_id',$user_id)
+        $list = $this->where('user_id', $user_id)
             ->limit($page->firstRow, $page->listRows)
             ->order('create_at DESC')
             ->field($fields)
             ->select();
 
         foreach($list as &$item){
-            $item['img']= explode('|',$item['img'])[0];
-            $item['timeFmt']= date('Y.m.d',$item['timeStamp']);
+            $item['img'] = explode('|', $item['img'])[0];
+            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
         }
         $ret = [
             'p' => $page->nowPage,
@@ -91,5 +92,48 @@ class DynamicLogic extends BaseLogic{
             'list' => $list,
         ];
         return resultArray(2000, '', $ret);
+    }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Time: ${DAY}
+     * Describe:
+     * @param $id
+     * @param $user_id
+     *
+     * @success id            id.
+     * @success img           封面图片.
+     * @success title         标题.
+     * @success subTitle      副标题.
+     * @success content       内容.
+     * @success timeStamp         发布时间戳.
+     * @success timeFmt           格式化发布时间
+     * @success praiseNum         点赞数量.
+     * @success readNum           阅读量.
+     * @success isCollect         是否收藏.
+     * @success isPraise          是否点赞.
+     */
+    public function getDynamicDetailWithUserId($id, $user_id){
+
+
+        $fields = [
+            'act_id' => 'id',
+            'cover_img' => 'img',
+            'title',
+            'content',
+            'summary' => 'subTitle',
+            'read_num' => 'readNum',
+            'create_at' => 'timeStamp',
+        ];
+        $dynamic = $this->where('act_id', $id)->field($fields)->find();
+        if(empty($dynamic)){
+            return resultArray(4004, '该动态已经不存在');
+        }
+        $dynamic['timeFmt'] = date('Y.m.d', $dynamic['timeStamp']);
+        $dynamic['isCollect'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_DYNAMIC)->where('user_id', $user_id)->count();
+        $dynamic['collectNum'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_DYNAMIC)->count();
+        $dynamic['isPraise'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->where('user_id', $user_id)->count();
+        $dynamic['praiseNum'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->count();
+        return resultArray(2000, '', $dynamic);
     }
 }
