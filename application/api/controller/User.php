@@ -1642,7 +1642,7 @@ class User extends Base{
 
 
     /**
-     * @api             {DELETE}   /index.php?m=Api&c=User&a=dynamic   24.删除动态 doing wxx
+     * @api             {DELETE}   /index.php?m=Api&c=User&a=dynamic   24.删除动态 ok wxx
      * @apiDescription  发布动态
      * @apiName         deleteDynamic
      * @apiGroup        User
@@ -1650,7 +1650,14 @@ class User extends Base{
      * @apiParam {string} id    要删除的动态id.
      *
      */
-    private function deleteDynamic($request){
+    private function deleteDynamic(Request $request){
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002,'缺少参数id');
+        }
+        $dynamicLogic = new DynamicLogic();
+        return $this->returnJson($dynamicLogic->deleteDynamic($id, $this->user_id));
+
     }
 
     public function strategy(Request $request){

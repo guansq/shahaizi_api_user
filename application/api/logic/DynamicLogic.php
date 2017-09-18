@@ -115,7 +115,6 @@ class DynamicLogic extends BaseLogic{
      */
     public function getDynamicDetailWithUserId($id, $user_id){
 
-
         $fields = [
             'act_id' => 'id',
             'cover_img' => 'img',
@@ -135,5 +134,27 @@ class DynamicLogic extends BaseLogic{
         $dynamic['isPraise'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->where('user_id', $user_id)->count();
         $dynamic['praiseNum'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->count();
         return resultArray(2000, '', $dynamic);
+    }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe:
+     * @param $id
+     * @param $user_id
+     */
+    public function deleteDynamic($id, $user_id){
+        $fields = [
+            'act_id' => 'id',
+            'user_id',
+        ];
+        $dynamic = $this->where('act_id', $id)->field($fields)->find();
+        if(empty($dynamic)){
+            return resultArray(4004,'要删除的动态已经不存在');
+        }
+        if($dynamic->user_id != $user_id){
+            return resultArray(4010,'无权删除');
+        }
+        $dynamic->delete();
+        return resultArray(2000);
     }
 }
