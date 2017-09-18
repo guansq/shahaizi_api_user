@@ -23,6 +23,8 @@ use think\Model;
  * @package common\Logic
  */
 class BaseLogic extends Model{
-
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'create_at';
+    protected $updateTime = 'update_at';
 
 }

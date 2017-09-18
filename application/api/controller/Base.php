@@ -217,6 +217,7 @@ class Base extends Controller{
                 'comment_num',
                 'del_address',
                 'del_visit_log',
+                'dynamic',
                 'getAddressList',
                 'getCollectStoreData',
                 'getCouponList',

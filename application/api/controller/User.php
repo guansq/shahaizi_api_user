@@ -14,6 +14,7 @@
 
 namespace app\api\controller;
 
+use app\api\logic\DynamicLogic;
 use app\api\logic\UserLogic;
 use app\api\logic\WithdrawalsLogic;
 use app\common\logic\CartLogic;
@@ -1054,7 +1055,7 @@ class User extends Base{
     public function getGoodsCollect(){
         $info = input();
         if($info['model_type'] != 0){
-            $data = $this->userLogic->get_goods_collect($this->user_id,-1,I('model_type',1));
+            $data = $this->userLogic->get_goods_collect($this->user_id, -1, I('model_type', 1));
             unset($data['show']);
             unset($data['page']);
         }else{
@@ -1064,8 +1065,8 @@ class User extends Base{
     }
 
     /**
-     * @api     {POST}  /index.php?m=Api&c=User&a=collectLine   收藏取消路线操作
-     * @apiName collectLine
+     * @api         {POST}  /index.php?m=Api&c=User&a=collectLine   收藏取消路线操作
+     * @apiName     collectLine
      * @apiGroup    User
      * @apiParam    {String}    token   token
      * @apiParam    {String}    line_id 路线ID
@@ -1081,7 +1082,7 @@ class User extends Base{
         $count = M('goods_collect')->where($where)->count();
         if($data['action'] == 'collect'){
             if($count > 0){
-                $this->ajaxReturn(['status'=>-1,'msg'=>'您已经收藏过该路线了']);
+                $this->ajaxReturn(['status' => -1, 'msg' => '您已经收藏过该路线了']);
             }
             $add = [
                 'user_id' => $this->user_id,
@@ -1092,17 +1093,18 @@ class User extends Base{
             ];
             $result = M('goods_collect')->save($add);
             if(!$result){
-                $this->ajaxReturn(['status'=>-1,'msg'=>'失败']);
+                $this->ajaxReturn(['status' => -1, 'msg' => '失败']);
             }
-            $this->ajaxReturn(['status'=>1,'msg'=>'成功']);
+            $this->ajaxReturn(['status' => 1, 'msg' => '成功']);
         }else{
             if($count > 0){
                 $result = M('goods_collect')->where($where)->delete();
-                $this->ajaxReturn(['status'=>1,'msg'=>'成功']);
+                $this->ajaxReturn(['status' => 1, 'msg' => '成功']);
             }
-            $this->ajaxReturn(['status'=>-1,'msg'=>'取消收藏失败']);
+            $this->ajaxReturn(['status' => -1, 'msg' => '取消收藏失败']);
         }
     }
+
     /*
      * 用户订单列表
      */
@@ -1473,7 +1475,7 @@ class User extends Base{
         if(!$request->isGet()){
             return $this->returnJson();
         }
-        $reqParams = $this->getReqParams(['startTime', 'endTime'=>time(), 'type' => 0]);
+        $reqParams = $this->getReqParams(['startTime', 'endTime' => time(), 'type' => 0]);
         $rule = [
             'type' => 'require|in:0,1,2,3,4'
         ];
@@ -1482,6 +1484,231 @@ class User extends Base{
         return $this->returnJson($userLogic->getUserAccountLogPageByTimeAndType($reqParams, $this->user));
     }
 
+
+    public function dynamic(Request $request){
+        if($request->isGet()){
+            return $this->getDynamicList($request);
+        }
+        if($request->isPost()){
+            return $this->postDynamic($request);
+        }
+        if($request->isDelete()){
+            return $this->deleteDynamic($request);
+        }
+        return $this->returnJson();
+    }
+
+
+    /**
+     * @api             {GET}   /index.php?m=Api&c=User&a=collectDynamic   23.我收藏的动态列表 doing wxx
+     * @apiDescription  获取当前用户的动态列表 时间倒序排列
+     * @apiName         getCollectDynamicList
+     * @apiGroup        User
+     * @apiParam  {string} token    token.
+     * @apiParam  {number} [p=1]        页码.
+     * @apiParam  {number} [pageSize=20]   每页数据量.
+     *
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
+     * @apiSuccess {array} list         列表.
+     * @apiSuccess {number} list.id     id.
+     * @apiSuccess {string} list.img    封面图片.
+     * @apiSuccess {string} list.title  标题.
+     * @apiSuccess {string} list.subTitle 副标题.
+     * @apiSuccess {number} list.timeStamp  发布时间戳.
+     * @apiSuccess {string} list.timeFmt    格式化发布时间.
+     * @apiSuccess {number} list.praiseNum  点赞数量.
+     *
+     * @apiSuccessExample {json} SUCCESS
+     *   {
+     *       "status": 1,
+     *       "msg": "SUCCESS",
+     *       "result": {
+     *           "p": 1,
+     *           "totalPages": 5,
+     *           "list": [
+     *               {
+     *               },
+     *               {
+     *               }
+     *           ]
+     *       }
+     *   }
+     */
+    private function collectDynamic($request){
+
+
+    }
+
+    private function getCollectDynamicList($request){
+
+
+    }
+
+
+    /**
+     * @api             {GET}   /index.php?m=Api&c=User&a=dynamic   22.我的动态列表 doing wxx
+     * @apiDescription  获取当前用户的动态列表 时间倒序排列
+     * @apiName         getDynamicList
+     * @apiGroup        User
+     * @apiParam  {string} token    token.
+     * @apiParam  {number} [p=1]        页码.
+     * @apiParam  {number} [pageSize=20]   每页数据量.
+     *
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
+     * @apiSuccess {array} list         列表.
+     * @apiSuccess {number} list.id     id.
+     * @apiSuccess {string} list.img    封面图片.
+     * @apiSuccess {string} list.title  标题.
+     * @apiSuccess {string} list.subTitle 副标题.
+     * @apiSuccess {number} list.timeStamp  发布时间戳.
+     * @apiSuccess {string} list.timeFmt    格式化发布时间.
+     * @apiSuccess {number} list.praiseNum  点赞数量.
+     *
+     * @apiSuccessExample {json} SUCCESS
+     *   {
+     *       "status": 1,
+     *       "msg": "SUCCESS",
+     *       "result": {
+     *           "p": 1,
+     *           "totalPages": 5,
+     *           "list": [
+     *               {
+     *               },
+     *               {
+     *               }
+     *           ]
+     *       }
+     *   }
+     */
+    private function getDynamicList($request){
+    }
+
+    /**
+     * @api             {POST}   /index.php?m=Api&c=User&a=dynamic   21.发布动态 ok wxx
+     * @apiDescription  发布动态
+     * @apiName         postDynamic
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} img    封面图片 多张用“|” 分割 ，第一张为默认封面.
+     * @apiParam {string} title  标题.
+     * @apiParam {string} content 内容.
+     *
+     */
+    private function postDynamic($request){
+
+        $reqParams = $this->getReqParams(['img', 'title', 'content']);
+        $rule = [
+            'img' => 'require|max:1000',
+            'title' => 'require|max:200',
+            'content' => 'require|max:1000',
+        ];
+        $this->validateParams($reqParams, $rule);
+        $dynamicLogic = new DynamicLogic();
+        return $this->returnJson($dynamicLogic->createDynamic($reqParams, $this->user));
+
+    }
+
+
+    /**
+     * @api             {DELETE}   /index.php?m=Api&c=User&a=dynamic   24.删除动态 doing wxx
+     * @apiDescription  发布动态
+     * @apiName         deleteDynamic
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} id    要删除的动态id.
+     *
+     */
+    private function deleteDynamic($request){
+    }
+
+    public function strategy(Request $request){
+        if($request->isPost()){
+            return $this->postStrategy($request);
+        }
+        if($request->isGet()){
+            return $this->getStrategyList($request);
+        }
+        if($request->isDelete()){
+            return $this->deleteStrategy($request);
+        }
+
+        return $this->returnJson();
+    }
+
+    /**
+     * @api             {POST}   /index.php?m=Api&c=User&a=strategy   31.发布攻略 doing wxx
+     * @apiDescription  发布攻略
+     * @apiName         postStrategy
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} img    封面图片.
+     * @apiParam {string} title  标题.
+     * @apiParam {string} content 内容.
+     *
+     */
+    private function postStrategy(Request $request){
+
+        $reqParams = $this->getReqParams(['img', 'title', 'content']);
+        $rule = [
+            'type' => 'require|in:0,1,2,3,4'
+        ];
+        $this->validateParams($reqParams, $rule);
+        $userLogic = new UserLogic();
+        return $this->returnJson($userLogic->getUserAccountLogPageByTimeAndType($reqParams, $this->user));
+    }
+
+    /**
+     * @api             {GET}   /index.php?m=Api&c=User&a=strategy   32.我的攻略列表 doing wxx
+     * @apiDescription  获取当前用户的动态列表 时间倒序排列
+     * @apiName         getStrategyList
+     * @apiGroup        User
+     * @apiParam  {string} token    token.
+     * @apiParam  {number} [p=1]        页码.
+     * @apiParam  {number} [pageSize=20]   每页数据量.
+     *
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
+     * @apiSuccess {array} list         列表.
+     * @apiSuccess {number} list.id     id.
+     * @apiSuccess {string} list.img    封面图片.
+     * @apiSuccess {string} list.title  标题.
+     * @apiSuccess {string} list.subTitle 副标题.
+     * @apiSuccess {number} list.timeStamp  发布时间戳.
+     * @apiSuccess {string} list.timeFmt    格式化发布时间.
+     * @apiSuccess {number} list.praiseNum  点赞数量.
+     *
+     * @apiSuccessExample {json} SUCCESS
+     *   {
+     *       "status": 1,
+     *       "msg": "SUCCESS",
+     *       "result": {
+     *           "p": 1,
+     *           "totalPages": 5,
+     *           "list": [
+     *               {
+     *               },
+     *               {
+     *               }
+     *           ]
+     *       }
+     *   }
+     */
+    private function getStrategyList($request){
+    }
+
+    /**
+     * @api             {DELETE}   /index.php?m=Api&c=User&a=strategy   34.删除攻略 todo wxx
+     * @apiDescription  删除攻略
+     * @apiName         deleteStrategy
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} id    要删除的攻略id.
+     *
+     */
+    private function deleteStrategy($request){
+    }
 
     /**
      * 验证码获取
