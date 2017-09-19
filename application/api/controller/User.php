@@ -1875,6 +1875,129 @@ class User extends Base{
         return $this->returnJson($strategyLogic->deleteStrategy( $id, $this->user_id));
     }
 
+    public function collectStrategy(Request $request){
+        if($request->isPost()){
+            return $this->postCollectStrategy($request);
+        }
+        if($request->isGet()){
+            return $this->getCollectStrategyList($request);
+        }
+        if($request->isDelete()){
+            return $this->deleteCollectStrategy($request);
+        }
+        return $this->returnJson();
+
+    }
+
+
+    /**
+     * @api             {POST}   /index.php?m=Api&c=User&a=collectStrategy   36.攻略收藏 ok wxx
+     * @apiDescription  收藏攻略
+     * @apiName         postCollectStrategy
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} id    要收藏的攻略id.
+     */
+    private function postCollectStrategy(Request $request){
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002, '缺少参数id');
+        }
+        $collectLogic = new UserCollectLogic();
+        $strategyLogic = new StrategyLogic();
+        if($strategyLogic->where('guide_id',$id)->count() == 0){
+            return $this->returnJson(4002, '你要收藏的攻略已经不存在。');
+        }
+
+        return $this->returnJson($collectLogic->addCollect(UserCollectLogic::TYPE_STRATEGY, $id, $this->user_id));
+    }
+
+    /**
+     * @api             {GET}   /index.php?m=Api&c=User&a=collectStrategy   37.我收藏的攻略列表 ok wxx
+     * @apiDescription  获取当前用户收藏的动态列表 时间倒序排列
+     * @apiName         getCollectStrategyList
+     * @apiGroup        User
+     * @apiParam  {string} token    token.
+     * @apiParam  {number} [p=1]        页码.
+     * @apiParam  {number} [pageSize=20]   每页数据量.
+     *
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
+     * @apiSuccess {array} list         列表.
+     * @apiSuccess {number} list.id     id.
+     * @apiSuccess {string} list.img    封面图片.
+     * @apiSuccess {string} list.title  标题.
+     * @apiSuccess {string} list.subTitle 副标题.
+     * @apiSuccess {number} list.timeStamp  发布时间戳.
+     * @apiSuccess {string} list.timeFmt    格式化发布时间.
+     * @apiSuccess {number} list.praiseNum  点赞量.
+     * @apiSuccess {number} list.readNum    阅读量.
+     * @apiSuccess {number} list.ownerId    发布人id.
+     * @apiSuccess {number} list.ownerName  发布人昵称.
+     * @apiSuccess {number} list.readAvatar 发布人头像.
+     *
+     * @apiSuccessExample {json} SUCCESS
+     *  {
+     *      "status": 1,
+     *      "msg": "SUCCESS",
+     *      "result": {
+     *          "p": 1,
+     *          "totalPages": 4,
+     *          "list": [
+     *              {
+     *                  "id": 13,
+     *                  "img": "http://img002.21cnimg.com/photos/album/20150702/m600/2D79154370E073A2BA3CD4D07868861D.jpeg",
+     *                  "title": "小黄人大闹天空",
+     *                  "subTitle": null,
+     *                  "readNum": 0,
+     *                  "praiseNum": 0,
+     *                  "timeStamp": 1505729853,
+     *                  "timeFmt": "2017.09.18"
+     *                  "ownerId": 1,
+     *                  "ownerName": "",
+     *                  "ownerAvatar": ""
+     *              },
+     *              {
+     *                  "id": 12,
+     *                  "img": "http://img002.21cnimg.com/photos/album/20150702/m600/2D79154370E073A2BA3CD4D07868861D.jpeg",
+     *                  "title": "小黄人大闹天空",
+     *                  "subTitle": null,
+     *                  "readNum": 0,
+     *                  "praiseNum": 0,
+     *                  "timeStamp": 1505729850,
+     *                  "timeFmt": "2017.09.18"
+     *                  "ownerId": 1,
+     *                  "ownerName": "",
+     *                  "ownerAvatar": ""
+     *              }
+     *          ]
+     *      }
+     *  }
+     *
+     */
+    private function getCollectStrategyList($request){
+        $strategyLogic = new StrategyLogic();
+        return $this->returnJson($strategyLogic->getCollectStrategyPage( $this->user_id));
+    }
+
+    /**
+     * @api             {DELETE}   /index.php?m=Api&c=User&a=collectDynamic   38.攻略取消收藏 ok wxx
+     * @apiDescription  取消收藏攻略
+     * @apiName         deleteCollectStrategy
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} id    要取消攻略的动态id.
+     */
+    private function deleteCollectStrategy(Request $request){
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002, '缺少参数id');
+        }
+        $collectLogic = new UserCollectLogic();
+        return $this->returnJson($collectLogic->removeCollect(UserCollectLogic::TYPE_STRATEGY, $id, $this->user_id));
+    }
+
+
 
     /**
      * 验证码获取

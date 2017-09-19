@@ -190,23 +190,23 @@ class StrategyLogic extends BaseLogic{
         $page = new Page($count);
 
         $ids = $userColl->where('user_id', $user_id)
-            ->where('model_type',UserCollectLogic::TYPE_Strategy)
+            ->where('model_type',UserCollectLogic::TYPE_STRATEGY)
             ->limit($page->firstRow, $page->listRows)
             ->order('add_time DESC')
             ->column('goods_id');
         $fields = [
-            'act_id' => 'id',
+            'guide_id' => 'id',
             'cover_img' => 'img',
             'title',
             'summary' => 'subTitle',
             'read_num' => 'readNum',
             'create_at' => 'timeStamp',
-            'dyn.user_id' => 'ownerId',
+            'str.user_id' => 'ownerId',
             'nickname' => 'ownerName',
             'head_pic' => 'ownerAvatar',
         ];
 
-        $list = $this->alias('dyn')->join('ruit_users user','user.user_id=dyn.user_id','LEFT')->where('act_id', ['IN', $ids])
+        $list = $this->alias('str')->join('ruit_users user','user.user_id=str.user_id','LEFT')->where('guide_id', ['IN', $ids])
             ->order('create_at DESC')
             ->field($fields)
             ->select();
@@ -214,7 +214,7 @@ class StrategyLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_Strategy)->count();
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_STRATEGY)->count();
         }
 
         $ret = [
