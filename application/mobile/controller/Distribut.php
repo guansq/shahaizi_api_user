@@ -17,7 +17,7 @@ use app\common\logic\DistributLogic;
 use think\Verify;
 use think\Db;
 
-class Distribut extends MobileBase {
+class Distribut extends WebBase {
     /*
     * 初始化操作
     */

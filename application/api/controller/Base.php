@@ -199,7 +199,8 @@ class Base extends Controller{
                 'return_goods_index',
                 'return_goods_info',
                 'return_goods_list',
-                'return_goods_refund'
+                'return_goods_refund',
+
             ],
             'payment' => ['alipay_sign'],
             'store' => ['collectStoreOrNo'],
@@ -238,6 +239,7 @@ class Base extends Controller{
                 'return_goods_status',
                 'service_comment',
                 'setDefaultAddress',
+                'strategy',
                 'updateUserInfo',
                 'upload_headpic',
                 'userInfo',

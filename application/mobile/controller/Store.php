@@ -15,7 +15,7 @@
 
 namespace app\mobile\controller;
 
-class Store extends MobileBase {
+class Store extends WebBase {
 	public $store = array();
 	public $user_id = '';
 

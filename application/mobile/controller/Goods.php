@@ -22,7 +22,7 @@ use think\AjaxPage;
 use think\Page;
 use think\Db;
 
-class Goods extends MobileBase {
+class Goods extends WebBase {
     public function index(){       
         return $this->fetch();
     }

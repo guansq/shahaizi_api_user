@@ -17,7 +17,7 @@ use app\common\logic\CouponLogic;
 use app\common\logic\OrderLogic;
 use think\Db;
 
-class Cart extends MobileBase {
+class Cart extends WebBase {
 
     public $user_id = 0;
     public $user = array();

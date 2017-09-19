@@ -12,7 +12,7 @@
  * $Author: 当燃 2016-01-09
  */ 
 namespace app\mobile\controller;
-class Channel extends MobileBase {
+class Channel extends WebBase {
 	
 	public function index(){
 		$cat_id = I('cat_id/d',1);

@@ -20,7 +20,7 @@ use app\common\model\GroupBuy;
 use think\Db;
 use think\Page;
 
-class Activity extends MobileBase {
+class Activity extends WebBase {
     public function index(){      
         return $this->fetch();
     }

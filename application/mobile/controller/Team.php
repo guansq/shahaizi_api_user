@@ -30,7 +30,7 @@ use think\Db;
 use think\Page;
 
 
-class Team extends MobileBase
+class Team extends WebBase
 {
     public $user_id = 0;
     public $user = array();

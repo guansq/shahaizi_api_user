@@ -13,7 +13,7 @@
  */ 
 namespace app\mobile\controller;
 
-class Payment extends MobileBase {
+class Payment extends WebBase {
     
     public $payment; //  具体的支付类
     public $pay_code; //  具体的支付code

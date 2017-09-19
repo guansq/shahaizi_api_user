@@ -47,6 +47,7 @@ class StrategyLogic extends BaseLogic{
             'content' => $reqParams['content'],    // 内容.
             'summary' => $reqParams['summary'],    // 内容.
             'city_id' => $reqParams['regionId'],
+            'city' => RegionInterLogic::where('id',$reqParams['regionId'])->value('name') ,
             'user_id' => $user['user_id'],
             'user_name' => $user['nickname'],
             'type' => self::TYPE_REGION,
@@ -60,20 +61,19 @@ class StrategyLogic extends BaseLogic{
 
     /**
      * Author: WILL<314112362@qq.com>
-     * Time: ${DAY}
      * Describe:
      * @param $user_id
-     * @success {number} list.id     id.
-     * @success {string} list.img    封面图片.
-     * @success {string} list.title  标题.
-     * @success {string} list.subTitle 副标题.
-     * @success {number} list.timeStamp  发布时间戳.
-     * @success {string} list.timeFmt    格式化发布时间.
-     * @success {number} list.readNum  阅读量.
+     * @success {number} id     id.
+     * @success {string} img    封面图片.
+     * @success {string} title  标题.
+     * @success {string} subTitle 副标题.
+     * @success {number} timeStamp  发布时间戳.
+     * @success {string} timeFmt    格式化发布时间.
+     * @success {number} praiseNum  点赞数量.
      */
     public function getStrategyPageByUserId($user_id){
         $fields = [
-            'act_id' => 'id',
+            'guide_id' => 'id',
             'cover_img' => 'img',
             'title',
             'summary' => 'subTitle',
@@ -91,7 +91,7 @@ class StrategyLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_Strategy)->count();
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_STRATEGY)->count();
         }
 
         $ret = [
@@ -186,7 +186,7 @@ class StrategyLogic extends BaseLogic{
 
         $userColl = new  UserCollectLogic();
 
-        $count = $userColl->where('user_id', $user_id)->where('model_type',UserCollectLogic::TYPE_Strategy)->count();
+        $count = $userColl->where('user_id', $user_id)->where('model_type',UserCollectLogic::TYPE_STRATEGY)->count();
         $page = new Page($count);
 
         $ids = $userColl->where('user_id', $user_id)

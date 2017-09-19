@@ -22,7 +22,7 @@ use app\common\logic\UsersLogic;
 use think\Db;
 use think\Page;
 
-class Order extends MobileBase {
+class Order extends WebBase {
 
 	public $user_id = 0;
 	public $user = array();

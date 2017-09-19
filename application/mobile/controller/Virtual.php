@@ -21,7 +21,7 @@ use app\common\logic\CommentLogic;
 use app\common\model\Store;
 use think\Page;
 
-class Virtual extends MobileBase
+class Virtual extends WebBase
 {
     public $user_id = 0;
     public $user = array();

@@ -17,7 +17,7 @@ use app\common\logic\UsersLogic;
 use app\common\logic\CartLogic;
 
 
-class LoginApi extends MobileBase{
+class LoginApi extends WebBase{
     public $config;
     public $oauth;
     public $class_obj;

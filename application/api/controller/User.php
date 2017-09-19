@@ -99,7 +99,6 @@ class User extends Base{
         $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
         $push_id = I('push_id', '');
         $data = $this->userLogic->app_login($username, $password, $capache, $push_id);
-
         if($data['status'] != 1){
             $this->ajaxReturn($data);
         }
@@ -1869,6 +1868,8 @@ class User extends Base{
      *   }
      */
     private function getStrategyList($request){
+        $strategyLogic = new StrategyLogic();
+        return $this->returnJson($strategyLogic->getStrategyPageByUserId( $this->user_id));
     }
 
     /**

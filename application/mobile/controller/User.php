@@ -23,7 +23,7 @@ use think\Page;
 use think\Verify;
 use think\Db;
 
-class User extends MobileBase
+class User extends WebBase
 {
 
     public $user_id = 0;

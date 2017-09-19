@@ -15,7 +15,7 @@ namespace app\mobile\controller;
 use app\common\logic\JssdkLogic;
 use app\common\logic\StoreLogic;
 use Think\Db;
-class Index extends MobileBase {
+class Index extends WebBase {
 
     public function test(){
         
