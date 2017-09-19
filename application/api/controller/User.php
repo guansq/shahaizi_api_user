@@ -15,6 +15,7 @@
 namespace app\api\controller;
 
 use app\api\logic\DynamicLogic;
+use app\api\logic\UserCollectLogic;
 use app\api\logic\UserLogic;
 use app\api\logic\WithdrawalsLogic;
 use app\common\logic\CartLogic;
@@ -1682,14 +1683,25 @@ class User extends Base{
     }
 
     /**
-     * @api             {POST}   /index.php?m=Api&c=User&a=collectDynamic   26.动态收藏 doing wxx
+     * @api             {POST}   /index.php?m=Api&c=User&a=collectDynamic   26.动态收藏 ok wxx
      * @apiDescription  收藏动态
      * @apiName         postCollectDynamic
      * @apiGroup        User
      * @apiParam {string} token    token.
      * @apiParam {string} id    要收藏的动态id.
      */
-    private function postCollectDynamic($request){
+    private function postCollectDynamic(Request $request){
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002, '缺少参数id');
+        }
+        $collectLogic = new UserCollectLogic();
+        $dynamicLogic = new DynamicLogic();
+        if($dynamicLogic->where('act_id',$id)->count() == 0){
+            return $this->returnJson(4002, '你要收藏的动态已经不存在。');
+        }
+
+        return $this->returnJson($collectLogic->addCollect(UserCollectLogic::TYPE_DYNAMIC, $id, $this->user_id));
     }
 
     /**
@@ -1758,6 +1770,7 @@ class User extends Base{
     private function getCollectDynamicList($request){
 
     }
+
     /**
      * @api             {DELETE}   /index.php?m=Api&c=User&a=collectDynamic   28.动态取消收藏 doing wxx
      * @apiDescription  取消收藏动态
@@ -1769,8 +1782,6 @@ class User extends Base{
     private function deleteCollectDynamic($request){
 
     }
-
-
 
 
     public function strategy(Request $request){

@@ -29,4 +29,29 @@ class UserCollectLogic extends BaseLogic{
     const TYPE_HOUSE    = 2;
     const TYPE_DYNAMIC  = 3;
     const TYPE_STRATEGY = 4;
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe:添加收藏
+     * @param $type
+     * @param $id
+     * @param $user_id
+     */
+    public function addCollect($type, $id, $user_id){
+
+        $where = [
+            'model_type' => $type,
+            'goods_id' => $id,
+            'user_id' => $user_id,
+        ];
+        if($this->where($where)->count() >= 1){
+            return resultArray(4005, '您已经收藏过了。');
+        }
+        $data = array_merge($where, ['add_time' => time()]);
+        if(!$this->create($data)){
+            return resultArray(5020);
+        }
+        return resultArray(2000);
+
+    }
 }
