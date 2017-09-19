@@ -15,6 +15,7 @@
 namespace app\api\controller;
 
 use app\api\logic\DynamicLogic;
+use app\api\logic\StrategyLogic;
 use app\api\logic\UserCollectLogic;
 use app\api\logic\UserLogic;
 use app\api\logic\WithdrawalsLogic;
@@ -1805,29 +1806,34 @@ class User extends Base{
     }
 
     /**
-     * @api             {POST}   /index.php?m=Api&c=User&a=strategy   31.发布攻略 doing wxx
+     * @api             {POST}   /index.php?m=Api&c=User&a=strategy   31.发布攻略 ok wxx
      * @apiDescription  发布攻略
      * @apiName         postStrategy
      * @apiGroup        User
      * @apiParam {string} token    token.
-     * @apiParam {string} img    封面图片.
+     * @apiParam {string} img    图片  多张用“|” 分割 ，第一张为默认封面.
      * @apiParam {string} title  标题.
      * @apiParam {string} content 内容.
+     * @apiParam {number} regionId 地区.
+     * @apiParam {string} summary 简介.
      *
      */
     private function postStrategy(Request $request){
-
-        $reqParams = $this->getReqParams(['img', 'title', 'content']);
+        $reqParams = $this->getReqParams(['img', 'title', 'content','regionId','summary']);
         $rule = [
-            'type' => 'require|in:0,1,2,3,4'
+            'img' => 'require|max:1000',
+            'title' => 'require|max:200',
+            'summary' => 'require|max:200',
+            'content' => 'require|max:1000',
+            'regionId' => 'require',
         ];
         $this->validateParams($reqParams, $rule);
-        $userLogic = new UserLogic();
-        return $this->returnJson($userLogic->getUserAccountLogPageByTimeAndType($reqParams, $this->user));
+        $userLogic = new StrategyLogic();
+        return $this->returnJson($userLogic->createStrategy($reqParams, $this->user));
     }
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=User&a=strategy   32.我的攻略列表 doing wxx
+     * @api             {GET}   /index.php?m=Api&c=User&a=strategy   32.我的攻略列表 todo wxx
      * @apiDescription  获取当前用户的动态列表 时间倒序排列
      * @apiName         getStrategyList
      * @apiGroup        User
