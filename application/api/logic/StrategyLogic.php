@@ -163,10 +163,10 @@ class StrategyLogic extends BaseLogic{
      */
     public function deleteStrategy($id, $user_id){
         $fields = [
-            'act_id' => 'id',
+            'guide_id' => 'id',
             'user_id',
         ];
-        $Strategy = $this->where('act_id', $id)->field($fields)->find();
+        $Strategy = $this->where('guide_id', $id)->field($fields)->find();
         if(empty($Strategy)){
             return resultArray(4004,'要删除的攻略已经不存在');
         }

@@ -1832,7 +1832,7 @@ class User extends Base{
     }
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=User&a=strategy   32.我的攻略列表 todo wxx
+     * @api             {GET}   /index.php?m=Api&c=User&a=strategy   32.我的攻略列表 ok wxx
      * @apiDescription  获取当前用户的动态列表 时间倒序排列
      * @apiName         getStrategyList
      * @apiGroup        User
@@ -1851,21 +1851,6 @@ class User extends Base{
      * @apiSuccess {string} list.timeFmt    格式化发布时间.
      * @apiSuccess {number} list.praiseNum  点赞数量.
      *
-     * @apiSuccessExample {json} SUCCESS
-     *   {
-     *       "status": 1,
-     *       "msg": "SUCCESS",
-     *       "result": {
-     *           "p": 1,
-     *           "totalPages": 5,
-     *           "list": [
-     *               {
-     *               },
-     *               {
-     *               }
-     *           ]
-     *       }
-     *   }
      */
     private function getStrategyList($request){
         $strategyLogic = new StrategyLogic();
@@ -1873,7 +1858,7 @@ class User extends Base{
     }
 
     /**
-     * @api             {DELETE}   /index.php?m=Api&c=User&a=strategy   34.删除攻略 todo wxx
+     * @api             {DELETE}   /index.php?m=Api&c=User&a=strategy   34.删除攻略 ok wxx
      * @apiDescription  删除攻略
      * @apiName         deleteStrategy
      * @apiGroup        User
@@ -1882,7 +1867,12 @@ class User extends Base{
      *
      */
     private function deleteStrategy($request){
-
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002, '缺少参数id');
+        }
+        $strategyLogic = new StrategyLogic();
+        return $this->returnJson($strategyLogic->deleteStrategy( $id, $this->user_id));
     }
 
 
