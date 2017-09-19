@@ -1,0 +1,693 @@
+*{
+    box-sizing: border-box;
+}
+a:hover,a{
+    text-decoration: none;
+}
+html,body{
+    height: 100%;
+    min-height: 100%;
+}
+body{
+    background: #F0F0F0;
+}
+.head{
+    width: 100%;
+    height: 70px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+.head .head_b{
+    padding: 0 20px;
+    height: 100%;
+    line-height: 69px;
+    position: relative;
+    text-align: center;
+}
+.head .go_back{
+    display: inline-block;
+    width: 36px;
+    height: 34px;
+    background: url("__STATIC__/image/back@2x.png") no-repeat;
+    background-size: 100%;
+    margin-top: 18px;
+    position: absolute;
+    left: 20px;
+}
+.head .head_tit{
+    font-size: 21px;
+    color: #000;
+    vertical-align: super;
+}
+.main,.par_main{
+    width: 100%;
+    height: auto;
+    background: #fff;
+}
+.con_model{
+    width: 100%;
+    height: auto;
+    padding: 20px 30px 10px;
+    border-bottom: 1px solid #dddddd;
+}
+.con_model .cm_a{
+    display: block;
+    color: #333;
+}
+.con_model img{
+    width: 100%;
+}
+.con_model h2{
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: normal;
+}
+.con_model .synopsis{
+    font-size: 14px;
+    color: #666;
+    overflow: hidden;
+}
+.con_model .synopsis .text_ell{
+    float: left;
+    width: 85%;
+    line-height: 28px;
+    overflow: hidden;/*内容超出后隐藏*/
+    text-overflow: ellipsis;/*超出部分以省略号显示*/
+    white-space: nowrap;/*文本不进行换行*/
+}
+.con_model .synopsis .good_num{
+    float: left;
+    width: 15%;
+    text-align: right;
+    line-height: 28px;
+}
+/*签证攻略*/
+.content{
+    padding: 0 20px;
+}
+.strategy_tit{
+    font-size: 24px;
+    color: #333333;
+    padding: 30px 0 20px;
+    font-weight: normal;
+}
+.strategy_text{
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 26px;
+}
+/*攻略详情*/
+.detail_head{
+    border-bottom: 1px solid #dddddd;
+}
+.detail_head h1{
+    font-size: 19px;
+    color: #1E2226;
+    padding: 20px 0 15px;
+    font-weight: normal;
+}
+.hcon_remarks{
+    padding: 0 0 12px;
+    overflow: hidden;
+}
+.hcon_remarks span{
+    float: left;
+    width: 33.3%;
+    text-align: left;
+    color: #999;
+    font-size: 13px;
+}
+.detail_img{
+    padding: 20px 0;
+}
+.detail_img img{
+    width: 100%;
+}
+.detail_p p{
+    line-height: 24px;
+    font-size: 15px;
+    color: #333333;
+    padding-bottom: 10px;
+}
+/*商品参数*/
+.par_main{
+    margin-top: 20px;
+}
+.par_content,.about-content,.help-content{
+    padding: 0 20px;
+}
+.par_content ul{
+    padding-top: 10px;
+}
+.par_content li{
+    overflow: hidden;
+    line-height: 50px;
+}
+.par_content li p{
+    float: left;
+}
+.par_content li p.par_name{
+    width: 30%;
+    color: #666666;
+}
+.par_content li p.par_detail{
+    width: 70%;
+    color: #333333;
+}
+/*关于我们*/
+.about-content ul{
+    padding-top: 25px;
+}
+.about-content li p{
+    color: #000;
+    padding-bottom: 25px;
+}
+/*帮助中心*/
+.help-content li{
+    /*height: 60px;*/
+    border-bottom: 1px solid #dddddd;
+    /*overflow: hidden;*/
+}
+.help-content li .show_d{
+    height: 59px;
+    line-height: 59px;
+}
+.help-content .show_d i{
+    display: inline-block;
+    width: 16px;
+    height: 28px;
+    background: url("__STATIC__/image/icon_down@2x.png") no-repeat;
+    background-size: 100%;
+    float: right;
+    margin: 15px 5px 0 0;
+}
+.help-content .show_d i.up{
+    background: url("__STATIC__/image/icon_up@2x.png") no-repeat;
+    background-size: 100%;
+}
+.help-content .panel{
+    display: none;
+}
+.detail_con{
+    font-size: 14px;
+    color: #666666;
+    line-height: 24px;
+    padding-bottom: 10px;
+}
+/*签证*/
+.visa_d{
+    padding: 0 20px;
+}
+.continent{
+    padding-top: 10px;
+}
+.continent .cont_name{
+    font-size: 19px;
+    font-weight: normal;
+    line-height: 55px;
+}
+.continent .cont_country{
+    overflow: hidden;
+}
+.continent .cont_country li{
+    float: left;
+    width: 50%;
+}
+.continent .cont_country li:nth-of-type(n){
+    padding: 0 10px 15px 0;
+}
+.continent .cont_country li:nth-of-type(2n){
+    padding: 0 0 15px 10px;
+}
+.cont_country li img{
+    width: 100%;
+}
+.cont_country li p{
+    font-size: 15px;
+    text-align: center;
+    padding: 15px 0 0;
+}
+/*线路详情*/
+.circuit_img{
+    width: 100%;
+    background: #ffffff;
+}
+.circuit_img>img{
+    width: 100%;
+}
+.circuit_img .synopsis{
+    padding: 0 20px;
+}
+.circuit_img .synopsis h3{
+    font-weight: normal;
+    font-size: 17px;
+    padding: 15px 0;
+}
+.circuit_img .synopsis .pri{
+    padding: 0 0 10px 0;
+}
+.circuit_img .synopsis .level{
+    float: right;
+    display: inline-block;
+    width: 80px;
+}
+.synopsis .syn_title{
+    display: inline-block;
+    width: 70%;
+    overflow: hidden;/*内容超出后隐藏*/
+    text-overflow: ellipsis;/*超出部分以省略号显示*/
+    white-space: nowrap;/*文本不进行换行*/
+}
+.synopsis .level img{
+    width: 100%;
+    vertical-align: bottom;
+}
+.pri {
+    font-size: 14px;
+}
+.pri .w30b{
+    display: inline-block;
+    width: 30%;
+}
+.col_ff7{
+    color: #FF7F19;
+}
+.pri .price{
+    font-size: 16px;
+    font-weight: normal;
+}
+.cir_con{
+    padding: 18px 20px 20px;
+    margin-top: 10px;
+    background: #ffffff;
+}
+.cir_con h1{
+    font-size: 18px;
+    font-weight: normal;
+    padding: 0 0 18px 0;
+}
+.driver_info .head_img{
+    width: 65px;
+    height: 65px;
+    vertical-align: middle;
+}
+.driver_info .dri_xx{
+    display: inline-block;
+    width: 75%;
+}
+.dri_xx span{
+    padding: 0 5px 0 0;
+}
+.dri_xx .drive_name{
+    color: #333333;
+    font-size: 16px;
+    padding-left: 5px;
+}
+.dri_xx .drive_id,.dri_xx .drive_addre{
+    color: #666666;
+    font-size: 14px;
+}
+.dri_xx .drive_id i{
+    font-style: normal;
+}
+.dri_xx .drive_addre i{
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url("__STATIC__/image/icon_location@2x.png") no-repeat;
+    background-size: 100%;
+    vertical-align: sub;
+}
+.taste .taste_text{
+    font-size: 14px;
+    line-height: 23px;
+    color: #666666;
+}
+.appraise h1 span,.dr_assess h1 span{
+    font-size: 15px;
+    color: #666666;
+    float: right;
+    padding-top: 2px;
+}
+.appraise_con{
+    padding: 5px 0 10px 0;
+}
+.appraise_con .appra_peo img{
+    width: 45px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.appraise_con .appra_peo .peo_name{
+    color: #333333;
+    font-size: 16px;
+    padding-right: 5px;
+}
+.appraise_con .appra_peo .peo_level{
+    display: inline-block;
+    width: 100px;
+}
+.appra_peo .peo_level img{
+    width: 100%;
+    vertical-align: top;
+}
+.appra_peo .peo_time{
+    color: #999999;
+    font-size: 13px;
+    float: right;
+    line-height: 45px;
+}
+.appraise_con .appr_text,.ass_con .dr_text{
+    padding-left: 60px;
+    font-size: 14px;
+    line-height: 23px;
+    color: #333333;
+}
+.look{
+    text-align: center;
+    padding: 10px 0;
+}
+.look a{
+    display: inline-block;
+    padding: 10px 28px;
+    border: 1px solid #2CD052;
+    border-radius: 3px;
+    color: #2CD052;
+    font-size: 14px;
+}
+.line>h1{
+    padding-bottom: 0;
+}
+.line .days_num{
+    padding: 30px 0 5px;
+    text-align: center;
+}
+.days_num i{
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    background: url("__STATIC__/image/icon_shape.png") no-repeat;
+    background-size: 100%;
+    vertical-align: bottom;
+    margin: 0 1%;
+}
+.days_num .diji{
+    color: #000000;
+    font-size: 17px;
+    padding: 0 2.5%;
+}
+.days_num .wire{
+    display: inline-block;
+    width: 20%;
+    height: 1px;
+    background: #D4D4D4;
+    vertical-align: middle;
+}
+.days_con {
+    border-bottom: 1px solid #dddddd;
+}
+.days_con h2{
+    color: #666666;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 15px 0 15px 0;
+}
+.days_con img{
+    width: 100%;
+}
+.days_con p{
+    padding: 10px 0 15px;
+    color: #666666;
+    font-size: 15px;
+    line-height: 24px;
+}
+/*房源详情*/
+.home_repeat{
+    padding: 18px 20px 20px;
+    background: #ffffff;
+}
+.home_repeat h1{
+    font-size: 17px;
+    font-weight: normal;
+    padding: 0 0 25px 0;
+}
+.landlord,.home_info,.home-js{
+    padding: 0 0 20px;
+    border-bottom: 1px solid #dddddd;
+    overflow: hidden;
+}
+.home_repeat .landlord section{
+    float: left;
+    font-size: 16px;
+}
+.landlord .land_p1{
+    color: #000000;
+    padding-bottom: 16px;
+}
+.landlord .land_p2{
+    color: #999;
+}
+.landlord .land_p2 span{
+    color: #3F96F3;
+    font-size: 14px;
+}
+.landlord .landlord_img{
+    width: 50px;
+    height: 50px;
+    float: right;
+}
+.home_info ul{
+    overflow: hidden;
+}
+.home_info li,.easy li{
+    float: left;
+    width: 25%;
+    padding: 15px 5px 0;
+    text-align: center;
+}
+.home_info li img,.easy li img{
+    display: block;
+    width: 45%;
+    margin: 0 auto;
+}
+.home_info li p,.easy li p{
+    padding-top: 8px;
+    font-size: 13px;
+    color: #999999;
+}
+.home-js{
+    padding-bottom: 5px;
+}
+.home-js h3{
+    font-size: 16px;
+    color: #000000;
+    font-weight: normal;
+    padding: 15px 0;
+}
+.home-js p{
+    width: 100%;
+    font-size: 14px;
+    color: #999999;
+    line-height: 26px;
+    overflow: hidden;/*内容超出后隐藏*/
+    text-overflow: ellipsis;/*超出部分以省略号显示*/
+    white-space: nowrap;/*文本不进行换行*/
+}
+.require{
+    padding: 20px 0 0;
+    font-size: 16px;
+    color: #000000;
+}
+.easy,.location{
+    margin-top: 10px;
+}
+.easy h2{
+    font-size: 18px;
+    font-weight: normal;
+    padding-bottom: 15px;
+}
+.easy ul{
+    overflow: hidden;
+}
+.location .loca_href{
+    display: inline-block;
+}
+.loca_href .href_p1{
+    color: #333333;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+.loca_href .href_p2{
+    color: #666;
+    font-size: 14px;
+}
+.location img{
+    width: 14px;
+    float: right;
+    margin-top: 8px;
+}
+/*司导详情*/
+.drive_img{
+    position: relative;
+}
+.drive_img img{
+    width: 100%;
+}
+.drive_img .dr_info{
+    position: absolute;
+    bottom: 1rem;
+    color: #ffffff;
+}
+.drive_img .dr_info p{
+    line-height: 25px;
+    padding-left: 1.2rem;
+}
+.dr_info .dr_name{
+    font-size: 17px;
+}
+.dr_info .dr_id{
+    font-size: 14px;
+}
+.dr_repeat{
+    padding: 20px 20px;
+    background: #ffffff;
+}
+.dr_repeat h1{
+    font-weight: normal;
+    font-size: 18px;
+    padding-bottom: 15px;
+}
+.peo_info{
+    font-size: 14px;
+    color: #999;
+    line-height: 25px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #dddddd;
+}
+.skill{
+    padding-top: 10px;
+}
+.skill li{
+    overflow: hidden;
+    line-height: 35px;
+    font-size: 15px;
+}
+.skill li .ski_span1{
+    float: left;
+    color: #999999 ;
+}
+.skill li .ski_span2{
+    float: right;
+    color: #333333;
+}
+.mt_10{
+    margin-top: 10px;
+}
+.ass_con{
+    overflow: hidden;
+    padding: 5px 0 10px 0;
+}
+.ass_con>img{
+    width: 45px;
+    margin-right: 8px;
+    vertical-align: sub;
+}
+.ass_con .left_d{
+    display: inline-block;
+}
+.ass_con .left_d p{
+    line-height: 25px;
+}
+.ass_con .left_d p:nth-of-type(1){
+    font-size: 16px;
+}
+.ass_con .left_d p:nth-of-type(2){
+    font-size: 14px;
+    color: #666666;
+}
+.ass_con .right_d {
+    float: right;
+}
+.ass_con .right_d img{
+    width: 100px;
+}
+.ass_con .right_d p{
+    line-height: 25px;
+    text-align: right;
+    color: #666666;
+    font-size: 14px;
+}
+.dr_text{
+    padding-top: 10px;
+}
+.old_box img{
+    width: 100%;
+}
+.old_box h2{
+    font-weight: normal;
+    padding-top: 15px;
+    color: #000000;
+    font-size: 16px;
+}
+.old_box p{
+    color: #999;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 12px 0;
+    text-indent: 2rem;
+}
+.car_con .swiper-wrapper .swiper-slide{
+    overflow: hidden;
+}
+.car_con .swiper-wrapper .swiper-slide img{
+    float: left;
+    width: 60%;
+}
+.car_con .swiper-wrapper .swiper-slide .car_info{
+    width: 40%;
+    height: 100%;
+    background: #F0F0F0;
+    position: absolute;
+    margin-left: 60%;
+    padding-left: 2%;
+}
+.car_info h2{
+    font-weight: normal;
+    font-size: 17px;
+    padding: 10% 0;
+}
+.car_info p{
+    color: #666666;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
