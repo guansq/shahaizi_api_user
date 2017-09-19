@@ -1768,7 +1768,8 @@ class User extends Base{
      *
      */
     private function getCollectDynamicList($request){
-
+        $dynamicLogic = new DynamicLogic();
+        return $this->returnJson($dynamicLogic->getCollectDynamicPage( $this->user_id));
     }
 
     /**
@@ -1779,7 +1780,7 @@ class User extends Base{
      * @apiParam {string} token    token.
      * @apiParam {string} id    要取消收藏的动态id.
      */
-    private function deleteCollectDynamic($request){
+    private function deleteCollectDynamic(Request $request){
 
     }
 

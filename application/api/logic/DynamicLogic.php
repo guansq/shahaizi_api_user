@@ -168,4 +168,52 @@ class DynamicLogic extends BaseLogic{
         $dynamic->delete();
         return resultArray(2000);
     }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe: 我收藏的动态列表
+     * @param $user_id
+     */
+    public function getCollectDynamicPage($user_id){
+
+        $userColl = new  UserCollectLogic();
+
+        $count = $userColl->where('user_id', $user_id)->where('model_type',UserCollectLogic::TYPE_DYNAMIC)->count();
+        $page = new Page($count);
+
+        $ids = $userColl->where('user_id', $user_id)
+            ->where('model_type',UserCollectLogic::TYPE_DYNAMIC)
+            ->limit($page->firstRow, $page->listRows)
+            ->order('add_time DESC')
+            ->column('goods_id');
+        $fields = [
+            'act_id' => 'id',
+            'cover_img' => 'img',
+            'title',
+            'summary' => 'subTitle',
+            'read_num' => 'readNum',
+            'create_at' => 'timeStamp',
+            'dyn.user_id' => 'ownerId',
+            'nickname' => 'ownerName',
+            'head_pic' => 'ownerAvatar',
+        ];
+
+        $list = $this->alias('dyn')->join('ruit_users user','user.user_id=dyn.user_id','LEFT')->where('act_id', ['IN', $ids])
+            ->order('create_at DESC')
+            ->field($fields)
+            ->select();
+
+        foreach($list as &$item){
+            $item['img'] = explode('|', $item['img'])[0];
+            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->count();
+        }
+
+        $ret = [
+            'p' => $page->nowPage,
+            'totalPages' => $page->totalPages,
+            'list' => $list,
+        ];
+        return resultArray(2000, '', $ret);
+    }
 }
