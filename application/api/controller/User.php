@@ -1705,7 +1705,7 @@ class User extends Base{
     }
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=User&a=collectDynamic   27.我收藏的动态列表 doing wxx
+     * @api             {GET}   /index.php?m=Api&c=User&a=collectDynamic   27.我收藏的动态列表 ok wxx
      * @apiDescription  获取当前用户收藏的动态列表 时间倒序排列
      * @apiName         getCollectDynamicList
      * @apiGroup        User
