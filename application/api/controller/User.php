@@ -1773,7 +1773,7 @@ class User extends Base{
     }
 
     /**
-     * @api             {DELETE}   /index.php?m=Api&c=User&a=collectDynamic   28.动态取消收藏 doing wxx
+     * @api             {DELETE}   /index.php?m=Api&c=User&a=collectDynamic   28.动态取消收藏 ok wxx
      * @apiDescription  取消收藏动态
      * @apiName         deleteCollectDynamic
      * @apiGroup        User
@@ -1781,7 +1781,12 @@ class User extends Base{
      * @apiParam {string} id    要取消收藏的动态id.
      */
     private function deleteCollectDynamic(Request $request){
-
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002, '缺少参数id');
+        }
+        $collectLogic = new UserCollectLogic();
+        return $this->returnJson($collectLogic->removeCollect(UserCollectLogic::TYPE_DYNAMIC, $id, $this->user_id));
     }
 
 

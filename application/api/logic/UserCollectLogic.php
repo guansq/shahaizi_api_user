@@ -54,4 +54,21 @@ class UserCollectLogic extends BaseLogic{
         return resultArray(2000);
 
     }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe: 取消收藏
+     * @param $TYPE_DYNAMIC
+     * @param $id
+     * @param $user_id
+     */
+    public function removeCollect($type, $id, $user_id){
+        $where = [
+            'model_type' => $type,
+            'goods_id' => $id,
+            'user_id' => $user_id,
+        ];
+         $this->where($where)->delete();
+        return resultArray(2000);
+    }
 }
