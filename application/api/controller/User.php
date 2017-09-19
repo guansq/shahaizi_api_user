@@ -1697,7 +1697,7 @@ class User extends Base{
         }
         $collectLogic = new UserCollectLogic();
         $dynamicLogic = new DynamicLogic();
-        if($dynamicLogic->where('act_id',$id)->count() == 0){
+        if($dynamicLogic->where('act_id', $id)->count() == 0){
             return $this->returnJson(4002, '你要收藏的动态已经不存在。');
         }
 
@@ -1769,7 +1769,7 @@ class User extends Base{
      */
     private function getCollectDynamicList($request){
         $dynamicLogic = new DynamicLogic();
-        return $this->returnJson($dynamicLogic->getCollectDynamicPage( $this->user_id));
+        return $this->returnJson($dynamicLogic->getCollectDynamicPage($this->user_id));
     }
 
     /**
@@ -1818,7 +1818,7 @@ class User extends Base{
      *
      */
     private function postStrategy(Request $request){
-        $reqParams = $this->getReqParams(['img', 'title', 'content','regionId','summary']);
+        $reqParams = $this->getReqParams(['img', 'title', 'content', 'regionId', 'summary']);
         $rule = [
             'img' => 'require|max:1000',
             'title' => 'require|max:200',
@@ -1854,7 +1854,7 @@ class User extends Base{
      */
     private function getStrategyList($request){
         $strategyLogic = new StrategyLogic();
-        return $this->returnJson($strategyLogic->getStrategyPageByUserId( $this->user_id));
+        return $this->returnJson($strategyLogic->getStrategyPageByUserId($this->user_id));
     }
 
     /**
@@ -1872,7 +1872,7 @@ class User extends Base{
             return $this->returnJson(4002, '缺少参数id');
         }
         $strategyLogic = new StrategyLogic();
-        return $this->returnJson($strategyLogic->deleteStrategy( $id, $this->user_id));
+        return $this->returnJson($strategyLogic->deleteStrategy($id, $this->user_id));
     }
 
     public function collectStrategy(Request $request){
@@ -1905,7 +1905,7 @@ class User extends Base{
         }
         $collectLogic = new UserCollectLogic();
         $strategyLogic = new StrategyLogic();
-        if($strategyLogic->where('guide_id',$id)->count() == 0){
+        if($strategyLogic->where('guide_id', $id)->count() == 0){
             return $this->returnJson(4002, '你要收藏的攻略已经不存在。');
         }
 
@@ -1977,7 +1977,7 @@ class User extends Base{
      */
     private function getCollectStrategyList($request){
         $strategyLogic = new StrategyLogic();
-        return $this->returnJson($strategyLogic->getCollectStrategyPage( $this->user_id));
+        return $this->returnJson($strategyLogic->getCollectStrategyPage($this->user_id));
     }
 
     /**
@@ -1996,8 +1996,6 @@ class User extends Base{
         $collectLogic = new UserCollectLogic();
         return $this->returnJson($collectLogic->removeCollect(UserCollectLogic::TYPE_STRATEGY, $id, $this->user_id));
     }
-
-
 
     /**
      * 验证码获取

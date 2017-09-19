@@ -220,4 +220,35 @@ class UserLogic extends BaseLogic{
 
     }
 
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe:
+     * @param $user
+     * @param $userId
+     *
+     * avatar      头像.
+     * nickname    昵称.
+     * sex      性别 0=保密 1=男 2=女.
+     * level    等级.
+     * fansNum    粉丝数量.
+     * attentionNum    关注数量.
+     * praiseNum    被赞数量.
+     * collectNum    被收藏数量.
+     */
+    public function getBaseInfo($user,$userId = 0){
+        $baseInfo =[
+            'avatar'=>$user['head_pic'],
+            'nickname'=>$user['nickname'],
+            'sex'=>$user['sex'],
+            'level'=>$user['level'],
+            // FIXME 以下4个字段值 应该从中间表查询
+            'fansNum'=>$user['fans_num'],
+            'attentionNum'=>$user['attention_num'],
+            'praiseNum'=>$user['good_num'],
+            'collectNum'=>$user['collection_num'],
+        ];
+        return resultArray(2000,'',$baseInfo);
+
+    }
+
 }
