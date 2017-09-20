@@ -15,6 +15,7 @@
 
 namespace app\common\logic;
 
+use emchat\EasemobUse;
 use think\Model;
 use think\Page;
 use think\Db;
@@ -264,7 +265,15 @@ class UsersLogic extends Model
         $map['push_id'] = $push_id; //推送id
         $map['token'] = md5(time().mt_rand(1,999999999));
         $map['last_login'] = time();
-        
+
+
+        $easemobUse = new  EasemobUse();
+        $hx_user = "hx_user_$username";
+        $easemobUse -> setUserName($hx_user);
+        $easemobUse -> setPassword($password);
+        $easemobUse -> createSingleUser();
+        $map['hx_user_name'] = $hx_user;
+
         $user_id = M('users')->add($map);
         if(!$user_id)
             return array('status'=>-1,'msg'=>'注册失败','result'=>'');
@@ -282,6 +291,9 @@ class UsersLogic extends Model
 //        		M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
 //        	}
 //        }
+
+
+
         return array('status'=>1,'msg'=>'注册成功','result'=>$user);
     }
 
