@@ -1701,7 +1701,7 @@ class User extends Base{
             return $this->returnJson(4002, '你要收藏的动态已经不存在。');
         }
 
-        return $this->returnJson($collectLogic->addCollect(UserCollectLogic::TYPE_DYNAMIC, $id, $this->user_id));
+        return $this->returnJson($collectLogic->addCollect($this->user_id, UserCollectLogic::TYPE_DYNAMIC, $id));
     }
 
     /**
@@ -1909,7 +1909,7 @@ class User extends Base{
             return $this->returnJson(4002, '你要收藏的攻略已经不存在。');
         }
 
-        return $this->returnJson($collectLogic->addCollect(UserCollectLogic::TYPE_STRATEGY, $id, $this->user_id));
+        return $this->returnJson($collectLogic->addCollect($this->user_id, UserCollectLogic::TYPE_STRATEGY, $id));
     }
 
     /**

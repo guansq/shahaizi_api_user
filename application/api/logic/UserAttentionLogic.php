@@ -20,41 +20,34 @@ namespace app\api\logic;
  * Class CatsLogic
  * @package common\Logic
  */
-class UserCollectLogic extends BaseLogic{
-    protected $table = 'ruit_goods_collect';
+class UserAttentionLogic extends BaseLogic{
+    protected $table = 'ruit_user_attention';
 
-    //  0为包车模块1为商城模块2为民宿模块 3=个人动态 4=个人攻略
-    const TYPE_CAR      = 0;
-    const TYPE_SHOP     = 1;
-    const TYPE_HOUSE    = 2;
-    const TYPE_DYNAMIC  = 3;
-    const TYPE_STRATEGY = 4;
+    // 被关注对象类型 1=用户
+    const TYPE_USER = 1;
 
     const TYPE_TABLE_ARR =[
-        self::TYPE_CAR       => 'pack_car_info',
-        self::TYPE_SHOP      => 'goods', // store + goods
-        self::TYPE_HOUSE     => 'home_house_info',
-        self::TYPE_DYNAMIC   => 'article_new_action',
-        self::TYPE_STRATEGY  => 'article_hot_guide',
+        self::TYPE_USER       => 'users',
     ];
 
     /**
      * Author: WILL<314112362@qq.com>
-     * Describe:添加收藏
+     * Describe:添加关注
      * @param $type
      * @param $id
-     * @param $user_id
+     * @param $userId
      */
-    public function addCollect($user_id , $type, $id ){
+    public function addAttention($type, $id, $userId){
+
         $owner = M(self::TYPE_TABLE_ARR[$type])->field(['user_id'])->find($id);
         $ownerId = empty($owner)?null:$owner['user_id'];
         $where = [
-            'user_id' => $user_id,
-            'model_type' => $type,
-            'goods_id' => $id,
+            'user_id' => $userId,
+            'obj_type' => $type,
+            'obj_id' => $id,
         ];
         if($this->where($where)->count() >= 1){
-            return resultArray(4005, '您已经收藏过了。');
+            return resultArray(4005, '您已经关注过了。');
         }
         $data = array_merge($where, ['add_time' => time(), 'obj_owner_id' => $ownerId]);
         if(!$this->create($data)){
@@ -66,18 +59,18 @@ class UserCollectLogic extends BaseLogic{
 
     /**
      * Author: WILL<314112362@qq.com>
-     * Describe: 取消收藏
+     * Describe: 取消关注
      * @param $TYPE_DYNAMIC
      * @param $id
-     * @param $user_id
+     * @param $userId
      */
-    public function removeCollect($type, $id, $user_id){
+    public function removeAttention($type, $id, $userId){
         $where = [
-            'model_type' => $type,
-            'goods_id' => $id,
-            'user_id' => $user_id,
+            'user_id' => $userId,
+            'obj_type' => $type,
+            'obj_id' => $id,
         ];
-         $this->where($where)->delete();
+        $this->where($where)->delete();
         return resultArray(2000);
     }
 }
