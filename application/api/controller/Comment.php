@@ -137,7 +137,7 @@ class Comment extends Base{
     }
 
     /**
-     * @api  {POST}   /comment/packOrderComment    10 评论包车订单 todo wxx
+     * @api  {POST}   /comment/packOrderComment    10 评论包车订单 ok wxx
      * @apiDescription 评论包车订单
      * @apiName  postPackOrderComment
      * @apiGroup Comment

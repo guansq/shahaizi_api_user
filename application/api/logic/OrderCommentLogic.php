@@ -48,6 +48,8 @@ class OrderCommentLogic extends BaseLogic{
             'describe_score' => $reqParams['score'],
             'seller_score' => $reqParams['score'],
             'logistics_score' => $reqParams['score'],
+            'img' => $reqParams['img'],
+            'is_anonymous' => $reqParams['isAnonymous'],
             'commemt_time' => time(),
             'deleted' => 0,
             'type' => self::TYPE_USER,
