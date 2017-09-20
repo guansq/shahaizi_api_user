@@ -10,7 +10,7 @@ namespace app\api\controller;
 
 use think\Request;
 
-class Comment extends BaseController {
+class Comment extends Base {
     /**
      * @api {GET}   /comment/commentInfo    获取评论内容（待调试）wxx
      * @apiName     commentInfo
@@ -72,7 +72,8 @@ class Comment extends BaseController {
             'attitude' => ['require', 'regex' => '[1-5]'],
             'satisfaction' => ['require', 'regex' => '[1-5]'],
         ];
-        validateData($paramAll, $rule);
+        $this->validateParams($paramAll, $rule);
+
         //获取订单详情
         $orderInfo = model('TransportOrder', 'logic')->getTransportOrderInfo(['sp_id' => $this->loginUser['id'], 'id' => $paramAll['order_id']]);
         if (empty($orderInfo)) {
