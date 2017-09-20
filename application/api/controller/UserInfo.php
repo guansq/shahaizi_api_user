@@ -78,7 +78,7 @@ class UserInfo extends Base {
             return $this->returnJson(4004,'要查看的用户已经不存在');
         }
         $uaLogic = new UserAttentionLogic();
-        return $this->returnJson($uaLogic->addAttention(UserAttentionLogic::TYPE_USER, $userId,$this->user_id));
+        return $this->returnJson($uaLogic->addAttention($this->user_id,UserAttentionLogic::TYPE_USER, $userId));
     }
 
     /*
@@ -107,7 +107,7 @@ class UserInfo extends Base {
             return $this->returnJson(4004,'要查看的用户已经不存在');
         }
         $uaLogic = new UserAttentionLogic();
-        return $this->returnJson($uaLogic->removeAttention(UserAttentionLogic::TYPE_USER, $userId,$this->user_id));
+        return $this->returnJson($uaLogic->removeAttention($this->user_id,UserAttentionLogic::TYPE_USER, $userId));
     }
 
 

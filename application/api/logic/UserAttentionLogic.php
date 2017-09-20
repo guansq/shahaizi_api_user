@@ -37,7 +37,7 @@ class UserAttentionLogic extends BaseLogic{
      * @param $id
      * @param $userId
      */
-    public function addAttention($type, $id, $userId){
+    public function addAttention($userId,$type, $id){
 
         $owner = M(self::TYPE_TABLE_ARR[$type])->field(['user_id'])->find($id);
         $ownerId = empty($owner)?null:$owner['user_id'];
@@ -60,11 +60,11 @@ class UserAttentionLogic extends BaseLogic{
     /**
      * Author: WILL<314112362@qq.com>
      * Describe: 取消关注
-     * @param $TYPE_DYNAMIC
+     * @param $type
      * @param $id
      * @param $userId
      */
-    public function removeAttention($type, $id, $userId){
+    public function removeAttention($userId,$type, $id){
         $where = [
             'user_id' => $userId,
             'obj_type' => $type,
