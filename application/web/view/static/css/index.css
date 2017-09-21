@@ -28,7 +28,7 @@ body{
     display: inline-block;
     width: 36px;
     height: 34px;
-    background: url("__STATIC__/image/back@2x.png") no-repeat;
+    background: url("../image/back@2x.png") no-repeat;
     background-size: 100%;
     margin-top: 18px;
     position: absolute;
@@ -177,13 +177,13 @@ body{
     display: inline-block;
     width: 16px;
     height: 28px;
-    background: url("__STATIC__/image/icon_down@2x.png") no-repeat;
+    background: url("/application/web/view/static/image/icon_down@2x.png") no-repeat;
     background-size: 100%;
     float: right;
     margin: 15px 5px 0 0;
 }
 .help-content .show_d i.up{
-    background: url("__STATIC__/image/icon_up@2x.png") no-repeat;
+    background: url("/application/web/view/static/image/icon_up@2x.png") no-repeat;
     background-size: 100%;
 }
 .help-content .panel{
@@ -315,7 +315,7 @@ body{
     display: inline-block;
     width: 18px;
     height: 18px;
-    background: url("__STATIC__/image/icon_location@2x.png") no-repeat;
+    background: url("../image/icon_location@2x.png") no-repeat;
     background-size: 100%;
     vertical-align: sub;
 }
@@ -386,7 +386,7 @@ body{
     display: inline-block;
     width: 17px;
     height: 17px;
-    background: url("__STATIC__/image/icon_shape.png") no-repeat;
+    background: url("/application/web/view/static/image/icon_shape.png") no-repeat;
     background-size: 100%;
     vertical-align: bottom;
     margin: 0 1%;
