@@ -265,7 +265,7 @@ class UsersLogic extends Model
         $map['push_id'] = $push_id; //推送id
         $map['token'] = md5(time().mt_rand(1,999999999));
         $map['last_login'] = time();
-
+        $map['expireTime'] = $map['last_login'] + C('APP_TOKEN_TIME');
 
         $easemobUse = new  EasemobUse();
         $hx_user = "hx_user_$username";
