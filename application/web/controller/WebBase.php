@@ -16,5 +16,50 @@ namespace app\web\controller;
 use think\Controller;
 
 class WebBase extends Controller {
+    /**
+     * 获得请求参参数
+     */
+    protected function getReqParams($keys = []){
+        $params = input("param.");
+        $ret = [];
+        //        if(empty($params)){
+        //            return [];
+        //        }
 
+        if(empty($keys)){
+            return $params;
+        }
+
+        foreach($keys as $k => $v){
+            if(is_numeric($k)){ // 一维数组
+                $ret[$v] = array_key_exists($v, $params) ? $params[$v] : '';
+                continue;
+            }
+            $ret[$k] = array_key_exists($k, $params) ? $params[$k] : (!isset($v) ? '' : $v);
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Auther: WILL<314112362@qq.com>
+     * Time: 2017-3-20 17:51:09
+     * Describe: 根据指定交易规则校验参数
+     * @return bool
+     */
+    function validateParams($params = [], $rule = []){
+        if(empty($params)){
+            return $this->returnJson(-1, '缺少必要参数.');
+        }
+        if(empty($rule)){
+            foreach($params as $k => $v){
+                $rule[$k] = 'require';
+            }
+        }
+        $validate = new Validate($rule);
+        if($validate->check($params)){
+            return true;
+        }
+        return $this->returnJson(-1, '', $validate->getError());
+    }
 }

@@ -265,10 +265,9 @@ class UsersLogic extends Model
         $map['push_id'] = $push_id; //推送id
         $map['token'] = md5(time().mt_rand(1,999999999));
         $map['last_login'] = time();
-        $map['expireTime'] = $map['last_login'] + C('APP_TOKEN_TIME');
 
         $easemobUse = new  EasemobUse();
-        $hx_user = "hx_user_$username";
+        $hx_user = md5("hx_user_$username".time());
         $easemobUse -> setUserName($hx_user);
         $easemobUse -> setPassword($password);
         $easemobUse -> createSingleUser();
@@ -282,6 +281,7 @@ class UsersLogic extends Model
         if($pay_points > 0)
             accountLog($user_id, 0,$pay_points, '会员注册赠送积分'); // 记录日志流水
         $user = M('users')->where("user_id = {$user_id}")->find();
+        $user['expireTime'] = $user['last_login'] + C('APP_TOKEN_TIME');
 //        // 会员注册送优惠券
 //        $coupon = M('coupon')->where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
 //        if(!empty($coupon)){

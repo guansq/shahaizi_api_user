@@ -2,7 +2,7 @@
 
 namespace app\web\controller;
 
-class Circuit extends WebBase {
+class Circuit extends WebBase{
 
 
     public function detail(){
