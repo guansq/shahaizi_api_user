@@ -799,3 +799,11 @@ function urlsafe_b64encode($string)
     $data = str_replace(array('+','/','='),array('-','_',''),$data);
     return $data;
 }
+
+if(!function_exists("dd")){
+    function dd($obj){
+        var_dump($obj);
+        die();
+    }
+
+}

@@ -86,14 +86,6 @@ if(!function_exists('returnJson')){
     }
 }
 
-if(!function_exists("dd")){
-    function dd($obj){
-        var_dump($obj);
-        die();
-    }
-
-}
-
 /*
  * 生成签名
  */

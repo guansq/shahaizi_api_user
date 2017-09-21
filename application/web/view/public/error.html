@@ -1,0 +1,35 @@
+{extend name="public/web_html"}
+{block name="style"}
+<link rel="stylesheet" href="">
+<style>
+  .b-main{
+    height: calc(100% - 70px);
+    background: #ffffff;
+  }
+  .b-container{
+    text-align: center;
+  }
+  .b-container img{
+    width: 160px;
+    margin: 0 auto;
+    padding: 20% 0 0 0;
+  }
+  .b-container p{
+    padding-top: 20px;
+    font-size: 15px;
+    color: #666666;
+  }
+</style>
+{/block}
+
+{block name="body"}
+<main class="b-main">
+  <div class="b-container">
+    <img src="/application/web/view/static/image/icon_no_content@2x.png" alt="">
+    <p>{$errorMsg}</p>
+  </div>
+</main>
+{/block}
+
+{block name="script"}{/block}
+

@@ -13,18 +13,27 @@
  */
 
 namespace app\web\controller;
-use think\Controller;
 
-class WebBase extends Controller {
+use think\Controller;
+use think\Validate;
+
+class WebBase extends Controller{
     /**
      * 获得请求参参数
      */
+
+    public function _initialize(){
+        parent::_initialize();
+        $this->assign('csrfToken', I('token', md5(time())));
+    }
+
+
     protected function getReqParams($keys = []){
         $params = input("param.");
         $ret = [];
         //        if(empty($params)){
         //            return [];
-        //        }
+        //        }csrfToken
 
         if(empty($keys)){
             return $params;
@@ -49,7 +58,7 @@ class WebBase extends Controller {
      */
     function validateParams($params = [], $rule = []){
         if(empty($params)){
-            return $this->returnJson(-1, '缺少必要参数.');
+            $this->error('缺少必要参数.');
         }
         if(empty($rule)){
             foreach($params as $k => $v){
@@ -60,6 +69,23 @@ class WebBase extends Controller {
         if($validate->check($params)){
             return true;
         }
-        return $this->returnJson(-1, '', $validate->getError());
+        $this->error($validate->getError());
     }
+
+    /**
+     * 操作错误跳转的快捷方法
+     * @access protected
+     * @param mixed   $msg    提示信息
+     * @param string  $url    跳转的URL地址
+     * @param mixed   $data   返回的数据
+     * @param integer $wait   跳转等待时间
+     * @param array   $header 发送的Header信息
+     * @return void
+     */
+    protected function error($msg = '暂无数据', $url = null, $data = '', $wait = 3, array $header = []){
+        $this->assign('errorMsg', $msg);
+       return $this->fetch('public/error');
+    }
+
+
 }

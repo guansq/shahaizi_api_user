@@ -9,6 +9,4 @@ $home_config = [
 	'dispatch_success_tmpl' => 'public:dispatch_jump', 
 ];
 
-$html_config = include_once 'html.php';
-return array_merge($home_config,$html_config);
 ?>
