@@ -430,7 +430,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=getConfig    得到私人定制的配置done 管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=getConfig    得到私人定制的配置 FIXME 管少秋
      * @apiName     getConfig
      * @apiGroup    DriverPack
      * @apiSuccessExample {json}    Success-Response
@@ -467,12 +467,14 @@ class DriverPack extends Base{
                 ['id' => 2, 'name' => '玩的地方多一点'],
             ],
             'restaurant_choose' => [
-                ['id' => 1, 'name' => '北海道大饭店'],
-                ['id' => 2, 'name' => '东京热大饭店'],
+                ['id' => 1, 'name' => '0-100'],
+                ['id' => 2, 'name' => '100-200'],
+                ['id' => 3, 'name' => '200以上'],
             ],
             'sleep_choose' => [
-                ['id' => 1, 'name' => '札幌大酒店'],
-                ['id' => 2, 'name' => '土耳其大宾馆'],
+                ['id' => 1, 'name' => '0-100'],
+                ['id' => 2, 'name' => '100-200'],
+                ['id' => 3, 'name' => '200以上'],
             ],
         ];
         $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $result]);
