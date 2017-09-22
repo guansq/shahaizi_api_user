@@ -92,7 +92,7 @@ class PackOrder extends Base{
         "dest_pointlng": 125.236,
         "dest_pointlat": 36.23,
         "dest_address": "英格兰",
-        "status": 5,
+        "status": 5,  //订单状态 0未支付 1待派单 2待接单 3进行中（待开始、待确认） 5待评价 6已完成
         "pay_way": 1,
         "total_price": 100,
         "real_price": "100.00",
@@ -111,7 +111,7 @@ class PackOrder extends Base{
         "con_car_id": 1,
         "con_car_type": "2",
         "con_car_seat_num": null,
-        "type": 1,
+        "type": 1,  // 1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
         "flt_no": "",
         "mile_length": 100,
         "discount_id": 23,
