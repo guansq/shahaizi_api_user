@@ -313,6 +313,7 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.sendAirport');
         if($result === true){//验证通过
+            $data['start_address'] =  $data['airport_name'];
             $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
@@ -408,11 +409,13 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.privateMake');
         if($result === true){//验证通过
+            $data['start_time'] = $data['tour_time'];
             $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
                 'end_address' => $data['end_address'],
                 'tour_days' => $data['tour_days'],
+                'tour_time' => $data['tour_time'],
                 'tour_person_num' => $data['tour_person_num'],
                 'tour_favorite' => $data['tour_favorite'],
                 'recommend_diner' => $data['recommend_diner'],

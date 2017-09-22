@@ -111,6 +111,7 @@ class PackOrderLogic extends Model{
             'user_id' => $user['user_id'],
             'customer_name' => $data['customer_name'],
             'customer_phone' => $data['customer_phone'],
+            'line_id' => $data['line_id'],
             'use_car_adult' => $data['use_car_adult'],
             'use_car_children' => $data['use_car_children'],
             'user_passport' => $data['user_passport'],

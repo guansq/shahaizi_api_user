@@ -179,6 +179,7 @@ class DriverLogic extends Model{
             'is_have_pack' => $data['is_have_pack'],
             'use_car_adult' => $data['adult_num'],
             'use_car_children' => $data['child_num'],
+            'user_identity' => $data['user_identity'],
             'twenty_four' => empty($data['twenty_four']) ? 0 : $data['twenty_four'],
             'twenty_six' =>  empty($data['twenty_six']) ?0: $data['twenty_six'],
             'twenty_eight' => empty($data['twenty_eight']) ? 0:$data['twenty_eight'],
