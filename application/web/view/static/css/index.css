@@ -168,9 +168,10 @@ body{
 }
 /*帮助中心*/
 .help-content li{
-    /*height: 60px;*/
     border-bottom: 1px solid #dddddd;
-    /*overflow: hidden;*/
+}
+.help-content li:last-child{
+    border: none;
 }
 .help-content li .show_d{
     height: 59px;
