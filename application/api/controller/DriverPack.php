@@ -254,6 +254,7 @@ class DriverPack extends Base{
      * @apiParam    {String}    flt_no    航班号
      * @apiParam    {String}    airport_name       机场名
      * @apiParam    {String}    dest_address       送达地点
+     * @apiParam    {Number}    con_car_seat_num    座位数
      * @apiParam    {String}    start_time       出发时间
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
@@ -263,21 +264,21 @@ class DriverPack extends Base{
     public function receiveAirport(){
         $data = I('post.');
         $result = $this->validate($data,'PackBase.receiveAirport');
-        if($result === true){//验证通过
-            $base_id = $this->driverLogic->save_pack_base($data,$this->user);
-            $saveData = [
-                'base_id' => $base_id,
-                'flt_no' => $data['flt_no'],
-                'airport_name' => $data['airport_name'],
-                'dest_address' => $data['dest_address'],
-                'start_time' => $data['start_time'],
-            ];
-            $result = $this->driverLogic->receive_airport($saveData);
-            if($result){
-                $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
-            }else{
-                $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
-            }
+        if($result){
+            $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+        }
+        //验证通过
+        $base_id = $this->driverLogic->save_pack_base($data,$this->user);
+        $saveData = [
+            'base_id' => $base_id,
+            'flt_no' => $data['flt_no'],
+            'airport_name' => $data['airport_name'],
+            'dest_address' => $data['dest_address'],
+            'start_time' => $data['start_time'],
+        ];
+        $result = $this->driverLogic->receive_airport($saveData);
+        if($result){
+            $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
         }else{
             $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
         }

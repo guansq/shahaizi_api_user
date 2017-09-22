@@ -148,8 +148,10 @@ class DriverLogic extends Model{
                 $type =5;
                 break;
         }
+        $OrderLogic = new OrderLogic();
         $saveData = [
             'type' => $type,
+            'order_sn' => $OrderLogic->get_order_sn(),
             'user_id' => $user['user_id'],
             'customer_name' => $data['user_name'],
             'req_car_type' => $data['car_type_id'],
@@ -163,6 +165,11 @@ class DriverLogic extends Model{
             'twenty-eight' => !empty($data['thirty']) ? $data['twenty-four'] : false,
             'thirty' => !empty($data['thirty']) ? $data['twenty-four'] : false,
             'remark' => $data['remark'],
+            'flt_no' => $data['flt_no'], //航班号
+            'start_time' => $data['start_time'], //
+            'work_address' => $data['airport_name'], //
+            'dest_address' => $data['dest_address'], //
+            'con_car_seat_num' => $data['dest_address'], //
         ];
         $return = M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
