@@ -15,29 +15,27 @@
         <img src="/application/web/view/static/image/2.png" alt="">
         <div class="dr_info">
             <p class="dr_name">{$seller.seller_name}</p>
-            <p class="dr_id">工号: <span>A267106</span></p>
+            <p class="dr_id">工号: <span>{$seller.drv_code}</span></p>
         </div>
     </div>
 
     <div class="dr_repeat">
         <h1>关于我</h1>
         <p class="peo_info">
-            我是李天浩，土生土长的新加坡人也是名专业司导。喜欢把 在世界地图上的一颗小红点(新加坡)介绍给旅游者，喜欢交朋友。
-            我生为新加坡人，熟悉新加坡市区各个景点，带您逛 新加坡最热闹的华人街牛车水，热闹非凡现代的乌节路，新加坡地标的鱼尾狮公园拍照留念，
-            品尝最地道的辣椒螃蟹和 海南鸡饭，在金沙酒店顶部的无边泳池欣赏新加坡最美的风景。您的所有旅行需求，我都可以帮您满足。
+            {$seller.briefing}
         </p>
         <ul class="skill">
             <li>
                 <span class="ski_span1">普通话</span>
-                <span class="ski_span2">熟练</span>
+                <span class="ski_span2">{$seller.putonghua}</span>
             </li>
             <li>
                 <span class="ski_span1">精通外语</span>
-                <span class="ski_span2">英语</span>
+                <span class="ski_span2">{$seller.language}</span>
             </li>
             <li>
                 <span class="ski_span1">家乡</span>
-                <span class="ski_span2">新加坡</span>
+                <span class="ski_span2">{$seller.country}</span>
             </li>
             <li>
                 <span class="ski_span1">职业</span>
@@ -146,7 +144,7 @@
             <p> 我是一名全职专职司导，在新加坡大街小巷都有我的足迹，有 30年的开车经验和5年的司导经验...</p>
         </div>
         <div class="look">
-            <a class="look_whole" href="javascript:void(0);">查看更多</a>
+            <a class="look_whole2" href="javascript:void(0);">查看更多</a>
         </div>
     </div>
 
@@ -267,6 +265,18 @@
                 $(this).text("查看更多");
                 $(this).removeClass("close");
                 eachAppraiseList($("#appraise"),".ass_con",2);
+            }
+        })
+
+        $(".look_whole2").click(function(){
+            if(!$(this).hasClass("close")){
+                $("#old").find(".old_box").css("display","block");
+                $(this).text("收起内容");
+                $(this).addClass("close");
+            }else{
+                $(this).text("查看更多");
+                $(this).removeClass("close");
+                eachAppraiseList($("#old"),".old_box",1);
             }
         })
     });
