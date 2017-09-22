@@ -26,14 +26,20 @@ class Car extends Base{
     }
 
     /**
-     * @api {GET}  /index.php?m=Api&c=Car&a=getCarType  得到车型列表 ok wxx
-     * @apiName     getCarType
+     * @api {GET}  /index.php?m=Api&c=Car&a=getCarBrand  得到车辆品牌列表 ok wxx
+     * @apiName     getCarBrand
      * @apiGroup    Car
-     *
-    */
-    public function getCarType(){
+     * @apiSuccess {Number} id id.
+     * @apiSuccess {Number} pid id.
+     * @apiSuccess {Number} name 品牌名称.
+     * @apiSuccess {Number} initialLetter  拼音首字母.
+     * @apiSuccess {Number} status 状态.
+     * @apiSuccess {Number} seatNum 座位数.
+     * @apiSuccess {Number} logo logo.
+     */
+    public function getCarBrand(){
         $carLogic = new PackCarBarLogic();
-        $result = $carLogic->get_car_info();
-        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+        $result = $carLogic->getValidList();
+        return $this->returnJson(['status'=>2000,'msg'=>'成功','result'=>['list'=>$result]]);
     }
 }
