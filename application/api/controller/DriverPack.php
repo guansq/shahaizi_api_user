@@ -410,6 +410,9 @@ class DriverPack extends Base{
         $result = $this->validate($data, 'PackBase.privateMake');
         if($result === true){//验证通过
             $data['start_time'] = $data['tour_time'];
+            $data['order_day'] = $data['tour_days'];
+            $data['eating_ave'] = $data['recommend_diner'];
+            $data['stay_ave'] = $data['recommend_sleep'];
             $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,

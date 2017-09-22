@@ -190,6 +190,10 @@ class DriverLogic extends Model{
             'work_address' =>  $data['start_address'], //
             'dest_address' => $data['dest_address'], //
             'con_car_seat_num' => $data['con_car_seat_num'], // 座位数
+            'tour_favorite' => $data['tour_favorite'], //
+            'order_day' => $data['order_day'], //
+            'eating_ave' => $data['eating_ave'], //
+            'stay_ave' => $data['stay_ave'], //
         ];
         $return = M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
