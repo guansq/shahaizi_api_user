@@ -7,6 +7,7 @@
  */
 namespace app\api\controller;
 
+use app\common\logic\PackCarBarLogic;
 use think\controller;
 use app\common\logic\CarLogic;
 
@@ -20,6 +21,18 @@ class Car extends Base{
     */
     public function getCarInfo(){
         $carLogic = new CarLogic();
+        $result = $carLogic->get_car_info();
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+    }
+
+    /**
+     * @api {GET}  /index.php?m=Api&c=Car&a=getCarType  得到车型列表 ok wxx
+     * @apiName     getCarType
+     * @apiGroup    Car
+     *
+    */
+    public function getCarType(){
+        $carLogic = new PackCarBarLogic();
         $result = $carLogic->get_car_info();
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }

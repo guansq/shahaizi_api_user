@@ -5,9 +5,10 @@
  * Date: 2017/9/4
  * Time: 19:40
  */
+
 namespace app\api\controller;
+
 use app\common\logic\DriverLogic;
-use app\api\validate\PackBase;
 
 class DriverPack extends Base{
 
@@ -19,7 +20,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {POST}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
+     * @api         {POST}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
      * @apiName     getAllDriver
      * @apiGroup    DriverPack
      * @apiParam    {Number}    [partner_num]     伴侣人数 根据人数取得符合座位的司机
@@ -44,7 +45,7 @@ class DriverPack extends Base{
         $city = I('dest_address');
         $where = [];
         $where['is_driver'] = 1;
-        $where['drv_id'] = ['<>',0];
+        $where['drv_id'] = ['<>', 0];
 
         $whereInfo = [];
         if(!empty($partner)){//通过伴侣人数去
@@ -61,34 +62,34 @@ class DriverPack extends Base{
                 10 => 10,
             ];
             $num = $map[$partner];//人数座位对应表->取满足的drv_id
-            $result = M('pack_car_info')->where('seat_num',['egt',$num])->select();
+            $result = M('pack_car_info')->where('seat_num', ['egt', $num])->select();
             if(!empty($result)){
-                $seller_arr = array_unique(get_arr_column($result,'seller_id'));
+                $seller_arr = array_unique(get_arr_column($result, 'seller_id'));
                 $whereInfo[] = $seller_arr;
             }else{
-                $this->ajaxReturn(['status'=>-1,'msg'=>'没有数据']);
+                $this->ajaxReturn(['status' => -1, 'msg' => '没有数据']);
             }
         }
 
 
         if(!empty($dest_address)){
-            $result = M('pack_line')->where(['city'=>['like',"%{$city}%"]])->select();
+            $result = M('pack_line')->where(['city' => ['like', "%{$city}%"]])->select();
             if(!empty($result)){
-                $dest_arr = array_unique(get_arr_column($result,'seller_id'));
+                $dest_arr = array_unique(get_arr_column($result, 'seller_id'));
                 $whereInfo[] = $dest_arr;
             }else{
-                $this->ajaxReturn(['status'=>-1,'msg'=>'没有数据']);
+                $this->ajaxReturn(['status' => -1, 'msg' => '没有数据']);
             }
         }
 
 
         if(!empty($date)){
-            $result = M('pack_line')->where(['start_time'=>['egt',$date],'end_time'=>['elt',$date]])->select();
+            $result = M('pack_line')->where(['start_time' => ['egt', $date], 'end_time' => ['elt', $date]])->select();
             if(!empty($result)){
-                $date_arr = array_unique(get_arr_column($result,'seller_id'));
+                $date_arr = array_unique(get_arr_column($result, 'seller_id'));
                 $whereInfo[] = $date_arr;
             }else{
-                $this->ajaxReturn(['status'=>-1,'msg'=>'没有数据']);
+                $this->ajaxReturn(['status' => -1, 'msg' => '没有数据']);
             }
         }
         $result = $this->driverLogic->get_driver_list($where);
@@ -99,12 +100,12 @@ class DriverPack extends Base{
                 if($k == 0){
                     $tmp_arr = $v;
                 }else{
-                    $tmp_arr = array_intersect($tmp_arr,$v);//符合3个条件的数组
+                    $tmp_arr = array_intersect($tmp_arr, $v);//符合3个条件的数组
                 }
             }
             $all_drv = [];
             foreach($result['result']['list'] as $val){
-                if(in_array($val['seller_id'],$tmp_arr)){//全部筛选出来的司导 符合 3个条件
+                if(in_array($val['seller_id'], $tmp_arr)){//全部筛选出来的司导 符合 3个条件
                     $all_drv[] = $val;
                 }
             }
@@ -116,54 +117,54 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=DriverPack&a=getDriverDetail 司导详情 done 管少秋
+     * @api         {GET}   /index.php?m=Api&c=DriverPack&a=getDriverDetail 司导详情 done 管少秋
      * @apiName     getDriverDetail
      * @apiGroup    DriverPack
      * @apiParam    seller_id  {String}    商家ID
      * @apiSuccessExample {json}    Success-Response
      *  Http/1.1    200 OK
-    {
-    "status": 1,
-    "msg": "成功",
-    "result": {
-        "preson_info": {
-            "seller_id": 17,
-            "drv_id": 2,
-            "drv_code": "20170908-1",
-            "head_pic": null,
-            "seller_name": "少秋",
-            "briefing": null,
-            "country": null,
-            "putonghua": null,
-            "language": null,
-            "type_info": "店主-司导-房东"
-        },
-        "comment_info": {
-                "head_pic": null,
-                "nickname": "15151877660",
-                "start_time": 1504839306,
-                "star": 4,
-                "type": 1,
-                "content": "提前联系了很热情定了豪华车，够宽敞"
-        },
-        "photo_type": [],
-        "my_story": [],
-        "my_line": [
-        {
-            "line_id": 1,
-            "cover_img": null
-        },
-        {
-            "line_id": 5,
-            "cover_img": "http://ovwiqces1.bkt.clouddn.com/cee31c276bb2c1ee71391ac799ed78cc.png"
-        }
-        ],
-        "my_car": []
-    }
-    }
+     * {
+     * "status": 1,
+     * "msg": "成功",
+     * "result": {
+     * "preson_info": {
+     * "seller_id": 17,
+     * "drv_id": 2,
+     * "drv_code": "20170908-1",
+     * "head_pic": null,
+     * "seller_name": "少秋",
+     * "briefing": null,
+     * "country": null,
+     * "putonghua": null,
+     * "language": null,
+     * "type_info": "店主-司导-房东"
+     * },
+     * "comment_info": {
+     * "head_pic": null,
+     * "nickname": "15151877660",
+     * "start_time": 1504839306,
+     * "star": 4,
+     * "type": 1,
+     * "content": "提前联系了很热情定了豪华车，够宽敞"
+     * },
+     * "photo_type": [],
+     * "my_story": [],
+     * "my_line": [
+     * {
+     * "line_id": 1,
+     * "cover_img": null
+     * },
+     * {
+     * "line_id": 5,
+     * "cover_img": "http://ovwiqces1.bkt.clouddn.com/cee31c276bb2c1ee71391ac799ed78cc.png"
+     * }
+     * ],
+     * "my_car": []
+     * }
+     * }
      */
     public function getDriverDetail(){
-        $seller_id = I('seller_id/d',0);
+        $seller_id = I('seller_id/d', 0);
         //个人信息
         $person_info = $this->driverLogic->get_person_info($seller_id);
         //收到的评价
@@ -189,11 +190,11 @@ class DriverPack extends Base{
             'my_line' => $my_line,
             'my_car' => $my_car,
         ];
-        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+        $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $result]);
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=rentCarByDay    按天包车游done  管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=rentCarByDay    按天包车游done  管少秋
      * @apiName     rentCarByDay
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -216,9 +217,9 @@ class DriverPack extends Base{
      */
     public function rentCarByDay(){
         $data = I('post.');
-        $result = $this->validate($data,'PackBase.rentCarByDay');
+        $result = $this->validate($data, 'PackBase.rentCarByDay');
         if($result === true){//验证通过
-            $base_id = $this->driverLogic->save_pack_base($data,$this->user);
+            $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
                 'dest_address' => $data['dest_address'],
@@ -226,18 +227,18 @@ class DriverPack extends Base{
             ];
             $result = $this->driverLogic->rent_car_by_day($saveData);
             if($result){
-                $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
+                $this->ajaxReturn(['status' => 1, 'msg' => '添加成功']);
             }else{
-                $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+                $this->ajaxReturn(['status' => -1, 'msg' => $result]);
             }
         }else{
-            $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+            $this->ajaxReturn(['status' => -1, 'msg' => $result]);
         }
 
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=receiveAirport    接机done 管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=receiveAirport    接机done 管少秋
      * @apiName     receiveAirport
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -263,12 +264,12 @@ class DriverPack extends Base{
      */
     public function receiveAirport(){
         $data = I('post.');
-        $result = $this->validate($data,'PackBase.receiveAirport');
-        if($result){
-            $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
-        }
+        // $result = $this->validate($data, 'PackBase.receiveAirport');
+        // if($result){
+        //     $this->ajaxReturn(['status' => -1, 'msg' => $result]);
+        // }
         //验证通过
-        $base_id = $this->driverLogic->save_pack_base($data,$this->user);
+        $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
             'flt_no' => $data['flt_no'],
@@ -277,15 +278,14 @@ class DriverPack extends Base{
             'start_time' => $data['start_time'],
         ];
         $result = $this->driverLogic->receive_airport($saveData);
-        if($result){
-            $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
-        }else{
-            $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+        if(empty($result)){
+            return $this->returnJson( 5020);
         }
+        return $this->returnJson( 2000);
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=sendAirport    送机done 管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=sendAirport    送机done 管少秋
      * @apiName     sendAirport
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -310,9 +310,9 @@ class DriverPack extends Base{
      */
     public function sendAirport(){
         $data = I('post.');
-        $result = $this->validate($data,'PackBase.sendAirport');
+        $result = $this->validate($data, 'PackBase.sendAirport');
         if($result === true){//验证通过
-            $base_id = $this->driverLogic->save_pack_base($data,$this->user);
+            $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
                 'flt_no' => $data['flt_no'],
@@ -322,17 +322,17 @@ class DriverPack extends Base{
             ];
             $result = $this->driverLogic->send_airport($saveData);
             if($result){
-                $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
+                $this->ajaxReturn(['status' => 1, 'msg' => '添加成功']);
             }else{
-                $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+                $this->ajaxReturn(['status' => -1, 'msg' => $result]);
             }
         }else{
-            $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+            $this->ajaxReturn(['status' => -1, 'msg' => $result]);
         }
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=oncePickup    单次接送done 管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=oncePickup    单次接送done 管少秋
      * @apiName     oncePickup
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -356,9 +356,9 @@ class DriverPack extends Base{
      */
     public function oncePickup(){
         $data = I('post.');
-        $result = $this->validate($data,'PackBase.oncePickup');
+        $result = $this->validate($data, 'PackBase.oncePickup');
         if($result === true){//验证通过
-            $base_id = $this->driverLogic->save_pack_base($data,$this->user);
+            $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
                 'start_address' => $data['start_address'],
@@ -367,17 +367,17 @@ class DriverPack extends Base{
             ];
             $result = $this->driverLogic->once_pickup($saveData);
             if($result){
-                $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
+                $this->ajaxReturn(['status' => 1, 'msg' => '添加成功']);
             }else{
-                $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+                $this->ajaxReturn(['status' => -1, 'msg' => $result]);
             }
         }else{
-            $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+            $this->ajaxReturn(['status' => -1, 'msg' => $result]);
         }
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=privateMake    私人定制done 管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=privateMake    私人定制done 管少秋
      * @apiName     privateMake
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
@@ -404,9 +404,9 @@ class DriverPack extends Base{
      */
     public function privateMake(){
         $data = I('post.');
-        $result = $this->validate($data,'PackBase.privateMake');
+        $result = $this->validate($data, 'PackBase.privateMake');
         if($result === true){//验证通过
-            $base_id = $this->driverLogic->save_pack_base($data,$this->user);
+            $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
                 'end_address' => $data['end_address'],
@@ -418,96 +418,96 @@ class DriverPack extends Base{
             ];
             $result = $this->driverLogic->private_person($saveData);
             if($result){
-                $this->ajaxReturn(['status'=>1,'msg'=>'添加成功']);
+                $this->ajaxReturn(['status' => 1, 'msg' => '添加成功']);
             }else{
-                $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+                $this->ajaxReturn(['status' => -1, 'msg' => $result]);
             }
         }else{
-            $this->ajaxReturn(['status'=>-1,'msg'=>$result]);
+            $this->ajaxReturn(['status' => -1, 'msg' => $result]);
         }
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=getConfig    得到私人定制的配置done 管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=getConfig    得到私人定制的配置done 管少秋
      * @apiName     getConfig
      * @apiGroup    DriverPack
      * @apiSuccessExample {json}    Success-Response
      *  Http/1.1    200 OK
-    {
-        "status": 1,
-        "msg": "成功",
-        "result": {
-        "trip_choose": {    //出行偏好
-            {"id": 1,
-            "name": '吃的地方多一点'},//出行偏好名称
-            {"id": 2,
-            "name": '玩的地方多一点'},//出行偏好名称
-        },
-        "restaurant_choose": {    //餐馆
-            {"id": 1,
-            "name": '北海道大饭店'},//出行偏好名称
-            {"id": 2,
-            "name": '东京热大饭店'},//出行偏好名称
-        },
-        "sleep_choose": {    //个人信息
-            {"id": 1,
-            "name": '札幌大酒店'},//出行偏好名称
-            {"id": 2,
-            "name": '土耳其大宾馆'},//出行偏好名称
-        },
-    }
-    }
+     * {
+     * "status": 1,
+     * "msg": "成功",
+     * "result": {
+     * "trip_choose": {    //出行偏好
+     * {"id": 1,
+     * "name": '吃的地方多一点'},//出行偏好名称
+     * {"id": 2,
+     * "name": '玩的地方多一点'},//出行偏好名称
+     * },
+     * "restaurant_choose": {    //餐馆
+     * {"id": 1,
+     * "name": '北海道大饭店'},//出行偏好名称
+     * {"id": 2,
+     * "name": '东京热大饭店'},//出行偏好名称
+     * },
+     * "sleep_choose": {    //个人信息
+     * {"id": 1,
+     * "name": '札幌大酒店'},//出行偏好名称
+     * {"id": 2,
+     * "name": '土耳其大宾馆'},//出行偏好名称
+     * },
+     * }
+     * }
      */
     public function getConfig(){
         $result = [
             'trip_choose' => [
-                ['id' => 1,'name' => '吃的地方多一点'],
-                ['id' => 2,'name' => '玩的地方多一点'],
+                ['id' => 1, 'name' => '吃的地方多一点'],
+                ['id' => 2, 'name' => '玩的地方多一点'],
             ],
             'restaurant_choose' => [
-                ['id' => 1,'name' => '北海道大饭店'],
-                ['id' => 2,'name' => '东京热大饭店'],
+                ['id' => 1, 'name' => '北海道大饭店'],
+                ['id' => 2, 'name' => '东京热大饭店'],
             ],
             'sleep_choose' => [
-                ['id' => 1,'name' => '札幌大酒店'],
-                ['id' => 2,'name' => '土耳其大宾馆'],
+                ['id' => 1, 'name' => '札幌大酒店'],
+                ['id' => 2, 'name' => '土耳其大宾馆'],
             ],
         ];
-        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+        $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $result]);
     }
 
     /**
-     * @api {POST}  /index.php?m=Api&c=DriverPack&a=searchDriver    搜索司导done 管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=searchDriver    搜索司导done 管少秋
      * @apiName     searchDriver
      * @apiGroup    DriverPack
      * @apiParam    {String}    search  搜索字符
      * @apiSuccessExample {json}    Success-Response
-    {
-    "status": 1,
-    "msg": "成功",
-    "result": [
-    {
-        "seller_id": 17,
-        "head_pic": null,
-        "seller_name": "少秋",
-        "drv_code": "20170908-1",
-        "province": "朝阳门街道",
-        "city": "建国门街道",
-        "plat_start": null,
-        "star": 4,
-        "line": "我的标题很长很长可以用100年"
-    }
-    ]
-    }
+     * {
+     * "status": 1,
+     * "msg": "成功",
+     * "result": [
+     * {
+     * "seller_id": 17,
+     * "head_pic": null,
+     * "seller_name": "少秋",
+     * "drv_code": "20170908-1",
+     * "province": "朝阳门街道",
+     * "city": "建国门街道",
+     * "plat_start": null,
+     * "star": 4,
+     * "line": "我的标题很长很长可以用100年"
+     * }
+     * ]
+     * }
      */
     public function searchDriver(){
 
         $search = I('search');
         if(empty($search)){
-            $this->ajaxReturn(['status'=>-1,'msg'=>'请输入搜索词']);
+            $this->ajaxReturn(['status' => -1, 'msg' => '请输入搜索词']);
         }
         $where = [
-            'seller_name|drv_code' => ['like',"%{$search}%"],
+            'seller_name|drv_code' => ['like', "%{$search}%"],
             'is_driver' => 1
         ];
         $result = $this->driverLogic->search_driver($where);

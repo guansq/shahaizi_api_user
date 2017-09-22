@@ -5,11 +5,11 @@
  * Date: 2017/9/8
  * Time: 12:40
  */
+
 namespace app\common\logic;
 
 use think\Model;
 use think\Page;
-use think\Db;
 
 class DriverLogic extends Model{
 
@@ -20,13 +20,17 @@ class DriverLogic extends Model{
 
         $count = M('seller')->where($where)->count();
         $Page = new Page($count, 10);
-        $list = M('seller')->field('seller_id,drv_id,drv_code,head_pic,seller_name,plat_start')->where($where)->limit($Page->firstRow.','.$Page->listRows)->select();
+        $list = M('seller')
+            ->field('seller_id,drv_id,drv_code,head_pic,seller_name,plat_start')
+            ->where($where)
+            ->limit($Page->firstRow.','.$Page->listRows)
+            ->select();
         if(empty($list)){
-            return ['status'=>-1,'msg'=>'没有记录'];
+            return ['status' => -1, 'msg' => '没有记录'];
         }
         //去计算评分
         foreach($list as &$val){
-            $star = M('pack_comment')->where('seller_id',$val['seller_id'])->avg('star');
+            $star = M('pack_comment')->where('seller_id', $val['seller_id'])->avg('star');
             $val['star'] = $star;
         }
         $result = [
@@ -45,9 +49,12 @@ class DriverLogic extends Model{
      */
     public function get_person_info($seller_id){
         $where = ['seller_id' => $seller_id];
-        $info = M('seller')->field('seller_id,drv_id,drv_code,head_pic,seller_name,briefing,country,putonghua,language')->where($where)->find();
+        $info = M('seller')
+            ->field('seller_id,drv_id,drv_code,head_pic,seller_name,briefing,country,putonghua,language')
+            ->where($where)
+            ->find();
         if(empty($info)){
-            return ['status'=>-1,'msg'=>'没有记录'];
+            return ['status' => -1, 'msg' => '没有记录'];
         }
         $str = '';
         $type = getIDType($info['seller_id']);
@@ -61,7 +68,7 @@ class DriverLogic extends Model{
             $str .= '房东-';
         }
         if(!empty($str)){
-            $info['type_info'] = substr($str,0,-1);
+            $info['type_info'] = substr($str, 0, -1);
         }
         return $info;
     }
@@ -71,7 +78,13 @@ class DriverLogic extends Model{
      */
     public function get_comment_info($seller_id){
         $where = ['c.seller_id' => $seller_id];
-        $info = M('pack_comment')->field('u.head_pic,u.nickname,c.start_time,c.star,c.type,c.content')->alias('c')->join('__USERS__ u','c.user_id = u.user_id','LEFT')->order('c.create_at desc')->where($where)->find();
+        $info = M('pack_comment')
+            ->field('u.head_pic,u.nickname,c.start_time,c.star,c.type,c.content')
+            ->alias('c')
+            ->join('__USERS__ u', 'c.user_id = u.user_id', 'LEFT')
+            ->order('c.create_at desc')
+            ->where($where)
+            ->find();
         return $info;
     }
 
@@ -79,7 +92,7 @@ class DriverLogic extends Model{
      * 我的相册
      */
     public function get_my_photo($seller_id){
-        $where = ['seller_id'=>$seller_id];
+        $where = ['seller_id' => $seller_id];
         $list = M('article_photo_type')->field('drv_type_id,cover_img')->where($where)->select();
         return $list;
     }
@@ -107,7 +120,13 @@ class DriverLogic extends Model{
      * 我的车辆
      */
     public function get_my_car($seller_id){
-        $list = M('pack_car_info')->alias('c')->field('c.*,b.name as brand_name,t.car_info')->join('ruit_brand_car b','c.brand_id = b.id')->join('ruit_pack_car_bar t','c.car_type_id = t.id')->where(['is_state'=>1,'seller_id'=>$seller_id])->select();
+        $list = M('pack_car_info')
+            ->alias('c')
+            ->field('c.*,b.name as brand_name,t.car_info')
+            ->join('ruit_brand_car b', 'c.brand_id = b.id')
+            ->join('ruit_pack_car_bar t', 'c.car_type_id = t.id')
+            ->where(['is_state' => 1, 'seller_id' => $seller_id])
+            ->select();
         return $list;
     }
 
@@ -121,7 +140,7 @@ class DriverLogic extends Model{
      *
      *
      */
-    public function save_pack_base($data,$user){
+    public function save_pack_base($data, $user){
         /*
           3线路订单
         rent_car_by_day 按天包车游  6按天包车游
@@ -133,19 +152,19 @@ class DriverLogic extends Model{
         $type = 0;
         switch($data['type']){
             case 'rent_car_by_day':
-                $type =6;
+                $type = 6;
                 break;
             case 'receive_airport':
-                $type =1;
+                $type = 1;
                 break;
             case 'send_airport':
-                $type =2;
+                $type = 2;
                 break;
             case 'once_pickup':
-                $type =4;
+                $type = 4;
                 break;
             case 'private_person':
-                $type =5;
+                $type = 5;
                 break;
         }
         $OrderLogic = new OrderLogic();
@@ -160,10 +179,10 @@ class DriverLogic extends Model{
             'is_have_pack' => $data['is_have_pack'],
             'use_car_adult' => $data['adult_num'],
             'use_car_children' => $data['child_num'],
-            'twenty-four' => !empty($data['thirty']) ? $data['twenty-four'] : 0,
-            'twenty-six' => !empty($data['thirty']) ? $data['twenty-four'] : 0,
-            'twenty-eight' => !empty($data['thirty']) ? $data['twenty-four'] : 0,
-            'thirty' => !empty($data['thirty']) ? $data['twenty-four'] : 0,
+            'twenty_four' => empty($data['twenty_four']) ? 0 : $data['twenty_four'],
+            'twenty_six' =>  empty($data['twenty_six']) ?0: $data['twenty_six'],
+            'twenty_eight' => empty($data['twenty_eight']) ? 0:$data['twenty_eight'],
+            'thirty' => empty($data['thirty']) ? 0:$data['thirty'],
             'remark' => $data['remark'],
             'flt_no' => $data['flt_no'], //航班号
             'start_time' => $data['start_time'], //
@@ -215,7 +234,10 @@ class DriverLogic extends Model{
      * 搜索司导
      */
     public function search_driver($where){
-        $drv = M('seller')->field('seller_id,head_pic,seller_name,drv_code,province,city,plat_start')->where($where)->select();
+        $drv = M('seller')
+            ->field('seller_id,head_pic,seller_name,drv_code,province,city,plat_start')
+            ->where($where)
+            ->select();
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
             $val['province'] = getCityName($val['province']);
@@ -224,9 +246,9 @@ class DriverLogic extends Model{
             $val['line'] = $result['line'];
         }
         if(empty($drv)){
-            return ['status'=>-1,'msg'=>'没有数据'];
+            return ['status' => -1, 'msg' => '没有数据'];
         }else{
-            return ['status'=>1,'msg'=>'成功','result'=>$drv];
+            return ['status' => 1, 'msg' => '成功', 'result' => $drv];
         }
     }
 }
