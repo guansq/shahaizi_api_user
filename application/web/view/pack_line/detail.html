@@ -1,7 +1,6 @@
 {extend name="public/web_html"}
 {block name="style"}
 <link rel="stylesheet" href="">
-<title>线路详情</title>
 {/block}
 
 {block name="body"}
@@ -109,7 +108,7 @@
       </p>
     </div>
     <div class="look">
-      <a class="look_whole" href="javascript:void(0);">查看全部评价</a>
+      <a class="look_whole" href="javascript:void(0);">查看更多</a>
     </div>
   </div>
 
@@ -177,10 +176,10 @@
 
            if(!$(this).hasClass("close")){
                $("#appraise").find(".appraise_con").css("display","block");
-               $(this).text("收起全部评价");
+               $(this).text("收起内容");
                $(this).addClass("close");
            }else{
-               $(this).text("查看全部评价");
+               $(this).text("查看更多");
                $(this).removeClass("close");
                eachAppraiseList();
            }
