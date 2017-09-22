@@ -30,10 +30,27 @@ class PackOrderLogic extends Model{
                 'user_id' => $user_id
             ];
         }
+        $field = [
+            'ord.air_id',
+            'ord.order_sn',
+            'ord.seller_id',
+            'sel.hx_user_name',
+            'sel.nickname',
+            'sel.head_pic'=>'avatar',
+            'ord.status',
+            'ord.title',
+            'ord.customer_name',
+            'ord.drv_name',
+            'ord.create_at',
+            'ord.drv_phone',
+            'ord.total_price',
+            'ord.real_price'
+        ];
         $count = M('pack_order')->where($where)->count();
         $page = new Page($count, 10);//每页10
-        $order_list = M('pack_order')
-            ->field('air_id,order_sn,seller_id,status,title,customer_name,drv_name,create_at,drv_phone,total_price,real_price')
+        $order_list = $this->alias('ord')
+            ->join('ruit_seller sel', 'ord.seller_id = sel.seller_id', 'LEFT')
+            ->field($field)
             ->where($where)
             ->limit($page->firstRow.','.$page->listRows)
             ->select();
@@ -65,6 +82,7 @@ class PackOrderLogic extends Model{
      */
     public function get_pack_order_info($air_id, $user_id){
         $carBarLogic = new PackCarBarLogic();
+        $sellerLogic = new SellerLogic();
         $info = M('pack_order')->where(['air_id' => $air_id, 'user_id' => $user_id])->find();
         if(empty($info)){
             $return = [
@@ -77,9 +95,12 @@ class PackOrderLogic extends Model{
                 'msg' => '成功',
                 'result' => $info
             ];
-
+            $seller = $sellerLogic->find($info['seller_id']);
             $carBar = $carBarLogic->find($info['con_car_type']);
             $info['con_car_type_name'] = $carBar['car_info'];
+            $info['hx_user_name'] = empty($seller['hx_user_name'])?'':$seller['hx_user_name'];
+            $info['nickname'] =  empty($seller['nickname'])?'':$seller['nickname'];
+            $info['avatar'] =  empty($seller['head_pic'])?'':$seller['head_pic'];
         }
         return $return;
     }
@@ -116,9 +137,9 @@ class PackOrderLogic extends Model{
             'use_car_children' => $data['use_car_children'],
             'user_passport' => $data['user_passport'],
             'user_user_identity' => $data['user_user_identity'],
-            'twenty-four' => $data['twenty-four'],
-            'twenty-six' => $data['twenty-six'],
-            'twenty-eight' => $data['twenty-eight'],
+            'twenty - four' => $data['twenty - four'],
+            'twenty - six' => $data['twenty - six'],
+            'twenty - eight' => $data['twenty - eight'],
             'thirty' => $data['thirty'],
             'work_at' => $data['work_at'],
             'work_address' => $data['work_address'],
