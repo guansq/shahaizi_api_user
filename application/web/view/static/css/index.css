@@ -207,9 +207,9 @@ body{
     padding-top: 10px;
 }
 .continent .cont_name{
-    font-size: 19px;
+    font-size: 18px;
     font-weight: normal;
-    line-height: 55px;
+    line-height: 50px;
 }
 .continent .cont_country{
     overflow: hidden;
@@ -228,7 +228,7 @@ body{
     width: 100%;
 }
 .cont_country li p{
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
     padding: 15px 0 0;
 }
