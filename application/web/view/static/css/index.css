@@ -156,12 +156,14 @@ body{
     color: #333333;
 }
 /*关于我们*/
-.about-content ul{
+.pt_25{
     padding-top: 25px;
 }
-.about-content li p{
-    color: #000;
-    padding-bottom: 25px;
+.docu{
+    color: #333;
+    line-height: 28px;
+    font-size: 14px;
+    padding-bottom: 10px;
 }
 /*帮助中心*/
 .help-content li{
