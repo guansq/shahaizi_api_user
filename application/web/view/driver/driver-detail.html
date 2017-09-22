@@ -146,7 +146,7 @@
             <p> 我是一名全职专职司导，在新加坡大街小巷都有我的足迹，有 30年的开车经验和5年的司导经验...</p>
         </div>
         <div class="look">
-            <a class="look_whole2" href="javascript:void(0);">查看更多</a>
+            <a class="look_whole" href="javascript:void(0);">查看更多</a>
         </div>
     </div>
 
@@ -267,18 +267,6 @@
                 $(this).text("查看更多");
                 $(this).removeClass("close");
                 eachAppraiseList($("#appraise"),".ass_con",2);
-            }
-        });
-        
-        $(".look_whole2").click(function(){
-            if(!$(this).hasClass("close")){
-                $("#old").find(".old_box").css("display","block");
-                $(this).text("收起内容");
-                $(this).addClass("close");
-            }else{
-                $(this).text("查看更多");
-                $(this).removeClass("close");
-                eachAppraiseList($("#old"),".old_box",1);
             }
         })
     });
