@@ -46,14 +46,15 @@ class Index extends Base{
         $data = M('ad')
             ->where('pid = 10')
             ->field(array('ad_link', 'ad_name', 'ad_code'))
-            ->cache(true, TPSHOP_CACHE_TIME)
+            //->cache(true, TPSHOP_CACHE_TIME)
             ->select();
         //广告地址转换
         foreach($data as $k => $v){
-            if(!strstr($v['ad_link'], 'http')){
-                $data[$k]['ad_link'] = SITE_URL.$v['ad_link'];
+            if(!strstr($v['ad_code'], 'http')){
+                $data[$k]['ad_code'] = SITE_URL.$v['ad_code'];
             }
-            $data[$k]['ad_code'] = SITE_URL.$v['ad_code'];
+            $data[$k]['ad_link'] = $v['ad_link'];
+
 
         }
         //获取大分类
