@@ -10,5 +10,8 @@ class Area extends WebBase{
     public function index(){
         return $this->fetch('area');
      }
+     public function areaDetail(){
+         return $this->fetch('area-detail');
+      }
 }
 ?>
