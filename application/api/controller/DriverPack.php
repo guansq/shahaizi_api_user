@@ -269,6 +269,7 @@ class DriverPack extends Base{
         //     $this->ajaxReturn(['status' => -1, 'msg' => $result]);
         // }
         //验证通过
+        $data['start_address'] =  $data['airport_name'];
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
@@ -358,6 +359,7 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.oncePickup');
         if($result === true){//验证通过
+            $data['start_time'] = $data['user_car_time'];
             $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,

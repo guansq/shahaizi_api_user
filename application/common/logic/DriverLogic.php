@@ -186,7 +186,7 @@ class DriverLogic extends Model{
             'remark' => $data['remark'],
             'flt_no' => $data['flt_no'], //航班号
             'start_time' => $data['start_time'], //
-            'work_address' => $data['airport_name'], //
+            'work_address' =>  $data['start_address'], //
             'dest_address' => $data['dest_address'], //
             'con_car_seat_num' => $data['con_car_seat_num'], // 座位数
         ];
