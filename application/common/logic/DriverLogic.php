@@ -160,16 +160,16 @@ class DriverLogic extends Model{
             'is_have_pack' => $data['is_have_pack'],
             'use_car_adult' => $data['adult_num'],
             'use_car_children' => $data['child_num'],
-            'twenty-four' => !empty($data['thirty']) ? $data['twenty-four'] : false,
-            'twenty-six' => !empty($data['thirty']) ? $data['twenty-four'] : false,
-            'twenty-eight' => !empty($data['thirty']) ? $data['twenty-four'] : false,
-            'thirty' => !empty($data['thirty']) ? $data['twenty-four'] : false,
+            'twenty-four' => !empty($data['thirty']) ? $data['twenty-four'] : 0,
+            'twenty-six' => !empty($data['thirty']) ? $data['twenty-four'] : 0,
+            'twenty-eight' => !empty($data['thirty']) ? $data['twenty-four'] : 0,
+            'thirty' => !empty($data['thirty']) ? $data['twenty-four'] : 0,
             'remark' => $data['remark'],
             'flt_no' => $data['flt_no'], //航班号
             'start_time' => $data['start_time'], //
             'work_address' => $data['airport_name'], //
             'dest_address' => $data['dest_address'], //
-            'con_car_seat_num' => $data['dest_address'], //
+            'con_car_seat_num' => $data['con_car_seat_num'], // 座位数
         ];
         $return = M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
