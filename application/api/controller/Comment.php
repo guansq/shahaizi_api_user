@@ -16,7 +16,7 @@ use think\Request;
 class Comment extends Base{
 
     /*
-     * @api         {GET}   /comment/commentInfo    获取评论内容（待调试）wxx
+     * @api         {GET}   /api/comment/commentInfo    获取评论内容（待调试）wxx
      * @apiName     commentInfo
      * @apiGroup    Comment
      * @apiHeader   {String}    authorization-token     token.
@@ -55,7 +55,7 @@ class Comment extends Base{
     }
 
     /*
-     * @api  {POST}   /comment/sendCommentInfo    发送评论内容（待调试）wxx
+     * @api  {POST}   /api/comment/sendCommentInfo    发送评论内容（待调试）wxx
      * @apiName  sendCommentInfo
      * @apiGroup Comment
      * @apiParam {String}  token  token.
@@ -137,7 +137,7 @@ class Comment extends Base{
     }
 
     /**
-     * @api  {POST}   /comment/packOrderComment    10 评论包车订单 ok wxx
+     * @api  {POST}   /api/comment/orderComment    10 评论包车订单 ok wxx
      * @apiDescription 评论包车订单
      * @apiName  postPackOrderComment
      * @apiGroup Comment
