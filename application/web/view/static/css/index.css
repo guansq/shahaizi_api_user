@@ -281,6 +281,7 @@ body{
     padding: 18px 20px 20px;
     margin-top: 10px;
     background: #ffffff;
+    overflow: hidden;
 }
 .cir_con h1{
     font-size: 18px;
@@ -295,6 +296,9 @@ body{
 .driver_info .dri_xx{
     display: inline-block;
     width: 75%;
+    float: right;
+    line-height: 23px;
+    padding: 8px 0;
 }
 .dri_xx span{
     padding: 0 5px 0 0;
@@ -306,10 +310,11 @@ body{
 }
 .dri_xx .drive_id,.dri_xx .drive_addre{
     color: #666666;
-    font-size: 14px;
+    font-size: 13px;
 }
 .dri_xx .drive_id i{
     font-style: normal;
+    font-size: 13px;
 }
 .dri_xx .drive_addre i{
     display: inline-block;
@@ -345,11 +350,10 @@ body{
 }
 .appraise_con .appra_peo .peo_level{
     display: inline-block;
-    width: 100px;
+    width: 80px;
 }
 .appra_peo .peo_level img{
     width: 100%;
-    vertical-align: top;
 }
 .appra_peo .peo_time{
     color: #999999;
