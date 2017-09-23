@@ -37,7 +37,7 @@ class PackLineLogic extends Model{
 
     public function get_pack_line($where){
         $list = M('pack_line')
-            ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
+            ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at,start_time,end_time')
             ->where($where)
             ->limit(9)
             ->select();
