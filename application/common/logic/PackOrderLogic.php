@@ -70,7 +70,7 @@ class PackOrderLogic extends Model{
             ->select();
         foreach($order_list as &$val){
             $val['create_at'] = shzDate($val['create_at']);
-            $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']]: $val['title'];
+            $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']] : $val['title'];
         }
         $result = [
             'totalPages' => $page->totalPages,
@@ -144,7 +144,10 @@ class PackOrderLogic extends Model{
      * 生成路线订单
      */
     public function create_pack_order($data, $user){
-        //dump($data);die;
+        $line = PackLineLogic::find($data['line_id']);
+        if(empty($line)){
+            return ['status' => -1, 'msg' => '当前线路不存在'];
+        }
         $order_data = [
             'order_sn' => $this->get_order_sn(),
             'user_id' => $user['user_id'],
@@ -165,11 +168,10 @@ class PackOrderLogic extends Model{
             'discount_id' => $data['discount_id'],
             'total_price' => $data['total_price'],
             'real_price' => $data['real_price'],
-            'total_price' => $data['total_price'],
             'remark' => $data['remark'],
+            'title' => $line['line_title'],
             'status' => 0,
             'type' => 3,//1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
-            'discount_id' => $data['discount_id'],
             'user_message' => $data['user_message'],
             'create_at' => time(),
             'update_at' => time(),
