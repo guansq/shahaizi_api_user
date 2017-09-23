@@ -15,6 +15,18 @@ use think\Page;
 class PackOrderLogic extends Model{
     protected $table = 'ruit_pack_order';
 
+    // 1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游7快捷订单
+    const TYPE_ARR = [
+        1 => '接机订单',
+        2 => '送机订单',
+        3 => '线路订单',
+        4 => '单次接送',
+        5 => '私人订制',
+        6 => '按天包车游',
+        7 => '快捷订单',
+    ];
+
+
     /*
      * 得到 我的包车订单
      */
@@ -36,9 +48,10 @@ class PackOrderLogic extends Model{
             'ord.seller_id',
             'sel.hx_user_name',
             'sel.nickname',
-            'sel.head_pic'=>'avatar',
+            'sel.head_pic' => 'avatar',
             'ord.status',
             'ord.title',
+            'ord.type',
             'ord.customer_name',
             'ord.drv_name',
             'ord.create_at',
@@ -57,6 +70,7 @@ class PackOrderLogic extends Model{
             ->select();
         foreach($order_list as &$val){
             $val['create_at'] = shzDate($val['create_at']);
+            $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']]: $val['title'];
         }
         $result = [
             'totalPages' => $page->totalPages,
@@ -94,12 +108,12 @@ class PackOrderLogic extends Model{
 
             $seller = $sellerLogic->find($info['seller_id']);
             $carBar = $carBarLogic->find($info['con_car_type']);
-            $info['con_car_type_name'] =  empty($carBar['car_info'])?'':$carBar['car_info'];
+            $info['con_car_type_name'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
             $carBar = $carBarLogic->find($info['req_car_type']);
-            $info['req_car_type'] = empty($carBar['car_info'])?'':$carBar['car_info'];
-            $info['hx_user_name'] = empty($seller['hx_user_name'])?'':$seller['hx_user_name'];
-            $info['nickname'] =  empty($seller['nickname'])?'':$seller['nickname'];
-            $info['avatar'] =  empty($seller['head_pic'])?'':$seller['head_pic'];
+            $info['req_car_type'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
+            $info['hx_user_name'] = empty($seller['hx_user_name']) ? '' : $seller['hx_user_name'];
+            $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
+            $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
             $return = [
                 'status' => 1,
                 'msg' => '成功',
@@ -141,9 +155,9 @@ class PackOrderLogic extends Model{
             'use_car_children' => $data['use_car_children'],
             'user_passport' => $data['user_passport'],
             'user_identity' => $data['user_identity'],
-            'twenty - four' => $data['twenty - four'],
-            'twenty - six' => $data['twenty - six'],
-            'twenty - eight' => $data['twenty - eight'],
+            'twenty_four' => $data['twenty_four'],
+            'twenty_six' => $data['twenty_six'],
+            'twenty_eight' => $data['twenty_eight'],
             'thirty' => $data['thirty'],
             'work_at' => $data['work_at'],
             'work_address' => $data['work_address'],

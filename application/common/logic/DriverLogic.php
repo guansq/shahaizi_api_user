@@ -194,6 +194,8 @@ class DriverLogic extends Model{
             'order_day' => $data['order_day'], //
             'eating_ave' => $data['eating_ave'], //
             'stay_ave' => $data['stay_ave'], //
+            'create_at' => time(),
+            'update_at' => time(),
         ];
         $return = M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
