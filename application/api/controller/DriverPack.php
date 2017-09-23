@@ -390,7 +390,6 @@ class DriverPack extends Base{
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
-     * @apiParam    {Number}    total_num       出行总人数
      * @apiParam    {Number}    adult_num       成人乘客数
      * @apiParam    {String}    child_num       儿童乘客数
      * @apiParam    {String}    tour_time       出行时间
@@ -413,6 +412,9 @@ class DriverPack extends Base{
             $data['order_day'] = $data['tour_days'];
             $data['eating_ave'] = $data['recommend_diner'];
             $data['stay_ave'] = $data['recommend_sleep'];
+            $data['dest_address'] = $data['end_address'];
+            $data['use_car_adult'] = $data['adult_num'];
+            $data['use_car_children'] = $data['child_num'];
             $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
