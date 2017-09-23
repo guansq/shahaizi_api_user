@@ -136,7 +136,7 @@ class PackOrderLogic extends Model{
             'use_car_adult' => $data['use_car_adult'],
             'use_car_children' => $data['use_car_children'],
             'user_passport' => $data['user_passport'],
-            'user_user_identity' => $data['user_user_identity'],
+            'user_identity' => $data['user_identity'],
             'twenty - four' => $data['twenty - four'],
             'twenty - six' => $data['twenty - six'],
             'twenty - eight' => $data['twenty - eight'],

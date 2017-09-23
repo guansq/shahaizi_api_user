@@ -323,7 +323,8 @@ function payPackOrder($pack_order,$user_info,$discount_price,$pay_way,$is_coupon
     ];
     $account_arr = [
         'user_id' => $pack_order['user_id'],
-        'user_money' => $user['user_money'],//用户余额
+        'user_money' => $real_price,//使用的余额
+        'user_balance' => $user['user_money'],//用户余额
         'frozen_money' => 0,//冻结金额
         'change_time' => time(),
         'desc' => $order_map[$pack_order['type']],
