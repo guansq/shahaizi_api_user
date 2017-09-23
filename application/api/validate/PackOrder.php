@@ -19,8 +19,8 @@ class PackOrder extends Validate{
         'user_passport' => 'require',
         'user_identity' => 'require',
         'work_at' => 'require',
-        'work_address' => 'require',
-        'dest_address' => 'require',
+        //'work_address' => 'require',
+        //'dest_address' => 'require',
         //'discount_id' => 'require',
         'total_price' => 'require',
     ];
