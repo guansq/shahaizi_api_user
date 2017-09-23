@@ -313,7 +313,7 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.sendAirport');
         if($result === true){//验证通过
-            $data['start_address'] =  $data['airport_name'];
+            $data['dest_address'] =  $data['airport_name'];
             $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
