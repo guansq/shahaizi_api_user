@@ -204,7 +204,6 @@ class DriverPack extends Base{
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    [drv_code]        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
-     * @apiParam    {Number}    total_num       出行总人数
      * @apiParam    {Number}    adult_num       成人乘客数
      * @apiParam    {String}    child_num       儿童乘客数
      * @apiParam    {String}    remark       备注
@@ -219,6 +218,7 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.rentCarByDay');
         if($result === true){//验证通过
+            $data['start_time'] = $data['pack_time'];
             $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
