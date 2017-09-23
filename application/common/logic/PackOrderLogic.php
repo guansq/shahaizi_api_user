@@ -53,6 +53,7 @@ class PackOrderLogic extends Model{
             ->field($field)
             ->where($where)
             ->limit($page->firstRow.','.$page->listRows)
+            ->order('air_id DESC')
             ->select();
         foreach($order_list as &$val){
             $val['create_at'] = shzDate($val['create_at']);
