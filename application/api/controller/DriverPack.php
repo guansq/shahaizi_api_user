@@ -519,7 +519,7 @@ class DriverPack extends Base{
             $this->ajaxReturn(['status' => -1, 'msg' => '请输入搜索词']);
         }
         $where = [
-            'seller_name|drv_code' => ['like', "%{$search}%"],
+            'seller_name|drv_code|nickname' => ['like', "%{$search}%"],
             'is_driver' => 1
         ];
         $result = $this->driverLogic->search_driver($where);
