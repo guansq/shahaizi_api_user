@@ -23,35 +23,45 @@ use think\Model;
  * @package common\Logic
  */
 class PackCommentLogic extends Model{
-    protected $table ='ruit_pack_comment';
+    protected $table = 'ruit_pack_comment';
 
     public function getCommentBylineId($lineId){
         $sellerLogic = new SellerLogic();
 
-        $total = $this->where('line_id',$lineId)->count();
-        $list = $this->where('line_id',$lineId)->select();
+        $total = $this->where('line_id', $lineId)->count();
+        $list = $this->where('line_id', $lineId)->select();
         if($total == 0){
             return [
-                'total'=>0,
-                'list'=>[]
+                'total' => 0,
+                'list' => []
             ];
         }
         foreach($list as &$item){
 
             $seller = $sellerLogic->find($item['']);
-
-            $ownerId =
-            $item[]=[
-                'ownerId'=>$ownerId,
-                'ownerId'=>$ownerId,
+            // todo
+            $ownerId = $item[] = [
+                'ownerId' => '',
             ];
         }
 
         $ret = [
-            'total'=>$total,
-            'list'=>$list
+            'total' => $total,
+            'list' => $list
         ];
         return $ret;
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe:
+     * @param $lineId
+     * @return float|int
+     */
+    public function getStartBylineId($lineId){
+        $start = $this->where('line_id', $lineId)->avg('ranking');
+        $start = empty($start) ? 4 : intval($start);
+        return $start;
     }
 
 }

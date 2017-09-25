@@ -24,7 +24,7 @@ namespace app\api\logic;
  */
 class RegionInterLogic extends BaseLogic{
 
-    protected $table ='ruit_region_new';
+    protected $table ='ruit_region_country';
 
 
 }

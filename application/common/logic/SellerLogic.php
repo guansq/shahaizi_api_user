@@ -23,4 +23,26 @@ use think\Model;
 class SellerLogic extends Model{
     protected $table = 'ruit_seller';
 
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 根据ID查询seller详情
+     * @param $id
+     */
+    public function getInfoById($id){
+        $regionLogic = new RegionLogic();
+        $seller = $this->find($id);
+        if(empty($seller)){
+            return [];
+        }
+
+        $seller = $seller->toArray();
+        //  `province` int(6) DEFAULT '0' COMMENT '省份',
+        //  `city` int(6) DEFAULT '0' COMMENT '市区',
+        //  `district` int(6) DEFAULT '0' COMMENT '县',
+        $seller['province_name'] = $regionLogic->where('id',$seller['province'])->value('name');
+        $seller['city_name'] = $regionLogic->where('id',$seller['city'])->value('name');
+        $seller['district_name'] = $regionLogic->where('id',$seller['district'])->value('name');
+        return $seller;
+    }
+
 }

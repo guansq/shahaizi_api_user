@@ -14,6 +14,7 @@
 
 namespace app\api\controller;
 
+use app\common\logic\AdLogic;
 use app\common\logic\GoodsLogic;
 use app\common\logic\HomeLogic;
 use app\common\logic\StoreLogic;
@@ -44,7 +45,7 @@ class Index extends Base{
         $city = I('city', '');
         //获取轮播图
         $data = M('ad')
-            ->where('pid = 10')
+            ->where('pid',AdLogic::AD_POSITION_HOME)
             ->field(array('ad_link', 'ad_name', 'ad_code'))
             //->cache(true, TPSHOP_CACHE_TIME)
             ->select();

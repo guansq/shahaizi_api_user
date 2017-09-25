@@ -62,12 +62,24 @@ class Region extends Base{
      * @api {GET}   /index.php?m=Api&c=Region&a=getChildHotCity     得到子热门城市done     管少秋
      * @apiName     getChildHotCity
      * @apiGroup    Region
-     * @apiParam    {String}    id  父级城市ID
+     * @apiParam    {String}    [id]  父级城市ID
      */
     public function getChildHotCity(){
         $id = I('id');
         $regionLogic = new RegionLogic();
-        $result = $regionLogic->get_hot_city($id);
+        $result = $regionLogic->getChildHotCity($id);
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+    }
+
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getHotCity     得到热门城市 ok will
+     * @apiName     getHotCity
+     * @apiGroup    Region
+     */
+    public function getHotCity(){
+        $regionLogic = new RegionLogic();
+        $result = $regionLogic->getHotCity();
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }
 

@@ -11,11 +11,13 @@ use think\Model;
 use think\Db;
 
 class RegionLogic extends Model{
+
+    protected $table = 'ruit_region';
     /*
      * 得到城市信息
      */
     public function get_city_info($where){
-        $result = M('region_new')->where($where)->select();
+        $result = M('region_country')->where($where)->select();
         return $result;
     }
 
@@ -23,13 +25,13 @@ class RegionLogic extends Model{
      * 得到所有城市信息
      */
     public function get_all_city(){
-        $allCity = M('region_new')->where(['level'=>['in','3,4'],'parent_id'=>3426])->select();
+        $allCity = $this->where(['level'=> 2])->select();
         return $allCity;
 
     }
 
     public function index(){
-        $allCity = M('region_new')->select();
+        $allCity = M('region_country')->select();
         $result = $this->tree($allCity);
         return $result;
     }
@@ -58,14 +60,21 @@ class RegionLogic extends Model{
     /*
      * 得到热门城市
      */
-    public function get_hot_city($id){
-        return M('region_new')->where(['is_hot'=>1,'parent_id'=>$id])->select();
+    public function getChildHotCity($id){
+        return M('region_country')->where(['is_hot'=>1,'parent_id'=>$id])->select();
+    }
+
+    /*
+     * 得到热门城市
+     */
+    public function getHotCity(){
+        return $this->where(['is_hot'=>1,'level'=> 2])->select();
     }
 
     /*
      * 搜索城市
      */
     public function search_city($name){
-        return M('region_new')->where(['name'=>['like',"%{$name}%"]])->select();
+        return M('region_country')->where(['name'=>['like',"%{$name}%"]])->select();
     }
 }

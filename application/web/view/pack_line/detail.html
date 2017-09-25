@@ -11,14 +11,14 @@
       <h3>
         <span class="syn_title">{$line.line_title}</span>
         <span class="level">
-          <img src="/application/web/view/static/image/star_full@2x.png" alt="">
+          <img src="/application/web/view/static/image/star_{$driver.plat_start}@2x.png" alt="">
         </span>
       </h3>
       <div class="pri">
         <span class="w30b col_ff7"><b class="price">￥{$line.line_price}</b><small>/天</small></span>
-        <span class="w30b"> ??????? 人出游</span>
+        <span class="w30b">  </span>
         <div class="level">
-          <img src="/application/web/view/static/image/heart_full@2x.png" alt="">
+          <img src="/application/web/view/static/image/heart_{$line.plat_start}@2x.png" alt="">
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
   <div class="cir_con driver_info">
     <h1>司导信息</h1>
     <div>
-      <img class="head_img" src="/application/web/view/static/image/avatar@2x.png" alt="">
+      <img class="head_img" src="{$driver.head_pic}" alt="">
       <p class="dri_xx">
         <span class="drive_name">{$driver.seller_name}</span>
         <span class="drive_id">工号:<i> {$driver.drv_code}</i></span>

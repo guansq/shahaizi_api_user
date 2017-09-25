@@ -19,15 +19,17 @@ class PackLine extends WebBase{
         if(empty($line)){
             return $this->error('你要查看的路线已经不存在');
         }
-        $driver =$sellerLogic->find($line['seller_id']);
-        $line['line_detail'] = json_encode($line['line_detail'],true);
+
+        $line['line_detail'] = json_encode($line['line_detail'], true);
         $line = $line->toArray();
-        $driver = empty($driver)?[]:$driver->toArray();
+        $line['plat_start'] = $lineCommentLogic->getStartBylineId($id);
+
+        $driverInfo = $sellerLogic->getInfoById($line['seller_id']);
         $comment = $lineCommentLogic->getCommentBylineId($line['line_id']);
-        $this->assign('line',$line);
-        $this->assign('driver',$driver);
-        $this->assign('comment',$comment);
-        return $this->fetch('detail');
+        $this->assign('line', $line);
+        $this->assign('driver', $driverInfo);
+        $this->assign('comment', $comment);
+        return $this->fetch();
     }
 
 
