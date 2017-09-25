@@ -16,11 +16,12 @@ class PackLineLogic extends Model{
     protected $table = 'ruit_pack_line';
 
     public function get_all_pack_line($where){
-        $count = M('pack_line')->where($where)->count();
+        $count = $this->where($where)->count();
         $page = new Page($count, 10);
-        $list = M('pack_line')
+        $list = $this
             ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
             ->where($where)
+            ->order('order_by')
             ->limit($page->firstRow.','.$page->listRows)
             ->select();
         foreach($list as &$val){
@@ -70,9 +71,11 @@ class PackLineLogic extends Model{
      * @return array
      */
     public function getCommPackLine(){
-
+        $where = ['is_state' =>1];
         $list = $this
             ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
+            ->where($where)
+            ->order('order_by')
             ->limit(3)
             ->select();
         foreach($list as &$val){
