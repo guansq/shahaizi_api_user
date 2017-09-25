@@ -29,6 +29,7 @@ class SellerLogic extends Model{
      * @param $id
      */
     public function getInfoById($id){
+        $regCouLogic = new RegionCountryLogic();
         $regionLogic = new RegionLogic();
         $seller = $this->find($id);
         if(empty($seller)){
@@ -39,6 +40,7 @@ class SellerLogic extends Model{
         //  `province` int(6) DEFAULT '0' COMMENT '省份',
         //  `city` int(6) DEFAULT '0' COMMENT '市区',
         //  `district` int(6) DEFAULT '0' COMMENT '县',
+        $seller['country_name'] = $regCouLogic->where('id',$seller['country_id'])->value('name');
         $seller['province_name'] = $regionLogic->where('id',$seller['province'])->value('name');
         $seller['city_name'] = $regionLogic->where('id',$seller['city'])->value('name');
         $seller['district_name'] = $regionLogic->where('id',$seller['district'])->value('name');

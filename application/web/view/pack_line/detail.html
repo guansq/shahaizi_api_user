@@ -29,9 +29,11 @@
     <div>
       <img class="head_img" src="{$driver.head_pic}" alt="">
       <p class="dri_xx">
-        <span class="drive_name">{$driver.seller_name}</span>
+        <span class="drive_name">{$driver.nickname}</span>
         <span class="drive_id">工号:<i> {$driver.drv_code}</i></span>
-        <span class="drive_addre"><i></i>日本???·京都???</span>
+        {notempty name="driver.country_name"}
+        <span class="drive_addre"><i></i>{$driver.country_name}·{$driver.province_name}</span>
+        {/notempty}
       </p>
     </div>
   </div>
