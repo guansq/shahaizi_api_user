@@ -16,6 +16,7 @@
 namespace app\common\logic;
 
 use think\Model;
+use think\Page;
 
 /**
  * 线路评论逻辑
@@ -25,14 +26,16 @@ use think\Model;
 class PackCommentLogic extends Model{
     protected $table = 'ruit_pack_comment';
 
-    public function getCommentBylineId($lineId){
+    public function getCommentPageBylineId($lineId, $pageSize=20){
         $sellerLogic = new SellerLogic();
 
         $total = $this->where('line_id', $lineId)->count();
         $list = $this->where('line_id', $lineId)->select();
+        $page = new  Page($total,$pageSize);
         if($total == 0){
             return [
-                'total' => 0,
+                'total' => $total,
+                'totalPage' => $page->totalPages,
                 'list' => []
             ];
         }
@@ -47,7 +50,8 @@ class PackCommentLogic extends Model{
 
         $ret = [
             'total' => $total,
-            'list' => $list
+            'totalPage' => $page->totalPages,
+            'list' => []
         ];
         return $ret;
     }

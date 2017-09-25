@@ -26,10 +26,37 @@ class PackOrderLogic extends Model{
         7 => '快捷订单',
     ];
 
+    const STATUS_UNCONFIRM         = -1; //未确定价格
+    const STATUS_UNPAY             = 0; //未支付
+    const STATUS_UNALLOT           = 1; //待派单
+    const STATUS_UNJXDJ            = 2; //已派单_待接单
+    const STATUS_UNSTART           = 3; //即将开始
+    const STATUS_DOING             = 4; //进行中
+    const STATUS_UNCOMMENT         = 5; //待评价
+    const STATUS_FINISH            = 6; //已完成
+    const STATUS_CANCEL            = 10; //取消
+    const STATUS_AFTER_SALE        = 11; //申请售后中
+    const STATUS_AFTER_SALE_PASS   = 12; //售后成功
+    const STATUS_AFTER_SALE_REFUSE = 13; //售后拒绝
+
+    const STATUS_ARR = [
+        self::STATUS_UNCONFIRM => '未确定价格',
+        self::STATUS_UNPAY => '未支付',
+        self::STATUS_UNALLOT => '待派单',
+        self::STATUS_UNJXDJ => '已派单_待接单',
+        self::STATUS_UNSTART => '即将开始',
+        self::STATUS_DOING => '进行中',
+        self::STATUS_UNCOMMENT => '待评价',
+        self::STATUS_FINISH => '已完成',
+        self::STATUS_CANCEL => '取消',
+        self::STATUS_AFTER_SALE => '申请售后中',
+        self::STATUS_AFTER_SALE_PASS => '售后成功',
+        self::STATUS_AFTER_SALE_REFUSE => '售后拒绝',
+    ];
 
     /*
-     * 得到 我的包车订单
-     */
+       * 得到 我的包车订单
+       */
     public function get_pack_order($type, $user_id){
         if($type == 'all'){
             $where = [
@@ -154,6 +181,7 @@ class PackOrderLogic extends Model{
             'customer_name' => $data['customer_name'],
             'customer_phone' => $data['customer_phone'],
             'line_id' => $data['line_id'],
+            'seller_id' => $line['seller_id'],
             'use_car_adult' => $data['use_car_adult'],
             'use_car_children' => $data['use_car_children'],
             'user_passport' => $data['user_passport'],
@@ -170,7 +198,7 @@ class PackOrderLogic extends Model{
             'real_price' => $data['real_price'],
             'remark' => $data['remark'],
             'title' => $line['line_title'],
-            'status' => 0,
+            'status' => PackOrderLogic::STATUS_UNPAY,
             'type' => 3,//1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
             'user_message' => $data['user_message'],
             'create_at' => time(),

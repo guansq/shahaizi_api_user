@@ -9,6 +9,7 @@
 namespace app\api\controller;
 
 use app\common\logic\DriverLogic;
+use app\common\logic\PackOrderLogic;
 use app\common\logic\SellerLogic;
 
 class DriverPack extends Base{

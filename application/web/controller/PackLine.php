@@ -25,7 +25,7 @@ class PackLine extends WebBase{
         $line['plat_start'] = $lineCommentLogic->getStartBylineId($id);
 
         $driverInfo = $sellerLogic->getInfoById($line['seller_id']);
-        $comment = $lineCommentLogic->getCommentBylineId($line['line_id']);
+        $comment = $lineCommentLogic->getCommentPageBylineId($line['line_id'],PHP_INT_MAX);
         $this->assign('line', $line);
         $this->assign('driver', $driverInfo);
         $this->assign('comment', $comment);
