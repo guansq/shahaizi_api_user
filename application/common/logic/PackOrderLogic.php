@@ -53,6 +53,10 @@ class PackOrderLogic extends Model{
         self::STATUS_AFTER_SALE_PASS => '售后成功',
         self::STATUS_AFTER_SALE_REFUSE => '售后拒绝',
     ];
+    /**
+     * 不在用户端显示的状态
+     */
+    const UN_SHOW_STATUS_ARR = [self::STATUS_UNCONFIRM, self::STATUS_CANCEL];
 
     /*
        * 得到 我的包车订单
@@ -60,7 +64,7 @@ class PackOrderLogic extends Model{
     public function get_pack_order($type, $user_id){
         if($type == 'all'){
             $where = [
-                'status' => ['in', '0,3,4,5'],
+                'status' => ['NOT IN', PackOrderLogic::UN_SHOW_STATUS_ARR],
                 'user_id' => $user_id
             ];
         }else{
