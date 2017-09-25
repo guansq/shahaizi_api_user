@@ -133,9 +133,7 @@ class PackLine extends Base{
         $banner = M('ad')->where('pid',AdLogic::AD_POSITION_CAR)->field(array('ad_name','ad_code'))->cache(true,TPSHOP_CACHE_TIME)->select();
         //精选路线
         $packLogic = new PackLineLogic();
-        $where['is_comm'] = 1;//精品路线
-
-        $line = $packLogic->get_pack_line($where);
+        $line = $packLogic->getCommPackLine();
         foreach($line as &$val){
             unset($val['line_detail']);
         }

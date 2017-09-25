@@ -63,4 +63,23 @@ class PackLineLogic extends Model{
         }
         return $drv;
     }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 获取精品线路
+     * @return array
+     */
+    public function getCommPackLine(){
+
+        $list = $this
+            ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
+            ->limit(3)
+            ->select();
+        foreach($list as &$val){
+            $val['star'] = getLineStar($val['seller_id'], 6);
+            $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
+            $val['create_at'] = shzDate($val['create_at']);
+        }
+        return $list;
+    }
 }
