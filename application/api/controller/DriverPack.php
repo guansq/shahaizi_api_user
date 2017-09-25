@@ -9,6 +9,7 @@
 namespace app\api\controller;
 
 use app\common\logic\DriverLogic;
+use app\common\logic\SellerLogic;
 
 class DriverPack extends Base{
 
@@ -269,7 +270,7 @@ class DriverPack extends Base{
         //     $this->ajaxReturn(['status' => -1, 'msg' => $result]);
         // }
         //验证通过
-        $data['start_address'] =  $data['airport_name'];
+        $data['start_address'] = $data['airport_name'];
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
@@ -280,9 +281,9 @@ class DriverPack extends Base{
         ];
         $result = $this->driverLogic->receive_airport($saveData);
         if(empty($result)){
-            return $this->returnJson( 5020);
+            return $this->returnJson(5020);
         }
-        return $this->returnJson( 2000);
+        return $this->returnJson(2000);
     }
 
     /**
@@ -313,7 +314,7 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.sendAirport');
         if($result === true){//验证通过
-            $data['dest_address'] =  $data['airport_name'];
+            $data['dest_address'] = $data['airport_name'];
             $base_id = $this->driverLogic->save_pack_base($data, $this->user);
             $saveData = [
                 'base_id' => $base_id,
@@ -489,9 +490,10 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=searchDriver    搜索司导done 管少秋
-     * @apiName     searchDriver
-     * @apiGroup    DriverPack
+     * @api             {POST}  /index.php?m=Api&c=DriverPack&a=searchDriver    搜索司导done 管少秋
+     * @apiDescription  按照 seller_name|drv_code|nickname 模糊搜索
+     * @apiName         searchDriver
+     * @apiGroup        DriverPack
      * @apiParam    {String}    search  搜索字符
      * @apiSuccessExample {json}    Success-Response
      * {
@@ -524,5 +526,41 @@ class DriverPack extends Base{
         ];
         $result = $this->driverLogic->search_driver($where);
         $this->ajaxReturn($result);
+    }
+
+    /**
+     * @api             {GET}  /index.php?m=Api&c=DriverPack&a=findDriver    精确查找司导 ok will
+     * @apiDescription  按照 手机号|工号 精确查找
+     * @apiName         findDriver
+     * @apiGroup        DriverPack
+     * @apiParam    {String}    search  搜索字符
+     * @apiSuccessExample {json}    Success-Response
+     * {
+     *  status: -1,
+     *  msg: "成功",
+     *  result:  {
+     *      seller_id: 48,
+     *      head_pic: "http://img.shahaizi.cn/4804b6d4afbaf7229635c2542cf8c07b.jpeg",
+     *      seller_name: "",
+     *      drv_code: "20170925-48",
+     *      province: null,
+     *      city: null,
+     *      plat_start: "4",
+     *      star: null,
+     *      line: "地狱城一人一游"
+     *  }
+     * }
+     */
+    public function findDriver(){
+        $search = I('search');
+        if(empty($search)){
+            $this->ajaxReturn(['status' => -1, 'msg' => '请输入搜索词']);
+        }
+        $where = [
+            'mobile|drv_code' => $search,
+            'is_driver' => 1
+        ];
+        $driverInfo = $this->driverLogic->find_driver($where);
+        return $this->returnJson($driverInfo);
     }
 }

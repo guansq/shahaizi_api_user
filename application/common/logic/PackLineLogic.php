@@ -71,7 +71,10 @@ class PackLineLogic extends Model{
      * @return array
      */
     public function getCommPackLine(){
-        $where = ['is_state' =>1];
+        $where = [
+            'is_state' =>1,
+            'is_comm' =>1
+        ];
         $list = $this
             ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
             ->where($where)

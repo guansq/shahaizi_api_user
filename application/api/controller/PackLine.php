@@ -71,7 +71,7 @@ class PackLine extends Base{
         $city = I('city');
         $line_buy_num = I('line_buy_num');
         $time = empty(I('time')) ? '' : strtotime(I('time'));
-        $where = ['is_state' => 1];
+        $where = ['is_state' =>1];
         !empty($city) && $where['city'] = ['like', "%$city%"];
         !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
         !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];

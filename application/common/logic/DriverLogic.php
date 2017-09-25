@@ -13,6 +13,7 @@ use think\Page;
 
 class DriverLogic extends Model{
 
+
     /*
      * 得到司导列表
      */
@@ -181,13 +182,13 @@ class DriverLogic extends Model{
             'use_car_children' => $data['child_num'],
             'user_identity' => $data['user_identity'],
             'twenty_four' => empty($data['twenty_four']) ? 0 : $data['twenty_four'],
-            'twenty_six' =>  empty($data['twenty_six']) ?0: $data['twenty_six'],
-            'twenty_eight' => empty($data['twenty_eight']) ? 0:$data['twenty_eight'],
-            'thirty' => empty($data['thirty']) ? 0:$data['thirty'],
+            'twenty_six' => empty($data['twenty_six']) ? 0 : $data['twenty_six'],
+            'twenty_eight' => empty($data['twenty_eight']) ? 0 : $data['twenty_eight'],
+            'thirty' => empty($data['thirty']) ? 0 : $data['thirty'],
             'remark' => $data['remark'],
             'flt_no' => $data['flt_no'], //航班号
             'start_time' => $data['start_time'], //
-            'work_address' =>  $data['start_address'], //
+            'work_address' => $data['start_address'], //
             'dest_address' => $data['dest_address'], //
             'con_car_seat_num' => $data['con_car_seat_num'], // 座位数
             'tour_favorite' => $data['tour_favorite'], //
@@ -257,5 +258,25 @@ class DriverLogic extends Model{
         }else{
             return ['status' => 1, 'msg' => '成功', 'result' => $drv];
         }
+    }
+
+    /*
+     * 搜索司导
+     */
+    public function find_driver($where){
+        $sellerLogic = new SellerLogic();
+        $drv = $sellerLogic->field('seller_id,head_pic,seller_name,drv_code,province,city,plat_start')
+            ->where($where)
+            ->find();
+        if(empty($drv)){
+            return ['status' => -1, 'msg' => '没有数据'];
+        }
+
+        $result = getDrvIno($drv['seller_id']);
+        $drv['province'] = getCityName($drv['province']);
+        $drv['city'] = getCityName($drv['city']);
+        $drv['star'] = $result['star'];
+        $drv['line'] = $result['line'];
+        return ['status' => 1, 'msg' => '成功', 'result' => $drv];
     }
 }
