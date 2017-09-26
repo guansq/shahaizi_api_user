@@ -58,21 +58,24 @@ class PackOrderLogic extends Model{
      */
     const UN_SHOW_STATUS_ARR = [self::STATUS_UNCONFIRM, self::STATUS_CANCEL];
 
+    // ALL,UN_PAY,DOING,UN_COMMENT,FINISH
+    const STATUS_WHERE_ARR = [
+        'ALL' => ['NOT IN', PackOrderLogic::UN_SHOW_STATUS_ARR],
+        'UN_PAY' => self::STATUS_UNPAY,
+        'DOING' => ['IN', [self::STATUS_UNALLOT, self::STATUS_UNJXDJ, self::STATUS_UNSTART, self::STATUS_DOING]],
+        'UN_COMMENT' => self::STATUS_UNCOMMENT,
+        'FINISH' => self::STATUS_FINISH,
+    ];
+
+
     /*
        * 得到 我的包车订单
        */
-    public function get_pack_order($type, $user_id){
-        if($type == 'all'){
-            $where = [
-                'status' => ['NOT IN', PackOrderLogic::UN_SHOW_STATUS_ARR],
-                'user_id' => $user_id
-            ];
-        }else{
-            $where = [
-                'status' => $type,
-                'user_id' => $user_id
-            ];
-        }
+    public function get_pack_order($statusCode, $user_id){
+        $where = [
+            'status' => self::STATUS_WHERE_ARR[$statusCode],
+            'user_id' => $user_id
+        ];
         $field = [
             'ord.air_id',
             'ord.order_sn',

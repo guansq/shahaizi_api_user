@@ -41,18 +41,16 @@ class PackCommentLogic extends Model{
         }
         foreach($list as &$item){
 
-            $seller = $sellerLogic->find($item['']);
+            $seller = $sellerLogic->find($item['seller_id']);
             // todo
-            $ownerId = $item[] = [
-                'ownerId' => '',
-            ];
         }
 
         $ret = [
             'total' => $total,
             'totalPage' => $page->totalPages,
-            'list' => []
+            'list' => $list
         ];
+
         return $ret;
     }
 

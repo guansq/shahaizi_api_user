@@ -19,11 +19,11 @@ class PackOrder extends Base{
     }
 
     /**
-     * @api {POST}   /index.php?m=Api&c=PackOrder&a=getPackOrder  得到包车订单列表done 管少秋
+     * @api {GET}   /index.php?m=Api&c=PackOrder&a=getPackOrder  得到包车订单列表done 管少秋
      * @apiName     getPackOrder
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token.
-     * @apiParam    {String}    type    订单状态 0未支付 1待派单 2待接单 3进行中（待开始、待确认） 4待评价 5已完成 all为全部
+     * @apiParam    {String=ALL,UN_PAY,DOING,UN_COMMENT,FINISH}  status=ALL  订单状态
      * @apiSuccessExample   {json}  Success-Response
      * Http/1.1     200 OK
     {
@@ -63,8 +63,8 @@ class PackOrder extends Base{
     }
      */
     public function getPackOrder(){
-        $type = I('type',0);
-        $result = $this->packLogic->get_pack_order($type,$this->user_id);
+        $status = input('status','ALL');
+        $result = $this->packLogic->get_pack_order($status,$this->user_id);
         $this->ajaxReturn($result);
     }
 
