@@ -6,9 +6,11 @@ use app\common\logic\PackLineLogic;
 use app\common\logic\SellerLogic;
 use think\Request;
 
-class Fervent extends WebBase{
-    public function index(){
-        return $this->fetch('fervent');
+class Guide extends WebBase{
+
+
+    public function detail(){
+        return $this->fetch();
      }
 }
 ?>
