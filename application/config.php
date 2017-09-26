@@ -416,5 +416,8 @@ return [
     'SECRETKEY' => 'DszNIu8R_0H2T0bXI6He8b2TcPHK0uYBNE94sfbS',//你的secretKey
     'BUCKET' => 'shahaizi',//上传的空间
     //'DOMAINImage'=>'http://ovwiqces1.bkt.clouddn.com/'//空间绑定的域名
-    'DOMAINImage'=>'http://img.shahaizi.cn/'//空间绑定的域名
+    'DOMAINImage'=>'http://img.shahaizi.cn/',//空间绑定的域名
+
+
+    'APP_DEFAULT_STAR'=>4 // 系统默认星级
 ];
