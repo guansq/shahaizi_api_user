@@ -164,6 +164,8 @@ class PackLine extends Base{
      * }
      */
     public function home(){
+        $city = input('city');
+        $city ='';
         $index = M('pack_index')->order('sort asc')->select();
         //获取轮播图
         $banner = M('ad')
@@ -173,7 +175,7 @@ class PackLine extends Base{
             ->select();
         //精选路线
         $packLogic = new PackLineLogic();
-        $line = $packLogic->getCommPackLine();
+        $line = $packLogic->getCommPackLine($city);
         foreach($line as &$val){
             unset($val['line_detail']);
         }

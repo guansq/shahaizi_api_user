@@ -18,8 +18,7 @@ class PackLineLogic extends Model{
     public function get_all_pack_line($where){
         $count = $this->where($where)->count();
         $page = new Page($count, 10);
-        $list = $this
-            ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
+        $list = $this->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
             ->where($where)
             ->order('order_by')
             ->limit($page->firstRow.','.$page->listRows)
@@ -71,13 +70,16 @@ class PackLineLogic extends Model{
      * Describe: 获取精品线路
      * @return array
      */
-    public function getCommPackLine(){
+    public function getCommPackLine($city = ''){
+        $sellerLogic = new SellerLogic();
         $where = [
-            'is_state' =>1,
-            'is_comm' =>1
+            'is_state' => 1,
+            'is_comm' => 1,
         ];
-        $list = $this
-            ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,is_admin,create_at')
+        if(!empty($city)){
+            $where['city'] = ['LIKE', "%$city%"];
+        }
+        $list = $this->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,is_admin,create_at')
             ->where($where)
             ->order('order_by')
             ->limit(3)
@@ -86,6 +88,22 @@ class PackLineLogic extends Model{
             $val['star'] = getLineStar($val['seller_id'], 6);
             $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
             $val['create_at'] = shzDate($val['create_at']);
+            $sellerInfo = $sellerLogic->getInfoById($val['seller_id']);
+            if(empty($sellerInfo)){
+                $val['driver'] = [];
+                continue;
+            }
+            $val['driver'] = [
+                'id' => $sellerInfo['seller_id'],
+                'avatar' => $sellerInfo['head_pic'],
+                'nickname' => $sellerInfo['nickname'],
+                'is_driver' => $sellerInfo['is_driver'],
+                'plat_start' => $sellerInfo['plat_start'],
+                'country_name' => $sellerInfo['country_name'],
+                'province_name' => $sellerInfo['province_name'],
+                'city_name' => $sellerInfo['city_name'],
+                'district_name' => $sellerInfo['district_name'],
+            ];
         }
         return $list;
     }
