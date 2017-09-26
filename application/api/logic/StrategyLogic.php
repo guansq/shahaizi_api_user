@@ -224,4 +224,12 @@ class StrategyLogic extends BaseLogic{
         ];
         return resultArray(2000, '', $ret);
     }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe:
+     * @param $id
+     */
+    public function getDetail($id){
+    }
 }
