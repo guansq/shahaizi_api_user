@@ -23,7 +23,6 @@ class PackLine extends WebBase{
         $line['line_detail'] = json_encode($line['line_detail'], true);
         $line = $line->toArray();
         $line['plat_start'] = $lineCommentLogic->getStartBylineId($id);
-
         $driverInfo = $sellerLogic->getInfoById($line['seller_id']);
         $comment = $lineCommentLogic->getCommentPageBylineId($line['line_id'],PHP_INT_MAX);
         $this->assign('line', $line);

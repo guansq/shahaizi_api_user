@@ -11,7 +11,7 @@
       <h3>
         <span class="syn_title">{$line.line_title}</span>
         <span class="level">
-          <img src="/application/web/view/static/image/star_{$driver.plat_start}@2x.png" alt="">
+          <img src="/application/web/view/static/image/star_{$driver.plat_start|default=4}@2x.png" alt="">
         </span>
       </h3>
       <div class="pri">
@@ -27,7 +27,7 @@
   <div class="cir_con driver_info">
     <h1>司导信息</h1>
     <div>
-      <img class="head_img" src="{$driver.head_pic}" alt="">
+      <img class="head_img" src="{$driver.head_pic|default='http://img.shahaizi.cn/user_avatar.png'}" alt="">
       <p class="dri_xx">
         <span class="drive_name">{$driver.nickname}</span>
         <span class="drive_id">工号:<i> {$driver.drv_code}</i></span>
@@ -47,14 +47,14 @@
 
   <div id="appraise" class="cir_con appraise">
     <h1>收到的评价
-      <span>共90条</span>
+      <span>共4条</span>
     </h1>
     <div class="appraise_con">
       <section class="appra_peo">
         <img src="/application/web/view/static/image/avatar@2x.png" alt="">
         <span class="peo_name">王浩</span>
         <span class="peo_level">
-            <img src="/application/web/view/static/image/heart_full@2x.png" alt="">
+            <img src="/application/web/view/static/image/heart_5@2x.png" alt="">
         </span>
         <span class="peo_time">
             2017-3-26
@@ -69,7 +69,7 @@
         <img src="/application/web/view/static/image/avatar@2x.png" alt="">
         <span class="peo_name">谢小雨</span>
         <span class="peo_level">
-            <img src="/application/web/view/static/image/heart_full@2x.png" alt="">
+            <img src="/application/web/view/static/image/heart_4@2x.png" alt="">
         </span>
         <span class="peo_time">
             2017-3-26
@@ -84,7 +84,7 @@
         <img src="/application/web/view/static/image/avatar@2x.png" alt="">
         <span class="peo_name">王浩</span>
         <span class="peo_level">
-            <img src="/application/web/view/static/image/heart_full@2x.png" alt="">
+            <img src="/application/web/view/static/image/heart_4@2x.png" alt="">
         </span>
         <span class="peo_time">
             2017-3-26
@@ -99,7 +99,7 @@
         <img src="/application/web/view/static/image/avatar@2x.png" alt="">
         <span class="peo_name">谢小雨</span>
         <span class="peo_level">
-            <img src="/application/web/view/static/image/heart_full@2x.png" alt="">
+            <img src="/application/web/view/static/image/heart_4@2x.png" alt="">
         </span>
         <span class="peo_time">
             2017-3-26
