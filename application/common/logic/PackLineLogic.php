@@ -76,7 +76,7 @@ class PackLineLogic extends Model{
             'is_comm' =>1
         ];
         $list = $this
-            ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
+            ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,is_admin,create_at')
             ->where($where)
             ->order('order_by')
             ->limit(3)
