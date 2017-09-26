@@ -260,7 +260,7 @@ function shzMoney($num, $ispre = false){
 
 function getCityName($id){
     $name = M('region')->where('id', $id)->value('name');
-    return $name;
+    return empty($name)?'':$name;
 }
 
 /*
