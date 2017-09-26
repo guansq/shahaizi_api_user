@@ -47,6 +47,34 @@ class Region extends Base{
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }
 
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCityByCountryId  获取国家下的所有城市 ok will
+     * @apiName     getAllCityByCountryId
+     * @apiGroup    Region
+     * @apiParam    {Number} [countryId=中国id]  国家id
+     */
+    public function getAllCityByCountryId  (){
+
+        $countryId = input('countryId',RegionLogic::CHINA_ID);
+        $regionLogic = new RegionLogic();
+        $result = $regionLogic->getAllCityByCountryId($countryId);
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+    }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getHotCityByCountryId  获取国家下的热门城市 ok will
+     * @apiName     getHotCityByCountryId
+     * @apiGroup    Region
+     * @apiParam    {Number} [countryId=中国id]  国家id
+     */
+    public function getHotCityByCountryId(){
+
+        $countryId = input('countryId',RegionLogic::CHINA_ID);
+        $regionLogic = new RegionLogic();
+        $result = $regionLogic->getHotCityByCountryId($countryId);
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+    }
+
     /*
      * @api {GET}   /index.php?m=Api&c=Region&a=getAllCityInArr  得到国际城市 无限级信息done   管少秋
      * @apiName     getAllCityInArr
