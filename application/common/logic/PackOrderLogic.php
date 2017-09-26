@@ -42,9 +42,9 @@ class PackOrderLogic extends Model{
     const STATUS_ARR = [
         self::STATUS_UNCONFIRM => '未确定价格',
         self::STATUS_UNPAY => '未支付',
-        self::STATUS_UNALLOT => '待派单',
-        self::STATUS_UNJXDJ => '已派单_待接单',
-        self::STATUS_UNSTART => '即将开始',
+        self::STATUS_UNALLOT => '进行中',
+        self::STATUS_UNJXDJ => '进行中',
+        self::STATUS_UNSTART => '进行中',
         self::STATUS_DOING => '进行中',
         self::STATUS_UNCOMMENT => '待评价',
         self::STATUS_FINISH => '已完成',
@@ -66,7 +66,6 @@ class PackOrderLogic extends Model{
         'UN_COMMENT' => self::STATUS_UNCOMMENT,
         'FINISH' => self::STATUS_FINISH,
     ];
-
 
     /*
        * 得到 我的包车订单
