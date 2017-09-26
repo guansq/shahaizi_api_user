@@ -268,6 +268,7 @@ function getCityName($id){
  */
 
 function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id = ''){
+    $packLineLogic =  M('pack_line');
     $real_price = $pack_order['total_price'] - $discount_price;//真实价格
     //需要变更的用户信息
     $user['user_money'] = $user_info['user_money'] - $real_price;//余额
@@ -279,8 +280,7 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         $line_id = $pack_order['line_id'];
         if(!empty($line_id)){
             M('pack_line')->where(['line_id' => $line_id, 'is_del' => 0])->setInc('line_buy_num');//更新预订次数
-            $info = M('pack_line')
-                ->filed('seller_id,is_comm')
+            $info = $packLineLogic->field(['seller_id','is_comm'])
                 ->where(['line_id' => $line_id, 'is_del' => 0])
                 ->find();//查看是否精品路线
             if(!empty($info) && $info['is_comm'] == 0){

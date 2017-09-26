@@ -6,6 +6,7 @@
  * Time: 14:48
  */
 namespace app\api\controller;
+use app\common\logic\CouponListLogic;
 use app\common\logic\PackOrderLogic;
 
 class PackOrder extends Base{
@@ -143,6 +144,7 @@ class PackOrder extends Base{
     public function payPackOrder(){
         //判断订单是否在有效期内 有效付款时间24小时
         //判断用户
+        $clLogic = new CouponListLogic();
         $air_id = I('air_id');
         $pack_order = M('pack_order')->where(array('air_id' => $air_id,'status'=>0))->find();//订单详情
         $time = time();
@@ -168,7 +170,8 @@ class PackOrder extends Base{
                 'c.use_start_time' => ['lt',$time],//是否开始 开始时间小于当前时间
                 'c.use_end_time' => ['gt',$time]//是否过期    过期时间大于当前时间
             ];
-            $coupon_info = M('coupon_list')->field('l.id,c.*')->alias('l')->join('__COUPON__ c','l.cid = c.id')->where($where)->find();//找出优惠券
+
+            $coupon_info = $clLogic->alias('l')->join('ruit_coupon c','l.cid = c.id')->where($where)->field('l.id,c.*')->find();//找出优惠券
             //echo $coupon_info;die;->fetchSql(true)
             if(empty($coupon_info)){
                 $this->ajaxReturn(['status'=>-1,'msg'=>'该优惠券不满足条件']);
