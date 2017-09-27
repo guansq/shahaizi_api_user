@@ -132,14 +132,7 @@ class DriverLogic extends Model{
     }
 
     /**
-     * 公共的存入数据库pack_base包车资源表
-     *
-     *
-     *
-     *
-     *
-     *
-     *
+     * 公共的存入数据库pack_base包车资源表 记录订单
      */
     public function save_pack_base($data, $user){
         /*
@@ -255,9 +248,9 @@ class DriverLogic extends Model{
             $val['line'] = $result['line'];
         }
         if(empty($drv)){
-            return ['status' => -1, 'msg' => '没有数据'];
+            return ['status' => 4004, 'msg' => '没有数据'];
         }else{
-            return ['status' => 1, 'msg' => '成功', 'result' => $drv];
+            return ['status' => 2000, 'msg' => '成功', 'result' => $drv];
         }
     }
 

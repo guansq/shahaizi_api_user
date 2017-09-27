@@ -17,12 +17,13 @@ class PackLineLogic extends Model{
 
     public function get_all_pack_line($where){
         $count = $this->where($where)->count();
-        $page = new Page($count, 10);
+        $page = new Page($count);
         $list = $this->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
             ->where($where)
             ->order('order_by')
             ->limit($page->firstRow.','.$page->listRows)
             ->select();
+        // dd($this->getLastSql());
         foreach($list as &$val){
             $val['star'] = getLineStar($val['seller_id'], 6);
             $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));

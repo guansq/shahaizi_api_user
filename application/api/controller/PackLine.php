@@ -34,17 +34,16 @@ class PackLine extends Base{
      */
     public function getQualityLine(){
         $where = [];
-        $where['is_comm'] = 1;
-        $city = I('city');
+        // $city = I('city');
         $time = empty(I('time')) ? '' : strtotime(I('time'));
         $line_buy_num = I('line_buy_num');
-        !empty($city) && $where['city'] = ['like', "{$city}"];
+        !empty($city) && $where['city'] = ['LIKE', "%{$city}%"];
         !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
         !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];
         //精选路线
         $packLogic = new PackLineLogic($where);
         $line = $packLogic->get_all_pack_line($where);
-        $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $line]);
+        $this->returnJson(2000, '', $line);
     }
 
     /**
@@ -71,7 +70,7 @@ class PackLine extends Base{
         $city = I('city');
         $line_buy_num = I('line_buy_num');
         $time = empty(I('time')) ? '' : strtotime(I('time'));
-        $where = ['is_state' =>1];
+        $where = ['is_state' => 1];
         !empty($city) && $where['city'] = ['like', "%$city%"];
         !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
         !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];
@@ -165,7 +164,7 @@ class PackLine extends Base{
      */
     public function home(){
         $city = input('city');
-        $city ='';
+        $city = '';
         $index = M('pack_index')->order('sort asc')->select();
         //获取轮播图
         $banner = M('ad')
