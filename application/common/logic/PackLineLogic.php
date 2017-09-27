@@ -90,7 +90,7 @@ class PackLineLogic extends Model{
             $val['create_at'] = shzDate($val['create_at']);
             $sellerInfo = $sellerLogic->getInfoById($val['seller_id']);
             if(empty($sellerInfo)){
-                $val['driver'] = [];
+                $val['driver'] = null;  // 不要返回 []  android端会解析失败。
                 continue;
             }
             $val['driver'] = [
@@ -98,6 +98,7 @@ class PackLineLogic extends Model{
                 'avatar' => $sellerInfo['head_pic'],
                 'nickname' => $sellerInfo['nickname'],
                 'is_driver' => $sellerInfo['is_driver'],
+                'drv_code' => $sellerInfo['drv_code'],
                 'plat_start' => $sellerInfo['plat_start'],
                 'country_name' => $sellerInfo['country_name'],
                 'province_name' => $sellerInfo['province_name'],

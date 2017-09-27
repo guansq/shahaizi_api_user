@@ -270,7 +270,7 @@ class DriverLogic extends Model{
             ->where($where)
             ->find();
         if(empty($drv)){
-            return ['status' => -1, 'msg' => '没有数据'];
+            return ['status' => 4004, 'msg' => '没有数据'];
         }
 
         $result = getDrvIno($drv['seller_id']);
@@ -278,6 +278,6 @@ class DriverLogic extends Model{
         $drv['city'] = getCityName($drv['city']);
         $drv['star'] = $result['star'];
         $drv['line'] = $result['line'];
-        return ['status' => 1, 'msg' => '成功', 'result' => $drv];
+        return ['status' => 2000, 'msg' => '成功', 'result' => $drv];
     }
 }
