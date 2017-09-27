@@ -807,3 +807,38 @@ if(!function_exists("dd")){
     }
 
 }
+
+
+/**
+ * 解析json带有 html &quot;符号的数据
+ */
+function html_json($str){
+    //$str_str=array("&quot;");
+    if(strstr($str,"&quot;"))
+    {
+        $str=htmlspecialchars_decode($str);
+        $str_json=json_decode($str,true);
+    }else{
+        $str_json=json_decode($str,true);
+    }
+    return $str_json;
+}
+
+/**
+ * 对象 转 数组
+ *
+ * @param object $obj 对象
+ * @return array
+ */
+function object_to_array($obj) {
+    $obj = (array)$obj;
+    foreach ($obj as $k => $v) {
+        if (gettype($v) == 'resource') {
+            return;
+        }
+        if (gettype($v) == 'object' || gettype($v) == 'array') {
+            $obj[$k] = (array)object_to_array($v);
+        }
+    }
+    return $obj;
+}

@@ -117,47 +117,30 @@
 
   <div class="cir_con line">
     <h1>线路详情</h1>
+    {volist name="line.line_detail" id="day" key="k" }
     <div class="days">
       <p class="days_num">
         <span class="wire"></span>
         <i></i>
-        <span class="diji">第一天</span>
+        <span class="diji">第{$k}天</span>
         <i></i>
         <span class="wire"></span>
       </p>
+      <p>{$day.summary}</p>
+
+      {volist name="day.port_detail" id="port" }
       <div class="days_con">
-        <h2>第一站</h2>
-        <img src="/application/web/view/static/image/2.png" alt="">
+        <h2>第{$port.port_num}站</h2>
+        <img src="{$port.port_coverImg|default=''}" alt="">  <!--/application/web/view/static/image/2.png-->
         <p>
-          渡轮巡游自由岛，近距离拍摄自由女神震撼身姿。如果想 乘坐轮船近距离观看，需要您提前预定船票，
-          旺季时期船 票热销，有可能买不到，您可以在岸边观看。
+          {$port.port_detail}
         </p>
       </div>
-      <div class="days_con">
-        <h2>第一站</h2>
-        <img src="/application/web/view/static/image/2.png" alt="">
-        <p>
-          渡轮巡游自由岛，近距离拍摄自由女神震撼身姿。如果想 乘坐轮船近距离观看，需要您提前预定船票，
-          旺季时期船 票热销，有可能买不到，您可以在岸边观看。
-        </p>
-      </div>
+      {/volist}
     </div>
-    <div class="days">
-      <p class="days_num">
-        <span class="wire"></span>
-        <i></i>
-        <span class="diji">第二天</span>
-        <i></i>
-        <span class="wire"></span>
-      </p>
-      <div class="days_con">
-        <h2>第一站</h2>
-        <img src="/application/web/view/static/image/2.png" alt="">
-        <p>
-          “9.11恐怖袭击”中倒塌的世界贸易中心遗址---归零地
-        </p>
-      </div>
-    </div>
+    {/volist}
+
+
   </div>
 </main>
 {/block}
