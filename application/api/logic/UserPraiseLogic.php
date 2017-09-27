@@ -23,6 +23,7 @@ namespace app\api\logic;
 class UserPraiseLogic extends BaseLogic{
     protected $table = 'ruit_user_praise';
 
-    const TYPE_DYNAMIC = 1;    // 动态
+    const TYPE_DYNAMIC  = 1;    // 动态
     const TYPE_STRATEGY = 2;    // 攻略
+    const TYPE_LINE     = 3;    // 线路
 }

@@ -8,6 +8,8 @@
 
 namespace app\common\logic;
 
+use app\api\logic\UserCollectLogic;
+use app\api\logic\UserPraiseLogic;
 use ruitu\PageVo;
 use think\Model;
 use think\Page;
@@ -80,7 +82,7 @@ class PackLineLogic extends Model{
         if(!empty($city)){
             $where['city'] = ['LIKE', "%$city%"];
         }
-        $list = $this->getPackLineByWhereLimit($where,0,3);
+        $list = $this->getPackLineByWhereLimit($where, 0, 3);
         return $list;
     }
 
@@ -92,8 +94,8 @@ class PackLineLogic extends Model{
     public function getPackLinePageByWhere($where){
         $count = $this->where($where)->count();
         $page = new Page($count);
-        $list = $this->getPackLineByWhereLimit($where,$page->firstRow,$page->listRows);
-        $ret = new  PageVo($page,$list);
+        $list = $this->getPackLineByWhereLimit($where, $page->firstRow, $page->listRows);
+        $ret = new  PageVo($page, $list);
         return $ret;
     }
 
@@ -132,5 +134,31 @@ class PackLineLogic extends Model{
             ];
         }
         return $list;
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe:
+     * @param $pkgLine
+     * @param $user
+     */
+    public function getDetailByModel(Model $pkgLine, $user = null){
+        $userCollectLogic = new UserCollectLogic();
+        $userPraiseLogic = new UserPraiseLogic();
+        $pkgLine = $pkgLine->toArray();
+        if(empty($user)){
+            $pkgLine['is_collect'] = 0;
+            $pkgLine['is_praise'] = 0;
+        }
+        $pkgLine['is_collect'] = $userCollectLogic->where('user_id', $user['user_id'])
+            ->where('goods_id', $pkgLine['line_id'])
+            ->where('model_type', UserCollectLogic::TYPE_LINE)
+            ->count();
+        $pkgLine['is_praise'] = $userPraiseLogic->where('user_id', $user['user_id'])
+            ->where('obj_id', $pkgLine['line_id'])
+            ->where('obj_type', UserPraiseLogic::TYPE_LINE)
+            ->count();
+        return $pkgLine;
     }
 }

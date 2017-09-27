@@ -23,19 +23,20 @@ namespace app\api\logic;
 class UserCollectLogic extends BaseLogic{
     protected $table = 'ruit_goods_collect';
 
-    //  0为包车模块1为商城模块2为民宿模块 3=个人动态 4=个人攻略
+    //  0为包车模块1为商城模块2为民宿模块 3=个人动态 4=个人攻略  5=线路
     const TYPE_CAR      = 0;
     const TYPE_SHOP     = 1;
     const TYPE_HOUSE    = 2;
     const TYPE_DYNAMIC  = 3;
     const TYPE_STRATEGY = 4;
+    const TYPE_LINE     = 5;
 
-    const TYPE_TABLE_ARR =[
-        self::TYPE_CAR       => 'pack_car_info',
-        self::TYPE_SHOP      => 'goods', // store + goods
-        self::TYPE_HOUSE     => 'home_house_info',
-        self::TYPE_DYNAMIC   => 'article_new_action',
-        self::TYPE_STRATEGY  => 'article_hot_guide',
+    const TYPE_TABLE_ARR = [
+        self::TYPE_CAR => 'pack_car_info',
+        self::TYPE_SHOP => 'goods', // store + goods
+        self::TYPE_HOUSE => 'home_house_info',
+        self::TYPE_DYNAMIC => 'article_new_action',
+        self::TYPE_STRATEGY => 'article_hot_guide',
     ];
 
     /**
@@ -45,9 +46,9 @@ class UserCollectLogic extends BaseLogic{
      * @param $id
      * @param $user_id
      */
-    public function addCollect($user_id , $type, $id ){
+    public function addCollect($user_id, $type, $id){
         $owner = M(self::TYPE_TABLE_ARR[$type])->field(['user_id'])->find($id);
-        $ownerId = empty($owner)?null:$owner['user_id'];
+        $ownerId = empty($owner) ? null : $owner['user_id'];
         $where = [
             'user_id' => $user_id,
             'model_type' => $type,
@@ -77,7 +78,7 @@ class UserCollectLogic extends BaseLogic{
             'goods_id' => $id,
             'user_id' => $user_id,
         ];
-         $this->where($where)->delete();
+        $this->where($where)->delete();
         return resultArray(2000);
     }
 }

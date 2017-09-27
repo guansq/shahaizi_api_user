@@ -13,72 +13,6 @@ use app\common\logic\PackLineLogic;
 
 class PackLine extends Base{
 
-    /**
-     * @api         {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线 done 管少秋
-     * @apiName     getQualityLine
-     * @apiGroup    PackLine
-     * @apiParam    {String}    [city]    根据城市筛选
-     * @apiParam    {String}    [time]    根据时间筛选   2017-9-14
-     * @apiParam    {Number}    [line_buy_num]    根据时间筛选
-     * @apiSuccessExample {json}    Success-Response
-     *  Http/1.1    200 OK
-     *{
-     * "line_id" : "11",//线路ID
-     * "seller_id" : "11",//商家ID
-     * "cover_img" : "http://xxx.jpg",//线路风景
-     * "line_title" : "线路标题",//线路标题
-     * "line_sum" : "",//游玩次数
-     * "line_grade" : "",//线路评分
-     * "line_level" : "",//线路等级
-     *}
-     */
-    public function getQualityLine(){
-        $where = [];
-        // $city = I('city');
-        $time = empty(I('time')) ? '' : strtotime(I('time'));
-        $line_buy_num = I('line_buy_num');
-        !empty($city) && $where['city'] = ['LIKE', "%{$city}%"];
-        !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
-        !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];
-        //精选路线
-        $packLogic = new PackLineLogic();
-        $line = $packLogic->getPackLinePageByWhere($where);
-        $this->returnJson(2000, '', $line);
-    }
-
-    /**
-     * @api         {GET}   /index.php?m=Api&c=PackLine&a=getPackLine     查询路线 ok will
-     * @apiName     getPackLine
-     * @apiGroup    PackLine
-     * @apiParam    {String}    [city]    根据城市筛选
-     * @apiParam    {String}    [time]    根据时间筛选   2017-9-14
-     * @apiParam    {Number}    [line_buy_num]    根据时间筛选
-     * @apiSuccessExample {json}    Success-Response
-     *  Http/1.1    200 OK
-     *{
-     * "line_id" : "11",//线路ID
-     * "seller_id" : "11",//商家ID
-     * "cover_img" : "http://xxx.jpg",//线路风景
-     * "line_title" : "线路标题",//线路标题
-     * "line_sum" : "",//游玩次数
-     * "line_grade" : "",//线路评分
-     * "line_level" : "",//线路等级
-     *}
-     */
-    public function getPackLine(){
-
-        $city = I('city');
-        $line_buy_num = I('line_buy_num');
-        $time = empty(I('time')) ? '' : strtotime(I('time'));
-        $where = ['is_state' => 1];
-        !empty($city) && $where['city'] = ['like', "%$city%"];
-        !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
-        !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];
-
-        $packLogic = new PackLineLogic();
-        $line = $packLogic->get_all_pack_line($where);
-        $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $line]);
-    }
 
     /**
      * @api         {GET}   /index.php?m=Api&c=PackLine&a=home  包车定制首页  done    管少秋
@@ -188,5 +122,107 @@ class PackLine extends Base{
         ];
         $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $home]);
     }
+
+    /**
+     * @api         {GET}   /index.php?m=Api&c=PackLine&a=getPackLine     查询路线 ok will
+     * @apiName     getPackLine
+     * @apiGroup    PackLine
+     * @apiParam    {String}    [city]    根据城市筛选
+     * @apiParam    {String}    [time]    根据时间筛选   2017-9-14
+     * @apiParam    {Number}    [line_buy_num]    根据时间筛选
+     * @apiSuccessExample {json}    Success-Response
+     *  Http/1.1    200 OK
+     *{
+     * "line_id" : "11",//线路ID
+     * "seller_id" : "11",//商家ID
+     * "cover_img" : "http://xxx.jpg",//线路风景
+     * "line_title" : "线路标题",//线路标题
+     * "line_sum" : "",//游玩次数
+     * "line_grade" : "",//线路评分
+     * "line_level" : "",//线路等级
+     *}
+     */
+    public function getPackLine(){
+
+        $city = I('city');
+        $line_buy_num = I('line_buy_num');
+        $time = empty(I('time')) ? '' : strtotime(I('time'));
+        $where = ['is_state' => 1];
+        !empty($city) && $where['city'] = ['like', "%$city%"];
+        !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
+        !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];
+
+        $packLogic = new PackLineLogic();
+        $line = $packLogic->get_all_pack_line($where);
+        $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $line]);
+    }
+
+
+    /**
+     * @api         {GET}   /index.php?m=Api&c=PackLine&a=getQualityLine     得到精品路线 done 管少秋
+     * @apiName     getQualityLine
+     * @apiGroup    PackLine
+     * @apiParam    {String}    [city]    根据城市筛选
+     * @apiParam    {String}    [time]    根据时间筛选   2017-9-14
+     * @apiParam    {Number}    [line_buy_num]    根据时间筛选
+     * @apiSuccessExample {json}    Success-Response
+     *  Http/1.1    200 OK
+     *{
+     * "line_id" : "11",//线路ID
+     * "seller_id" : "11",//商家ID
+     * "cover_img" : "http://xxx.jpg",//线路风景
+     * "line_title" : "线路标题",//线路标题
+     * "line_sum" : "",//游玩次数
+     * "line_grade" : "",//线路评分
+     * "line_level" : "",//线路等级
+     *}
+     */
+    public function getQualityLine(){
+        $where = [];
+        // $city = I('city');
+        $time = empty(I('time')) ? '' : strtotime(I('time'));
+        $line_buy_num = I('line_buy_num');
+        !empty($city) && $where['city'] = ['LIKE', "%{$city}%"];
+        !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
+        !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];
+        //精选路线
+        $packLogic = new PackLineLogic();
+        $line = $packLogic->getPackLinePageByWhere($where);
+        $this->returnJson(2000, '', $line);
+    }
+
+    /**
+     * @api         {GET}   /index.php?m=Api&c=PackLine&a=detail    路线详情 ok will
+     * @apiName     detail
+     * @apiGroup    PackLine
+     * @apiParam    {Number}  id   id.
+     * @apiParam    {String}  [token]    token.
+     * @apiSuccess  {Number}  id        id.
+     * @apiSuccess  {Number}  isCollect     是否收藏.
+     * @apiSuccess  {Number}  isPraise      是否点赞.
+     * @apiSuccess  {Number}  isAdmin       是否是平台路线.
+     */
+    public function detail(){
+        $pkgLineLogic = new PackLineLogic();
+        $id = input('id');
+
+        $pkgLine = $pkgLineLogic->find($id);
+        if(empty($pkgLine)){
+            return $this->returnJson(4004);
+        }
+        $this->checkToken();
+        $pkgLine = $pkgLineLogic->getDetailByModel($pkgLine,$this->user);
+        $ret = [
+            'id'=>$pkgLine['line_id'],
+            'title'=>$pkgLine['line_title'],
+            'isAdmin'=>$pkgLine['is_admin'],
+            'isCollect'=>$pkgLine['is_collect'],
+            'isPraise'=>$pkgLine['is_praise'],
+        ];
+        return $this->returnJson(2000,'',$ret);
+
+
+    }
+
 
 }
