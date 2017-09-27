@@ -72,7 +72,6 @@ class PackLineLogic extends Model{
      * @return array
      */
     public function getCommPackLine($city = ''){
-        $sellerLogic = new SellerLogic();
         $where = [
             'is_state' => 1,
             'is_comm' => 1,
@@ -80,6 +79,17 @@ class PackLineLogic extends Model{
         if(!empty($city)){
             $where['city'] = ['LIKE', "%$city%"];
         }
+        $list = $this->getPackLineByWhere($where);
+        return $list;
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 获取线路
+     * @return array
+     */
+    public function getPackLineByWhere($where){
+        $sellerLogic = new SellerLogic();
         $list = $this->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,is_admin,create_at')
             ->where($where)
             ->order('order_by')
