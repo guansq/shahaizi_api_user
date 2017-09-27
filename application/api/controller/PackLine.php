@@ -41,8 +41,8 @@ class PackLine extends Base{
         !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
         !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];
         //精选路线
-        $packLogic = new PackLineLogic($where);
-        $line = $packLogic->getPackLineByWhere($where);
+        $packLogic = new PackLineLogic();
+        $line = $packLogic->getPackLinePageByWhere($where);
         $this->returnJson(2000, '', $line);
     }
 

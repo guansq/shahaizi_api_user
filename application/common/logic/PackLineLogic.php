@@ -8,6 +8,7 @@
 
 namespace app\common\logic;
 
+use ruitu\PageVo;
 use think\Model;
 use think\Page;
 
@@ -79,21 +80,34 @@ class PackLineLogic extends Model{
         if(!empty($city)){
             $where['city'] = ['LIKE', "%$city%"];
         }
-        $list = $this->getPackLineByWhere($where);
+        $list = $this->getPackLineByWhereLimit($where,0,3);
         return $list;
     }
 
     /**
      * Author: W.W <will.wxx@qq.com>
-     * Describe: 获取线路
+     * Describe: 获取精品线路
      * @return array
      */
-    public function getPackLineByWhere($where){
+    public function getPackLinePageByWhere($where){
+        $count = $this->where($where)->count();
+        $page = new Page($count);
+        $list = $this->getPackLineByWhereLimit($where,$page->firstRow,$page->listRows);
+        $ret = new  PageVo($page,$list);
+        return $ret;
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 获取线路列表
+     * @return array
+     */
+    public function getPackLineByWhereLimit($where, $start = 0, $limit = 20){
         $sellerLogic = new SellerLogic();
         $list = $this->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,is_admin,create_at')
             ->where($where)
             ->order('order_by')
-            ->limit(3)
+            ->limit($start, $limit)
             ->select();
         foreach($list as &$val){
             $val['star'] = getLineStar($val['seller_id'], 6);
