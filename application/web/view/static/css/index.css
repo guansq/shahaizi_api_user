@@ -177,6 +177,13 @@ body{
     height: 59px;
     line-height: 59px;
 }
+.help-content li .show_d span{
+    float: left;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .help-content .show_d i{
     display: inline-block;
     width: 16px;
