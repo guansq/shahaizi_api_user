@@ -91,7 +91,7 @@ class StrategyLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_STRATEGY)->count();
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_GUIDE)->count();
         }
 
         $ret = [
@@ -214,7 +214,7 @@ class StrategyLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_STRATEGY)->count();
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_GUIDE)->count();
         }
 
         $ret = [

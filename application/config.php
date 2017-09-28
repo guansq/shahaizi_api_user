@@ -419,5 +419,6 @@ return [
     'DOMAINImage'=>'http://img.shahaizi.cn/',//空间绑定的域名
 
 
-    'APP_DEFAULT_STAR'=>4 // 系统默认星级
+    'APP_DEFAULT_STAR'=>4, // 系统默认星级
+    'APP_DEFAULT_USER_AVATAR'=>'http://img.shahaizi.cn/user_avatar.png', // 系统默认头像
 ];

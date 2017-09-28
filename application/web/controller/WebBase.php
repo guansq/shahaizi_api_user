@@ -84,7 +84,28 @@ class WebBase extends Controller{
      */
     protected function error($msg = '暂无数据', $url = null, $data = '', $wait = 3, array $header = []){
         $this->assign('errorMsg', $msg);
-       return $this->fetch('public/error');
+        return $this->fetch('public/error');
+    }
+
+
+    protected function getUserByToken(){
+        $token = I("token", ''); // token
+        if(empty($token)){
+            return null;
+        }
+
+        $user = M('users')->where("token", $token)->find();
+        if(empty($user)){
+            return null;
+        }
+        // 登录超过72分钟 则为登录超时 需要重新登录.  //这个时间可以自己设置 可以设置为 20分钟
+        if(time() - $user['last_login'] > C('APP_TOKEN_TIME')){  //3600
+            return null;
+        }
+        // 更新最后一次操作时间 如果用户一直操作 则一直不超时
+        $user->last_login = time();
+        $user->save();
+        return $user;
     }
 
 

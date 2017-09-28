@@ -201,6 +201,7 @@ class PackLine extends Base{
      * @apiSuccess  {Number}  isCollect     是否收藏.
      * @apiSuccess  {Number}  isPraise      是否点赞.
      * @apiSuccess  {Number}  isAdmin       是否是平台路线.
+     * @apiSuccess  {Number}  playDay       游玩天数.
      */
     public function detail(){
         $pkgLineLogic = new PackLineLogic();
@@ -218,6 +219,7 @@ class PackLine extends Base{
             'isAdmin'=>$pkgLine['is_admin'],
             'isCollect'=>$pkgLine['is_collect'],
             'isPraise'=>$pkgLine['is_praise'],
+            'playDay'=>intval($pkgLine['play_day']),
         ];
         return $this->returnJson(2000,'',$ret);
 

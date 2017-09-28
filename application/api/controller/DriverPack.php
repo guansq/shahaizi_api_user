@@ -9,8 +9,6 @@
 namespace app\api\controller;
 
 use app\common\logic\DriverLogic;
-use app\common\logic\PackOrderLogic;
-use app\common\logic\SellerLogic;
 
 class DriverPack extends Base{
 
@@ -219,22 +217,23 @@ class DriverPack extends Base{
     public function rentCarByDay(){
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.rentCarByDay');
-        if($result === true){//验证通过
-            $data['start_time'] = $data['pack_time'];
-            $base_id = $this->driverLogic->save_pack_base($data, $this->user);
-            $saveData = [
-                'base_id' => $base_id,
-                'dest_address' => $data['dest_address'],
-                'pack_time' => $data['pack_time'],
-            ];
-            $result = $this->driverLogic->rent_car_by_day($saveData);
-            if($result){
-                $this->ajaxReturn(['status' => 1, 'msg' => '添加成功']);
-            }else{
-                $this->ajaxReturn(['status' => -1, 'msg' => $result]);
-            }
+        if(empty($result)){
+            return $this->returnJson(4003);
+        }
+        //验证通过
+        $data['start_time'] = $data['pack_time'];
+        $base_id = $this->driverLogic->save_pack_base($data, $this->user);
+        $saveData = [
+            'base_id' => $base_id,
+            'dest_address' => $data['dest_address'],
+            'pack_time' => $data['pack_time'],
+        ];
+        $result = $this->driverLogic->rent_car_by_day($saveData);
+        if($result){
+            $ret = ['id' => $base_id];
+            return $this->returnJson(2000, '添加成功', $ret);
         }else{
-            $this->ajaxReturn(['status' => -1, 'msg' => $result]);
+            return $this->returnJson(5020, '添加失败');
         }
 
     }
@@ -281,10 +280,12 @@ class DriverPack extends Base{
             'start_time' => $data['start_time'],
         ];
         $result = $this->driverLogic->receive_airport($saveData);
-        if(empty($result)){
-            return $this->returnJson(5020);
+        if($result){
+            $ret = ['id' => $base_id];
+            return $this->returnJson(2000, '添加成功', $ret);
+        }else{
+            return $this->returnJson(5020, '添加失败');
         }
-        return $this->returnJson(2000);
     }
 
     /**
@@ -305,7 +306,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    flt_no    航班号
      * @apiParam    {String}    airport_name       机场名
      * @apiParam    {String}    start_address       出发地点
-     * @apiParam    {String}    start_time       出发时间
+     * @apiParam    {String}    start_time          出发时间
+     * @apiParam    {String}    end_time            结束时间
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
      * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
@@ -314,24 +316,24 @@ class DriverPack extends Base{
     public function sendAirport(){
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.sendAirport');
-        if($result === true){//验证通过
-            $data['dest_address'] = $data['airport_name'];
-            $base_id = $this->driverLogic->save_pack_base($data, $this->user);
-            $saveData = [
-                'base_id' => $base_id,
-                'flt_no' => $data['flt_no'],
-                'airport_name' => $data['airport_name'],
-                'start_address' => $data['start_address'],
-                'start_time' => $data['start_time'],
-            ];
-            $result = $this->driverLogic->send_airport($saveData);
-            if($result){
-                $this->ajaxReturn(['status' => 1, 'msg' => '添加成功']);
-            }else{
-                $this->ajaxReturn(['status' => -1, 'msg' => $result]);
-            }
+        if(empty($result)){
+            return $this->returnJson(4003);
+        }
+        $data['dest_address'] = $data['airport_name'];
+        $base_id = $this->driverLogic->save_pack_base($data, $this->user);
+        $saveData = [
+            'base_id' => $base_id,
+            'flt_no' => $data['flt_no'],
+            'airport_name' => $data['airport_name'],
+            'start_address' => $data['start_address'],
+            'start_time' => $data['start_time'],
+        ];
+        $result = $this->driverLogic->send_airport($saveData);
+        if($result){
+            $ret = ['id' => $base_id];
+            return $this->returnJson(2000, '添加成功', $ret);
         }else{
-            $this->ajaxReturn(['status' => -1, 'msg' => $result]);
+            return $this->returnJson(5020, '添加失败');
         }
     }
 
@@ -361,23 +363,24 @@ class DriverPack extends Base{
     public function oncePickup(){
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.oncePickup');
-        if($result === true){//验证通过
-            $data['start_time'] = $data['user_car_time'];
-            $base_id = $this->driverLogic->save_pack_base($data, $this->user);
-            $saveData = [
-                'base_id' => $base_id,
-                'start_address' => $data['start_address'],
-                'dest_address' => $data['dest_address'],
-                'user_car_time' => $data['user_car_time'],
-            ];
-            $result = $this->driverLogic->once_pickup($saveData);
-            if($result){
-                $this->ajaxReturn(['status' => 1, 'msg' => '添加成功']);
-            }else{
-                $this->ajaxReturn(['status' => -1, 'msg' => $result]);
-            }
+        if(empty($result)){
+            return $this->returnJson(4003);
+        }
+        //验证通过
+        $data['start_time'] = $data['user_car_time'];
+        $base_id = $this->driverLogic->save_pack_base($data, $this->user);
+        $saveData = [
+            'base_id' => $base_id,
+            'start_address' => $data['start_address'],
+            'dest_address' => $data['dest_address'],
+            'user_car_time' => $data['user_car_time'],
+        ];
+        $result = $this->driverLogic->once_pickup($saveData);
+        if($result){
+            $ret = ['id' => $base_id];
+            return $this->returnJson(2000, '添加成功', $ret);
         }else{
-            $this->ajaxReturn(['status' => -1, 'msg' => $result]);
+            return $this->returnJson(5020, '添加失败');
         }
     }
 
@@ -405,37 +408,39 @@ class DriverPack extends Base{
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
      * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
      * @apiParam    {Number}    [thirty]     30行李箱尺寸
+     * @apiSuccess  {Number}    id  订单id
      */
     public function privateMake(){
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.privateMake');
-        if($result === true){//验证通过
-            $data['start_time'] = $data['tour_time'];
-            $data['order_day'] = $data['tour_days'];
-            $data['eating_ave'] = $data['recommend_diner'];
-            $data['stay_ave'] = $data['recommend_sleep'];
-            $data['dest_address'] = $data['end_address'];
-            $data['use_car_adult'] = $data['adult_num'];
-            $data['use_car_children'] = $data['child_num'];
-            $base_id = $this->driverLogic->save_pack_base($data, $this->user);
-            $saveData = [
-                'base_id' => $base_id,
-                'end_address' => $data['end_address'],
-                'tour_days' => $data['tour_days'],
-                'tour_time' => $data['tour_time'],
-                'tour_person_num' => $data['tour_person_num'],
-                'tour_favorite' => $data['tour_favorite'],
-                'recommend_diner' => $data['recommend_diner'],
-                'recommend_sleep' => $data['recommend_sleep'],
-            ];
-            $result = $this->driverLogic->private_person($saveData);
-            if($result){
-                $this->ajaxReturn(['status' => 1, 'msg' => '添加成功']);
-            }else{
-                $this->ajaxReturn(['status' => -1, 'msg' => $result]);
-            }
+        if(empty($result)){
+            return $this->returnJson(4003);
+        }
+        //验证通过
+        $data['start_time'] = $data['tour_time'];
+        $data['order_day'] = $data['tour_days'];
+        $data['eating_ave'] = $data['recommend_diner'];
+        $data['stay_ave'] = $data['recommend_sleep'];
+        $data['dest_address'] = $data['end_address'];
+        $data['use_car_adult'] = $data['adult_num'];
+        $data['use_car_children'] = $data['child_num'];
+        $base_id = $this->driverLogic->save_pack_base($data, $this->user);
+        $saveData = [
+            'base_id' => $base_id,
+            'end_address' => $data['end_address'],
+            'tour_days' => $data['tour_days'],
+            'tour_time' => $data['tour_time'],
+            'tour_person_num' => $data['tour_person_num'],
+            'tour_favorite' => $data['tour_favorite'],
+            'recommend_diner' => $data['recommend_diner'],
+            'recommend_sleep' => $data['recommend_sleep'],
+        ];
+        $result = $this->driverLogic->private_person($saveData);
+        if($result){
+            $ret = ['id' => $base_id];
+            return $this->returnJson(2000, '添加成功', $ret);
         }else{
-            $this->ajaxReturn(['status' => -1, 'msg' => $result]);
+            return $this->returnJson(5020, '添加失败');
         }
     }
 

@@ -7,10 +7,10 @@ use app\common\logic\SellerLogic;
 use think\Request;
 
 class Driver extends WebBase{
+
     public function index(){
         return $this->fetch('driver-detail');
      }
-
 
     public function detail(){
         $id = input('id');
@@ -19,7 +19,6 @@ class Driver extends WebBase{
         $this->assign('seller',$seller);
         return $this->fetch('detail');
      }
-
 
 }
 ?>
