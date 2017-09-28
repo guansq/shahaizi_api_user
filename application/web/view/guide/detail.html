@@ -1,48 +1,25 @@
 {extend name="public/web_html"}
+{block name="title"}攻略详情{/block}
 {block name="style"}
-
 {/block}
 
 {block name="body"}
 <main class="main">
     <div class="content">
         <div class="detail_head">
-            <h1>新加坡奇幻之旅-给你不一样的狮城</h1>
+            <h1>{$guide.title}</h1>
             <div class="hcon_remarks">
-                <span>2017-7-19</span>
-                <span>孙燕姿</span>
-                <span>192次阅读</span>
+                <span>{$guide.timeFmt}</span>
+                <span>{$guide.ownerName}</span>
+                <span>{$guide.read_num}次阅读</span>
             </div>
         </div>
         <div class="detail_img">
-            <img src="/application/web/view/static/image/2.png" alt="">
+            <img src="{$guide.guide_img|default='/application/web/view/static/image/2.png'}" alt="">
         </div>
         <div class="detail_p">
             <p>
-                新加坡真的很小很小，和朋友说走就走去游荡了四天。物价是残忍的5:1，自由行语言完全OK，基本都是华人，简单英文就够了。
-            </p>
-            <p>
-                #交通#机场有地铁巴士地铁，都很方便，很快就到了市区，我们办了游客卡（有2日，3日），
-                选择了三日的，30新币一个人，随便刷，适合我们这种跑来跑去瞎逛的。来回机场都选择了打车，大概26新币。
-            </p>
-            <p>
-                #住宿#不是壕，所以只住了一晚金沙酒店，3000一晚，房间设施一般，阳台看海景很美，无边泳池白天夜晚都很美，
-                所以说去新加坡一定要住的。其余住的经济酒店，靠近地铁方便出行。
-            </p>
-            <p>
-                #购物#最最划算的必须是樟宜机场啦！举个例子买的白泥面膜一罐只要145人民币，化妆品真的好便宜！珠宝手表最划算，
-                买的手表比国内便宜了8000，很多东西都可以在机场搞定，樟宜机场吃喝玩乐一条龙服务到家满意一百，如果说舍不得坡国什么，
-                那估计就是机场没有逛爽。
-            </p>
-            <p>
-                #美食#首推无招牌海鲜，好吃好吃！不用像珍宝一样预定，味道价格差不多，去了两次，一家老店像怀旧排挡很有味道，一家克拉码头的，可以赏景。
-            </p>
-            <p>
-                #景点#鱼尾狮公园、观景摩天轮、圣淘沙世界、环球影城、海洋馆、糖果屋（时间有限，大部分时间都用来逛街了）
-            </p>
-            <p>
-                #退税#过关以后可以在自助机器退税到信用卡，前提是你的信用卡有了购买退税物品纪录，此方法不推荐，经常关联失败会显示无纪录！柜台办理退税一定要出示购买的物品，
-                光提供退税单不给退税，有些国家就不需要出示物品，有的松有的严也是没个统一标准。 懒人第一次码了这么多字，大家随便看看，希望对你们有帮助
+                {$guide.content}
             </p>
         </div>
     </div>
