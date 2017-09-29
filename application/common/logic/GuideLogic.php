@@ -39,4 +39,23 @@ class GuideLogic extends Model{
         return $guide;
     }
 
+    /*
+     * 得到热门攻略详情
+     */
+    public function get_hot_detail($guide_id){
+        $info = $this->find($guide_id);
+        if(empty($info)){
+            return ['status'=>-1,'msg'=>'没有该记录'];
+        }
+        $info->read_num++;
+        $info->save();
+        $commentLogic = new CommentLogic();
+        $commentList = $commentLogic->getArticleComment($guide_id,1);
+        $result = [
+            'info' => $info,
+            'comment' => $commentList['list'],
+        ];
+
+        return ['status'=>1,'msg'=>'成功','result'=>$result];
+    }
 }

@@ -40,16 +40,20 @@ class HotLogic extends Model{
      * 得到热门攻略详情
      */
     public function get_hot_detail($guide_id){
-        $info = M('article_hot_guide')->where(['guide_id'=>$guide_id])->find();
+        $guideLogic =  new GuideLogic();
+        $info = $guideLogic->find($guide_id);
         if(empty($info)){
             return ['status'=>-1,'msg'=>'没有该记录'];
         }
+
         $commentLogic = new CommentLogic();
         $commentList = $commentLogic->getArticleComment($guide_id,1);
         $result = [
             'info' => $info,
             'comment' => $commentList['list'],
         ];
+        $info->read_num++;
+        $info->save();
         return ['status'=>1,'msg'=>'成功','result'=>$result];
     }
 

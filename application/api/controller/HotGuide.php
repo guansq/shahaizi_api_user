@@ -7,6 +7,7 @@
  */
 namespace app\api\controller;
 
+use app\common\logic\GuideLogic;
 use app\common\logic\HotLogic;
 
 class HotGuide extends Base{
@@ -113,8 +114,9 @@ class HotGuide extends Base{
      *
      */
     public function getHotGuideDetail(){
-        $guide_id = I('guide_id/d', 0);
-        $result = $this->hotLogic->get_hot_detail($guide_id);
+        $guide_id = I('guide_id', 0);
+        $guideLogic = new GuideLogic();
+        $result = $guideLogic->get_hot_detail($guide_id);
         $this->ajaxReturn($result);
     }
 
