@@ -1071,4 +1071,30 @@ class UsersLogic extends Model{
 
         return $visit_list;
     }
+
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe:
+     * @param $id
+     */
+    public function getBaseInfoById($id){
+        $fields = [
+            'user_id'=>'id',
+            'nickname',
+            'head_pic'=>'avatar',
+            'email',
+            'sex',
+            'mobile',
+            'level',
+            'shz_code'=>'shzCode',  //傻孩子号 ?
+            'personalized_signature'=>'signature',  //个性签名
+            'attention_num'=>'attentionNum',  //
+            'good_num'=>'praiseNum',
+            'collection_num'=>'collectionNum',  //
+        ];
+        $user = $this->field($fields)->find($id);
+
+        return $user;
+    }
 }

@@ -14,6 +14,8 @@ class HomeLogic extends Model
         $regionLogic = new RegionLogic();
         $regCtrLogic = new RegionCountryLogic();
         $praiseLogic = new UserPraiseLogic();
+        $sellerLogic = new SellerLogic();
+        $usersLogic = new UsersLogic();
         if(empty($city)){
             $localList = M('article_local_talent')->limit(4)->order('good_num desc')->select();//当地达人
         }else{
@@ -41,45 +43,16 @@ class HomeLogic extends Model
             }
         }
         foreach($guideList as &$val){
-            $str = '';
-            $type = getIDType($val['seller_id']);
-            if(!empty($type['store_id'])){
-                $str .= '店主-';
-            }
-            if(!empty($type['drv_id'])){
-                $str .= '司导-';
-            }
-            if(!empty($type['home_id'])){
-                $str .= '房东-';
-            }
-            if(!empty($str)){
-                $val['type_info'] = substr($str,0,-1);
-            }else{
-                $val['type_info'] = '';
-            }
             $country =   $regCtrLogic->where('id',$val['country_id'])->value('name');
             $city =  $regionLogic->where('id',$val['city_id'])->value('name');
             $val['city'] ="{$country}·{$city}";
             $val['country'] = $regCtrLogic->where('id',$val['country_id'])->value('name');
             $val['praiseNum'] = $praiseLogic->countPraiseOfGuide($val['guide_id']);
+            $val['owner'] =  $usersLogic->getBaseInfoById($val['user_id']);
         }
         foreach($newList as &$val){
-            $str = '';
-            $type = getIDType($val['seller_id']);
-            if(!empty($type['store_id'])){
-                $str .= '店主-';
-            }
-            if(!empty($type['drv_id'])){
-                $str .= '司导-';
-            }
-            if(!empty($type['home_id'])){
-                $str .= '房东-';
-            }
-            if(!empty($str)){
-                $val['type_info'] = substr($str,0,-1);
-            }else{
-                $val['type_info'] = '';
-            }
+            $val['praiseNum'] = $praiseLogic->countPraiseOfDynamic($val['act']);
+            $val['owner'] =  $usersLogic->getBaseInfoById($val['user_id']);
         }
 
 
