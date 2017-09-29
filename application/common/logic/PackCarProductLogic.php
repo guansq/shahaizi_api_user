@@ -34,6 +34,7 @@ class PackCarProductLogic extends Model{
         foreach($list as &$item){
             $item['publishTimeFmt'] = date('Y.m.d', $item['publishTime']);
             $item['priceFmt'] = moneyFormat($item['price']);
+            $item['imgs'] = ['http://gimg1.bitautoimg.com/ResourceFiles/0/3/406/20170712111916756.jpg','http://www.sinaimg.cn/qc/photo_auto/photopng/08/02/1470990802.png'];
         }
         $pageVo = new PageVo($page, $list);
         return resultArray(2000, '', $pageVo);

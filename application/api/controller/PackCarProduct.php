@@ -26,7 +26,7 @@ class PackCarProduct extends Base{
     }
     /**
      *
-     * @api             {GET}   /api/packCarProduct   02.包车产品列表 ok wxx
+     * @api             {GET}   /api/packCarProduct   02.包车产品列表 fixme wxx
      * @apiDescription  包车-按天包车-包车产品列表
      * @apiName         getList
      * @apiGroup        PackCarProduct
