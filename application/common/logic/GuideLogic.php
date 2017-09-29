@@ -30,9 +30,8 @@ class GuideLogic extends Model{
         $guide['isPraise'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_GUIDE)->where('user_id', $user_id)->count();
         $guide['collectNum'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_STRATEGY)->count();
         $guide['praiseNum'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_GUIDE)->count();
+        $guide['ownerName'] = $guide['user_name']; //作者
         $owner = UsersLogic::where('user_id',$guide['user_id'])->find();
-        $nickname = empty($guide['is_admin'])?'系统攻略':$owner['nickname'];
-        $guide['ownerName'] = $nickname.'';
         $guide['ownerAvatar'] = empty($owner['head_pic'])?C('APP_DEFAULT_USER_AVATAR'): $owner['head_pic'];
 
         return $guide;
