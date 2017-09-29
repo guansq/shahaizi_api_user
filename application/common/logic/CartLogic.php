@@ -26,7 +26,7 @@ use think\Db;
  * Class CatsLogic
  * @package common\Logic
  */
-class CartLogic extends Model
+class CartLogic extends BaseLogic
 {
     protected $goods;//商品模型
     protected $specGoodsPrice;//商品规格模型

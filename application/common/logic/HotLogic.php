@@ -10,7 +10,7 @@ namespace app\common\logic;
 use think\Model;
 use think\Page;
 use app\common\logic\CommentLogic;
-class HotLogic extends Model{
+class HotLogic extends BaseLogic{
     /*
      * 得到热门攻略列表
      */

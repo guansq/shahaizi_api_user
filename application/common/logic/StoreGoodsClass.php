@@ -20,7 +20,7 @@ use think\Model;
 /**
  * 活动逻辑类
  */
-class StoreGoodsClass extends Model
+class StoreGoodsClass extends BaseLogic
 {
     /**
      * 获取店铺商品分类

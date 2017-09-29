@@ -26,7 +26,7 @@ use app\common\model\Goods;
  * Class CatsLogic
  * @package common\Logic
  */
-class GroupBuyLogic extends Model
+class GroupBuyLogic extends BaseLogic
 {
     protected $GroupBuy;//团购模型
     protected $goods;//商品模型

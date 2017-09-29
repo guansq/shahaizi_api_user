@@ -13,7 +13,7 @@
  * Date: 2015-09-09
  */
 
-namespace app\api\logic;
+namespace app\common\logic;
 
 
 /**
@@ -21,12 +21,13 @@ namespace app\api\logic;
  * @package common\Logic
  */
 class UserPraiseLogic extends BaseLogic{
+
     protected $table = 'ruit_user_praise';
 
     const TYPE_DYNAMIC = 1;    // 动态
     const TYPE_GUIDE   = 2;    // 攻略
     const TYPE_LINE    = 3;     // 线路
-
+    const TYPE_PACKCAR = 4;     // 包车产品
 
     /**
      * Author: W.W <will.wxx@qq.com>
@@ -59,5 +60,27 @@ class UserPraiseLogic extends BaseLogic{
      */
     public function countPraiseOfLine($id){
         return $this->where('obj_type', self::TYPE_LINE)->where('obj_id', $id)->count();
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe: 包车产品点赞数
+     * @param $id
+     * @return int|string
+     */
+    public function countPraiseOfPackCar($id){
+        return $this->where('obj_type', self::TYPE_PACKCAR)->where('obj_id', $id)->count();
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe: 包车产品点赞数
+     * @param $id
+     * @return int|string
+     */
+    public function isPraisePackCar($id,$userId){
+        return $this->where('obj_type', self::TYPE_PACKCAR)->where('obj_id', $id)->where('user_id', $userId)->count();
     }
 }

@@ -12,7 +12,7 @@ use app\api\logic\UserCollectLogic;
 use app\api\logic\UserPraiseLogic;
 use think\Model;
 
-class GuideLogic extends Model{
+class GuideLogic extends BaseLogic{
 
     protected $table = 'ruit_article_hot_guide';
 

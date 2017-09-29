@@ -28,9 +28,10 @@ class PackCarProduct extends Base{
 
         return $this->returnJson();
     }
+
     /**
      *
-     * @api             {GET}   /api/packCarProduct   02.包车产品列表 fixme wxx
+     * @api             {GET}   /api/packCarProduct   02.包车产品列表 ok wxx
      * @apiDescription  包车-按天包车-包车产品列表
      * @apiName         getList
      * @apiGroup        PackCarProduct
@@ -55,7 +56,7 @@ class PackCarProduct extends Base{
     private function getList(Request $request){
         $pcpLogic = new PackCarProductLogic();
         $type = input('type');
-        if(!in_array($type,[PackCarProductLogic::TYPE_AIRPLANE,PackCarProductLogic::TYPE_PACKCAR])){
+        if(!in_array($type, [PackCarProductLogic::TYPE_AIRPLANE, PackCarProductLogic::TYPE_PACKCAR])){
             return $this->returnJson(4002);
         }
         return $this->returnJson($pcpLogic->getPageByType($type));
@@ -64,11 +65,12 @@ class PackCarProduct extends Base{
 
     /**
      *
-     * @api             {GET}   /api/packCarProduct   03.包车产品详情 fixme wxx
+     * @api             {GET}   /api/packCarProduct   03.包车产品详情 ok wxx
      * @apiDescription  包车-按天包车-包车产品详情
      * @apiName         getDetail
      * @apiGroup        PackCarProduct
      * @apiParam  {Number} id        id.
+     * @apiParam  {String} [token]  token.
      *
      * @apiSuccess {Number} id             id.
      * @apiSuccess {Array}  imgs           图片.
@@ -77,34 +79,36 @@ class PackCarProduct extends Base{
      * @apiSuccess {String} publishTimeFmt 发布时格式化.
      * @apiSuccess {Number} price          单价.
      * @apiSuccess {String} priceFmt       单价格式化.
-     * @apiSuccess {Number} type            单价格式化.
-     * @apiSuccess {String} title           单价格式化.
-     * @apiSuccess {String} img             单价格式化.
-     * @apiSuccess {String} price           单价格式化.
-     * @apiSuccess {String} service_country_id       单价格式化.
-     * @apiSuccess {String} service_country_name       单价格式化.
-     * @apiSuccess {String} service_city_id       单价格式化.
-     * @apiSuccess {String} service_city_name       单价格式化.
-     * @apiSuccess {String} service_max_distance       单价格式化.
-     * @apiSuccess {String} service_max_person       单价格式化.
-     * @apiSuccess {String} service_max_time       单价格式化.
-     * @apiSuccess {String} has_insurance       单价格式化.
-     * @apiSuccess {String} car_type_id       单价格式化.
-     * @apiSuccess {String} car_type_name       单价格式化.
-     * @apiSuccess {String} car_seat_total       单价格式化.
-     * @apiSuccess {String} car_seat_num       单价格式化.
-     * @apiSuccess {String} car_luggage_num       单价格式化.
-     * @apiSuccess {String} is_allow_return       单价格式化.
-     * @apiSuccess {String} return_policy       单价格式化.
-     * @apiSuccess {String} has_child_seat       单价格式化.
-     * @apiSuccess {String} child_seat_price       单价格式化.
-     * @apiSuccess {String} has_wheel_chair       单价格式化.
-     * @apiSuccess {String} wheel_chair_price       单价格式化.
-     * @apiSuccess {String} overtime_price       单价格式化.
-     * @apiSuccess {String} overdistance_price       单价格式化.
-     * @apiSuccess {String} remind       单价格式化.
+     * @apiSuccess {Number} type           类型.
+     * @apiSuccess {String} serviceCountryId       服务范围国家id.
+     * @apiSuccess {String} serviceCountryName     服务范围国家名称.
+     * @apiSuccess {String} serviceCityId        服务范围城市id.
+     * @apiSuccess {String} serviceCityName      服务范围城市名称.
+     * @apiSuccess {String} serviceMaxDistance    服务范围服务公里数.
+     * @apiSuccess {String} serviceMaxPerson      服务范围最多接待人数.
+     * @apiSuccess {String} serviceMaxTime       服务范围最长服务时间单位小时.
+     * @apiSuccess {String} hasInsurance       是否有乘车险.
+     * @apiSuccess {String} carTypeId       车辆类型id.
+     * @apiSuccess {String} carTypeName       车辆类型名称.
+     * @apiSuccess {String} carSeatTotal       座位总数（含司）.
+     * @apiSuccess {String} carSeatNum       行李空间空闲座位数.
+     * @apiSuccess {String} carLuggageNum       行李空间行李数.
+     * @apiSuccess {String} isAllowReturn       是否允许退订.
+     * @apiSuccess {String} returnPolicy       退订政策.
+     * @apiSuccess {String} hasChildSeat       是否有儿童座椅.
+     * @apiSuccess {String} childSeatPrice       儿童座椅单价.
+     * @apiSuccess {String} hasWheelChair       是否有轮椅.
+     * @apiSuccess {String} wheelChairPrice       轮椅单价.
+     * @apiSuccess {String} overtimePrice       超时加收价格.
+     * @apiSuccess {String} overdistancePrice       超出公里加收价格.
+     * @apiSuccess {String} remind                  当地人提醒.
+     * @apiSuccess {number} isCollect           是否收藏.
+     * @apiSuccess {number} isPraise            是否点赞.
      */
     private function getDetail($id){
+        $this->checkToken();
+        $pcpLogic = new PackCarProductLogic();
+        return $this->returnJson($pcpLogic->getDetailById($id, $this->user));
     }
 
 }

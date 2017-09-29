@@ -25,7 +25,7 @@ use think\Model;
 /**
  * 拼团订单逻辑类
  */
-class TeamOrderLogic extends Model
+class TeamOrderLogic extends BaseLogic
 {
     protected $team;// 拼团模型
     protected $order;//订单模型

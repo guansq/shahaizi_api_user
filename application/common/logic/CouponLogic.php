@@ -25,7 +25,7 @@ use think\Db;
  * Class CatsLogic
  * @package common\Logic
  */
-class CouponLogic extends Model
+class CouponLogic extends BaseLogic
 {
 
     /**

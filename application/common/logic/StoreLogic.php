@@ -21,7 +21,7 @@ use think\Page;
  * Class orderLogic
  * @package common\Logic
  */
-class StoreLogic extends Model
+class StoreLogic extends BaseLogic
 {
     /**
      * 更新店铺评分

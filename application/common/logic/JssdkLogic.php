@@ -21,7 +21,7 @@ use think\Model;
  * Class CatsLogic
  * @package common\Logic
  */
-class JssdkLogic extends Model
+class JssdkLogic extends BaseLogic
 {
  
   private $appId;

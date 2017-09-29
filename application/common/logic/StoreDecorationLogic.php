@@ -17,7 +17,7 @@
 namespace app\common\logic;
 use think\Model;
 use think\Db;
-class StoreDecorationLogic extends Model {
+class StoreDecorationLogic extends BaseLogic {
 
     /**
 	 * 查询基本数据

@@ -8,7 +8,7 @@
 namespace app\common\logic;
 
 use think\Model;
-class CarLogic extends Model{
+class CarLogic extends BaseLogic{
 
     public function get_car_info(){
         return M('system_car_info')->order('site_num desc')->select();

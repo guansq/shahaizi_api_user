@@ -11,7 +11,7 @@ namespace app\common\logic;
 use think\Model;
 use think\Page;
 
-class DriverLogic extends Model{
+class DriverLogic extends BaseLogic{
 
 
     /*

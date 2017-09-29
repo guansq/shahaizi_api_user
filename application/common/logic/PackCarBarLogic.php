@@ -8,7 +8,7 @@
 namespace app\common\logic;
 
 use think\Model;
-class PackCarBarLogic extends Model{
+class PackCarBarLogic extends BaseLogic{
     protected $table ='ruit_pack_car_bar';
 
     /**

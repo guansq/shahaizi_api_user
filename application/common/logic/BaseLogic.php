@@ -14,21 +14,17 @@
  */
 
 namespace app\common\logic;
-
 use think\Model;
-use think\Page;
 
 
 /**
- * 攻略
+ * 逻辑定义
+ * Class CatsLogic
  * @package common\Logic
  */
-class StrategyLogic extends BaseLogic{
-
-    protected $table = 'ruit_article_hot_guide';
-
-    // 1:热门攻略2:地区攻略
-    const TYPE_HOT= 1;
-    const TYPE_REGION = 2;
+class BaseLogic extends Model{
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'create_at';
+    protected $updateTime = 'update_at';
 
 }

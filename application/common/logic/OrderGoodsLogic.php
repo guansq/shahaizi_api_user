@@ -21,7 +21,7 @@ use think\Db;
  * Class OrderGoodsLogic
  * @package common\Logic
  */
-class OrderGoodsLogic extends Model
+class OrderGoodsLogic extends BaseLogic
 {
     /**
      * 查找订单下的所有未评价的商品

@@ -14,7 +14,7 @@ use ruitu\PageVo;
 use think\Model;
 use think\Page;
 
-class PackLineLogic extends Model{
+class PackLineLogic extends BaseLogic{
 
     protected $table = 'ruit_pack_line';
 

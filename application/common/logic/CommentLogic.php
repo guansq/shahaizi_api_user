@@ -25,7 +25,7 @@ use think\Db;
  * Class CatsLogic
  * @package common\Logic
  */
-class CommentLogic extends Model
+class CommentLogic extends BaseLogic
 {
 	
 	public function getCommentInfo($comment_id)

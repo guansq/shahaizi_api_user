@@ -24,7 +24,7 @@ use app\common\util\ChineseSpell;
  * Class CatsLogic
  * @package common\Logic
  */
-class SearchWordLogic extends Model
+class SearchWordLogic extends BaseLogic
 {
     /**
      * 获取全拼
