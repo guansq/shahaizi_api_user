@@ -25,5 +25,11 @@ class UserPraiseLogic extends BaseLogic{
 
     const TYPE_DYNAMIC = 1;    // 动态
     const TYPE_GUIDE   = 2;    // 攻略
-    const TYPE_LINE    = 3;    // 线路
+    const TYPE_LINE    = 3;     // 线路
+
+
+
+    public function countPraiseOfGuide($id){
+        return $this->where('obj_type',self::TYPE_GUIDE)->where('obj_id',$id)->count();
+    }
 }

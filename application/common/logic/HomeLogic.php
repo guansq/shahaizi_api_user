@@ -6,12 +6,14 @@
  * Time: 16:00
  */
 namespace app\common\logic;
+use app\api\logic\UserPraiseLogic;
 use think\Model;
 class HomeLogic extends Model
 {
     public function getHomeInfo($city){
         $regionLogic = new RegionLogic();
         $regCtrLogic = new RegionCountryLogic();
+        $praiseLogic = new UserPraiseLogic();
         if(empty($city)){
             $localList = M('article_local_talent')->limit(4)->order('good_num desc')->select();//当地达人
         }else{
@@ -55,8 +57,11 @@ class HomeLogic extends Model
             }else{
                 $val['type_info'] = '';
             }
-            $val['city'] = $regCtrLogic->where('id',$val['city_id'])->value('name');
-            $val['country'] = $regCtrLogic->where('id',$val['reg_children_id'])->value('name');
+            $country =   $regCtrLogic->where('id',$val['country_id'])->value('name');
+            $city =  $regionLogic->where('id',$val['city_id'])->value('name');
+            $val['city'] ="{$country}·{$city}";
+            $val['country'] = $regCtrLogic->where('id',$val['country_id'])->value('name');
+            $val['praiseNum'] = $praiseLogic->countPraiseOfGuide($val['guide_id']);
         }
         foreach($newList as &$val){
             $str = '';
