@@ -27,7 +27,7 @@ class StrategyLogic extends BaseLogic{
     protected $table = 'ruit_article_hot_guide';
 
     // 1:热门攻略2:地区攻略
-    const TYPE_HOT= 1;
+    const TYPE_HOT    = 1;
     const TYPE_REGION = 2;
 
     /**
@@ -42,16 +42,18 @@ class StrategyLogic extends BaseLogic{
     public function createStrategy($reqParams, $user){
         $data = [
             'title' => $reqParams['title'],     // 标题.
-            'guide_img' => $reqParams['img'],     // 封面图片 多张用“|” 分割
             'cover_img' => explode('|', $reqParams['img'])[0],     // 第一张为默认封面.
             'content' => $reqParams['content'],    // 内容.
-            'summary' => $reqParams['summary'],    // 内容.
-            'city_id' => $reqParams['regionId'],
-            'city' => RegionInterLogic::where('id',$reqParams['regionId'])->value('name') ,
+            'summary' => $reqParams['summary'],    // 简介.
+            'publish_time' => time(),    //.
+            'country_id' => $reqParams['countryId'],
+            'city_id' => $reqParams['cityId'],
             'user_id' => $user['user_id'],
             'user_name' => $user['nickname'],
             'type' => self::TYPE_REGION,
             'status' => 1,
+            'is_admin' => 0,
+            'is_hot' => 0,
         ];
         if(!$this->create($data)){
             return resultArray(5020);
@@ -91,7 +93,9 @@ class StrategyLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_GUIDE)->count();
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
+                ->where('obj_type', UserPraiseLogic::TYPE_GUIDE)
+                ->count();
         }
 
         $ret = [
@@ -144,12 +148,22 @@ class StrategyLogic extends BaseLogic{
         $user = UserLogic::where('user_id', $Strategy['ownerId'])->find();
 
         $Strategy['timeFmt'] = date('Y.m.d', $Strategy['timeStamp']);
-        $Strategy['isCollect'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_Strategy)->where('user_id', $user_id)->count();
-        $Strategy['collectNum'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_Strategy)->count();
-        $Strategy['isPraise'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_Strategy)->where('user_id', $user_id)->count();
-        $Strategy['praiseNum'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_Strategy)->count();
-        $Strategy['ownerName'] =$user['nickname'];
-        $Strategy['ownerAvatar'] = $user['head_pic'] ;
+        $Strategy['isCollect'] = UserCollectLogic::where('goods_id', $id)
+            ->where('model_type', UserCollectLogic::TYPE_Strategy)
+            ->where('user_id', $user_id)
+            ->count();
+        $Strategy['collectNum'] = UserCollectLogic::where('goods_id', $id)
+            ->where('model_type', UserCollectLogic::TYPE_Strategy)
+            ->count();
+        $Strategy['isPraise'] = UserPraiseLogic::where('obj_id', $id)
+            ->where('obj_type', UserPraiseLogic::TYPE_Strategy)
+            ->where('user_id', $user_id)
+            ->count();
+        $Strategy['praiseNum'] = UserPraiseLogic::where('obj_id', $id)
+            ->where('obj_type', UserPraiseLogic::TYPE_Strategy)
+            ->count();
+        $Strategy['ownerName'] = $user['nickname'];
+        $Strategy['ownerAvatar'] = $user['head_pic'];
 
 
         return resultArray(2000, '', $Strategy);
@@ -168,10 +182,10 @@ class StrategyLogic extends BaseLogic{
         ];
         $Strategy = $this->where('guide_id', $id)->field($fields)->find();
         if(empty($Strategy)){
-            return resultArray(4004,'要删除的攻略已经不存在');
+            return resultArray(4004, '要删除的攻略已经不存在');
         }
         if($Strategy->user_id != $user_id){
-            return resultArray(4010,'无权删除');
+            return resultArray(4010, '无权删除');
         }
         $Strategy->delete();
         return resultArray(2000);
@@ -186,11 +200,11 @@ class StrategyLogic extends BaseLogic{
 
         $userColl = new  UserCollectLogic();
 
-        $count = $userColl->where('user_id', $user_id)->where('model_type',UserCollectLogic::TYPE_STRATEGY)->count();
+        $count = $userColl->where('user_id', $user_id)->where('model_type', UserCollectLogic::TYPE_STRATEGY)->count();
         $page = new Page($count);
 
         $ids = $userColl->where('user_id', $user_id)
-            ->where('model_type',UserCollectLogic::TYPE_STRATEGY)
+            ->where('model_type', UserCollectLogic::TYPE_STRATEGY)
             ->limit($page->firstRow, $page->listRows)
             ->order('add_time DESC')
             ->column('goods_id');
@@ -206,7 +220,9 @@ class StrategyLogic extends BaseLogic{
             'head_pic' => 'ownerAvatar',
         ];
 
-        $list = $this->alias('str')->join('ruit_users user','user.user_id=str.user_id','LEFT')->where('guide_id', ['IN', $ids])
+        $list = $this->alias('str')
+            ->join('ruit_users user', 'user.user_id=str.user_id', 'LEFT')
+            ->where('guide_id', ['IN', $ids])
             ->order('create_at DESC')
             ->field($fields)
             ->select();
@@ -214,7 +230,9 @@ class StrategyLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_GUIDE)->count();
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
+                ->where('obj_type', UserPraiseLogic::TYPE_GUIDE)
+                ->count();
         }
 
         $ret = [

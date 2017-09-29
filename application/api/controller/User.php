@@ -1813,18 +1813,20 @@ class User extends Base{
      * @apiParam {string} img    图片  多张用“|” 分割 ，第一张为默认封面.
      * @apiParam {string} title  标题.
      * @apiParam {string} content 内容.
-     * @apiParam {number} regionId 地区.
+     * @apiParam {number} countryId 国家id.
+     * @apiParam {number} cityId    城市id.
      * @apiParam {string} summary 简介.
      *
      */
     private function postStrategy(Request $request){
-        $reqParams = $this->getReqParams(['img', 'title', 'content', 'regionId', 'summary']);
+        $reqParams = $this->getReqParams(['img', 'title', 'content', 'countryId', 'cityId', 'summary']);
         $rule = [
             'img' => 'require|max:1000',
             'title' => 'require|max:200',
             'summary' => 'require|max:200',
             'content' => 'require|max:1000',
-            'regionId' => 'require',
+            'countryId' => 'require',
+            'cityId' => 'require',
         ];
         $this->validateParams($reqParams, $rule);
         $userLogic = new StrategyLogic();

@@ -10,6 +10,8 @@ use think\Model;
 class HomeLogic extends Model
 {
     public function getHomeInfo($city){
+        $regionLogic = new RegionLogic();
+        $regCtrLogic = new RegionCountryLogic();
         if(empty($city)){
             $localList = M('article_local_talent')->limit(4)->order('good_num desc')->select();//当地达人
         }else{
@@ -53,6 +55,8 @@ class HomeLogic extends Model
             }else{
                 $val['type_info'] = '';
             }
+            $val['city'] = $regCtrLogic->where('id',$val['city_id'])->value('name');
+            $val['country'] = $regCtrLogic->where('id',$val['reg_children_id'])->value('name');
         }
         foreach($newList as &$val){
             $str = '';
@@ -72,6 +76,8 @@ class HomeLogic extends Model
                 $val['type_info'] = '';
             }
         }
+
+
         return [
             'local' => $localList,
             'hot' => $guideList,
