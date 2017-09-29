@@ -5,24 +5,22 @@
 
 {block name="body"}
 <main class="main">
-    <div class="content">
-        <div class="detail_head">
-            <h1>{$guide.title}</h1>
-            <div class="hcon_remarks">
-                <span>{$guide.timeFmt}</span>
-                <span>{$guide.ownerName}</span>
-                <span>{$guide.read_num}次阅读</span>
-            </div>
-        </div>
-        <div class="detail_img">
-            <img src="{$guide.guide_img|default='/application/web/view/static/image/2.png'}" alt="">
-        </div>
-        <div class="detail_p">
-            <p>
-                {$guide.content}
-            </p>
-        </div>
+  <div class="content">
+    <div class="detail_head">
+      <h1>{$guide.title}</h1>
+      <div class="hcon_remarks">
+        <span>{$guide.timeFmt}</span>
+        <span>{$guide.ownerName}</span>
+        <span>{$guide.read_num}次阅读</span>
+      </div>
     </div>
+    <div class="detail_img">
+      <img src="{$guide.cover_img|default='/application/web/view/static/image/2.png'}" alt="">
+    </div>
+    <div class="detail_p">
+      <p>{$guide.content}</p>
+    </div>
+  </div>
 </main>
 {/block}
 
