@@ -18,8 +18,8 @@ class HomeLogic extends Model
             $localList = M('article_local_talent')->where(['city'=>['like',"%{$city}%"]])->limit(4)->order('good_num desc')->select();//当地达人
         }
 
-        $guideList = M('article_hot_guide')->limit(4)->order('good_num desc')->select();//热门攻略
-        $newList = M('article_new_action')->limit(4)->order('good_num desc')->select();//最新动态
+        $guideList = M('article_hot_guide')->where('is_hot',1)->order('sort')->limit(4)->select();//热门攻略
+        $newList = M('article_new_action')->where('is_hot',1)->order('sort')->limit(4)->select();//最新动态
         foreach($localList as &$val){
             $str = '';
             $type = getIDType($val['seller_id']);
