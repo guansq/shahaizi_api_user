@@ -6,7 +6,7 @@ use app\common\logic\PackLineLogic;
 use app\common\logic\SellerLogic;
 use think\Request;
 
-class Driver extends WebBase{
+class Baobus extends WebBase{
 
     public function index(){
         return $this->fetch('chartered-bus');

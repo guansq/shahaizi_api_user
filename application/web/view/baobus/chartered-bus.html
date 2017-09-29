@@ -4,7 +4,139 @@
 {/block}
 
 {block name="body"}
-<main class="main">
-111
+<main class="cir_main">
+    <div class="circuit_img">
+        <img src="/application/web/view/static/image/2.png" alt="">
+        <div class="synopsis">
+            <h3>
+                <span class="syn_title">自由女神+华尔街 包车两日游</span>
+            </h3>
+            <div class="pri">
+                <span class="w30b col_ff7"><b class="price">￥2350</b><small>/天</small></span>
+                <span class="w30b">276人出游</span>
+                <div class="level">
+                    <img src="/application/web/view/static/image/heart_5@2x.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cir_con box1">
+        <ul>
+            <li class="bor_r">
+                <h3><span>300</span>公里</h3>
+                <p>服务里程</p>
+            </li>
+            <li>
+                <h3><span>7</span>人</h3>
+                <p>服务里程</p>
+            </li>
+            <li>
+                <h3><span>10</span>小时</h3>
+                <p>服务里程</p>
+            </li>
+        </ul>
+    </div>
+    <div class="cir_con box2">
+        <h1>车辆信息</h1>
+        <ul>
+            <li><span class="s-head">车型</span><span class="s-con">丰田</span></li>
+            <li><span class="s-head">座位</span><span class="s-con">8座（包含司机）</span></li>
+            <li><span class="s-head">乘客险</span><span class="s-con">有</span></li>
+            <li><span class="s-head">行李空间</span><span class="s-con">7人</span></li>
+        </ul>
+    </div>
+    <div id="appraise" class="dr_repeat mt_10 dr_assess">
+        <h1>
+            收到的评价
+            <span>共90条</span>
+        </h1>
+        <div class="ass_con">
+            <img src="/application/web/view/static/image/avatar@2x.png" alt="">
+            <div class="left_d">
+                <p>王浩</p>
+                <p><span>2017-3-26 </span>出行</p>
+            </div>
+            <div class="right_d">
+                <p><img src="/application/web/view/static/image/star_4@2x.png" alt=""></p>
+                <p>接机服务</p>
+            </div>
+            <p class="dr_text">
+                提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
+            </p>
+        </div>
+        <div class="ass_con">
+            <img src="/application/web/view/static/image/avatar@2x.png" alt="">
+            <div class="left_d">
+                <p>王浩</p>
+                <p><span>2017-3-26 </span>出行</p>
+            </div>
+            <div class="right_d">
+                <p><img src="/application/web/view/static/image/star_4@2x.png" alt=""></p>
+                <p>接机服务</p>
+            </div>
+            <p class="dr_text">
+                提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
+            </p>
+        </div>
+        <div class="ass_con">
+            <img src="/application/web/view/static/image/avatar@2x.png" alt="">
+            <div class="left_d">
+                <p>王浩</p>
+                <p><span>2017-3-26 </span>出行</p>
+            </div>
+            <div class="right_d">
+                <p><img src="/application/web/view/static/image/star_4@2x.png" alt=""></p>
+                <p>接机服务</p>
+            </div>
+            <p class="dr_text">
+                提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
+            </p>
+        </div>
+        <div class="look">
+            <a class="look_whole" href="javascript:void(0);">查看更多</a>
+        </div>
+    </div>
+    <div class="cir_con box4">
+        <ul>
+            <li><span class="s-head">退订政策</span><span class="s-con">不支持</span></li>
+            <li><span class="s-head">儿童座椅</span><span class="s-con">￥ <span>20 </span>/ 个</span></li>
+            <li><span class="s-head">轮椅</span><span class="s-con">不提供</span></li>
+            <li><span class="s-head">超时加收</span><span class="s-con">￥<span>200</span>/小时</span></li>
+            <li><span class="s-head">超公里加收</span><span class="s-con">￥<span>2</span>/公里</span></li>
+        </ul>
+        <div class="remind">
+            <h1>当地人提醒</h1>
+            <p>需要特殊帮忙的情况请提前联系</p>
+        </div>
+    </div>
+
 </main>
+{/block}
+
+{block name="script"}
+<script>
+    $(function(){
+        // 遍历 显示两个 其余隐藏
+        function eachAppraiseList(ele,eleT,num){
+            var appraConLength =ele.find(eleT).length;
+            for(var i =num; i<appraConLength; i++){
+                ele.find(eleT).eq(i).css("display","none");
+            }
+        }
+        eachAppraiseList($("#appraise"),".ass_con",2);
+
+        $(".look_whole").click(function(){
+            if(!$(this).hasClass("close")){
+                $("#appraise").find(".ass_con").css("display","block");
+                $(this).text("收起内容");
+                $(this).addClass("close");
+            }else{
+                $(this).text("查看更多");
+                $(this).removeClass("close");
+                eachAppraiseList($("#appraise"),".ass_con",2);
+            }
+        })
+
+    });
+</script>
 {/block}
