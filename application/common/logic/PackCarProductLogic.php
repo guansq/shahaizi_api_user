@@ -16,8 +16,15 @@ class PackCarProductLogic extends Model{
 
     protected $table = 'ruit_pack_car_product';
 
-    public function getPage(){
-        $where = ['is_show' => 1];
+    const TYPE_AIRPLANE = 1;  //接送机
+    const TYPE_PACKCAR  = 2;  // 包车
+
+
+    public function getPageByType($type){
+        $where = [
+            'is_show' => 1,
+            'type' => $type
+        ];
         $total = $this->where($where)->count();
 
         $page = new Page($total);
@@ -29,12 +36,14 @@ class PackCarProductLogic extends Model{
             'publish_time' => 'publishTime',
             'price',
             'title',
+            'img' => 'imgs',
         ];
         $list = $this->where($where)->field($fields)->order('create_at DESC')->select();
         foreach($list as &$item){
             $item['publishTimeFmt'] = date('Y.m.d', $item['publishTime']);
             $item['priceFmt'] = moneyFormat($item['price']);
-            $item['imgs'] = ['http://gimg1.bitautoimg.com/ResourceFiles/0/3/406/20170712111916756.jpg','http://www.sinaimg.cn/qc/photo_auto/photopng/08/02/1470990802.png'];
+            // fixme
+            $item['imgs'] = explode('|', $item['imgs']);
         }
         $pageVo = new PageVo($page, $list);
         return resultArray(2000, '', $pageVo);
