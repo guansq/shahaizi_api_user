@@ -10,7 +10,7 @@ namespace app\common\logic;
 use think\Model;
 use think\Page;
 use think\Db;
-class LocalTalentLogic extends Model{
+class LocalTalentLogic extends BaseLogic{
 
     /*
      * 得到当地达人列表

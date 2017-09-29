@@ -22,7 +22,7 @@ use think\Db;
  * Class OrderGoodsLogic
  * @package common\Logic
  */
-class MessageLogic extends Model
+class MessageLogic extends BaseLogic
 {
     protected $tableName = 'message';
     protected $_validate = array();

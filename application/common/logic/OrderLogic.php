@@ -20,7 +20,7 @@ use think\Model;
  * Class orderLogic
  * @package Common\Logic
  */
-class OrderLogic extends Model
+class OrderLogic extends BaseLogic
 {
 
 	//取消订单

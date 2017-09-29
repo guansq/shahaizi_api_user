@@ -10,7 +10,7 @@ namespace app\common\logic;
 
 use think\Model;
 
-class RegionLogic extends Model{
+class RegionLogic extends BaseLogic{
 
     const CHINA_ID = 7;
     protected $table = 'ruit_region';

@@ -23,7 +23,7 @@ use think\Page;
  * Class CatsLogic
  * @package common\Logic
  */
-class PackCommentLogic extends Model{
+class PackCommentLogic extends BaseLogic{
     protected $table = 'ruit_pack_comment';
 
     public function getCommentPageBylineId($lineId, $pageSize=20){

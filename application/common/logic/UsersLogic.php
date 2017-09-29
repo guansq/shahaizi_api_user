@@ -17,7 +17,6 @@ namespace app\common\logic;
 
 use emchat\EasemobUse;
 use think\Db;
-use think\Model;
 use think\Page;
 
 /**
@@ -25,7 +24,7 @@ use think\Page;
  * Class CatsLogic
  * @package common\Logic
  */
-class UsersLogic extends Model{
+class UsersLogic extends BaseLogic{
     protected $table = 'ruit_users';
 
     /*

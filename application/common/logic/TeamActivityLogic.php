@@ -20,7 +20,7 @@ use think\Model;
 /**
  * 拼团活动逻辑类
  */
-class TeamActivityLogic extends Model
+class TeamActivityLogic extends BaseLogic
 {
     public function getCouponOrderList($order, $userCouponList)
     {

@@ -22,7 +22,7 @@ use think\Model;
  * Class CatsLogic
  * @package common\Logic
  */
-class CouponListLogic extends Model{
+class CouponListLogic extends BaseLogic{
     protected $table ='ruit_coupon_list';
 
 }

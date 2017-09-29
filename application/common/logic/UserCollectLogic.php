@@ -13,7 +13,7 @@
  * Date: 2015-09-09
  */
 
-namespace app\api\logic;
+namespace app\common\logic;
 
 
 /**
@@ -23,13 +23,14 @@ namespace app\api\logic;
 class UserCollectLogic extends BaseLogic{
     protected $table = 'ruit_goods_collect';
 
-    //  0为包车模块1为商城模块2为民宿模块 3=个人动态 4=个人攻略  5=线路
+    //  0为包车模块1为商城模块2为民宿模块 3=个人动态 4=个人攻略  5=线路  6=包车产品
     const TYPE_CAR      = 0;
     const TYPE_SHOP     = 1;
     const TYPE_HOUSE    = 2;
     const TYPE_DYNAMIC  = 3;
     const TYPE_STRATEGY = 4;
     const TYPE_LINE     = 5;
+    const TYPE_PACKCAR  = 6;
 
     const TYPE_TABLE_ARR = [
         self::TYPE_CAR => 'pack_car_info',
@@ -37,6 +38,7 @@ class UserCollectLogic extends BaseLogic{
         self::TYPE_HOUSE => 'home_house_info',
         self::TYPE_DYNAMIC => 'article_new_action',
         self::TYPE_STRATEGY => 'article_hot_guide',
+        self::TYPE_PACKCAR => 'pack_car_product',
     ];
 
     /**
@@ -80,5 +82,16 @@ class UserCollectLogic extends BaseLogic{
         ];
         $this->where($where)->delete();
         return resultArray(2000);
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe: 是否收藏包车产品
+     * @param $id
+     * @return int|string
+     */
+    public function isCollectPackCar($id, $userId){
+        return $this->where('model_type', self::TYPE_PACKCAR)->where('goods_id', $id)->where('user_id', $userId)->count();
     }
 }

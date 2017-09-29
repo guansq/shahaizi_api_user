@@ -26,7 +26,7 @@ use think\db;
  * Class CatsLogic
  * @package common\Logic
  */
-class PromGoodsLogic extends Model
+class PromGoodsLogic extends BaseLogic
 {
     protected $promGoods;//促销活动模型
     protected $goods;//商品模型

@@ -15,12 +15,10 @@
 
 namespace app\common\logic;
 
-use think\Model;
-
 /**
  * 活动逻辑类
  */
-class ActivityLogic extends Model
+class ActivityLogic extends BaseLogic
 {
     /**
      * 团购列表

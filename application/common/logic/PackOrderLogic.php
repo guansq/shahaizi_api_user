@@ -12,7 +12,7 @@ use think\Model;
 use think\Page;
 
 
-class PackOrderLogic extends Model{
+class PackOrderLogic extends BaseLogic{
     protected $table = 'ruit_pack_order';
 
     // 1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游7快捷订单

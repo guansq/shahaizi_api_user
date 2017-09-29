@@ -20,7 +20,7 @@ use think\Model;
  * 拼团活动
  * Class TeamActivity
  */
-class GroupTeamLogic extends Model
+class GroupTeamLogic extends BaseLogic
 {
 	//编辑拼团活动
 	public function saveTeamActivity($data){

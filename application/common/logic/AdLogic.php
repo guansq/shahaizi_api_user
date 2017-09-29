@@ -10,7 +10,7 @@ namespace app\common\logic;
 
 use think\Model;
 
-class AdLogic extends Model{
+class AdLogic extends BaseLogic{
     protected $table = 'ruit_ad';
     const  AD_POSITION_HOME     = 10;  //	用户端首页轮播
     const  AD_POSITION_CAR      = 11;  //	用户端包车定制内轮播

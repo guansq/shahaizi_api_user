@@ -20,7 +20,7 @@ use think\Model;
 /**
  *  逻辑类
  */
-class SellerLogic extends Model{
+class SellerLogic extends BaseLogic{
     protected $table = 'ruit_seller';
 
     /**

@@ -9,7 +9,7 @@ namespace app\common\logic;
 
 use think\Model;
 
-class ConfigLogic extends Model{
+class ConfigLogic extends BaseLogic{
     /*
      * 得到城市区号
      */

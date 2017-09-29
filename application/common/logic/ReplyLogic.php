@@ -22,7 +22,7 @@ use think\Model;
  * Class CatsLogic
  * @package common\Logic
  */
-class ReplyLogic extends Model
+class ReplyLogic extends BaseLogic
 {
     /**
      * 把回复树状数组转换成二维数组

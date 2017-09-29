@@ -8,7 +8,7 @@
 namespace app\common\logic;
 use app\api\logic\UserPraiseLogic;
 use think\Model;
-class HomeLogic extends Model
+class HomeLogic extends BaseLogic
 {
     public function getHomeInfo($city){
         $regionLogic = new RegionLogic();

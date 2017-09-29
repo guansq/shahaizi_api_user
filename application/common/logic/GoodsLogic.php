@@ -26,7 +26,7 @@ use app\common\model\SpecGoodsPrice;
  * Class CatsLogic
  * @package common\Logic
  */
-class GoodsLogic extends Model
+class GoodsLogic extends BaseLogic
 {
 
     /**

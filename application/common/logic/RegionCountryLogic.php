@@ -9,6 +9,6 @@ namespace app\common\logic;
 
 use think\Model;
 
-class RegionCountryLogic extends Model{
+class RegionCountryLogic extends BaseLogic{
     protected $table = 'ruit_region_country';
 }
