@@ -16,6 +16,8 @@ class Guide extends WebBase{
         if(empty($guide)){
             return $this->error('您要查看的攻略不存在');
         }
+
+        // dd($guide);  //
         $this->assign('guide',$guide);
         return $this->fetch();
      }

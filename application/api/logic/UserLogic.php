@@ -242,7 +242,7 @@ class UserLogic extends BaseLogic{
             'sex'=>$user['sex'],
             'level'=>$user['level'],
             // FIXME 以下4个字段值 应该从中间表查询
-            'fansNum'=>$user['fans_num'],
+            'fansNum'=>$user['attention_num'],
             'attentionNum'=>$user['attention_num'],
             'praiseNum'=>$user['good_num'],
             'collectNum'=>$user['collection_num'],

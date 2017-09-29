@@ -25,5 +25,39 @@ class UserPraiseLogic extends BaseLogic{
 
     const TYPE_DYNAMIC = 1;    // 动态
     const TYPE_GUIDE   = 2;    // 攻略
-    const TYPE_LINE    = 3;    // 线路
+    const TYPE_LINE    = 3;     // 线路
+
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe: 攻略点赞数
+     * @param $id
+     * @return int|string
+     */
+    public function countPraiseOfGuide($id){
+        return $this->where('obj_type', self::TYPE_GUIDE)->where('obj_id', $id)->count();
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe: 动态点赞数
+     * @param $id
+     * @return int|string
+     */
+    public function countPraiseOfDynamic($id){
+        return $this->where('obj_type', self::TYPE_DYNAMIC)->where('obj_id', $id)->count();
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe: 线路点赞数
+     * @param $id
+     * @return int|string
+     */
+    public function countPraiseOfLine($id){
+        return $this->where('obj_type', self::TYPE_LINE)->where('obj_id', $id)->count();
+    }
 }

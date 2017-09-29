@@ -87,7 +87,7 @@ class RegionLogic extends Model{
      * @param $countryId
      */
     public function getAllCityByCountryId($countryId){
-        return $this->where('country_id', $countryId)->where('level', 2)->select();
+        return $this->where('country_id', $countryId)->where('level', 1)->select();
     }
 
     /**

@@ -183,7 +183,7 @@ class DriverLogic extends Model{
             'start_time' => $data['start_time'], //
             'work_address' => $data['start_address'], //
             'dest_address' => $data['dest_address'], //
-            'con_car_seat_num' => $data['con_car_seat_num'], // 座位数
+            'req_car_seat_num' => $data['con_car_seat_num'], // 座位数
             'tour_favorite' => $data['tour_favorite'], //
             'order_day' => $data['order_day'], //
             'eating_ave' => $data['eating_ave'], //

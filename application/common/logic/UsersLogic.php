@@ -390,7 +390,7 @@ class UsersLogic extends Model{
 
         $activityLogic = new ActivityLogic;             //获取能使用优惠券个数
         $user['coupon_count'] = $activityLogic->getUserCouponNum($user_id, 0);
-
+        $user['user_money_fmt'] = moneyFormat($user['user_money']);
         $user['collect_count'] = M('goods_collect')->where('user_id', $user_id)->count(); //获取商品收藏数量
         $user['focus_count'] = M('store_collect')->where('user_id', $user_id)->count(); //获取商家关注数量
         $user['visit_count'] = M('goods_visit')->where('user_id', $user_id)->count();   //商品访问记录数
@@ -1070,5 +1070,31 @@ class UsersLogic extends Model{
         }
 
         return $visit_list;
+    }
+
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe:
+     * @param $id
+     */
+    public function getBaseInfoById($id){
+        $fields = [
+            'user_id'=>'id',
+            'nickname',
+            'head_pic'=>'avatar',
+            'email',
+            'sex',
+            'mobile',
+            'level',
+            'shz_code'=>'shzCode',  //傻孩子号 ?
+            'personalized_signature'=>'signature',  //个性签名
+            'attention_num'=>'attentionNum',  //
+            'good_num'=>'praiseNum',
+            'collection_num'=>'collectionNum',  //
+        ];
+        $user = $this->field($fields)->find($id);
+
+        return $user;
     }
 }

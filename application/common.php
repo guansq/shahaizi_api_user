@@ -1559,3 +1559,7 @@ function getTotalAddress($province_id, $city_id, $district_id, $twon_id, $addres
     $total_address .= $address ?: '';
     return $total_address;
 }
+
+function moneyFormat($money ){
+  return  '¥'. number_format($money,2);
+}

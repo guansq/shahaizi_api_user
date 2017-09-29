@@ -147,12 +147,14 @@ class PackOrderLogic extends Model{
             $info['hx_user_name'] = empty($seller['hx_user_name']) ? '' : $seller['hx_user_name'];
             $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
             $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
+            $info['user_money_fmt'] = moneyFormat($seller['user_money']);
             $return = [
                 'status' => 1,
                 'msg' => '成功',
                 'result' => $info
             ];
         }
+        
         return $return;
     }
 
