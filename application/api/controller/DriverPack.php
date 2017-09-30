@@ -9,6 +9,7 @@
 namespace app\api\controller;
 
 use app\common\logic\DriverLogic;
+use app\common\logic\PackCarProductLogic;
 
 class DriverPack extends Base{
 
@@ -244,6 +245,7 @@ class DriverPack extends Base{
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
+     * @apiParam    {Number}    pcpId          包车产品id
      * @apiParam    {String}    user_name       用户
      * @apiParam    {String}    car_type_id     车型ID
      * @apiParam    {String}    connect         联系方式
@@ -252,8 +254,8 @@ class DriverPack extends Base{
      * @apiParam    {Number}    total_num       出行总人数
      * @apiParam    {Number}    adult_num       成人乘客数
      * @apiParam    {String}    child_num       儿童乘客数
-     * @apiParam    {String}    remark       备注
-     * @apiParam    {String}    flt_no    航班号
+     * @apiParam    {String}    remark          备注
+     * @apiParam    {String}    flt_no          航班号
      * @apiParam    {String}    airport_name       机场名
      * @apiParam    {String}    dest_address       送达地点
      * @apiParam    {Number}    con_car_seat_num    座位数
@@ -264,13 +266,21 @@ class DriverPack extends Base{
      * @apiParam    {Number}    [thirty]     30行李箱尺寸
      */
     public function receiveAirport(){
+        $pcpLogic = new PackCarProductLogic();
         $data = I('post.');
+        $pcpId = I('pcpId');
         // $result = $this->validate($data, 'PackBase.receiveAirport');
         // if($result){
         //     $this->ajaxReturn(['status' => -1, 'msg' => $result]);
         // }
         //验证通过
+
+        $pcp = $pcpLogic->find($pcpId);
+        if(empty($pcp)){
+            return $this->returnJson(4004,'缺少参数pcpId');
+        }
         $data['start_address'] = $data['airport_name'];
+        $data['real_price'] = $pcp['price'];
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
