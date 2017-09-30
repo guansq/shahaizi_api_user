@@ -22,7 +22,7 @@ return [
     // 用户名
     'username'       => 'shahaizi',
     // 密码
-    'password'       => 'shahz&rui7tke2017',//'a',//
+    'password'       => 'shahz&r8ui7tke2017',//'a',//
     // 端口
     'hostport'       => '3306',
     // 连接dsn
