@@ -134,10 +134,11 @@ class User extends Base{
      * @api         {POST}  /index.php?m=Api&c=User&a=thirdLogin     第三方登录done 管少秋
      * @apiName     thirdLogin
      * @apiGroup    User
-     * @apiParam    {String}      unique_id     第三方唯一标识
+     * @apiParam    {String}      openid     第三方唯一标识
      * @apiParam    {String}      from          来源 wx weibo alipay
-     * @apiParam    {String}      [nickname]    第三方返回昵称
-     * @apiParam    {String}      [head_pic]    头像路径
+     * @apiParam    {String}      nickname    第三方返回昵称
+     * @apiParam    {String}      head_pic    头像路径
+     * @apiParam    {Number}      sex         性别  0=未知 1=男 2=女
      * @apiSuccessExample   {json}  Success-response
      *      Http/1.1    200 Ok
      * {
