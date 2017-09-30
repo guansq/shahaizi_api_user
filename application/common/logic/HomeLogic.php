@@ -6,7 +6,6 @@
  * Time: 16:00
  */
 namespace app\common\logic;
-use app\api\logic\UserPraiseLogic;
 use think\Model;
 class HomeLogic extends BaseLogic
 {

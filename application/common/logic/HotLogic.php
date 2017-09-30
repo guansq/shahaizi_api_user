@@ -17,7 +17,7 @@ class HotLogic extends BaseLogic{
     public function get_hot_list(){
         $count = M('article_hot_guide')->count();
         $Page = new Page($count, 10);
-        $hot_list = M('article_hot_guide')->order('good_num desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $hot_list = M('article_hot_guide')->where('is_hot',1)->order('sort')->limit($Page->firstRow . ',' . $Page->listRows)->select();//热门攻略
         $result = [
             'totalPages' => $Page->totalPages,
             'list' => $hot_list

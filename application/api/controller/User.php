@@ -135,48 +135,48 @@ class User extends Base{
      * @apiName     thirdLogin
      * @apiGroup    User
      * @apiParam    {String}      openid     第三方唯一标识
-     * @apiParam    {String}      from          来源 wx weibo alipay
+     * @apiParam    {String}      from       来源 wx weibo alipay
      * @apiParam    {String}      nickname    第三方返回昵称
      * @apiParam    {String}      head_pic    头像路径
      * @apiParam    {Number}      sex         性别  0=未知 1=男 2=女
      * @apiSuccessExample   {json}  Success-response
      *      Http/1.1    200 Ok
      * {
-     * "status": 1,
-     * "msg": "登陆成功",
-     * "result": {
-     * "user_id": "12",
-     * "email": "",
-     * "password": "",
-     * "sex": "0",
-     * "birthday": "0000-00-00",
-     * "user_money": "0.00",
-     * "frozen_money": "0.00",
-     * "pay_points": "0",
-     * "address_id": "0",
-     * "reg_time": "1452331498",
-     * "last_login": "0",
-     * "last_ip": "",
-     * "qq": "",
-     * "mobile": "",
-     * "mobile_validated": "0",
-     * "oauth": "wx",
-     * "openid": "2",
-     * "head_pic": null,
-     * "province": "0",
-     * "city": "0",
-     * "district": "0",
-     * "email_validated": "0",
-     * "nickname": ""
-     * }
-     * }
-     * @apiErrorExample     {json}  Error-response
-     *              Http/1.1    200 OK
-     *   {
-     * "status": -1,
-     * "msg": "参数有误",
-     * "result": ""
-     * }
+     *  "status": 1,
+     *  "msg": "登陆成功",
+     *  "result": {
+     *  "user_id": "12",
+     *  "email": "",
+     *  "password": "",
+     *  "sex": "0",
+     *  "birthday": "0000-00-00",
+     *  "user_money": "0.00",
+     *  "frozen_money": "0.00",
+     *  "pay_points": "0",
+     *  "address_id": "0",
+     *  "reg_time": "1452331498",
+     *  "last_login": "0",
+     *  "last_ip": "",
+     *  "qq": "",
+     *  "mobile": "",
+     *  "mobile_validated": "0",
+     *  "oauth": "wx",
+     *  "openid": "2",
+     *  "head_pic": null,
+     *  "province": "0",
+     *  "city": "0",
+     *  "district": "0",
+     *  "email_validated": "0",
+     *  "nickname": ""
+     *  }
+     *  }
+     *  @apiErrorExample     {json}  Error-response
+     *               Http/1.1    200 OK
+     *    {
+     *  "status": -1,
+     *  "msg": "参数有误",
+     *  "result": ""
+     *  }
      */
     public function thirdLogin(){
         $unique_id = I("unique_id"); // 唯一id  类似于 pc 端的session id
