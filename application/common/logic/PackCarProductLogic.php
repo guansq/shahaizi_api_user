@@ -66,6 +66,7 @@ class PackCarProductLogic extends BaseLogic{
             'id',
             'publish_time' => 'publishTime',
             'price',
+            'type',
             'title',
             'img' => 'imgs',
             'service_country_id' => 'serviceCountryId',              //服务范围国家id',
