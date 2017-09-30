@@ -6,10 +6,10 @@ use app\common\logic\PackLineLogic;
 use app\common\logic\SellerLogic;
 use think\Request;
 
-class Baobus extends WebBase{
+class PackCarProduct extends WebBase{
 
-    public function index(){
-        return $this->fetch('chartered-bus');
+    public function detail(){
+        return $this->fetch();
      }
 
 }
