@@ -15,8 +15,9 @@ class PackCarProductLogic extends BaseLogic{
 
     protected $table = 'ruit_pack_car_product';
 
-    const TYPE_AIRPLANE = 1;  //接送机
-    const TYPE_PACKCAR  = 2;  // 包车
+    const TYPE_AIRPLANE_RECEIVE = 1;  //接送机
+    const TYPE_AIRPLANE_SEND    = 3;  // 包车
+    const TYPE_PACKCAR          = 2;  // 包车
 
 
     public function getPageByType($type){

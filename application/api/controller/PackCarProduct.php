@@ -35,7 +35,7 @@ class PackCarProduct extends Base{
      * @apiDescription  包车-按天包车-包车产品列表
      * @apiName         getList
      * @apiGroup        PackCarProduct
-     * @apiParam  {Number} type         包车类型 1=接送机  2=包车.
+     * @apiParam  {Number} type         包车类型  1=接机  2=包车 3=送机.
      * @apiParam  {Number} [p=1]        页码.
      * @apiParam  {Number} [pageSize=20]   每页数据量.
      *
@@ -56,7 +56,7 @@ class PackCarProduct extends Base{
     private function getList(Request $request){
         $pcpLogic = new PackCarProductLogic();
         $type = input('type');
-        if(!in_array($type, [PackCarProductLogic::TYPE_AIRPLANE, PackCarProductLogic::TYPE_PACKCAR])){
+        if(!in_array($type, [PackCarProductLogic::TYPE_AIRPLANE_RECEIVE, PackCarProductLogic::TYPE_PACKCAR,PackCarProductLogic::TYPE_AIRPLANE_SEND])){
             return $this->returnJson(4002);
         }
         return $this->returnJson($pcpLogic->getPageByType($type));
