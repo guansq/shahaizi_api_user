@@ -23,7 +23,6 @@ class PackCarBarLogic extends BaseLogic{
             'car_info'=>'name',
             'initial_letter'=>'initialLetter',
             'status'=>'status',
-            'seat_num'=>'seatNum',
             'car_brand_img'=>'logo',
         ];
         return $this->where('status',1)->field($fields)->select();
