@@ -14,6 +14,7 @@
 
 namespace app\web\controller;
 
+use app\common\logic\UsersLogic;
 use think\Controller;
 use think\Validate;
 
@@ -90,11 +91,12 @@ class WebBase extends Controller{
 
     protected function getUserByToken(){
         $token = I("token", ''); // token
+        $userLogic = new UsersLogic();
         if(empty($token)){
             return null;
         }
 
-        $user = M('users')->where("token", $token)->find();
+        $user = $userLogic->where("token", $token)->find();
         if(empty($user)){
             return null;
         }

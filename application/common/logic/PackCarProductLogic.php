@@ -105,7 +105,6 @@ class PackCarProductLogic extends BaseLogic{
 
         $pcar['isCollect'] = empty($user) ? 0 : $userCollLogic->isCollectPackCar($id, $user['user_id']);
         $pcar['isPraise'] = empty($user) ? 0 : $userPraiceLogic->isPraisePackCar($id, $user['user_id']);
-
         ksort($pcar);
         return resultArray(2000, '', $pcar);
     }
