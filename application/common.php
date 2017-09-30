@@ -343,7 +343,11 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         'type' => 3,
     ];
     M('account_log')->save($account_arr);
-    return ['status' => 1, 'msg' => '成功', 'result' => ['user_money' => $user['user_money']]];//返回余额
+    $ret =  [
+        'user_money' => $user['user_money'],
+        'user_money_fmt' => moneyFormat($user['user_money'])
+    ];
+    return ['status' => 1, 'msg' => '成功', 'result' =>$ret];//返回余额
 }
 
 /*

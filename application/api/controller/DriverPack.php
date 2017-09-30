@@ -245,7 +245,7 @@ class DriverPack extends Base{
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
-     * @apiParam    {Number}    pcpId          包车产品id
+     * @apiParam    {Number}    pcpid          包车产品id
      * @apiParam    {String}    user_name       用户
      * @apiParam    {String}    car_type_id     车型ID
      * @apiParam    {String}    connect         联系方式
@@ -268,7 +268,7 @@ class DriverPack extends Base{
     public function receiveAirport(){
         $pcpLogic = new PackCarProductLogic();
         $data = I('post.');
-        $pcpId = I('pcpId');
+        $pcpId = I('pcpid');
         // $result = $this->validate($data, 'PackBase.receiveAirport');
         // if($result){
         //     $this->ajaxReturn(['status' => -1, 'msg' => $result]);

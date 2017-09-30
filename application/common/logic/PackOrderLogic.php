@@ -8,7 +8,6 @@
 
 namespace app\common\logic;
 
-use think\Model;
 use think\Page;
 
 
@@ -137,24 +136,26 @@ class PackOrderLogic extends BaseLogic{
                 'status' => -1,
                 'msg' => '数据为空'
             ];
-        }else{
-
-            $seller = $sellerLogic->find($info['seller_id']);
-            $carBar = $carBarLogic->find($info['con_car_type']);
-            $info['con_car_type_name'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
-            $carBar = $carBarLogic->find($info['req_car_type']);
-            $info['req_car_type'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
-            $info['hx_user_name'] = empty($seller['hx_user_name']) ? '' : $seller['hx_user_name'];
-            $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
-            $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
-            $info['user_money_fmt'] = moneyFormat($seller['user_money']);
-            $return = [
-                'status' => 1,
-                'msg' => '成功',
-                'result' => $info
-            ];
         }
-        
+
+        $seller = $sellerLogic->find($info['seller_id']);
+        $carBar = $carBarLogic->find($info['con_car_type']);
+        $info['con_car_type_name'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
+        $info['real_price_fmt'] = moneyFormat($info['real_price']);
+
+
+        $carBar = $carBarLogic->find($info['req_car_type']);
+        $info['req_car_type'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
+        $info['hx_user_name'] = empty($seller['hx_user_name']) ? '' : $seller['hx_user_name'];
+        $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
+        $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
+        $info['user_money_fmt'] = moneyFormat($seller['user_money']);
+        $return = [
+            'status' => 1,
+            'msg' => '成功',
+            'result' => $info
+        ];
+
         return $return;
     }
 
