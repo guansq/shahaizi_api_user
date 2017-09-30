@@ -74,6 +74,15 @@ class PackOrderLogic extends BaseLogic{
             'status' => self::STATUS_WHERE_ARR[$statusCode],
             'user_id' => $user_id
         ];
+//        if($statusCode == 'DOING'){
+//            $now = time();
+//            $where = [
+//                'status' => self::STATUS_UNSTART,
+//                'start_time' => ['<=', $now],
+//                'end_time' => ['>=', $now],
+//                'user_id' => $user_id
+//            ];
+//        }
         $field = [
             'ord.air_id',
             'ord.order_sn',
@@ -103,6 +112,9 @@ class PackOrderLogic extends BaseLogic{
         foreach($order_list as &$val){
             $val['create_at'] = shzDate($val['create_at']);
             $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']] : $val['title'];
+
+            $val['real_price_fmt'] = moneyFormat($val['real_price']);
+            $val['total_price_fmt'] = moneyFormat($val['total_price']);
         }
         $result = [
             'totalPages' => $page->totalPages,
@@ -142,6 +154,7 @@ class PackOrderLogic extends BaseLogic{
         $carBar = $carBarLogic->find($info['con_car_type']);
         $info['con_car_type_name'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
         $info['real_price_fmt'] = moneyFormat($info['real_price']);
+        $info['total_price_fmt'] = moneyFormat($info['total_price']);
 
 
         $carBar = $carBarLogic->find($info['req_car_type']);

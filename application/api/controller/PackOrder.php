@@ -146,7 +146,7 @@ class PackOrder extends Base{
         //判断用户
         $clLogic = new CouponListLogic();
         $air_id = I('air_id');
-        $pack_order = M('pack_order')->where(array('air_id' => $air_id,'status'=>0))->find();//订单详情
+        $pack_order = M('pack_order')->where(array('air_id' => $air_id,'status'=>PackOrderLogic::STATUS_UNPAY))->find();//订单详情
         $time = time();
         if(empty($pack_order)){
             $this->ajaxReturn(['status'=>-1,'msg'=>'该订单不可进行付款操作']);

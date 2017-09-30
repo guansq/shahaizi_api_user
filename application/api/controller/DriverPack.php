@@ -280,7 +280,7 @@ class DriverPack extends Base{
             return $this->returnJson(4004,'缺少参数pcpId');
         }
         $data['start_address'] = $data['airport_name'];
-        $data['real_price'] = $pcp['price'];
+        $data['total_price'] = $pcp['price'];
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,

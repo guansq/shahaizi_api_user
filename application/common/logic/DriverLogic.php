@@ -188,7 +188,7 @@ class DriverLogic extends BaseLogic{
             'order_day' => $data['order_day'], //
             'eating_ave' => $data['eating_ave'], //
             'stay_ave' => $data['stay_ave'], //
-            'real_price' => $data['real_price'], //
+            'total_price' => $data['total_price'], //
             'status' => PackOrderLogic::STATUS_UNPAY, //
             'create_at' => time(),
             'update_at' => time(),
