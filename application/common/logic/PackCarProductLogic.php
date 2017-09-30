@@ -37,7 +37,7 @@ class PackCarProductLogic extends BaseLogic{
             'title',
             'img' => 'imgs',
         ];
-        $list = $this->where($where)->field($fields)->order('create_at DESC')->select();
+        $list = $this->where($where)->field($fields)->order('sort,create_at DESC,id DESC')->limit($page->firstRow,$page->listRows)->select();
         foreach($list as &$item){
             $item['publishTimeFmt'] = date('Y.m.d', $item['publishTime']);
             $item['priceFmt'] = moneyFormat($item['price']);
