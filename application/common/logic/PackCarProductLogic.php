@@ -37,7 +37,11 @@ class PackCarProductLogic extends BaseLogic{
             'title',
             'img' => 'imgs',
         ];
-        $list = $this->where($where)->field($fields)->order('sort,create_at DESC,id DESC')->limit($page->firstRow,$page->listRows)->select();
+        $list = $this->where($where)
+            ->field($fields)
+            ->order('sort,create_at DESC,id DESC')
+            ->limit($page->firstRow, $page->listRows)
+            ->select();
         foreach($list as &$item){
             $item['publishTimeFmt'] = date('Y.m.d', $item['publishTime']);
             $item['priceFmt'] = moneyFormat($item['price']);
@@ -99,8 +103,8 @@ class PackCarProductLogic extends BaseLogic{
         $pcar['overdistancePriceFmt'] = moneyFormat($pcar['overdistancePrice']);
         $pcar['imgs'] = explode('|', $pcar['imgs']);
 
-        $pcar['isCollect'] = empty($user)?0:$userCollLogic->isCollectPackCar($id,$user['user_id']);
-        $pcar['isPraise'] =  empty($user)?0:$userPraiceLogic->isPraisePackCar($id,$user['user_id']);
+        $pcar['isCollect'] = empty($user) ? 0 : $userCollLogic->isCollectPackCar($id, $user['user_id']);
+        $pcar['isPraise'] = empty($user) ? 0 : $userPraiceLogic->isPraisePackCar($id, $user['user_id']);
 
         ksort($pcar);
         return resultArray(2000, '', $pcar);
