@@ -260,7 +260,7 @@ class Base extends Controller{
                 'getGoodsCollect',
             ],
             'driverpack' => ['rentCarByDay', 'receiveAirport', 'sendAirport', 'oncePickup', 'privateMake'],
-            'packorder' => ['getPackOrder', 'getPackOrderDetail', 'payPackOrderByBalance', 'createPackOrder'],
+            'packorder' => ['getPackOrder', 'getPackOrderDetail', 'payPackOrderByBalance', 'createPackOrder','confirmFinish'],
         ];
 
         // 保留状态的检查组

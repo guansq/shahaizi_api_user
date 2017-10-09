@@ -8,6 +8,7 @@
 
 namespace app\common\logic;
 
+use think\Model;
 use think\Page;
 
 
@@ -242,5 +243,19 @@ class PackOrderLogic extends BaseLogic{
         }else{
             return ['status' => -1, 'msg' => '失败'];
         }
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 用户 确认订单完成
+     * @param $order
+     * @param $user
+     */
+    public function confirmFinish(Model $order, $user){
+        $order->status = PackOrderLogic::STATUS_UNCOMMENT;
+        if($order->save()){
+            return resultArray(2000);
+        };
+        return resultArray(5020);
     }
 }

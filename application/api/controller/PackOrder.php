@@ -8,6 +8,7 @@
 namespace app\api\controller;
 use app\common\logic\CouponListLogic;
 use app\common\logic\PackOrderLogic;
+use think\Request;
 
 class PackOrder extends Base{
 
@@ -232,4 +233,31 @@ class PackOrder extends Base{
         }
     }
 
+    /**
+     * @api {PUT}  /index.php?m=Api&c=PackOrder&a=confirmFinish   确认结束订单 ok wxx
+     * @apiName     confirmFinish
+     * @apiGroup    PackOrder
+     * @apiParam    {String}    token   token
+     * @apiParam    {Number}    id  订单ID
+     */
+    public function confirmFinish(Request $request){
+        if(!$request->isPut()){
+            $this->returnJson(4000);
+        }
+        $id = I('id');
+        $orderLogic = new PackOrderLogic();
+        $order = $orderLogic->find($id);
+        if(empty($order)){
+            $this->returnJson(4004);
+        }
+        if($order->user_id != $this->user_id){
+            $this->returnJson(4010);
+        }
+        if($order->status == PackOrderLogic::STATUS_UNCOMMENT){
+            $this->returnJson(4005);
+        }
+        $this->returnJson($orderLogic->confirmFinish($order,$this->user));
+
+
+    }
 }
