@@ -304,6 +304,7 @@ class DriverPack extends Base{
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
+     * @apiParam    {Number}    pcpid          包车产品id
      * @apiParam    {String}    user_name       用户
      * @apiParam    {String}    car_type_id     车型ID
      * @apiParam    {String}    connect         联系方式
@@ -329,6 +330,12 @@ class DriverPack extends Base{
         if(empty($result)){
             return $this->returnJson(4003);
         }
+        $pcpLogic = new PackCarProductLogic();
+        $pcp = $pcpLogic->find($data['pcpid']);
+        if(empty($pcp)){
+            return $this->returnJson(4004,'缺少参数pcpId');
+        }
+        $data['total_price'] = $pcp['price'];
         $data['dest_address'] = $data['airport_name'];
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [

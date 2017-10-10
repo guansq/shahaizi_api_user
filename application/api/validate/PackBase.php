@@ -66,7 +66,7 @@ class PackBase extends Validate{
     protected $scene = [
         'rentCarByDay' => ['type','car_type_id','user_name','connect','is_have_pack','adult_num','child_num','dest_address','pack_time'],
         'receiveAirport' => ['type','car_type_id','user_name','connect','is_have_pack','flt_no','airport_name','dest_address','start_time'],
-        'sendAirport' => ['type','car_type_id','user_name','connect','is_have_pack','flt_no','airport_name','start_address','start_time'],
+        'sendAirport' => ['type','pcpid','car_type_id','user_name','connect','is_have_pack','flt_no','airport_name','start_address','start_time'],
         'oncePickup' => ['type','car_type_id','user_name','connect','is_have_pack','adult_num','child_num','start_address','dest_address','user_car_time'],
         'privateMake' => ['type','user_name','connect','is_have_pack','tour_time','end_address','tour_days','tour_person_num','tour_favorite','recommend_diner','recommend_sleep'],
         //'add'   =>  ['name','email'],
