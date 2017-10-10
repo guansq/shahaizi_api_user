@@ -14,7 +14,8 @@ use think\Page;
 
 class PackOrderLogic extends BaseLogic{
     protected $table = 'ruit_pack_order';
-
+    // 时间字段取出后的默认时间格式
+    protected $dateFormat;
     // 1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游7快捷订单
     const TYPE_ARR = [
         1 => '接机订单',
@@ -111,7 +112,7 @@ class PackOrderLogic extends BaseLogic{
             ->order('air_id DESC')
             ->select();
         foreach($order_list as &$val){
-            $val['create_at'] = shzDate($val['create_at']);
+            // $val['create_at'] = shzDate($val['create_at']);
             $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']] : $val['title'];
 
             $val['real_price_fmt'] = moneyFormat($val['real_price']);
