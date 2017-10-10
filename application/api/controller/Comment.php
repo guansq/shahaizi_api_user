@@ -176,4 +176,41 @@ class Comment extends Base{
         $order['order_id'] = $reqParams['orderId'];  //
         return $this->returnJson($poCommentLogic->commentOrder($order,$reqParams,$this->user));
     }
+
+    /**
+     * @api  {GET}   /api/comment/orderComment    11 查看包车订单评论 todo wxx
+     * @apiDescription 评论包车订单
+     * @apiName  getPackOrderComment
+     * @apiGroup Comment
+     * @apiParam {String}  token  token.
+     * @apiParam  {Number} orderId            订单id.
+     *
+     * @apiSuccess  {Number} score        评分.
+     * @apiSuccess  {String} content            评论文字.
+     * @apiSuccess  {String} img                图片.
+     * @apiSuccess  {Number} isAnonymous        是否匿名.
+     *
+     */
+    private function getPackOrderComment($request){
+        $reqParams = $this->getReqParams([
+            'orderId',
+        ]);
+        $rule = [
+            'orderId' => ['require'],
+        ];
+        $this->validateParams($reqParams, $rule);
+
+        $packOrderLogic = new PackOrderLogic();
+        $poCommentLogic = new OrderCommentLogic();
+        //获取订单详情
+        $order = $packOrderLogic->find($reqParams['orderId']);
+        if(empty($order)){
+            return $this->returnJson(4004, '未获取到订单信息');
+        }
+        if($order['status'] != PackOrderLogic::STATUS_UN_COMMENT){
+            returnJson(4004, '当前订单不允许评价');
+        }
+        $order['order_id'] = $reqParams['orderId'];  //
+        return $this->returnJson($poCommentLogic->commentOrder($order,$reqParams,$this->user));
+    }
 }
