@@ -92,13 +92,14 @@ class PackOrderLogic extends BaseLogic{
             'sel.hx_user_name',
             'sel.nickname',
             'sel.head_pic' => 'avatar',
+            'sel.nickname' =>'drv_name',
+            'sel.mobile' =>'drv_phone',
             'ord.status',
             'ord.title',
             'ord.type',
             'ord.customer_name',
-            'ord.drv_name',
             'ord.create_at',
-            'ord.drv_phone',
+
             'ord.total_price',
             'ord.real_price'
         ];
