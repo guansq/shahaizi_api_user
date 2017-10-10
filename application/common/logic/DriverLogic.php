@@ -161,11 +161,11 @@ class DriverLogic extends BaseLogic{
                 $type = 5;
                 break;
         }
-        $OrderLogic = new OrderLogic();
         $saveData = [
             'type' => $type,
-            'order_sn' => $OrderLogic->get_order_sn(),
+            'order_sn' => OrderLogic::get_order_sn(),
             'user_id' => $user['user_id'],
+            'car_product_id' => intval($data['pcpid']),
             'customer_name' => $data['user_name'],
             'req_car_type' => $data['car_type_id'],
             'customer_phone' => $data['connect'],

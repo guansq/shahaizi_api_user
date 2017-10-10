@@ -45,6 +45,7 @@ class OrderCommentLogic extends BaseLogic{
             'content' => $reqParams['content'],
             'user_id' => $user['user_id'],
             'order_id' => $order['order_id'],
+            'car_product_id' => $order['car_product_id'],
             'describe_score' => $reqParams['score'],
             'seller_score' => $reqParams['score'],
             'logistics_score' => $reqParams['score'],

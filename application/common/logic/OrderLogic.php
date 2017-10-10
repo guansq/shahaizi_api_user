@@ -314,7 +314,7 @@ class OrderLogic extends BaseLogic
 	 * 获取订单 order_sn
 	 * @return string
 	 */
-	public function get_order_sn()
+	public static function get_order_sn($prefix = '')
 	{
 		$order_sn = null;
 		// 保证不会有重复订单号存在
@@ -324,7 +324,7 @@ class OrderLogic extends BaseLogic
 			if($order_sn_count == 0)
 				break;
 		}
-		return $order_sn;
+		return $prefix.$order_sn;
 	}
 
     /**
