@@ -33,9 +33,9 @@ return [
     // 扩展函数文件
     'extra_file_list'        => [THINK_PATH . 'helper' . EXT,APP_PATH.'function.php'],
     // 默认输出类型
-    'default_return_type'    => 'html',
+    'default_return_type'    => 'json',
     // 默认AJAX 数据返回格式,可选json xml ...
-    'default_ajax_return'    => 'html',
+    'default_ajax_return'    => 'json',
     // 默认JSONP格式返回的处理方法
     'default_jsonp_handler'  => 'jsonpReturn',
     // 默认JSONP处理方法
@@ -58,7 +58,7 @@ return [
     // +----------------------------------------------------------------------
 
     // 默认模块名
-    'default_module'         => 'home',
+    'default_module'         => 'api',
     // 禁止访问模块
     'deny_module_list'       => ['common'],
     // 默认控制器名
@@ -85,7 +85,7 @@ return [
     // pathinfo分隔符
     'pathinfo_depr'          => '/',
     // URL伪静态后缀
-    'url_html_suffix'        => 'html',
+    'url_html_suffix'        => 'json',
     // URL普通方式参数 用于自动生成
     'url_common_param'       => false,
     // URL参数方式 0 按名称成对解析 1 按顺序解析

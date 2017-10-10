@@ -15,6 +15,7 @@
 
 namespace app\api\logic;
 
+use app\common\logic\UserPraiseLogic;
 use think\Page;
 
 
@@ -64,34 +65,8 @@ class DynamicLogic extends BaseLogic{
      * @success {number} list.readNum  阅读量.
      */
     public function getDynamicPageByUserId($user_id){
-        $fields = [
-            'act_id' => 'id',
-            'cover_img' => 'img',
-            'title',
-            'summary' => 'subTitle',
-            'read_num' => 'readNum',
-            'create_at' => 'timeStamp',
-        ];
-        $count = $this->where('user_id', $user_id)->count();
-        $page = new Page($count);
-        $list = $this->where('user_id', $user_id)
-            ->limit($page->firstRow, $page->listRows)
-            ->order('create_at DESC')
-            ->field($fields)
-            ->select();
-
-        foreach($list as &$item){
-            $item['img'] = explode('|', $item['img'])[0];
-            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->count();
-        }
-
-        $ret = [
-            'p' => $page->nowPage,
-            'totalPages' => $page->totalPages,
-            'list' => $list,
-        ];
-        return resultArray(2000, '', $ret);
+        $where = ['user_id' => $user_id];
+        return $this->getDynamicPageByWhere($where);
     }
 
     /**
@@ -136,12 +111,22 @@ class DynamicLogic extends BaseLogic{
         $user = UserLogic::where('user_id', $dynamic['ownerId'])->find();
 
         $dynamic['timeFmt'] = date('Y.m.d', $dynamic['timeStamp']);
-        $dynamic['isCollect'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_DYNAMIC)->where('user_id', $user_id)->count();
-        $dynamic['collectNum'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_DYNAMIC)->count();
-        $dynamic['isPraise'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->where('user_id', $user_id)->count();
-        $dynamic['praiseNum'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->count();
-        $dynamic['ownerName'] =$user['nickname'];
-        $dynamic['ownerAvatar'] = $user['head_pic'] ;
+        $dynamic['isCollect'] = UserCollectLogic::where('goods_id', $id)
+            ->where('model_type', UserCollectLogic::TYPE_DYNAMIC)
+            ->where('user_id', $user_id)
+            ->count();
+        $dynamic['collectNum'] = UserCollectLogic::where('goods_id', $id)
+            ->where('model_type', UserCollectLogic::TYPE_DYNAMIC)
+            ->count();
+        $dynamic['isPraise'] = UserPraiseLogic::where('obj_id', $id)
+            ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
+            ->where('user_id', $user_id)
+            ->count();
+        $dynamic['praiseNum'] = UserPraiseLogic::where('obj_id', $id)
+            ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
+            ->count();
+        $dynamic['ownerName'] = $user['nickname'];
+        $dynamic['ownerAvatar'] = $user['head_pic'];
 
 
         return resultArray(2000, '', $dynamic);
@@ -160,10 +145,10 @@ class DynamicLogic extends BaseLogic{
         ];
         $dynamic = $this->where('act_id', $id)->field($fields)->find();
         if(empty($dynamic)){
-            return resultArray(4004,'要删除的动态已经不存在');
+            return resultArray(4004, '要删除的动态已经不存在');
         }
         if($dynamic->user_id != $user_id){
-            return resultArray(4010,'无权删除');
+            return resultArray(4010, '无权删除');
         }
         $dynamic->delete();
         return resultArray(2000);
@@ -178,11 +163,11 @@ class DynamicLogic extends BaseLogic{
 
         $userColl = new  UserCollectLogic();
 
-        $count = $userColl->where('user_id', $user_id)->where('model_type',UserCollectLogic::TYPE_DYNAMIC)->count();
+        $count = $userColl->where('user_id', $user_id)->where('model_type', UserCollectLogic::TYPE_DYNAMIC)->count();
         $page = new Page($count);
 
         $ids = $userColl->where('user_id', $user_id)
-            ->where('model_type',UserCollectLogic::TYPE_DYNAMIC)
+            ->where('model_type', UserCollectLogic::TYPE_DYNAMIC)
             ->limit($page->firstRow, $page->listRows)
             ->order('add_time DESC')
             ->column('goods_id');
@@ -198,7 +183,44 @@ class DynamicLogic extends BaseLogic{
             'head_pic' => 'ownerAvatar',
         ];
 
-        $list = $this->alias('dyn')->join('ruit_users user','user.user_id=dyn.user_id','LEFT')->where('act_id', ['IN', $ids])
+        $list = $this->alias('dyn')->join('ruit_users user', 'user.user_id=dyn.user_id', 'LEFT')->where('act_id', [
+            'IN',
+            $ids
+        ])->order('create_at DESC')->field($fields)->select();
+
+        foreach($list as &$item){
+            $item['img'] = explode('|', $item['img'])[0];
+            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
+                ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
+                ->count();
+        }
+
+        $ret = [
+            'p' => $page->nowPage,
+            'totalPages' => $page->totalPages,
+            'list' => $list,
+        ];
+        return resultArray(2000, '', $ret);
+    }
+
+    public function getDynamicPage(){
+        return $this->getDynamicPageByWhere();
+    }
+
+    private function getDynamicPageByWhere($where = []){
+        $fields = [
+            'act_id' => 'id',
+            'cover_img' => 'img',
+            'title',
+            'summary' => 'subTitle',
+            'read_num' => 'readNum',
+            'create_at' => 'timeStamp',
+        ];
+        $count = $this->where($where)->count();
+        $page = new Page($count);
+        $list = $this->where($where)
+            ->limit($page->firstRow, $page->listRows)
             ->order('create_at DESC')
             ->field($fields)
             ->select();
@@ -206,7 +228,9 @@ class DynamicLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)->count();
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
+                ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
+                ->count();
         }
 
         $ret = [
