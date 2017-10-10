@@ -10,6 +10,7 @@ namespace app\api\controller;
 
 use app\common\logic\DriverLogic;
 use app\common\logic\PackCarProductLogic;
+use app\common\logic\PackOrderLogic;
 
 class DriverPack extends Base{
 
@@ -280,7 +281,8 @@ class DriverPack extends Base{
             return $this->returnJson(4004,'缺少参数pcpId');
         }
         $data['start_address'] = $data['airport_name'];
-        $data['total_price'] = $pcp['price'];
+        $data['real_price'] = $data['total_price'] = $pcp['price'];
+        $data['status'] = PackOrderLogic::STATUS_UNPAY;
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
@@ -335,8 +337,9 @@ class DriverPack extends Base{
         if(empty($pcp)){
             return $this->returnJson(4004,'缺少参数pcpId');
         }
-        $data['total_price'] = $pcp['price'];
+        $data['real_price'] = $data['total_price'] = $pcp['price'];
         $data['dest_address'] = $data['airport_name'];
+        $data['status'] = PackOrderLogic::STATUS_UNPAY;
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
@@ -385,6 +388,7 @@ class DriverPack extends Base{
         }
         //验证通过
         $data['start_time'] = $data['user_car_time'];
+        $data['status'] = PackOrderLogic::STATUS_UNCONFIRM;
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,

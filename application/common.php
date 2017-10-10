@@ -313,7 +313,7 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         'status' => 1,
         'pay_way' => $pay_way,
         'coupon_price' => $discount_price,//优惠价格
-        'real_price' => $real_price,
+        //'real_price' => $real_price,
         'is_pay' => 1,
         'pay_time' => time(),
     ];
