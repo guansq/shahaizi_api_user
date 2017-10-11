@@ -53,6 +53,7 @@ class BaseMessage extends Base{
         $code = rand($min, $max);
         switch($data['opt']){
             case 'reg' :
+                //进行真实的手机号验证 需要客户端传一个不带国家的手机号过来
                 $content = '【傻孩子APP】您正在进行[注册]操作，验证码为：'.$code;
                 break;
             case 'resetpwd' :
@@ -93,6 +94,12 @@ class BaseMessage extends Base{
                     $content = '【傻孩子APP】您正在进行[注册]操作，验证码为：'.$code;
                     break;
                 case 'resetpwd' :
+                    //对邮箱号判断
+                    $user_where = "mail = {$data['mail']}";
+                    $userInfo = M("seller") -> where($user_where) -> find();
+                    if(empty($userInfo)){
+                        $this->ajaxReturn(['status'=>-1,'msg'=>'您的邮箱还没有注册或绑定']);
+                    }
                     $content = '【傻孩子APP】您正在进行[重置密码]操作，验证码为：'.$code;
                     break;
                 case 'bind' :
