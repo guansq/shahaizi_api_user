@@ -17,6 +17,7 @@ namespace app\api\controller;
 use app\common\logic\AdLogic;
 use app\common\logic\GoodsLogic;
 use app\common\logic\HomeLogic;
+use app\common\logic\LocalTalentLogic;
 use app\common\logic\StoreLogic;
 use think\Db;
 use think\Page;
@@ -43,11 +44,13 @@ class Index extends Base{
      */
     public function home(){
         $city = I('city', '');
+        $city = ''; // FIXME 目前去掉地区筛选
         //获取轮播图
-        $data = M('ad')
-            ->where('pid',AdLogic::AD_POSITION_HOME)
-            ->field(array('ad_link', 'ad_name', 'ad_code'))
-            //->cache(true, TPSHOP_CACHE_TIME)
+        $data = M('ad')->where('pid', AdLogic::AD_POSITION_HOME)->field(array(
+                'ad_link',
+                'ad_name',
+                'ad_code'
+            ))//->cache(true, TPSHOP_CACHE_TIME)
             ->select();
         //广告地址转换
         foreach($data as $k => $v){
@@ -55,14 +58,18 @@ class Index extends Base{
                 $data[$k]['ad_code'] = SITE_URL.$v['ad_code'];
             }
             $data[$k]['ad_link'] = $v['ad_link'];
-
-
         }
+
         //获取大分类
-        //        $category_arr = M('goods_category')->where('id in(4,5,7)')->field('id,name')->limit(3)->cache(true,TPSHOP_CACHE_TIME)->select();
+        // $category_arr = M('goods_category')->where('id in(4,5,7)')->field('id,name')->limit(3)->cache(true,TPSHOP_CACHE_TIME)->select();
         $homeLogic = new HomeLogic();
         $result = $homeLogic->getHomeInfo($city);
-        $this->ajaxReturn(array('status' => 1, 'msg' => '获取成功', 'result' => array('action' => $result, 'ad' => $data)));
+        $talents = LocalTalentLogic::getListAtHome($city);
+        $this->ajaxReturn(array(
+            'status' => 1,
+            'msg' => '获取成功',
+            'result' => array('action' => $result, 'ad' => $data, 'talent' => $talents)
+        ));
     }
 
     /**

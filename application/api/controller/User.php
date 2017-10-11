@@ -170,7 +170,7 @@ class User extends Base{
      *  "nickname": ""
      *  }
      *  }
-     *  @apiErrorExample     {json}  Error-response
+     * @apiErrorExample     {json}  Error-response
      *               Http/1.1    200 OK
      *    {
      *  "status": -1,
@@ -216,7 +216,7 @@ class User extends Base{
     }
 
     /**
-     * @api         {POST}  /index.php?m=Api&c=User&a=bindPhone     绑定手机done  管少秋
+     * @api         {POST}  /index.php?m=Api&c=User&a=bindPhone     token绑定手机done  管少秋
      * @apiName     bindPhone
      * @apiGroup    User
      * @apiParam    {String}    token       token
@@ -255,6 +255,60 @@ class User extends Base{
             $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
         $this->ajaxReturn(['status' => 1, 'msg' => '绑定成功']);
+    }
+
+    /**
+     * @api         {POST}  /Api/User/thirdBindPhone     第三方登录绑定手机 ok  wxx
+     * @apiName     thirdBindPhone
+     * @apiGroup    User
+     * @apiParam    {String}    openid     第三方唯一标识
+     * @apiParam    {String}    from       同第三方登录接口
+     * @apiParam    {String}    mobile      绑定手机号
+     * @apiParam    {String}    countroy_code   绑定国家的区号
+     * @apiParam    {String}    code        绑定手机code
+     */
+    public function thirdBindPhone(){
+        //看该手机号是否被别人绑定
+        $reqParams = $this->getReqParams(['openid', 'from', 'mobile', 'countroy_code', 'code']);
+        $rule = [
+            'openid' => 'require|max:100',
+            'from' => 'require|max:10',
+            'mobile' => 'require|max:20',
+            'countroy_code' => 'require|max:5',
+            'code' => 'require|max:8',
+        ];
+        $this->validateParams($reqParams, $rule);
+
+        $mobile = I('mobile');
+        if(!check_mobile($mobile)){
+            $this->ajaxReturn(['status' => -1, 'msg' => '请填写正确的手机号']);
+        }
+        $user = M('users')->field('mobile, nickname')->where(['mobile' => $mobile])->find();
+        if(!empty($user)){
+            $this->ajaxReturn(['status' => -1, 'msg' => '该手机号已被绑定']);
+        }
+        $countroy_code = I('countroy_code');
+        $sendphone = $countroy_code.$mobile;
+        $code = I('code');
+        //校验code
+        $msgService = new MsgService();
+        $result = $msgService->verifyInterCaptcha($sendphone, 'bind', $code);
+        if($result['status'] != 1){
+            $this->ajaxReturn(['status' => -1, 'msg' => $result['msg']]);
+        }
+
+        $thirdUser = get_user_info($reqParams['openid'], 3, $reqParams['from']);
+        if(empty($thirdUser)){
+            return $this->returnJson(4004, '绑定失败,无效的第三方用户');
+        }
+
+        $thirdUser->mobile = $mobile;
+        $thirdUser->mobile_validated = 1;
+
+        if(!$thirdUser->save()){
+            return $this->returnJson(5020, '绑定失败');
+        }
+        return $this->returnJson(2000, '绑定成功');
     }
 
     /**

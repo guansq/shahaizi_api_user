@@ -5,12 +5,47 @@
  * Date: 2017/9/7
  * Time: 13:30
  */
+
 namespace app\common\logic;
 
-use think\Model;
 use think\Page;
-use think\Db;
+
 class LocalTalentLogic extends BaseLogic{
+
+    protected $table = 'ruit_article_local_talent';
+
+    //1:用户2:司导3:房东4:店主
+
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe:
+     * @param $city
+     */
+    public static function getListAtHome($city){
+
+        $where = [
+            'is_del' => 0
+        ];
+        if(!empty($city)){
+            $where['city'] = ['like', "%{$city}%"];
+        }
+        $field = [
+            'talent_id' => 'id',
+            'title' => 'title',
+            'cover_img' => 'img',
+            'summary' => 'summary',
+            'name' => 'name',
+            'country_id' => 'countryId',
+            'city_id' => 'cityId',
+            'city' => 'cityName',
+            'lable' => 'lable',
+            'good_num' => 'praiseNum',
+        ];
+
+        $dbRet = self::where($where)->order('sort,create_at DESC')->limit(3)->field($field)->select();
+        return $dbRet;
+    }
 
     /*
      * 得到当地达人列表
@@ -19,12 +54,16 @@ class LocalTalentLogic extends BaseLogic{
         if(empty($city)){
             $where = [];
         }else{
-            $where = ['city'=>['like',"%{$city}%"]];
+            $where = ['city' => ['like', "%{$city}%"]];
         }
         $count = M('article_local_talent')->where($where)->count();
         $Page = new Page($count, 10);
         //echo $Page->totalPages;die;
-        $local_list = M('article_local_talent')->where($where)->order('good_num desc')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        $local_list = M('article_local_talent')
+            ->where($where)
+            ->order('good_num desc')
+            ->limit($Page->firstRow.','.$Page->listRows)
+            ->select();
         foreach($local_list as &$val){
             $str = '';
             $type = getIDType($val['seller_id']);
@@ -38,14 +77,14 @@ class LocalTalentLogic extends BaseLogic{
                 $str .= '房东-';
             }
             if(!empty($str)){
-                $val['type_info'] = substr($str,0,-1);
+                $val['type_info'] = substr($str, 0, -1);
             }
         }
-        $result = ['totalPages' => $Page->totalPages,'list'=>$local_list];
+        $result = ['totalPages' => $Page->totalPages, 'list' => $local_list];
         $return = [
-            'status'    =>1,
-            'msg'       =>'',
-            'result'    =>$result,
+            'status' => 1,
+            'msg' => '',
+            'result' => $result,
         ];
         return $return;
     }
@@ -56,7 +95,7 @@ class LocalTalentLogic extends BaseLogic{
     public function get_local_detail($where){
         $info = M('article_local_talent')->where($where)->find();
         if(empty($info)){
-            $this->ajaxReturn(['status'=>-1,'msg'=>'没有该记录']);
+            $this->ajaxReturn(['status' => -1, 'msg' => '没有该记录']);
         }
         $str = '';
         $type = getIDType($info['seller_id']);
@@ -70,12 +109,12 @@ class LocalTalentLogic extends BaseLogic{
             $str .= '房东-';
         }
         if(!empty($str)){
-            $info['type_info'] = substr($str,0,-1);
+            $info['type_info'] = substr($str, 0, -1);
         }
         $return = [
-            'status'    =>1,
-            'msg'       =>'',
-            'result'    =>$info,
+            'status' => 1,
+            'msg' => '',
+            'result' => $info,
         ];
         return $return;
     }
