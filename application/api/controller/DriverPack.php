@@ -226,7 +226,7 @@ class DriverPack extends Base{
         // 校验指定司导
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
-            if(empty($seller)){
+            if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004,'指定司导不存在。');
             }
         }
@@ -286,7 +286,7 @@ class DriverPack extends Base{
         // 校验指定司导
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
-            if(empty($seller)){
+            if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004,'指定司导不存在。');
             }
         }
@@ -355,7 +355,7 @@ class DriverPack extends Base{
         // 校验指定司导
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
-            if(empty($seller)){
+            if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004,'指定司导不存在。');
             }
         }
@@ -412,7 +412,7 @@ class DriverPack extends Base{
         // 校验指定司导
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
-            if(empty($seller)){
+            if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004,'指定司导不存在。');
             }
         }
@@ -470,7 +470,7 @@ class DriverPack extends Base{
         // 校验指定司导
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
-            if(empty($seller)){
+            if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004,'指定司导不存在。');
             }
         }
