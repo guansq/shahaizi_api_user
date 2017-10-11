@@ -23,6 +23,10 @@ use think\Model;
 class SellerLogic extends BaseLogic{
     protected $table = 'ruit_seller';
 
+    public static function findByDrvCode($drv_code){
+        return self::where('drv_code',$drv_code)->find();
+    }
+
     /**
      * Author: W.W <will.wxx@qq.com>
      * Describe: 根据ID查询seller详情

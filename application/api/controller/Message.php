@@ -70,8 +70,9 @@ class Message extends Base{
      * @api         {GET}   /index.php?m=Api&c=Message&a=getMessageList    得到消息列表 todo will
      * @apiName     getMessageList
      * @apiGroup    Message
-     * @apiParam  {number} [p=1]        页码.
-     * @apiParam  {number} [pageSize=20]   每页数据量.
+     * @apiParam  {Number=system} [type=system]  类别.
+     * @apiParam  {Number} [p=1]        页码.
+     * @apiParam  {Number} [pageSize=20]   每页数据量.
      */
     public function getMessageList(){
         $msgLgc = new MessageLogic();
