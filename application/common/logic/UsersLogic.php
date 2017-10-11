@@ -151,25 +151,17 @@ class UsersLogic extends BaseLogic{
             return array('status' => -1, 'msg' => '参数有误', 'result' => '');
         }
         //获取用户信息
-        if(isset($data['unionid'])){
+        if(empty($data['unionid'])){
+            $user = get_user_info($openid, 3, $oauth);
+        }else{
             $map['unionid'] = $data['unionid'];
             $user = get_user_info($data['unionid'], 4, $oauth);
-        }else{
-            $user = get_user_info($openid, 3, $oauth);
         }
-        $user2 = session('user');
-        if(!empty($user2)){
-            $r = $this->oauth_bind($data);//绑定账号
-            if($r){
-                return array('status' => 1, 'msg' => '绑定成功', 'bind_status' => 1);
-            }else{
-                return array('status' => -1, 'msg' => '您的'.$data['oauth'].'账号已经绑定过账号', 'bind_status' => 0);
-            }
-        }
+
         $data['push_id'] && $map['push_id'] = $data['push_id'];
         $map['token'] = md5(time().mt_rand(1, 999999999));
         $map['last_login'] = time();
-        if(!$user){
+        if(empty($user)){
             //账户不存在 注册一个
             $map['password'] = '';
             $map['openid'] = $openid;
@@ -206,8 +198,13 @@ class UsersLogic extends BaseLogic{
             $user['token'] = $map['token'];
             $user['last_login'] = $map['last_login'];
         }
+        if(empty($user['mobile'])){
+            return resultArray(4000,'请绑定手机号');
+        }else{
+            return array('status' => 1, 'msg' => '登陆成功', 'result' => $user);
+        }
 
-        return array('status' => 1, 'msg' => '登陆成功', 'result' => $user);
+
     }
 
     /**
