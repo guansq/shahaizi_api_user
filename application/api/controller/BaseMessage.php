@@ -36,6 +36,7 @@ class BaseMessage extends Base{
      * @api      {POST} /index.php?m=Api&c=BaseMessage&a=sendInterCaptcha  发送国际验证码done  管少秋
      * @apiName  sendInterCaptcha
      * @apiGroup Common
+     * @apiParam {String} countroy_code   国家号.
      * @apiParam {String} mobile   手机号.
      * @apiParam {String} opt      验证码类型 reg=注册 resetpwd=找回密码 login=登陆 bind=绑定手机号.
      */
@@ -51,15 +52,25 @@ class BaseMessage extends Base{
         $min = pow(10 , 5);
         $max = pow(10, 6);
         $code = rand($min, $max);
+        $user = M('users')->where("mobile",$data['mobile'])->find();
         switch($data['opt']){
             case 'reg' :
                 //进行真实的手机号验证 需要客户端传一个不带国家的手机号过来
+                if($user){
+                    $this->ajaxReturn(['status' => -1, 'msg' => '该手机号已注册过了']);
+                }
                 $content = '【傻孩子APP】您正在进行[注册]操作，验证码为：'.$code;
                 break;
             case 'resetpwd' :
+                if(!$user){
+                    $this->ajaxReturn(['status' => -1, 'msg' => '该手机号尚未注册']);
+                }
                 $content = '【傻孩子APP】您正在进行[重置密码]操作，验证码为：'.$code;
                 break;
             case 'bind' :
+                /*if(!$user){
+                    $this->ajaxReturn(['status' => -1, 'msg' => '该手机号已注册过了']);
+                }*/
                 $content = '【傻孩子APP】您正在进行[绑定手机]操作，验证码为：'.$code;
                 break;
             case 'login' :
@@ -70,6 +81,7 @@ class BaseMessage extends Base{
                 break;
         }
         $msgService = new MsgService();
+        $data['mobile'] = $data['countroy_code'].$data['mobile'];
         $result = $msgService->sendInternational($data['mobile'],$content,$code,$data['opt']);
         $this->ajaxReturn($result);
     }

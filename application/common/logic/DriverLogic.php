@@ -194,6 +194,13 @@ class DriverLogic extends BaseLogic{
             'create_at' => time(),
             'update_at' => time(),
         ];
+        if($data['type'] == 'rent_car_by_day'){
+            $car_info = M('pack_car_product')->where("id",$data['pcpid'])->find();
+            if($car_info){
+                $saveData['total_price'] = $car_info['price'];
+                $saveData['real_price'] = $car_info['price'];
+            }
+        }
         $return = M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
         return $id;
