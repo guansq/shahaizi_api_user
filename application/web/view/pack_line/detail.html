@@ -132,10 +132,12 @@
         <span class="wire"></span>
       </p>
       <p>{$day.summary}</p>
-
       {volist name="day.port_detail" id="port" }
       <div class="days_con">
-        <h2>第{$port.port_num}站</h2>
+        <h2>
+          第{$port.port_num}站
+          <span class="pl_15">{$port.site_name}</span>
+        </h2>
         <img src="{$port.port_coverImg|default=''}" alt="">  <!--/application/web/view/static/image/2.png-->
         <p>
           {$port.port_detail}

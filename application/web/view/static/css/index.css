@@ -264,6 +264,11 @@ body{
     /*display: inline-block;*/
     /*width: 80px;*/
 /*}*/
+.pl_15{
+    padding-left: 15px;
+    color: #333;
+    font-size: 14px;
+}
 .synopsis .syn_title{
     display: inline-block;
     width: 70%;
