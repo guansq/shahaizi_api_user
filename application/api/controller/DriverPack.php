@@ -233,6 +233,7 @@ class DriverPack extends Base{
         }
         //验证通过
         $data['start_time'] = $data['pack_time'];
+        $data['status'] = 0;
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
