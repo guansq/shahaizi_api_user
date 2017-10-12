@@ -8,7 +8,6 @@
 
 namespace app\api\controller;
 
-use app\api\logic\LineCommentLogic;
 use app\api\logic\OrderCommentLogic;
 use app\api\logic\PackOrderLogic;
 use think\Request;
@@ -128,7 +127,7 @@ class Comment extends Base{
             return $this->postPackOrderComment($request);
         }
         if($request->isGet()){
-            // return $this->getPackOrderCommentList($request);
+             return $this->getPackOrderComment($request);
         }
         if($request->isDelete()){
         }
@@ -137,10 +136,10 @@ class Comment extends Base{
     }
 
     /**
-     * @api  {POST}   /api/comment/orderComment    10 评论包车订单 ok wxx
+     * @api            {POST}   /api/comment/orderComment    10 评论包车订单 ok wxx
      * @apiDescription 评论包车订单
-     * @apiName  postPackOrderComment
-     * @apiGroup Comment
+     * @apiName        postPackOrderComment
+     * @apiGroup       Comment
      * @apiParam {String}  token  token.
      * @apiParam  {Number} orderId            订单id.
      * @apiParam  {Number={1-5}} score        评分.
@@ -174,21 +173,24 @@ class Comment extends Base{
             returnJson(4004, '当前订单不允许评价');
         }
         $order['order_id'] = $reqParams['orderId'];  //
-        return $this->returnJson($poCommentLogic->commentOrder($order,$reqParams,$this->user));
+        return $this->returnJson($poCommentLogic->commentOrder($order, $reqParams, $this->user));
     }
 
     /**
-     * @api  {GET}   /api/comment/orderComment    11 查看包车订单评论 todo wxx
+     * @api            {GET}   /api/comment/orderComment    11 查看包车订单评论 todo wxx
      * @apiDescription 评论包车订单
-     * @apiName  getPackOrderComment
-     * @apiGroup Comment
+     * @apiName        getPackOrderComment
+     * @apiGroup       Comment
      * @apiParam {String}  token  token.
      * @apiParam  {Number} orderId            订单id.
      *
-     * @apiSuccess  {Number} score        评分.
-     * @apiSuccess  {String} content            评论文字.
-     * @apiSuccess  {String} img                图片.
-     * @apiSuccess  {Number} isAnonymous        是否匿名.
+     * @apiSuccess  {Array} list        评分.
+     * @apiSuccess  {Number} list.score        评分.
+     * @apiSuccess  {String} list.content            评论文字.
+     * @apiSuccess  {Array}  list.imgs                图片.
+     * @apiSuccess  {Number} list.commentTime        评论时间.
+     * @apiSuccess  {String} list.commentTimeFmt     评论时间.
+     * @apiSuccess  {Object} list.owner              评论人信息.
      *
      */
     private function getPackOrderComment($request){
@@ -199,18 +201,7 @@ class Comment extends Base{
             'orderId' => ['require'],
         ];
         $this->validateParams($reqParams, $rule);
-
-        $packOrderLogic = new PackOrderLogic();
         $poCommentLogic = new OrderCommentLogic();
-        //获取订单详情
-        $order = $packOrderLogic->find($reqParams['orderId']);
-        if(empty($order)){
-            return $this->returnJson(4004, '未获取到订单信息');
-        }
-        if($order['status'] != PackOrderLogic::STATUS_UN_COMMENT){
-            returnJson(4004, '当前订单不允许评价');
-        }
-        $order['order_id'] = $reqParams['orderId'];  //
-        return $this->returnJson($poCommentLogic->commentOrder($order,$reqParams,$this->user));
+        return $this->returnJson($poCommentLogic->getByOrderId($reqParams['orderId']));
     }
 }

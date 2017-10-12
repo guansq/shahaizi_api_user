@@ -66,4 +66,24 @@ class OrderCommentLogic extends BaseLogic{
 
     }
 
+    /** todo
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 根据订单获取订单详情
+     * @param $orderId
+     * @Success  {Number} score        评分.
+     * @Success  {String} content            评论文字.
+     * @Success  {Array} imgs                图片.
+     * @Success  {Number} commentTime        评论时间.
+     * @Success  {String} commentTimeFmt     评论时间.
+     * @Success  {Object} owner        评论人信息.
+     */
+    public function getByOrderId($orderId){
+        $filed =[
+            'pack_order_score' => 'score',
+            'content' => 'content',
+            'img' => 'imgs',
+            'commemt_time' => 'commentTime',
+        ];
+    }
+
 }
