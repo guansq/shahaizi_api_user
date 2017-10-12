@@ -259,11 +259,14 @@ body{
 .circuit_img .synopsis .pri{
     padding: 0 0 10px 0;
 }
-/*.circuit_img .synopsis .{*/
-    /*float: right;*/
-    /*display: inline-block;*/
-    /*width: 80px;*/
-/*}*/
+.circuit_img .synopsis .xing_b{
+    float: right;
+    display: inline-block;
+}
+.circuit_img .synopsis .xing_b img{
+    width: 80px;
+    vertical-align: text-bottom;
+}
 .pl_15{
     padding-left: 15px;
     color: #333;
