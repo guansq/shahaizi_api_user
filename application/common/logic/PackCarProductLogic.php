@@ -110,8 +110,18 @@ class PackCarProductLogic extends BaseLogic{
         $pcar['isAllowReturnFmt'] = empty( $pcar['isAllowReturn']) ? '不支持' : '支持';
         $pcar['isCollect'] = empty($user) ? 0 : $userCollLogic->isCollectPackCar($id, $user['user_id']);
         $pcar['isPraise'] = empty($user) ? 0 : $userPraiceLogic->isPraisePackCar($id, $user['user_id']);
+        $pcar['orderCnt'] = $this->countOrder($id);
         ksort($pcar);
         return resultArray(2000, '', $pcar);
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 统计下单数量
+     * @param $id
+     */
+    public function countOrder($id){
+       return PackOrderLogic::where('car_product_id',$id)->count();
     }
 
 
