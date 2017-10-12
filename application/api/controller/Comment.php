@@ -184,13 +184,27 @@ class Comment extends Base{
      * @apiParam {String}  token  token.
      * @apiParam  {Number} orderId            订单id.
      *
-     * @apiSuccess  {Array} list        评分.
-     * @apiSuccess  {Number} list.score        评分.
-     * @apiSuccess  {String} list.content            评论文字.
-     * @apiSuccess  {Array}  list.imgs                图片.
-     * @apiSuccess  {Number} list.commentTime        评论时间.
-     * @apiSuccess  {String} list.commentTimeFmt     评论时间.
-     * @apiSuccess  {Object} list.owner              评论人信息.
+     * @apiSuccess  {Object} userComm                用户评论内容.
+     * @apiSuccess  {Number} userComm.score            评分.
+     * @apiSuccess  {String} userComm.content            评论文字.
+     * @apiSuccess  {Array}  userComm.imgs                图片.
+     * @apiSuccess  {Number} userComm.commentTime        评论时间.
+     * @apiSuccess  {String} userComm.commentTimeFmt     评论时间.
+     * @apiSuccess  {Object} userComm.owner              评论人信息.
+
+     * @apiSuccess  {Object} drvComm                  司导评论内容.
+     * @apiSuccess  {Number} drvComm.score            评分.
+     * @apiSuccess  {String} drvComm.content            评论文字.
+     * @apiSuccess  {Array}  drvComm.imgs                图片.
+     * @apiSuccess  {Number} drvComm.commentTime        评论时间.
+     * @apiSuccess  {String} drvComm.commentTimeFmt     评论时间.
+
+     * @apiSuccess  {Object} sysComm                  平台评论内容.
+     * @apiSuccess  {Number} sysComm.score            评分.
+     * @apiSuccess  {String} sysComm.content            评论文字.
+     * @apiSuccess  {Array}  sysComm.imgs                图片.
+     * @apiSuccess  {Number} sysComm.commentTime        评论时间.
+     * @apiSuccess  {String} sysComm.commentTimeFmt     评论时间.
      *
      */
     private function getPackOrderComment($request){

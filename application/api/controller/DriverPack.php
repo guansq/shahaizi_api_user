@@ -211,7 +211,8 @@ class DriverPack extends Base{
      * @apiParam    {Number}    adult_num       成人乘客数
      * @apiParam    {String}    child_num       儿童乘客数
      * @apiParam    {String}    remark       备注
-     * @apiParam    {String}    dest_address    目的地地址
+     * @apiParam    {String}    start_address   出发地
+     * @apiParam    {String}    end_address     目的地
      * @apiParam    {String}    pack_time       包车日期
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
@@ -237,7 +238,7 @@ class DriverPack extends Base{
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
-            'dest_address' => $data['dest_address'],
+            'dest_address' => $data['end_address'],
             'pack_time' => $data['pack_time'],
         ];
         $result = $this->driverLogic->rent_car_by_day($saveData);
@@ -451,6 +452,7 @@ class DriverPack extends Base{
      * @apiParam    {Number}    adult_num       成人乘客数
      * @apiParam    {Number}    child_num       儿童乘客数
      * @apiParam    {String}    tour_time       出行时间
+     * @apiParam    {String}    start_address   出发地
      * @apiParam    {String}    end_address     目的地
      * @apiParam    {String}    tour_days       游玩天数
      * @apiParam    {String}    tour_person_num       游玩人数
