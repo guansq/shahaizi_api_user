@@ -317,6 +317,11 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         'is_pay' => 1,
         'pay_time' => time(),
     ];
+
+    if($pack_order['type'] == 3 && !empty($pack_order['seller_id'] )){ // 用户支付成功后判断订单是否是司导发布的线路，如果是订单状态（status）改为进行中；
+        $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
+    }
+
     if($is_coupon){
         $order_arr['discount_id'] = $coupon_id;//优惠券ID
     }
