@@ -105,6 +105,9 @@ class PackCarProductLogic extends BaseLogic{
         $pcar['overdistancePriceFmt'] = moneyFormat($pcar['overdistancePrice']);
         $pcar['imgs'] = explode('|', $pcar['imgs']);
 
+        $pcar['hasWheelChairFmt'] = empty( $pcar['hasWheelChair']) ? '无' : '有';
+        $pcar['hasInsuranceFmt'] = empty( $pcar['hasInsurance']) ? '无' : '有';
+        $pcar['isAllowReturnFmt'] = empty( $pcar['isAllowReturn']) ? '不支持' : '支持';
         $pcar['isCollect'] = empty($user) ? 0 : $userCollLogic->isCollectPackCar($id, $user['user_id']);
         $pcar['isPraise'] = empty($user) ? 0 : $userPraiceLogic->isPraisePackCar($id, $user['user_id']);
         ksort($pcar);
