@@ -200,7 +200,6 @@ class PackOrderLogic extends BaseLogic{
         if(empty($line)){
             return ['status' => -1, 'msg' => '当前线路不存在'];
         }
-        // FIXME 这里容易报错
         $lineDetail = json_decode(htmlspecialchars_decode($line['line_detail']),true);
         $firstSite = $lineDetail[0]['port_detail'][0]['site_name'];
         $lastPort = $lineDetail[count($lineDetail)-1]['port_detail'];
