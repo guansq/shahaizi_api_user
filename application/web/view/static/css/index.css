@@ -259,11 +259,11 @@ body{
 .circuit_img .synopsis .pri{
     padding: 0 0 10px 0;
 }
-.circuit_img .synopsis .{
-    float: right;
-    display: inline-block;
-    width: 80px;
-}
+/*.circuit_img .synopsis .{*/
+    /*float: right;*/
+    /*display: inline-block;*/
+    /*width: 80px;*/
+/*}*/
 .synopsis .syn_title{
     display: inline-block;
     width: 70%;
@@ -277,7 +277,7 @@ body{
     width: 90%;
     padding-left: 10%;
 }
-.left_d{
+.le_d{
     float: left;
     width: 70%;
 }
