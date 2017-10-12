@@ -8,8 +8,6 @@
 
 namespace app\common\logic;
 
-use app\api\logic\UserCollectLogic;
-use app\api\logic\UserPraiseLogic;
 use ruitu\PageVo;
 use think\Model;
 use think\Page;
