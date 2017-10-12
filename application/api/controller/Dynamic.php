@@ -33,6 +33,8 @@ class Dynamic extends Base {
      * @apiGroup        Dynamic
      * @apiParam  {number} [p=1]        页码.
      * @apiParam  {number} [pageSize=20]   每页数据量.
+     * @apiParam  {String='time,praise'} [sort_field=time]  排序字段.
+     * @apiParam  {String='asc,desc'} [sort_type=desc]      排序方式.
      *
      * @apiSuccess {number} page        当前页码.
      * @apiSuccess {number} totalPages  总页码数.
@@ -45,7 +47,7 @@ class Dynamic extends Base {
      * @apiSuccess {string} list.timeFmt    格式化发布时间.
      * @apiSuccess {number} list.praiseNum  点赞量.
      * @apiSuccess {number} list.readNum  阅读量.
-     *
+     * @apiSuccess {Object} list.owner  发布人信息.
      *
      * @apiSuccessExample {json} SUCCESS
      *  {
