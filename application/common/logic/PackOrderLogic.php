@@ -200,6 +200,8 @@ class PackOrderLogic extends BaseLogic{
         if(empty($line)){
             return ['status' => -1, 'msg' => '当前线路不存在'];
         }
+
+        $discountPrice = 0; // FIXME 获取优惠券金额
         $order_data = [
             'order_sn' => $this->get_order_sn(),
             'user_id' => $user['user_id'],
@@ -220,7 +222,7 @@ class PackOrderLogic extends BaseLogic{
             'dest_address' => $data['dest_address'],
             'discount_id' => $data['discount_id'],
             'total_price' => $line['line_price'],
-            'real_price' => $line['line_price'],
+            'real_price' => $line['line_price'] - $discountPrice,
             'remark' => $data['remark'],
             'title' => $line['line_title'],
             'status' => PackOrderLogic::STATUS_UNPAY,
@@ -237,7 +239,8 @@ class PackOrderLogic extends BaseLogic{
                 'status' => 1,
                 'msg' => '成功',
                 'result' => [
-                    'real_price' => $data['total_price'],
+                    'real_price' => $order_data['real_price'],
+                    'real_price_fmt' => moneyFormat($order_data['real_price']),
                     'discount_id' => $data['discount_id'],
                     'air_id' => $air_id
                 ]
