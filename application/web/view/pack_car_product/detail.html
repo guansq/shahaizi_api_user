@@ -44,7 +44,7 @@
         <ul>
             <li><span class="s-head">车型</span><span class="s-con">{$packCarProduct.carTypeName}</span></li>
             <li><span class="s-head">座位</span><span class="s-con">{$packCarProduct.carSeatTotal}座（包含司机）</span></li>
-            <li><span class="s-head">乘客险</span><span class="s-con">{$packCarProduct.hasInsurance}</span></li>
+            <li><span class="s-head">乘客险</span><span class="s-con">{$packCarProduct.hasInsuranceFmt}</span></li>
             <li><span class="s-head">行李空间</span><span class="s-con">{$packCarProduct.carSeatNum}人{$packCarProduct.carLuggageNum}行李</span></li>
         </ul>
     </div>
@@ -101,11 +101,11 @@
     </div>
     <div class="cir_con box4">
         <ul>
-            <li><span class="s-head">退订政策</span><span class="s-con">{$packCarProduct.isAllowReturn}</span></li>
-            <li><span class="s-head">儿童座椅</span><span class="s-con">￥ <span>{$packCarProduct.childSeatPrice} </span>/ 个</span></li>
-            <li><span class="s-head">轮椅</span><span class="s-con">{$packCarProduct.hasWheelChair}</span></li>
-            <li><span class="s-head">超时加收</span><span class="s-con">￥<span>{$packCarProduct.overtimePrice}</span>/小时</span></li>
-            <li><span class="s-head">超公里加收</span><span class="s-con">￥<span>{$packCarProduct.overdistancePrice}</span>/公里</span></li>
+            <li><span class="s-head">退订政策</span><span class="s-con">{$packCarProduct.isAllowReturnFmt}</span></li>
+            <li><span class="s-head">儿童座椅</span><span class="s-con"><span>{$packCarProduct.childSeatPriceFmt} </span>/ 个</span></li>
+            <li><span class="s-head">轮椅</span><span class="s-con">{$packCarProduct.hasWheelChairFmt}</span></li>
+            <li><span class="s-head">超时加收</span><span class="s-con"><span>{$packCarProduct.overtimePriceFmt}</span>/小时</span></li>
+            <li><span class="s-head">超公里加收</span><span class="s-con"><span>{$packCarProduct.overdistancePriceFmt}</span>/公里</span></li>
         </ul>
         <div class="remind">
             <h1>当地人提醒</h1>
