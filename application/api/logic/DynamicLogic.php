@@ -231,6 +231,7 @@ class DynamicLogic extends BaseLogic{
             $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
                 ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
                 ->count();
+            $item['owner'] = []; // todo
         }
 
         $ret = [
