@@ -227,7 +227,7 @@ class DriverPack extends Base{
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
             if(empty($seller) || empty($seller->is_driver)){
-                return $this->returnJson(4004,'指定司导不存在。');
+                return $this->returnJson(4004, '指定司导不存在。');
             }
         }
         //验证通过
@@ -287,12 +287,12 @@ class DriverPack extends Base{
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
             if(empty($seller) || empty($seller->is_driver)){
-                return $this->returnJson(4004,'指定司导不存在。');
+                return $this->returnJson(4004, '指定司导不存在。');
             }
         }
         $pcp = $pcpLogic->find($pcpId);
         if(empty($pcp)){
-            return $this->returnJson(4004,'缺少参数pcpId');
+            return $this->returnJson(4004, '缺少参数pcpId');
         }
         $data['start_address'] = $data['airport_name'];
         $data['real_price'] = $data['total_price'] = $pcp['price'];
@@ -349,14 +349,14 @@ class DriverPack extends Base{
         $pcpLogic = new PackCarProductLogic();
         $pcp = $pcpLogic->find($data['pcpid']);
         if(empty($pcp)){
-            return $this->returnJson(4004,'缺少参数pcpId');
+            return $this->returnJson(4004, '缺少参数pcpId');
         }
 
         // 校验指定司导
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
             if(empty($seller) || empty($seller->is_driver)){
-                return $this->returnJson(4004,'指定司导不存在。');
+                return $this->returnJson(4004, '指定司导不存在。');
             }
         }
 
@@ -413,7 +413,7 @@ class DriverPack extends Base{
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
             if(empty($seller) || empty($seller->is_driver)){
-                return $this->returnJson(4004,'指定司导不存在。');
+                return $this->returnJson(4004, '指定司导不存在。');
             }
         }
         //验证通过
@@ -471,7 +471,7 @@ class DriverPack extends Base{
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
             if(empty($seller) || empty($seller->is_driver)){
-                return $this->returnJson(4004,'指定司导不存在。');
+                return $this->returnJson(4004, '指定司导不存在。');
             }
         }
         //验证通过
@@ -480,8 +480,8 @@ class DriverPack extends Base{
         $data['eating_ave'] = $data['recommend_diner'];
         $data['stay_ave'] = $data['recommend_sleep'];
         $data['dest_address'] = $data['end_address'];
-        $data['use_car_adult'] = $data['adult_num'];
-        $data['use_car_children'] = $data['child_num'];
+        $data['use_car_adult'] = intval($data['adult_num']);
+        $data['use_car_children'] = intval($data['child_num']);
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
