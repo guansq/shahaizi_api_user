@@ -421,8 +421,8 @@ class User extends Base{
             'user_id' => $this->user_id
         ];
         $updateData = [
-            'mail' => $mail,
-            'mail_validated' => 1
+            'email' => $mail,
+            'email_validated' => 1
         ];
         $result = M('users')->where($where)->update($updateData);
         if($result === false){

@@ -204,6 +204,7 @@ class DriverPack extends Base{
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {String}    user_name       用户
      * @apiParam    {String}    car_type_id     车型ID
+     * @apiParam    {String}    pcpid     车型ID
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    [drv_code]        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李

@@ -200,7 +200,16 @@ class PackOrderLogic extends BaseLogic{
         if(empty($line)){
             return ['status' => -1, 'msg' => '当前线路不存在'];
         }
-
+        $lineDetail = json_decode(htmlspecialchars_decode($line['line_detail']),true);
+        $firstSite = $lineDetail[0]['port_detail'][0]['site_name'];
+        $lastPort = $lineDetail[count($lineDetail)-1]['port_detail'];
+        $lastSite = $lastPort[count($lastPort)-1]['site_name'];
+        if(empty($firstSite)){
+            return ['status' => -1, 'msg' => '无法获取起始地'];
+        }
+        if( empty($lastSite)){
+            return ['status' => -1, 'msg' => '无法获取目的地'];
+        }
         $discountPrice = 0; // FIXME 获取优惠券金额
         $order_data = [
             'order_sn' => $this->get_order_sn(),
@@ -218,8 +227,8 @@ class PackOrderLogic extends BaseLogic{
             'twenty_eight' => $data['twenty_eight'],
             'thirty' => $data['thirty'],
             'work_at' => $data['work_at'],
-            'work_address' => $data['work_address'],
-            'dest_address' => $data['dest_address'],
+            'work_address' => $firstSite,
+            'dest_address' => $lastSite,
             'discount_id' => $data['discount_id'],
             'total_price' => $line['line_price'],
             'real_price' => $line['line_price'] - $discountPrice,
