@@ -12,9 +12,9 @@
 <main class="drive_main">
 
     <div class="drive_img">
-        <img src="/application/web/view/static/image/2.png" alt="">
+        <img src={$seller.cover_img} alt="">
         <div class="dr_info">
-            <p class="dr_name">{$seller.seller_name}</p>
+            <p class="dr_name">{$seller.nickname}</p>
             <p class="dr_id">工号: <span>{$seller.drv_code}</span></p>
         </div>
     </div>
@@ -27,19 +27,19 @@
         <ul class="skill">
             <li>
                 <span class="ski_span1">普通话</span>
-                <span class="ski_span2">{$seller.putonghua}</span>
+                <span class="ski_span2">{$seller.putonghua ? $seller.putonghua  : "未填写" }</span>
             </li>
             <li>
                 <span class="ski_span1">精通外语</span>
-                <span class="ski_span2">{$seller.language}</span>
+                <span class="ski_span2">{$seller.language ? $seller.language  : "未填写" }</span>
             </li>
             <li>
                 <span class="ski_span1">家乡</span>
-                <span class="ski_span2">{$seller.country}</span>
+                <span class="ski_span2">{$seller.country ? $seller.country  : "未填写" }</span>
             </li>
             <li>
-                <span class="ski_span1">职业</span>
-                <span class="ski_span2">司导</span>
+                <span class="ski_span1">平台星级</span>
+                <span class="ski_span2">{$seller.plat_start ? $seller.plat_start  : "保密" }</span>
             </li>
         </ul>
     </div>
@@ -115,13 +115,10 @@
         <div class="photo_con">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
+                    {volist name="seller.img_url" id="url" key="k" }
+                    <div class="swiper-slide"><img src="{$url}" alt=""></div>
+
+                    {/volist}
                 </div>
             </div>
         </div>
@@ -153,80 +150,39 @@
         <div class="photo_con">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
-                    <div class="swiper-slide"><img src="/application/web/view/static/image/2.png" alt=""></div>
+                    {volist name="line_array.line_detail" id="cover" key="k" }
+                        {volist name="cover.port_detail" id="port" }
+                    <div class="swiper-slide"><img src="{$port.port_coverImg|default=''}" alt=""></div>
+                        {/volist}
+                    {/volist}
+
+
                 </div>
             </div>
         </div>
     </div>
+
     <div class="dr_repeat mt_10 car">
         <h1>我的车辆</h1>
         <div class="car_con">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
+                    {volist name="seller_car" id="car" key="k" }
                     <div class="swiper-slide">
-                        <img src="/application/web/view/static/image/2.png" alt="">
+                        <img src="{$car.car_img}" alt="">
                         <div class="car_info">
-                            <h2>丰田海狮</h2>
+                            <h2>{$car.plate_number}</h2>
                             <p>
-                                舒适13座 可载11人 三件行李
+                                舒适{$car.seat_num}座 可载{$car.seat_num}人 三件行李
                             </p>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <img src="/application/web/view/static/image/2.png" alt="">
-                        <div class="car_info">
-                            <h2>丰田海狮</h2>
-                            <p>
-                                舒适13座 可载11人 三件行李
-                            </p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="/application/web/view/static/image/2.png" alt="">
-                        <div class="car_info">
-                            <h2>丰田海狮</h2>
-                            <p>
-                                舒适13座 可载11人 三件行李
-                            </p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="/application/web/view/static/image/2.png" alt="">
-                        <div class="car_info">
-                            <h2>丰田海狮</h2>
-                            <p>
-                                舒适13座 可载11人 三件行李
-                            </p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="/application/web/view/static/image/2.png" alt="">
-                        <div class="car_info">
-                            <h2>丰田海狮</h2>
-                            <p>
-                                舒适13座 可载11人 三件行李
-                            </p>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="/application/web/view/static/image/2.png" alt="">
-                        <div class="car_info">
-                            <h2>丰田海狮</h2>
-                            <p>
-                                舒适13座 可载11人 三件行李
-                            </p>
-                        </div>
-                    </div>
+                    {/volist}
                 </div>
             </div>
         </div>
     </div>
+
 </main>
 {/block}
 

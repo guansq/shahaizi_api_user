@@ -22,7 +22,7 @@ class PackLine extends WebBase{
         $line = $line->toArray();
         $line_detail=$line['line_detail'];
         $de_json=html_json($line_detail);
-        $line['line_detail'] =object_to_array($de_json);;
+        $line['line_detail'] =object_to_array($de_json);
         $line['plat_start'] = $lineCommentLogic->getStartBylineId($id);
         $line['line_price_fmt'] = moneyFormat($line['line_price']);
         $driverInfo = $sellerLogic->getInfoById($line['seller_id']);
