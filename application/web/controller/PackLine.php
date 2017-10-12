@@ -24,7 +24,7 @@ class PackLine extends WebBase{
         $de_json=html_json($line_detail);
         $line['line_detail'] =object_to_array($de_json);;
         $line['plat_start'] = $lineCommentLogic->getStartBylineId($id);
-        $line['line_price_fmt'] = '￥'. number_format($line['line_price'],2).'RMB';
+        $line['line_price_fmt'] = moneyFormat($line['line_price']);
         $driverInfo = $sellerLogic->getInfoById($line['seller_id']);
         $comment = $lineCommentLogic->getCommentPageBylineId($line['line_id'],PHP_INT_MAX);
         //dd($line['line_detail'][0]);  //todo 添加数据校验

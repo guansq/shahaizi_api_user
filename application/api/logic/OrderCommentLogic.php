@@ -46,9 +46,7 @@ class OrderCommentLogic extends BaseLogic{
             'user_id' => $user['user_id'],
             'order_id' => $order['order_id'],
             'car_product_id' => $order['car_product_id'],
-            'describe_score' => $reqParams['score'],
-            'seller_score' => $reqParams['score'],
-            'logistics_score' => $reqParams['score'],
+            'pack_order_score' => $reqParams['score'],
             'img' => $reqParams['img'],
             'is_anonymous' => $reqParams['isAnonymous'],
             'commemt_time' => time(),
@@ -64,6 +62,26 @@ class OrderCommentLogic extends BaseLogic{
         $order->save();
         return resultArray(2000);
 
+    }
+
+    /** todo
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 根据订单获取订单详情
+     * @param $orderId
+     * @Success  {Number} score        评分.
+     * @Success  {String} content            评论文字.
+     * @Success  {Array} imgs                图片.
+     * @Success  {Number} commentTime        评论时间.
+     * @Success  {String} commentTimeFmt     评论时间.
+     * @Success  {Object} owner        评论人信息.
+     */
+    public function getByOrderId($orderId){
+        $filed =[
+            'pack_order_score' => 'score',
+            'content' => 'content',
+            'img' => 'imgs',
+            'commemt_time' => 'commentTime',
+        ];
     }
 
 }

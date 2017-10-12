@@ -9,22 +9,26 @@
   <div class="circuit_img">
     <img src="{$line.cover_img}" alt="">
     <div class="synopsis">
-      <h3>
-        <span class="syn_title">{$line.line_title}</span>
+      <div class="le_d">
+        <h3>
+          <p class="pb_10 title-p">{$line.line_title}</p>
+          <div class="">
+            <span class="col_ff7"><b class="price">{$line.line_price_fmt}</b><small>/天</small></span>
+          </div>
+        </h3>
+      </div>
+      <div class="rig_d">
         <span class="level">
           <img src="/application/web/view/static/image/star_{$driver.plat_start|default=4}@2x.png" alt="">
         </span>
-      </h3>
-      <div class="pri">
-        <span class="w30b col_ff7"><b class="price">{$line.line_price_fmt}</b><small>/天</small></span>
-        <span class="w30b">  </span>
-        <div class="level">
+        <span class="level">
           <img src="/application/web/view/static/image/heart_{$line.plat_start}@2x.png" alt="">
-        </div>
+        </span>
       </div>
     </div>
   </div>
 
+  {notempty name='driver'}
   <div class="cir_con driver_info">
     <h1>司导信息</h1>
     <div>
@@ -38,6 +42,7 @@
       </p>
     </div>
   </div>
+  {/notempty}
 
   <div class="cir_con taste">
     <h1>体验亮点</h1>
@@ -127,10 +132,12 @@
         <span class="wire"></span>
       </p>
       <p>{$day.summary}</p>
-
       {volist name="day.port_detail" id="port" }
       <div class="days_con">
-        <h2>第{$port.port_num}站</h2>
+        <h2>
+          第{$port.port_num}站
+          <span class="pl_15">{$port.site_name}</span>
+        </h2>
         <img src="{$port.port_coverImg|default=''}" alt="">  <!--/application/web/view/static/image/2.png-->
         <p>
           {$port.port_detail}
