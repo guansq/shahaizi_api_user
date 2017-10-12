@@ -447,7 +447,7 @@ class DriverPack extends Base{
      * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
      * @apiParam    {Number}    adult_num       成人乘客数
-     * @apiParam    {String}    child_num       儿童乘客数
+     * @apiParam    {Number}    child_num       儿童乘客数
      * @apiParam    {String}    tour_time       出行时间
      * @apiParam    {String}    end_address     目的地
      * @apiParam    {String}    tour_days       游玩天数
