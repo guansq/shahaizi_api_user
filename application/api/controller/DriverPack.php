@@ -274,8 +274,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    child_num       儿童乘客数
      * @apiParam    {String}    remark          备注
      * @apiParam    {String}    flt_no          航班号
-     * @apiParam    {String}    airport_name       机场名
-     * @apiParam    {String}    dest_address       送达地点
+     * @apiParam    {String}    airport_name     机场名
+     * @apiParam    {String}    end_address     送达地点
      * @apiParam    {String}    start_time       出发时间
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸

@@ -105,9 +105,9 @@ class PackCarProductLogic extends BaseLogic{
         $pcar['overdistancePriceFmt'] = moneyFormat($pcar['overdistancePrice']);
         $pcar['imgs'] = explode('|', $pcar['imgs']);
 
-        $pcar['hasWheelChairFmt'] = empty( $pcar['hasWheelChair']) ? '无' : '有';
-        $pcar['hasInsuranceFmt'] = empty( $pcar['hasInsurance']) ? '无' : '有';
-        $pcar['isAllowReturnFmt'] = empty( $pcar['isAllowReturn']) ? '不支持' : '支持';
+        $pcar['hasWheelChairFmt'] = empty($pcar['hasWheelChair']) ? '无' : '有';
+        $pcar['hasInsuranceFmt'] = empty($pcar['hasInsurance']) ? '无' : '有';
+        $pcar['isAllowReturnFmt'] = empty($pcar['isAllowReturn']) ? '不支持' : '支持';
         $pcar['isCollect'] = empty($user) ? 0 : $userCollLogic->isCollectPackCar($id, $user['user_id']);
         $pcar['isPraise'] = empty($user) ? 0 : $userPraiceLogic->isPraisePackCar($id, $user['user_id']);
         $pcar['orderCnt'] = $this->countOrder($id);
@@ -121,8 +121,52 @@ class PackCarProductLogic extends BaseLogic{
      * @param $id
      */
     public function countOrder($id){
-       return PackOrderLogic::where('car_product_id',$id)->count();
+        return PackOrderLogic::where('car_product_id', $id)->count();
     }
 
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe: 我收藏的包车产品列表
+     * @param $user_id
+     */
+    public function getCollectPage($user_id){
+
+        $userColl = new  UserCollectLogic();
+
+        $count = $userColl->where('user_id', $user_id)->where('model_type', UserCollectLogic::TYPE_PACKCAR)->count();
+        $page = new Page($count);
+
+        $ids = $userColl->where('user_id', $user_id)
+            ->where('model_type', UserCollectLogic::TYPE_PACKCAR)
+            ->limit($page->firstRow, $page->listRows)
+            ->order('add_time DESC')
+            ->column('goods_id');
+        $fields = [
+            'id',
+            'img' => 'img',
+            'title',
+            'read_num' => 'readNum',
+            'publish_time' => 'timeStamp',
+        ];
+
+        $list = $this->alias('str')
+            ->join('ruit_users user', 'user.user_id=str.user_id', 'LEFT')
+            ->where('guide_id', ['IN', $ids])
+            ->order('sort , create_at DESC')
+            ->field($fields)
+            ->select();
+
+        foreach($list as &$item){
+            $item['img'] = explode('|', $item['img'])[0];
+            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+        }
+
+        $ret = [
+            'p' => $page->nowPage,
+            'totalPages' => $page->totalPages,
+            'list' => $list,
+        ];
+        return resultArray(2000, '', $ret);
+    }
 
 }

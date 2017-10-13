@@ -16,14 +16,15 @@ namespace app\api\controller;
 
 use app\api\logic\DynamicLogic;
 use app\api\logic\StrategyLogic;
-use app\api\logic\UserCollectLogic;
 use app\api\logic\UserLogic;
 use app\api\logic\WithdrawalsLogic;
 use app\common\logic\CartLogic;
 use app\common\logic\CommentLogic;
 use app\common\logic\CouponLogic;
 use app\common\logic\OrderLogic;
+use app\common\logic\PackCarProductLogic;
 use app\common\logic\StoreLogic;
+use app\common\logic\UserCollectLogic;
 use app\common\logic\UsersLogic;
 use service\MsgService;
 use think\Page;
@@ -2341,6 +2342,88 @@ class User extends Base{
         }
         $this->ajaxReturn(['status' => 1, 'msg' => '获取成功', 'result' => $user_sys_message]);
     }
+
+
+
+
+    public function collectPackPro(Request $request){
+        if($request->isPost()){
+            return $this->postCollectPackPro($request);
+        }
+        if($request->isGet()){
+            return $this->getCollectPackProPage($request);
+        }
+        if($request->isDelete()){
+            return $this->deleteCollectPackPro($request);
+        }
+        return $this->returnJson();
+
+    }
+
+    /**
+     * @api             {POST}   /index.php?m=Api&c=User&a=collectPackPro   41.收藏包车产品 ok wxx
+     * @apiDescription  收藏包车产品
+     * @apiName         postCollectPackPro
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} id    要收藏的id.
+     */
+    private function postCollectPackPro(Request $request){
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002, '缺少参数id');
+        }
+        $collectLogic = new UserCollectLogic();
+        $dynamicLogic = new PackCarProductLogic();
+        if($dynamicLogic->where('act_id', $id)->count() == 0){
+            return $this->returnJson(4002, '你要收藏的动态已经不存在。');
+        }
+
+        return $this->returnJson($collectLogic->addCollect($this->user_id, UserCollectLogic::TYPE_PACKCAR, $id));
+    }
+
+    /**
+     * @api             {GET}   /index.php?m=Api&c=User&a=collectPackPro   42.我收藏的包车产品列表 todo wxx
+     * @apiDescription  获取当前用户收藏的动态列表 时间倒序排列
+     * @apiName         getCollectPackProPage
+     * @apiGroup        User
+     * @apiParam  {string} token    token.
+     * @apiParam  {number} [p=1]        页码.
+     * @apiParam  {number} [pageSize=20]   每页数据量.
+     *
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
+     * @apiSuccess {array} list         列表.
+     * @apiSuccess {number} list.id     id.
+     * @apiSuccess {string} list.img    封面图片.
+     * @apiSuccess {string} list.title  标题.
+     * @apiSuccess {number} list.timeStamp  发布时间戳.
+     * @apiSuccess {string} list.timeFmt    格式化发布时间.
+     *
+     *
+     */
+    private function getCollectPackProPage($request){
+        $dynamicLogic = new PackCarProductLogic();
+        return $this->returnJson($dynamicLogic->getCollectPage($this->user_id));
+    }
+
+    /**
+     * @api             {DELETE}   /index.php?m=Api&c=User&a=collectPackPro   43.取消收藏包车产品 ok wxx
+     * @apiDescription  取消收藏
+     * @apiName         deleteCollectPackPro
+     * @apiGroup        User
+     * @apiParam {string} token    token.
+     * @apiParam {string} id    要取消收藏的id.
+     */
+    private function deleteCollectPackPro(Request $request){
+        $id = input('id');
+        if(empty($id)){
+            return $this->returnJson(4002, '缺少参数id');
+        }
+        $collectLogic = new UserCollectLogic();
+        return $this->returnJson($collectLogic->removeCollect(UserCollectLogic::TYPE_DYNAMIC, $id, $this->user_id));
+    }
+
 
 
 }
