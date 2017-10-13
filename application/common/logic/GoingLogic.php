@@ -32,13 +32,13 @@ class GoingLogic extends BaseLogic{
             'is_reliable' => 1,
         ];
         $drv = M('seller')
-            ->field('seller_id,head_pic,seller_name,drv_code,province,city,plat_start')
+            ->field('seller_id,head_pic,seller_name,drv_code,country_id,province,city,plat_start')
             ->where($where)
             ->select();
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
             $val['province'] = getCityName($val['province']);
-            $val['city'] = getCityName($val['city']);
+            $val['city'] = getCityName($val['country_id']).'.'.getCityName($val['city']);
             $val['star'] = $result['star'];
             $val['line'] = $result['line'];
         }

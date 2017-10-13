@@ -99,6 +99,7 @@ class UsersLogic extends BaseLogic{
         }
         $user['token'] = md5(time().mt_rand(1, 999999999));
         $data = ['token' => $user['token'], 'last_login' => time()];
+        M('users')->where("user_id", $user['user_id'])->save($data);
         $user['expireTime'] = $user['last_login'] + C('APP_TOKEN_TIME');
         $result = array('status' => 1, 'msg' => '刷新token成功', 'result' => $user);
         return $result;
