@@ -200,24 +200,20 @@ class DriverPack extends Base{
      * @apiName     rentCarByDay
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
-     * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
-     * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     需求车型ID
-     * @apiParam    {String}    car_seat_num    需求座位数
-     * @apiParam    {String}    pcpid     车型ID
-     * @apiParam    {String}    connect         联系方式
-     * @apiParam    {String}    [drv_code]        指定司导
-     * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
-     * @apiParam    {Number}    adult_num       成人乘客数
-     * @apiParam    {String}    child_num       儿童乘客数
-     * @apiParam    {String}    remark       备注
+     * @apiParam    {Number}    pcpid          包车产品id
      * @apiParam    {String}    start_address   出发地
      * @apiParam    {String}    end_address     目的地
      * @apiParam    {String}    pack_time       包车日期
+     * @apiParam    {String}    connect         联系方式
+     * @apiParam    {String}    connect         联系方式
+     * @apiParam    {Number}    adult_num       成人乘客数
+     * @apiParam    {String}    child_num       儿童乘客数
+     * @apiParam    {String}    [drv_code]        指定司导
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
      * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
      * @apiParam    {Number}    [thirty]     30行李箱尺寸
+     * @apiParam    {String}    [remark]       备注
      */
     public function rentCarByDay(){
         $data = I('post.');
@@ -232,6 +228,17 @@ class DriverPack extends Base{
                 return $this->returnJson(4004, '指定司导不存在。');
             }
         }
+
+        $pcpLogic = new PackCarProductLogic();
+        $pcp = $pcpLogic->find($data['pcpid']);
+        if(empty($pcp)){
+            return $this->returnJson(4004, '缺少参数pcpId');
+        }
+        $data['real_price'] = $data['total_price'] = $pcp['price'];
+        $data['car_type_id'] = $pcp['car_type_id'] ;
+        $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
+        $data['type'] = 6;
+
         //验证通过
         $data['start_time'] = $data['pack_time'];
         $data['status'] = 0;
@@ -259,8 +266,6 @@ class DriverPack extends Base{
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {Number}    pcpid          包车产品id
      * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     需求车型ID
-     * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
@@ -297,9 +302,13 @@ class DriverPack extends Base{
         if(empty($pcp)){
             return $this->returnJson(4004, '缺少参数pcpId');
         }
-        $data['start_address'] = $data['airport_name'];
         $data['real_price'] = $data['total_price'] = $pcp['price'];
+        $data['car_type_id'] = $pcp['car_type_id'] ;
+        $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
+
+        $data['start_address'] = $data['airport_name'];
         $data['status'] = PackOrderLogic::STATUS_UNPAY;
+        $data['type'] = 1;
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
@@ -365,8 +374,12 @@ class DriverPack extends Base{
         }
 
         $data['real_price'] = $data['total_price'] = $pcp['price'];
+        $data['car_type_id'] = $pcp['car_type_id'] ;
+        $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
+
         $data['end_address'] = $data['airport_name'];
         $data['status'] = PackOrderLogic::STATUS_UNPAY;
+        $data['type'] = 2;
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
@@ -424,6 +437,7 @@ class DriverPack extends Base{
         //验证通过
         $data['start_time'] = $data['user_car_time'];
         $data['status'] = PackOrderLogic::STATUS_UNCONFIRM;
+        $data['type'] = 4;
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
@@ -445,13 +459,11 @@ class DriverPack extends Base{
      * @apiName     privateMake
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
-     * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {String}    user_name       用户
      * @apiParam    {String}    car_type_id     需求车型ID
      * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    drv_code        指定司导
-     * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
      * @apiParam    {Number}    adult_num       成人乘客数
      * @apiParam    {Number}    child_num       儿童乘客数
      * @apiParam    {String}    tour_time       出行时间
@@ -459,9 +471,9 @@ class DriverPack extends Base{
      * @apiParam    {String}    end_address     目的地
      * @apiParam    {String}    tour_days       游玩天数
      * @apiParam    {String}    tour_person_num       游玩人数
-     * @apiParam    {String}    tour_favorite       出行偏好
-     * @apiParam    {String}    recommend_diner       推荐餐馆
-     * @apiParam    {String}    recommend_sleep       推荐住宿
+     * @apiParam    {String}    [tour_favorite]       出行偏好
+     * @apiParam    {String}    [recommend_diner]       推荐餐馆
+     * @apiParam    {String}    [recommend_sleep]       推荐住宿
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
      * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
@@ -471,7 +483,7 @@ class DriverPack extends Base{
     public function privateMake(){
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.privateMake');
-        if(empty($result)){
+        if($result !== true){
             return $this->returnJson(4003);
         }
         // 校验指定司导
@@ -488,6 +500,8 @@ class DriverPack extends Base{
         $data['stay_ave'] = $data['recommend_sleep'];
         $data['use_car_adult'] = intval($data['adult_num']);
         $data['use_car_children'] = intval($data['child_num']);
+        $data['type'] = 5;
+
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
