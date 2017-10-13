@@ -170,7 +170,10 @@ class Comment extends Base{
             return $this->returnJson(4004, '未获取到订单信息');
         }
         if($order['status'] != PackOrderLogic::STATUS_UN_COMMENT){
-            returnJson(4004, '当前订单不允许评价');
+            return $this->returnJson(4004, '当前订单不允许评价');
+        }
+        if($order['user_order_status']){
+            return $this->returnJson(4005, '您已经评论过');
         }
         $order['order_id'] = $reqParams['orderId'];  //
         return $this->returnJson($poCommentLogic->commentOrder($order, $reqParams, $this->user));
