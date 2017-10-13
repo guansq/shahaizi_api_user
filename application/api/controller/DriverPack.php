@@ -202,7 +202,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    token   token.
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     车型ID
+     * @apiParam    {String}    car_type_id     需求车型ID
+     * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    pcpid     车型ID
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    [drv_code]        指定司导
@@ -258,7 +259,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {Number}    pcpid          包车产品id
      * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     车型ID
+     * @apiParam    {String}    car_type_id     需求车型ID
+     * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
@@ -269,7 +271,6 @@ class DriverPack extends Base{
      * @apiParam    {String}    flt_no          航班号
      * @apiParam    {String}    airport_name       机场名
      * @apiParam    {String}    dest_address       送达地点
-     * @apiParam    {Number}    con_car_seat_num    座位数
      * @apiParam    {String}    start_time       出发时间
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
@@ -324,7 +325,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {Number}    pcpid          包车产品id
      * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     车型ID
+     * @apiParam    {String}    car_type_id     需求车型ID
+     * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
@@ -389,7 +391,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    token   token.
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     车型ID
+     * @apiParam    {String}    car_type_id     需求车型ID
+     * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
@@ -444,7 +447,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    token   token.
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     车型ID
+     * @apiParam    {String}    car_type_id     需求车型ID
+     * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李

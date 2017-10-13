@@ -168,6 +168,7 @@ class DriverLogic extends BaseLogic{
             'car_product_id' => intval($data['pcpid']),
             'customer_name' => $data['user_name'],
             'req_car_type' => $data['car_type_id'],
+            'req_car_seat_num' => $data['car_seat_num'], // 座位数
             'customer_phone' => $data['connect'],
             'drv_code' => $data['drv_code'],
             'is_have_pack' => $data['is_have_pack'],
@@ -183,7 +184,7 @@ class DriverLogic extends BaseLogic{
             'start_time' => $data['start_time'], //
             'work_address' => $data['start_address'], //
             'dest_address' => $data['end_address'], //
-            'req_car_seat_num' => $data['con_car_seat_num'], // 座位数
+
             'tour_favorite' => $data['tour_favorite'], //
             'order_day' => $data['order_day'], //
             'eating_ave' => $data['eating_ave'], //
