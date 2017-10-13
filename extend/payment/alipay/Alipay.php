@@ -9,7 +9,7 @@ class Alipay
     //应用ID
     public $appId;
     //私钥文件路径
-    public $rsaPrivateKeyFilePath = "/Pay/payment/rsa_private_key.pem";
+    public $rsaPrivateKeyFilePath = "";
 
     //私钥值
     public $rsaPrivateKey;
@@ -24,7 +24,7 @@ class Alipay
     public $postCharset = "UTF-8";
 
 
-    public $alipayPublicKey = "/Pay/payment/alipay_public_key.pem";
+    public $alipayPublicKey = "";
 
     public $alipayrsaPublicKey;
 
@@ -94,26 +94,26 @@ class Alipay
 
     protected function sign($data, $signType = "RSA")
     {
+
         if ($this->checkEmpty($this->rsaPrivateKeyFilePath))
         {
             $priKey = $this->rsaPrivateKey;
             $res = "-----BEGIN RSA PRIVATE KEY-----\n" .
                 wordwrap($priKey, 64, "\n", true) .
                 "\n-----END RSA PRIVATE KEY-----";
-        } else
-        {
+        }else{
             $priKey = file_get_contents(dirname(__DIR__).$this->rsaPrivateKeyFilePath);
             $res = openssl_get_privatekey($priKey);
         }
 
         ($res) or die('您使用的私钥格式错误，请检查RSA私钥配置');
 
+
         if ("RSA2" == $signType) {
             openssl_sign($data, $sign, $res, OPENSSL_ALGO_SHA256);
         } else {
             openssl_sign($data, $sign, $res);
         }
-
         if (!$this->checkEmpty($this->rsaPrivateKeyFilePath)) {
             openssl_free_key($res);
         }
@@ -370,7 +370,7 @@ class Alipay
     }
 
 
-    public function execute($request, $authToken = null, $appInfoAuthtoken = null)
+    public function execute(AlipayOpenCommon $request, $authToken = null, $appInfoAuthtoken = null)
     {
 
         $this->setupCharsets($request);
@@ -410,7 +410,6 @@ class Alipay
 
         //获取业务参数
         $apiParams = $request->getApiParas();
-
         if (method_exists($request, "getNeedEncrypt") && $request->getNeedEncrypt()) {
 
             $sysParams["encrypt_type"] = $this->encryptType;
@@ -439,8 +438,7 @@ class Alipay
         $totalParams = array_merge($apiParams, $sysParams);
         ksort($totalParams);
         $totalParams["sign"] = $this->generateSign($totalParams, $this->signType);
-        if(!$totalParams["sign"])
-        {
+        if(!$totalParams["sign"]){
             jsonReturn(0, "error",'');
         }
 

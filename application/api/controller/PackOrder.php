@@ -191,6 +191,7 @@ class PackOrder extends Base{
         $real_price = $pack_order['total_price'] - $discount_price;//真实价格
         $user_info = M('users')->where('user_id', $this->user_id)->find();
         if($pay_way == 0){  //todo 微信支付
+            return $this->returnJson();
             $this->ajaxReturn(['status' => -1, 'msg' => '暂未开放']);
         }elseif($pay_way == 1){ //todo 进行支付宝支付
             $this->ajaxReturn(['status' => -1, 'msg' => '暂未开放']);
