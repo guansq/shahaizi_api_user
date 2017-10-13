@@ -144,7 +144,7 @@ class Comment extends Base{
      * @apiParam  {Number} orderId            订单id.
      * @apiParam  {Number={1-5}} score        评分.
      * @apiParam  {String} content            评论文字.
-     * @apiParam  {String} [img]                图片.
+     * @apiParam  {String} [img]                图片,多张用“|”分割.
      * @apiParam  {Number} [isAnonymous=0]        是否匿名.
      */
     private function postPackOrderComment($request){

@@ -1397,19 +1397,19 @@ class User extends Base{
      *   }
      *
      */
-    // public function recharge(Request $request){
-    //     if(!$request->isGet()){
-    //         return $this->returnJson();
-    //     }
-    //     $reqParams = $this->getReqParams(['payWay','amount']);
-    //     $rule =[
-    //         'payWay'=>'require|in:wx,zfb',
-    //         'amount'=>'require|between:0.01,100000000'
-    //     ];
-    //     $this->validateParams($reqParams,$rule);
-    //     $userLogic = new  UserLogic();
-    //     return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
-    // }
+     public function recharge(Request $request){
+         if(!$request->isGet()){
+             return $this->returnJson();
+         }
+         $reqParams = $this->getReqParams(['payWay','amount']);
+         $rule =[
+             'payWay'=>'require|in:wx,zfb',
+             'amount'=>'require|between:0.01,100000000'
+         ];
+         $this->validateParams($reqParams,$rule);
+         $userLogic = new  UserLogic();
+         return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
+     }
 
 
     /**

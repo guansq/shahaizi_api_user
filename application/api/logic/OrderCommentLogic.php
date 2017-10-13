@@ -30,7 +30,8 @@ class OrderCommentLogic extends BaseLogic{
      */
 
     const TYPE_USER   = 1;
-    const TYPE_DRIVER = 2;
+    const TYPE_ADMIN  = 2;
+    const TYPE_DRIVER = 3;
 
     /**
      * Author: W.W <will.wxx@qq.com>
@@ -42,16 +43,18 @@ class OrderCommentLogic extends BaseLogic{
      */
     public function commentOrder($order, $reqParams, $user){
         $commentData = [
-            'content' => $reqParams['content'],
             'user_id' => $user['user_id'],
+            'type' => self::TYPE_USER,
             'order_id' => $order['order_id'],
             'car_product_id' => $order['car_product_id'],
+            'seller_id' => $order['seller_id'],
             'pack_order_score' => $reqParams['score'],
-            'img' => $reqParams['img'],
             'is_anonymous' => $reqParams['isAnonymous'],
             'commemt_time' => time(),
             'deleted' => 0,
-            'type' => self::TYPE_USER,
+            'content' => $reqParams['content'],
+            'img' => $reqParams['img'],
+
         ];
 
         if(!$this->create($commentData)){
@@ -76,7 +79,7 @@ class OrderCommentLogic extends BaseLogic{
      * @Success  {Object} owner        评论人信息.
      */
     public function getByOrderId($orderId){
-        $filed =[
+        $filed = [
             'pack_order_score' => 'score',
             'content' => 'content',
             'img' => 'imgs',
