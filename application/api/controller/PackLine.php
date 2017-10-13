@@ -99,7 +99,7 @@ class PackLine extends Base{
     public function home(){
         $city = input('city');
         $city = '';
-        $index = M('pack_index')->order('sort asc')->select();
+        $index = M('pack_index')->where('type','pack_index')->order('sort asc')->select();
         //获取轮播图
         $banner = M('ad')
             ->where('pid', AdLogic::AD_POSITION_CAR)
