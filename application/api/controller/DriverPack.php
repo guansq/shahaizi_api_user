@@ -49,7 +49,6 @@ class DriverPack extends Base{
         $where = [];
         $where['is_driver'] = 1;
         $where['drv_id'] = ['<>', 0];
-
         $whereInfo = [];
         if(!empty($partner)){//通过伴侣人数去
             $map = [
@@ -364,7 +363,7 @@ class DriverPack extends Base{
         }
 
         $data['real_price'] = $data['total_price'] = $pcp['price'];
-        $data['dest_address'] = $data['airport_name'];
+        $data['end_address'] = $data['airport_name'];
         $data['status'] = PackOrderLogic::STATUS_UNPAY;
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
@@ -399,7 +398,7 @@ class DriverPack extends Base{
      * @apiParam    {String}    child_num       儿童乘客数
      * @apiParam    {String}    remark       备注
      * @apiParam    {String}    start_address    起始地地址
-     * @apiParam    {String}    dest_address       目的地地址
+     * @apiParam    {String}    end_address       目的地地址
      * @apiParam    {String}    user_car_time     用车时间
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
@@ -426,7 +425,7 @@ class DriverPack extends Base{
         $saveData = [
             'base_id' => $base_id,
             'start_address' => $data['start_address'],
-            'dest_address' => $data['dest_address'],
+            'dest_address' => $data['end_address'],
             'user_car_time' => $data['user_car_time'],
         ];
         $result = $this->driverLogic->once_pickup($saveData);
@@ -483,7 +482,6 @@ class DriverPack extends Base{
         $data['order_day'] = $data['tour_days'];
         $data['eating_ave'] = $data['recommend_diner'];
         $data['stay_ave'] = $data['recommend_sleep'];
-        $data['dest_address'] = $data['end_address'];
         $data['use_car_adult'] = intval($data['adult_num']);
         $data['use_car_children'] = intval($data['child_num']);
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);

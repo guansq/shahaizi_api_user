@@ -111,15 +111,21 @@ class UserLogic extends BaseLogic{
         $bizContent = json_encode($bizContentArr);
         //dd($bizContent);
 
-        $plugin = M('plugin')->where(array('type' => 'payment', 'code' => 'alipayMobile'))->find();
-        if(!$plugin){
-            return resultArray(4000, '没有手机支付宝插件');
-        }
-        $config = unserialize($plugin['config_value']);
+        $config = [
+            'appid' => '2017101309278810',
+            'alipay_account' => '',
+            'alipay_key' => '',
+            'alipay_partner' => '',
+            'alipay_private_key' => 'MIICWwIBAAKBgQCp5Vr4s2QSo75N6lTM94lLaU7dwWt9TpWkI2xjzsu9Yteydfx7JGFNH8ox6YRTiL0ieX4Gy+ADXEnyIe0tH0/M9JIXrNcjbWXcAnX203c/arg8UhEppOrse20HsB6UnAkzQe7PhBo8IJBlMypbgQ/Gtyg5jpBCQGJopALLmDjNuwIDAQABAoGAcOht9s4xeXm8pUdQKA9x/N31fcZnSxWIuVaZWBM8r5Yaxw1GSAg7aefwlg8c0+8R0vFu4dFoBJO2yOXnG4+tlfBJjFNsTR8O7aUcKZTHY8WwPG1LAnzBTdhb2QEpqrKnW0FGDSqdn3pkyUGGFNOQekkAnPI+5iWBKpVVUANuk0ECQQDePMNeSMTkPhpfzZSTQdurrgP+MRRR4kdWHV2ThXH9nN9u6qWJSlYuefnaX3SOmvUeVOkgMkwk6Uh2BMNmniCLAkEAw7Tu8e5BgN4Ljcr259YqqrbudW3MIsdQ7mEjDu8vvHJJu/3EMk4m6BUCvpBkkZVJ0uF01TqQLD2VXhWzIF39kQJAUop08Y7Leg5K02xSk4LxaMk/+GgYKPWHE0fi2ojEtrJOFi8WfnBao/ZvwxiS/Og2xCY7U9b6ivcOD69jN7jhUwJAFmDsKdH6v4ekfpRE44HD4z2Dyv3BKADuqjOFVMHZDY1sDQkZlD8Hh+ZPKAdO2K7fgDOzrmZB8i0glV+Z2gulYQJAaa8QNCn6dIl2GLbYOeQVeUXuBXpONAfK0sz/h32pvsUQ2ph29I8RnxbHHcx0k21UDj8fFlUBJfu1KRDk8PX2OQ==',
+            'alipay_pay_method' => '2',
+            'is_bank' => '1',
+        ];
+        // $config = unserialize($plugin['config_value']);
+        // exit(serialize($config));
         if(empty($config['appid']) || empty($config['alipay_private_key'])){
             return resultArray(4000, '没有手机支付宝插件参数');
         }
-        dd($config);
+
         $alipay = new Alipay;
         $alipay->rsaPrivateKeyFilePath = null;
         $alipay->gatewayUrl = 'https://openapi.alipay.com/gateway.do';
@@ -236,18 +242,18 @@ class UserLogic extends BaseLogic{
      * praiseNum    被赞数量.
      * collectNum    被收藏数量.
      */
-    public static function getBaseInfo($user,$userId = 0){
-        $baseInfo =[
-            'avatar'=>empty($user['head_pic'])?config('APP_DEFAULT_USER_AVATAR'):$user['head_pic'],
-            'nickname'=>$user['nickname'],
-            'sex'=>$user['sex'],
-            'level'=>$user['level'],
-            'fansNum'=>$user['attention_num'],
-            'attentionNum'=>$user['attention_num'],
-            'praiseNum'=>$user['good_num'],
-            'collectNum'=>$user['collection_num'],
+    public static function getBaseInfo($user, $userId = 0){
+        $baseInfo = [
+            'avatar' => empty($user['head_pic']) ? config('APP_DEFAULT_USER_AVATAR') : $user['head_pic'],
+            'nickname' => $user['nickname'],
+            'sex' => $user['sex'],
+            'level' => $user['level'],
+            'fansNum' => $user['attention_num'],
+            'attentionNum' => $user['attention_num'],
+            'praiseNum' => $user['good_num'],
+            'collectNum' => $user['collection_num'],
         ];
-        return resultArray(2000,'',$baseInfo);
+        return resultArray(2000, '', $baseInfo);
 
     }
 
@@ -266,10 +272,10 @@ class UserLogic extends BaseLogic{
      * praiseNum    被赞数量.
      * collectNum    被收藏数量.
      */
-    public static function getBaseInfoById($userId,$viewerId = 0){
-        $baseFields = ['head_pic','nickname','sex','level','attention_num','good_num','collection_num'];
+    public static function getBaseInfoById($userId, $viewerId = 0){
+        $baseFields = ['head_pic', 'nickname', 'sex', 'level', 'attention_num', 'good_num', 'collection_num'];
         $user = self::field($baseFields)->find($userId);
-        return self::getBaseInfo($user,$viewerId);
+        return self::getBaseInfo($user, $viewerId);
 
     }
 

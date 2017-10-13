@@ -182,7 +182,7 @@ class DriverLogic extends BaseLogic{
             'flt_no' => $data['flt_no'], //航班号
             'start_time' => $data['start_time'], //
             'work_address' => $data['start_address'], //
-            'dest_address' => $data['dest_address'], //
+            'dest_address' => $data['end_address'], //
             'req_car_seat_num' => $data['con_car_seat_num'], // 座位数
             'tour_favorite' => $data['tour_favorite'], //
             'order_day' => $data['order_day'], //
