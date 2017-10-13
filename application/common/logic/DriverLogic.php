@@ -135,43 +135,17 @@ class DriverLogic extends BaseLogic{
      * 公共的存入数据库pack_base包车资源表 记录订单
      */
     public function save_pack_base($data, $user){
-        /*
-          3线路订单
-        rent_car_by_day 按天包车游  6按天包车游
-        receive_airport 接机   1是接机
-        send_airport 送机   2是送机
-        once_pickup 单次接送  4单次接送
-        private_person 私人定制  5私人订制
-         */
-        $type = 0;
-        switch($data['type']){
-            case 'rent_car_by_day':
-                $type = 6;
-                break;
-            case 'receive_airport':
-                $type = 1;
-                break;
-            case 'send_airport':
-                $type = 2;
-                break;
-            case 'once_pickup':
-                $type = 4;
-                break;
-            case 'private_person':
-                $type = 5;
-                break;
-        }
+
         $saveData = [
-            'type' => $type,
+            'type' => $data['type'],
             'order_sn' => OrderLogic::get_order_sn(),
             'user_id' => $user['user_id'],
             'car_product_id' => intval($data['pcpid']),
             'customer_name' => $data['user_name'],
+            'customer_phone' => $data['connect'],
             'req_car_type' => $data['car_type_id'],
             'req_car_seat_num' => $data['car_seat_num'], // 座位数
-            'customer_phone' => $data['connect'],
             'drv_code' => $data['drv_code'],
-            'is_have_pack' => $data['is_have_pack'],
             'use_car_adult' => $data['adult_num'],
             'use_car_children' => $data['child_num'],
             'user_identity' => $data['user_identity'],
@@ -195,13 +169,6 @@ class DriverLogic extends BaseLogic{
             'create_at' => time(),
             'update_at' => time(),
         ];
-        if($data['type'] == 'rent_car_by_day'){
-            $car_info = M('pack_car_product')->where("id",$data['pcpid'])->find();
-            if($car_info){
-                $saveData['total_price'] = $car_info['price'];
-                $saveData['real_price'] = $car_info['price'];
-            }
-        }
         $return = M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
         return $id;
