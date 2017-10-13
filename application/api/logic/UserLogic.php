@@ -119,6 +119,7 @@ class UserLogic extends BaseLogic{
         if(empty($config['appid']) || empty($config['alipay_private_key'])){
             return resultArray(4000, '没有手机支付宝插件参数');
         }
+        dd($config);
         $alipay = new Alipay;
         $alipay->rsaPrivateKeyFilePath = null;
         $alipay->gatewayUrl = 'https://openapi.alipay.com/gateway.do';
@@ -235,19 +236,40 @@ class UserLogic extends BaseLogic{
      * praiseNum    被赞数量.
      * collectNum    被收藏数量.
      */
-    public function getBaseInfo($user,$userId = 0){
+    public static function getBaseInfo($user,$userId = 0){
         $baseInfo =[
-            'avatar'=>$user['head_pic'],
+            'avatar'=>empty($user['head_pic'])?config('APP_DEFAULT_USER_AVATAR'):$user['head_pic'],
             'nickname'=>$user['nickname'],
             'sex'=>$user['sex'],
             'level'=>$user['level'],
-            // FIXME 以下4个字段值 应该从中间表查询
             'fansNum'=>$user['attention_num'],
             'attentionNum'=>$user['attention_num'],
             'praiseNum'=>$user['good_num'],
             'collectNum'=>$user['collection_num'],
         ];
         return resultArray(2000,'',$baseInfo);
+
+    }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe:
+     * @param $user
+     * @param $userId
+     *
+     * avatar      头像.
+     * nickname    昵称.
+     * sex      性别 0=保密 1=男 2=女.
+     * level    等级.
+     * fansNum    粉丝数量.
+     * attentionNum    关注数量.
+     * praiseNum    被赞数量.
+     * collectNum    被收藏数量.
+     */
+    public static function getBaseInfoById($userId,$viewerId = 0){
+        $baseFields = ['head_pic','nickname','sex','level','attention_num','good_num','collection_num'];
+        $user = self::field($baseFields)->find($userId);
+        return self::getBaseInfo($user,$viewerId);
 
     }
 

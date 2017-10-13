@@ -30,7 +30,7 @@ class OrderCommentLogic extends BaseLogic{
      */
 
     const TYPE_USER   = 1;
-    const TYPE_ADMIN  = 2;
+    const TYPE_SYSTEM = 2;
     const TYPE_DRIVER = 3;
 
     /**
@@ -46,6 +46,7 @@ class OrderCommentLogic extends BaseLogic{
             'user_id' => $user['user_id'],
             'type' => self::TYPE_USER,
             'order_id' => $order['order_id'],
+            'line_id' => $order['line_id'],
             'car_product_id' => $order['car_product_id'],
             'seller_id' => $order['seller_id'],
             'pack_order_score' => $reqParams['score'],
@@ -71,20 +72,52 @@ class OrderCommentLogic extends BaseLogic{
      * Author: W.W <will.wxx@qq.com>
      * Describe: 根据订单获取订单详情
      * @param $orderId
-     * @Success  {Number} score        评分.
-     * @Success  {String} content            评论文字.
-     * @Success  {Array} imgs                图片.
-     * @Success  {Number} commentTime        评论时间.
-     * @Success  {String} commentTimeFmt     评论时间.
-     * @Success  {Object} owner        评论人信息.
+     * @Success  {Object} userComm                用户评论内容.
+     * @Success  {Number} userComm.score            评分.
+     * @Success  {String} userComm.content            评论文字.
+     * @Success  {Array}  userComm.imgs                图片.
+     * @Success  {Number} userComm.commentTime        评论时间.
+     * @Success  {String} userComm.commentTimeFmt     评论时间.
+     * @Success  {Object} userComm.owner              评论人信息.
+     * @Success  {Object} drvComm                  司导评论内容.
+     * @Success  {Number} drvComm.score            评分.
+     * @Success  {String} drvComm.content            评论文字.
+     * @Success  {Array}  drvComm.imgs                图片.
+     * @Success  {Number} drvComm.commentTime        评论时间.
+     * @Success  {String} drvComm.commentTimeFmt     评论时间.
+     * @Success  {Object} sysComm                  平台评论内容.
+     * @Success  {Number} sysComm.score            评分.
+     * @Success  {String} sysComm.content            评论文字.
+     * @Success  {Array}  sysComm.imgs                图片.
+     * @Success  {Number} sysComm.commentTime        评论时间.
+     * @Success  {String} sysComm.commentTimeFmt     评论时间.
      */
     public function getByOrderId($orderId){
-        $filed = [
+        $fields = [
+            'order_commemt_id' => 'id',
             'pack_order_score' => 'score',
             'content' => 'content',
             'img' => 'imgs',
             'commemt_time' => 'commentTime',
+            'user_id' => 'comm_user_id',
         ];
+        $userComm = $this->where('order_id', $orderId)->where('type', self::TYPE_USER)->field($fields)->find();
+        $sysComm = $this->where('order_id', $orderId)->where('type', self::TYPE_SYSTEM)->field($fields)->find();
+        $drvComm = $this->where('order_id', $orderId)->where('type', self::TYPE_DRIVER)->field($fields)->find();
+        $ret = [
+            'userComm' => $userComm,
+            'sysComm' => $sysComm,
+            'drvComm' => $drvComm,
+        ];
+        if(empty($userComm)){
+            return resultArray(4004);
+        }
+        foreach($ret as $k => $comm){
+            $comm['imgs'] = explode('|', $comm['imgs']);
+            $comm['commentTimeFmt'] = date('Y.m.d h:s', $comm['commentTime']);
+        }
+        $ret['userComm']['owner'] =  UserLogic::getBaseInfoById($comm['comm_user_id'])['result'];
+        return resultArray(2000, '', $ret);
     }
 
 }

@@ -177,7 +177,7 @@ class Comment extends Base{
     }
 
     /**
-     * @api            {GET}   /api/comment/orderComment    11 查看包车订单评论 todo wxx
+     * @api            {GET}   /api/comment/orderComment    11 查看包车订单评论 ok wxx
      * @apiDescription 评论包车订单
      * @apiName        getPackOrderComment
      * @apiGroup       Comment
