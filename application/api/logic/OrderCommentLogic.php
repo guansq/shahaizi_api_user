@@ -62,7 +62,10 @@ class OrderCommentLogic extends BaseLogic{
             return resultArray(5020);
         }
 
-        $order->status = PackOrderLogic::STATUS_FINISH;
+        $order->user_order_status = 1;
+        if( $order->seller_order_status){
+            $order->status = PackOrderLogic::STATUS_FINISH;
+        }
         $order->save();
         return resultArray(2000);
 
@@ -100,6 +103,7 @@ class OrderCommentLogic extends BaseLogic{
             'img' => 'imgs',
             'commemt_time' => 'commentTime',
             'user_id' => 'comm_user_id',
+            'is_anonymous' => 'isAnonymous',
         ];
         $userComm = $this->where('order_id', $orderId)->where('type', self::TYPE_USER)->field($fields)->find();
         $sysComm = $this->where('order_id', $orderId)->where('type', self::TYPE_SYSTEM)->field($fields)->find();
@@ -114,9 +118,10 @@ class OrderCommentLogic extends BaseLogic{
         }
         foreach($ret as $k => $comm){
             $comm['imgs'] = explode('|', $comm['imgs']);
-            $comm['commentTimeFmt'] = date('Y.m.d h:s', $comm['commentTime']);
+            $comm['commentTimeFmt'] = date('Y.m.d H:s', $comm['commentTime']);
         }
-        $ret['userComm']['owner'] =  UserLogic::getBaseInfoById($comm['comm_user_id'])['result'];
+
+        $userComm['owner'] =  UserLogic::getBaseInfoById($userComm['comm_user_id'],0,$userComm['isAnonymous'])['result'];
         return resultArray(2000, '', $ret);
     }
 

@@ -242,7 +242,10 @@ class UserLogic extends BaseLogic{
      * praiseNum    被赞数量.
      * collectNum    被收藏数量.
      */
-    public static function getBaseInfo($user, $userId = 0){
+    public static function getBaseInfo($user, $userId = 0, $isAnonymous = 0){
+        if($isAnonymous){
+            $user['nickname'] = hidMiddleStr($user['nickname']);
+        }
         $baseInfo = [
             'avatar' => empty($user['head_pic']) ? config('APP_DEFAULT_USER_AVATAR') : $user['head_pic'],
             'nickname' => $user['nickname'],
@@ -272,10 +275,13 @@ class UserLogic extends BaseLogic{
      * praiseNum    被赞数量.
      * collectNum    被收藏数量.
      */
-    public static function getBaseInfoById($userId, $viewerId = 0){
+    public static function getBaseInfoById($userId, $viewerId = 0, $isAnonymous = 0){
+        if(empty($userId)){
+            return resultArray(4004);
+        }
         $baseFields = ['head_pic', 'nickname', 'sex', 'level', 'attention_num', 'good_num', 'collection_num'];
         $user = self::field($baseFields)->find($userId);
-        return self::getBaseInfo($user, $viewerId);
+        return self::getBaseInfo($user, $viewerId, $isAnonymous);
 
     }
 

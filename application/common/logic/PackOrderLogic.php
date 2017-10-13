@@ -65,7 +65,7 @@ class PackOrderLogic extends BaseLogic{
         'UN_PAY' => self::STATUS_UNPAY,
         'DOING' => ['IN', [self::STATUS_UNALLOT, self::STATUS_UNJXDJ, self::STATUS_UNSTART, self::STATUS_DOING]],
         'UN_COMMENT' => self::STATUS_UNCOMMENT,
-        'FINISH' => self::STATUS_FINISH,
+        'FINISH' => ['IN', [self::STATUS_UNCOMMENT, self::STATUS_FINISH]],
     ];
 
     /*
@@ -76,15 +76,11 @@ class PackOrderLogic extends BaseLogic{
             'status' => self::STATUS_WHERE_ARR[$statusCode],
             'user_id' => $user_id
         ];
-//        if($statusCode == 'DOING'){
-//            $now = time();
-//            $where = [
-//                'status' => self::STATUS_UNSTART,
-//                'start_time' => ['<=', $now],
-//                'end_time' => ['>=', $now],
-//                'user_id' => $user_id
-//            ];
-//        }
+
+        if($statusCode == 'FINISH'){
+            $where['user_order_status'] = 1;
+        }
+
         $field = [
             'ord.air_id',
             'ord.order_sn',
@@ -92,14 +88,13 @@ class PackOrderLogic extends BaseLogic{
             'sel.hx_user_name',
             'sel.nickname',
             'sel.head_pic' => 'avatar',
-            'sel.nickname' =>'drv_name',
-            'sel.mobile' =>'drv_phone',
+            'sel.nickname' => 'drv_name',
+            'sel.mobile' => 'drv_phone',
             'ord.status',
             'ord.title',
             'ord.type',
             'ord.customer_name',
             'ord.create_at',
-
             'ord.total_price',
             'ord.real_price'
         ];
@@ -200,14 +195,14 @@ class PackOrderLogic extends BaseLogic{
         if(empty($line)){
             return ['status' => -1, 'msg' => '当前线路不存在'];
         }
-        $lineDetail = json_decode(htmlspecialchars_decode($line['line_detail']),true);
+        $lineDetail = json_decode(htmlspecialchars_decode($line['line_detail']), true);
         $firstSite = $lineDetail[0]['port_detail'][0]['site_name'];
-        $lastPort = $lineDetail[count($lineDetail)-1]['port_detail'];
-        $lastSite = $lastPort[count($lastPort)-1]['site_name'];
+        $lastPort = $lineDetail[count($lineDetail) - 1]['port_detail'];
+        $lastSite = $lastPort[count($lastPort) - 1]['site_name'];
         if(empty($firstSite)){
             return ['status' => -1, 'msg' => '无法获取起始地'];
         }
-        if( empty($lastSite)){
+        if(empty($lastSite)){
             return ['status' => -1, 'msg' => '无法获取目的地'];
         }
         $discountPrice = 0; // FIXME 获取优惠券金额
