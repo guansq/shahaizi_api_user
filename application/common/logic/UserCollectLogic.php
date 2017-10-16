@@ -49,8 +49,7 @@ class UserCollectLogic extends BaseLogic{
      * @param $user_id
      */
     public function addCollect($user_id, $type, $id){
-        $owner = M(self::TYPE_TABLE_ARR[$type])->field(['user_id'])->find($id);
-        $ownerId = empty($owner) ? null : $owner['user_id'];
+
         $where = [
             'user_id' => $user_id,
             'model_type' => $type,
@@ -59,6 +58,14 @@ class UserCollectLogic extends BaseLogic{
         if($this->where($where)->count() >= 1){
             return resultArray(4005, '您已经收藏过了。');
         }
+
+        if($type == self::TYPE_PACKCAR){ // 包车产品不是用户发布的 没有user_id 字段
+            $owner = null;
+        }else{
+            $owner = M(self::TYPE_TABLE_ARR[$type])->field(['user_id'])->find($id);
+        }
+
+        $ownerId = empty($owner) ? null : $owner['user_id'];
         $data = array_merge($where, ['add_time' => time(), 'obj_owner_id' => $ownerId]);
         if(!$this->create($data)){
             return resultArray(5020);
@@ -92,6 +99,9 @@ class UserCollectLogic extends BaseLogic{
      * @return int|string
      */
     public function isCollectPackCar($id, $userId){
-        return $this->where('model_type', self::TYPE_PACKCAR)->where('goods_id', $id)->where('user_id', $userId)->count();
+        return $this->where('model_type', self::TYPE_PACKCAR)
+            ->where('goods_id', $id)
+            ->where('user_id', $userId)
+            ->count();
     }
 }
