@@ -16,6 +16,7 @@
 namespace app\api\logic;
 
 use payment\alipay\Alipay;
+use payment\alipay\AliPayHelper;
 use payment\alipay\AlipayOpenCommon;
 use payment\wxpay\WxPay;
 use think\Log;
@@ -50,8 +51,9 @@ class UserLogic extends BaseLogic{
 
         $result = [];
         if($reqParams['payWay'] == 'zfb'){
-
-            $aliPayParams = $this->aliPay($paymentParams);
+            $aliPayHelper = new AliPayHelper();
+            $aliPayHelper = new AliPayPayParams();
+            $aliPayParams = $aliPayHelper->aliPay($paymentParams);
             $result = ['aliPayParams' => $aliPayParams];
             //$result = ['aliPayParams' => 'app_id=2017061607503256&biz_content={"body":"17051335257\u5145\u503c","subject":"\u5145\u503c","out_trade_no":"2017091652991025","timeout_express":"90m","total_amount":"0.01","product_code":"QUICK_MSECURITY_PAY","passback_params":"recharge"}&charset=UTF-8&format=json&method=alipay.trade.app.pay&notify_url=http://wztx.shp.api.zenmechi.cc/callback/alipay_callback&sign_type=RSA2&timestamp=2017-09-16 13:36:36&version=1.0&sign=C3CYMHfeoPjxpg947K25PF76Y7Q5BhA6dI6vdu+iPH2bfaRBkmIExVVG8b2/UqkhNRpY1hO5BJuim5hOrpi003kMIyb9yfao6MyJyQ6LVIqbcNlRTJOAameTqJe6O4oo7jeOq9X+lTWGH+wVwQi3Oz3eiS892ilBUJPnubtwrTpvT/to74M43/mAy5UtdCkiS6XkkO4PmW2YqTHj5/roB6JzbCqOxlPUsZhqlxssS3jyMM8Id1x3yeuP5o65NX5BB73ivSPh03HdV/E3PgtnG7Ni0KVzRUXJdIr2ez4AHh4h80QW8PecZ4aCIA7wGnLrrkkBViOx9S3WQIYhpiy6AQ=='];
         }elseif($reqParams['payWay'] == 'wx'){

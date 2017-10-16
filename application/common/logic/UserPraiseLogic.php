@@ -95,6 +95,17 @@ class UserPraiseLogic extends BaseLogic{
         return $this->where('obj_type', self::TYPE_PACKCAR)->where('obj_id', $id)->where('user_id', $userId)->count();
     }
 
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe: 是否点过赞
+     * @param $id
+     * @return int|string
+     */
+    public function isPraise($id, $userId, $type){
+        return $this->where('obj_type', $type)->where('obj_id', $id)->where('user_id', $userId)->count();
+    }
+
     public function addPraise($userId, $type, $id){
 
         $where = [
