@@ -102,7 +102,7 @@ class UserPraiseLogic extends BaseLogic{
      * @param $id
      * @return int|string
      */
-    public function isPraise($id, $userId, $type){
+    public function isPraised($id, $userId, $type){
         return $this->where('obj_type', $type)->where('obj_id', $id)->where('user_id', $userId)->count();
     }
 
