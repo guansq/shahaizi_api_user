@@ -170,7 +170,7 @@ class Base extends Controller{
                 'store'
             ],
             'goods' => ['collectGoodsOrNo'],
-            'message' => ['message_read'],
+            'message' => ['message_read','getHxUserList'],
             'order' => [
                 'add_comment',
                 'ajaxZan',

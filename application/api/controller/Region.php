@@ -48,7 +48,7 @@ class Region extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCityByCountryId  获取国家下的所有城市 ok will
+     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCityByCountryId  获取国家下的所有城市 ok wxx
      * @apiName     getAllCityByCountryId
      * @apiGroup    Region
      * @apiParam    {Number} [countryId=中国id]  国家id
@@ -62,7 +62,7 @@ class Region extends Base{
     }
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=getHotCityByCountryId  获取国家下的热门城市 ok will
+     * @api {GET}   /index.php?m=Api&c=Region&a=getHotCityByCountryId  获取国家下的热门城市 ok wxx
      * @apiName     getHotCityByCountryId
      * @apiGroup    Region
      * @apiParam    {Number} [countryId=中国id]  国家id
@@ -101,7 +101,7 @@ class Region extends Base{
 
 
     /**
-     * @api {GET}   /index.php?m=Api&c=Region&a=getHotCity     得到热门城市 ok will
+     * @api {GET}   /index.php?m=Api&c=Region&a=getHotCity     得到热门城市 ok wxx
      * @apiName     getHotCity
      * @apiGroup    Region
      */

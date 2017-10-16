@@ -613,7 +613,7 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api             {GET}  /index.php?m=Api&c=DriverPack&a=findDriver    精确查找司导 ok will
+     * @api             {GET}  /index.php?m=Api&c=DriverPack&a=findDriver    精确查找司导 ok wxx
      * @apiDescription  按照 手机号|工号 精确查找
      * @apiName         findDriver
      * @apiGroup        DriverPack

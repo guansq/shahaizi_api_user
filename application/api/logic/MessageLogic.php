@@ -15,6 +15,8 @@
 
 namespace app\api\logic;
 
+use app\common\logic\SellerLogic;
+
 
 /**
  *  消息
@@ -37,10 +39,48 @@ class MessageLogic extends BaseLogic{
             return resultArray(4004, '');
         }
 
-        $ret = [
-            // todo
+        $ret = [// todo
         ];
         return resultArray(2000, '', $ret);
+    }
+
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe:
+     * @param $user_id
+     * @param $type string  driver,house,shop
+     */
+    public function getHxUserPage($userId, $type){
+        $poLogic = new PackOrderLogic();
+        $sellerLogic = new SellerLogic();
+        if($type == 'driver'){
+            $sellerIds = $poLogic->where('user_id', $userId)
+                ->where('status', ['<', PackOrderLogic::STATUS_FINISH])
+                ->where('seller_id', ['<>', 0])
+                ->group('seller_id')
+                ->column('seller_id');
+        }elseif($type == 'house'){
+            //todo
+            return resultArray(4004);
+        }elseif($type == 'shop'){
+            // todo
+            return resultArray(4004);
+        }else{
+            return resultArray(4003);
+        }
+        if(empty($sellerIds)){
+            return resultArray(4004);
+        }
+
+        $sellers = [];
+        foreach($sellerIds as $sellerId){
+            $sellers[] = $sellerLogic->getBaseInfoById($sellerId);
+        }
+        return resultArray(2000,'',$sellers);
+
+
     }
 
 }

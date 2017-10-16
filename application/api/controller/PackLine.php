@@ -124,7 +124,7 @@ class PackLine extends Base{
     }
 
     /**
-     * @api         {GET}   /index.php?m=Api&c=PackLine&a=getPackLine     查询路线 ok will
+     * @api         {GET}   /index.php?m=Api&c=PackLine&a=getPackLine     查询路线 ok wxx
      * @apiName     getPackLine
      * @apiGroup    PackLine
      * @apiParam    {String}    [city]    根据城市筛选
@@ -192,7 +192,7 @@ class PackLine extends Base{
     }
 
     /**
-     * @api         {GET}   /index.php?m=Api&c=PackLine&a=detail    路线详情 ok will
+     * @api         {GET}   /index.php?m=Api&c=PackLine&a=detail    路线详情 ok wxx
      * @apiName     detail
      * @apiGroup    PackLine
      * @apiParam    {Number}  id   id.

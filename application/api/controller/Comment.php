@@ -169,7 +169,7 @@ class Comment extends Base{
         if(empty($order)){
             return $this->returnJson(4004, '未获取到订单信息');
         }
-        if($order['status'] != PackOrderLogic::STATUS_UN_COMMENT){
+        if($order['status'] != PackOrderLogic::STATUS_UNCOMMENT){
             return $this->returnJson(4004, '当前订单不允许评价');
         }
         if($order['user_order_status']){

@@ -52,4 +52,34 @@ class SellerLogic extends BaseLogic{
         return $seller;
     }
 
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe: 根据ID查询seller详情
+     * @param $id
+     */
+    public function getBaseInfoById($id){
+        $regCouLogic = new RegionCountryLogic();
+        $regionLogic = new RegionLogic();
+        $filed =[
+            'seller_id'=>'sellerId',
+            'nickname',
+            'seller_name'=>'sellerName',
+            'hx_user_name'=>'hxName',
+            'head_pic'=>'avatar',
+            'country_id'=>'countryId',
+            'city'=>'cityId',
+            'plat_start'=>'platStart',
+        ];
+        $seller = $this->field($filed)->find($id);
+        if(empty($seller)){
+            return [];
+        }
+
+        $seller = $seller->toArray();
+        $seller['countryName'] = $regCouLogic->where('id', $seller['countryId'])->value('name').'';
+        $seller['cityName'] = $regionLogic->where('id', $seller['city'])->value('name').'';
+        $seller['platStart'] = intval($seller['platStart']);
+        return $seller;
+    }
+
 }

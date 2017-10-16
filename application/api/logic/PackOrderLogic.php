@@ -15,32 +15,12 @@
 
 namespace app\api\logic;
 
-
+use app\common\logic\PackOrderLogic as ComPackOrderLogic;
 /**
  * 用户逻辑定义
  * Class CatsLogic
  * @package common\Logic
  */
-class PackOrderLogic extends BaseLogic{
-
-    protected $table = 'ruit_pack_order';
-
-    // 订单状态 0未支付 1待派单 2待接单 3进行中（待开始、待确认） 5待评价 6已完成
-    const STATUS_UN_PAY     = 0;
-    const STATUS_PAY        = 1;
-    const STATUS_DISTRIBUTE = 2;
-    const STATUS_DOING      = 3;
-    const STATUS_UN_COMMENT = 5;
-    const STATUS_FINISH     = 6;
-
-
-    //1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
-    const TYPE_MEET_AIRPORT = 1;
-    const TYPE_SEND_AIRPORT = 2;
-    const TYPE_LINE         = 3;
-    const TYPE_SINGLE       = 4;
-    const TYPE_CUSTOM       = 5;
-    const TYPE_CHARTERED    = 6;
-
+class PackOrderLogic extends ComPackOrderLogic{
 
 }

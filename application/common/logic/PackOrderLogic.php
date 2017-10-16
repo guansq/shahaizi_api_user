@@ -17,14 +17,24 @@ class PackOrderLogic extends BaseLogic{
     // 时间字段取出后的默认时间格式
     protected $dateFormat;
     // 1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游7快捷订单
+
+    //1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
+    const TYPE_MEET_AIRPORT = 1;
+    const TYPE_SEND_AIRPORT = 2;
+    const TYPE_LINE         = 3;
+    const TYPE_SINGLE       = 4;
+    const TYPE_CUSTOM       = 5;
+    const TYPE_CHARTERED    = 6;
+    const TYPE_QUICK        = 7;
+
     const TYPE_ARR = [
-        1 => '接机订单',
-        2 => '送机订单',
-        3 => '线路订单',
-        4 => '单次接送',
-        5 => '私人订制',
-        6 => '按天包车游',
-        7 => '快捷订单',
+        self::TYPE_MEET_AIRPORT => '接机订单',
+        self::TYPE_SEND_AIRPORT => '送机订单',
+        self::TYPE_LINE => '线路订单',
+        self::TYPE_SINGLE => '单次接送',
+        self::TYPE_CUSTOM => '私人订制',
+        self::TYPE_CHARTERED => '按天包车游',
+        self::TYPE_QUICK => '快捷订单',
     ];
 
     const STATUS_UNCONFIRM         = -1; //未确定价格
