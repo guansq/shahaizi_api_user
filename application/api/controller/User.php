@@ -2421,7 +2421,7 @@ class User extends Base{
             return $this->returnJson(4002, '缺少参数id');
         }
         $collectLogic = new UserCollectLogic();
-        return $this->returnJson($collectLogic->removeCollect(UserCollectLogic::TYPE_DYNAMIC, $id, $this->user_id));
+        return $this->returnJson($collectLogic->removeCollect(UserCollectLogic::TYPE_PACKCAR, $id, $this->user_id));
     }
 
 
