@@ -118,6 +118,7 @@ class LocalTalent extends Base{
      * @api {POST}   /api/LocalTalent/praise    当地达人点赞 ok wxx
      * @apiName praise
      * @apiGroup    Talent
+     * @apiParam  {String} token    token.
      * @apiParam  {Number}  id   当地达人id
      */
     public function praise(){
