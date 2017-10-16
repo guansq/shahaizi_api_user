@@ -149,10 +149,10 @@ class DriverLogic extends BaseLogic{
             'use_car_adult' => $data['adult_num'],
             'use_car_children' => $data['child_num'],
             'user_identity' => $data['user_identity'],
-            'twenty_four' => empty($data['twenty_four']) ? 0 : $data['twenty_four'],
-            'twenty_six' => empty($data['twenty_six']) ? 0 : $data['twenty_six'],
-            'twenty_eight' => empty($data['twenty_eight']) ? 0 : $data['twenty_eight'],
-            'thirty' => empty($data['thirty']) ? 0 : $data['thirty'],
+            'twenty_four' => empty($data['twenty_four']) ? 0 : intval($data['twenty_four']),
+            'twenty_six' => empty($data['twenty_six']) ? 0 : intval($data['twenty_six']),
+            'twenty_eight' => empty($data['twenty_eight']) ? 0 : intval($data['twenty_eight']),
+            'thirty' => empty($data['thirty']) ? 0 : intval($data['thirty']),
             'remark' => $data['remark'],
             'flt_no' => $data['flt_no'], //航班号
             'start_time' => $data['start_time'], //

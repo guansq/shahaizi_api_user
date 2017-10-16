@@ -110,6 +110,7 @@ class LocalTalent extends Base{
             $this->ajaxReturn(['status'=>-1,'msg'=>'当地达人ID不能为空']);
         }
         $where = ['talent_id'=>$talent_id];
+        //echo $this->user_id;die;
         $user_id = $this->user_id;
         $result = $this->localLogic->get_local_detail($where,$user_id,$talent_id);
         $this->ajaxReturn($result);
