@@ -198,6 +198,7 @@ class PackLine extends Base{
      * @apiParam    {Number}  id   id.
      * @apiParam    {String}  [token]    token.
      * @apiSuccess  {Number}  id        id.
+     * @apiSuccess  {String}  coverImg      封面图.
      * @apiSuccess  {Number}  isCollect     是否收藏.
      * @apiSuccess  {Number}  isPraise      是否点赞.
      * @apiSuccess  {Number}  isAdmin       是否是平台路线.
@@ -216,6 +217,7 @@ class PackLine extends Base{
         $ret = [
             'id'=>$pkgLine['line_id'],
             'title'=>$pkgLine['line_title'],
+            'coverImg'=>$pkgLine['cover_img'],
             'isAdmin'=>$pkgLine['is_admin'],
             'isCollect'=>$pkgLine['is_collect'],
             'isPraise'=>$pkgLine['is_praise'],
