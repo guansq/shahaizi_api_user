@@ -262,6 +262,7 @@ class Base extends Controller{
             ],
             'driverpack' => ['rentCarByDay', 'receiveAirport', 'sendAirport', 'oncePickup', 'privateMake'],
             'packorder' => ['getPackOrder', 'getPackOrderDetail', 'payPackOrderByBalance', 'createPackOrder','confirmFinish'],
+            'localtalent' => ['praise'],
         ];
 
         // 保留状态的检查组

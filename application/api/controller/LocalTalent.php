@@ -7,12 +7,15 @@
  */
 namespace app\api\controller;
 use app\common\logic\LocalTalentLogic;
+use app\common\logic\UserPraiseLogic;
+use think\Request;
 
 class LocalTalent extends Base{
 
     public $localLogic;
 
     public function __construct(){
+        parent::__construct();
         $this->localLogic = new LocalTalentLogic();
     }
 
@@ -108,6 +111,26 @@ class LocalTalent extends Base{
         $where = ['talent_id'=>$talent_id];
         $result = $this->localLogic->get_local_detail($where);
         $this->ajaxReturn($result);
+    }
+
+
+    /**
+     * @api {POST}   /api/LocalTalent/praise    当地达人点赞 ok wxx
+     * @apiName praise
+     * @apiGroup    Talent
+     * @apiParam  {Number}  id   当地达人id
+     */
+    public function praise(){
+        $id = I('id');
+        if(empty($id)){
+            return $this->returnJson(4002, '缺少参数id');
+        }
+        $praiseLogic = new UserPraiseLogic();
+        $talentLogic = new LocalTalentLogic();
+        if($talentLogic->where('talent_id', $id)->count() == 0){
+            return $this->returnJson(4002, '你要点赞的达人已经不存在。');
+        }
+        return $this->returnJson($praiseLogic->addPraise($this->user_id, UserPraiseLogic::TYPE_TALENT, $id));
     }
 
 

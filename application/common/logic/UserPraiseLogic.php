@@ -22,12 +22,23 @@ namespace app\common\logic;
  */
 class UserPraiseLogic extends BaseLogic{
 
+
     protected $table = 'ruit_user_praise';
 
     const TYPE_DYNAMIC = 1;    // 动态
     const TYPE_GUIDE   = 2;    // 攻略
     const TYPE_LINE    = 3;     // 线路
     const TYPE_PACKCAR = 4;     // 包车产品
+    const TYPE_TALENT  = 5;     //达人
+
+
+    const TYPE_TABLE_ARR = [
+        self::TYPE_DYNAMIC => 'article_new_action',
+        self::TYPE_GUIDE => 'article_hot_guide',
+        self::TYPE_LINE => 'pack_line',
+        self::TYPE_PACKCAR => 'pack_car_product',
+        self::TYPE_TALENT => 'article_local_talent',
+    ];
 
     /**
      * Author: W.W <will.wxx@qq.com>
@@ -80,7 +91,35 @@ class UserPraiseLogic extends BaseLogic{
      * @param $id
      * @return int|string
      */
-    public function isPraisePackCar($id,$userId){
+    public function isPraisePackCar($id, $userId){
         return $this->where('obj_type', self::TYPE_PACKCAR)->where('obj_id', $id)->where('user_id', $userId)->count();
     }
+
+    public function addPraise($userId, $type, $id){
+
+        $where = [
+            'obj_id' => $id,
+            'obj_type' => $type,
+            'user_id' => $userId,
+        ];
+        if($this->where($where)->count() >= 1){
+            return resultArray(4005, '您已经点过赞了。');
+        }
+
+        if($type == self::TYPE_PACKCAR){ // 包车产品不是用户发布的 没有user_id 字段
+            $owner = null;
+        }else{
+            $owner = M(self::TYPE_TABLE_ARR[$type])->field(['user_id'])->find($id);
+        }
+        $ownerId = empty($owner) ? null : $owner['user_id'];
+
+        $data = array_merge($where, ['obj_owner_id' => $ownerId]);
+        if(!$this->create($data)){
+            return resultArray(5020);
+        }
+        return resultArray(2000);
+
+    }
+
+
 }
