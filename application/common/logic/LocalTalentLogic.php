@@ -92,7 +92,7 @@ class LocalTalentLogic extends BaseLogic{
     /*
      * 得到当地达人详情
      */
-    public function get_local_detail($where){
+    public function get_local_detail($where,$user_id,$talent_id){
         $info = M('article_local_talent')->where($where)->find();
         if(empty($info)){
             $this->ajaxReturn(['status' => -1, 'msg' => '没有该记录']);
@@ -110,6 +110,11 @@ class LocalTalentLogic extends BaseLogic{
         }
         if(!empty($str)){
             $info['type_info'] = substr($str, 0, -1);
+        }
+        $info['is_good'] = 0;
+        if(!empty($user_id)){
+            $user_praise = new UserPraiseLogic();
+            $info['is_good'] = $user_praise->isPraised($talent_id,$user_id,5);
         }
         $return = [
             'status' => 1,
