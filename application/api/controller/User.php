@@ -2374,8 +2374,8 @@ class User extends Base{
             return $this->returnJson(4002, '缺少参数id');
         }
         $collectLogic = new UserCollectLogic();
-        $dynamicLogic = new PackCarProductLogic();
-        if($dynamicLogic->where('act_id', $id)->count() == 0){
+        $pcpLogic = new PackCarProductLogic();
+        if($pcpLogic->where('id', $id)->count() == 0){
             return $this->returnJson(4002, '你要收藏的动态已经不存在。');
         }
 

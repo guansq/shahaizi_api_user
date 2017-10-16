@@ -257,6 +257,7 @@ class Base extends Controller{
                 'payPackOrderByBalance',
                 'recharge',
                 'collectLine',
+                'collectPackPro',
                 'getGoodsCollect',
             ],
             'driverpack' => ['rentCarByDay', 'receiveAirport', 'sendAirport', 'oncePickup', 'privateMake'],
