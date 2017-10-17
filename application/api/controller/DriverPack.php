@@ -495,7 +495,7 @@ class DriverPack extends Base{
         }
         //验证通过
         $data['start_time'] = $data['tour_time'];
-        $data['order_day'] = $data['tour_days'];
+        $data['order_day'] = intval($data['tour_days']);
         $data['eating_ave'] = $data['recommend_diner'];
         $data['stay_ave'] = $data['recommend_sleep'];
         $data['use_car_adult'] = intval($data['adult_num']);
@@ -506,9 +506,9 @@ class DriverPack extends Base{
         $saveData = [
             'base_id' => $base_id,
             'end_address' => $data['end_address'],
-            'tour_days' => $data['tour_days'],
+            'tour_days' => intval($data['tour_days']),
             'tour_time' => $data['tour_time'],
-            'tour_person_num' => $data['tour_person_num'],
+            'tour_person_num' => intval($data['tour_person_num']),
             'tour_favorite' => $data['tour_favorite'],
             'recommend_diner' => $data['recommend_diner'],
             'recommend_sleep' => $data['recommend_sleep'],

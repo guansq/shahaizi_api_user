@@ -101,6 +101,7 @@ class LocalTalent extends Base{
      *  "city"  :   "xxxxxx",//所在城市地址
      *  "good_num"  :   "111",//点赞数
      *  "desc"  :   "111"//简介
+     *  "good_num"  :   11//点赞数
      * }
      */
     public function getLocalTalentDetail(){
@@ -109,7 +110,9 @@ class LocalTalent extends Base{
             $this->ajaxReturn(['status'=>-1,'msg'=>'当地达人ID不能为空']);
         }
         $where = ['talent_id'=>$talent_id];
-        $result = $this->localLogic->get_local_detail($where);
+        //echo $this->user_id;die;
+        $user_id = $this->user_id;
+        $result = $this->localLogic->get_local_detail($where,$user_id,$talent_id);
         $this->ajaxReturn($result);
     }
 
