@@ -91,6 +91,7 @@ class PackCarProductLogic extends BaseLogic{
             'overtime_price' => 'overtimePrice',             //超时加收价格',
             'overdistance_price' => 'overdistancePrice',             //超出公里加收价格',
             'remind' => 'remind',             //当地人提醒',
+            'fly_name' => 'flyName',             //机场名',
         ];
         $pcar = $this->field($fields)->find($id);
         if(empty($pcar)){

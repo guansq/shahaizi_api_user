@@ -67,6 +67,13 @@ class BaseMessage extends Base{
                 }
                 $content = '【傻孩子APP】您正在进行[重置密码]操作，验证码为：'.$code;
                 break;
+            case 'reg2' :
+                //进行真实的手机号验证 需要客户端传一个不带国家的手机号过来
+                $content = '【傻孩子APP】您正在进行[注册]操作，验证码为：'.$code;
+                break;
+            case 'resetpwd2' :
+                $content = '【傻孩子APP】您正在进行[重置密码]操作，验证码为：'.$code;
+                break;
             case 'bind' :
                 /*if(!$user){
                     $this->ajaxReturn(['status' => -1, 'msg' => '该手机号已注册过了']);
