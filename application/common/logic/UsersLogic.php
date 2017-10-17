@@ -1075,7 +1075,7 @@ class UsersLogic extends BaseLogic{
      * Describe:
      * @param $id
      */
-    public function getBaseInfoById($id){
+    public static function getBaseInfoById($id){
         $fields = [
             'user_id'=>'id',
             'nickname',
@@ -1090,8 +1090,7 @@ class UsersLogic extends BaseLogic{
             'good_num'=>'praiseNum',
             'collection_num'=>'collectionNum',  //
         ];
-        $user = $this->field($fields)->find($id);
-
+        $user = self::field($fields)->find($id);
         return $user;
     }
 }

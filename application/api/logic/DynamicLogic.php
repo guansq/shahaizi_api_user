@@ -16,6 +16,7 @@
 namespace app\api\logic;
 
 use app\common\logic\UserPraiseLogic;
+use app\common\logic\UsersLogic;
 use think\Page;
 
 
@@ -215,6 +216,7 @@ class DynamicLogic extends BaseLogic{
             'title',
             'summary' => 'subTitle',
             'read_num' => 'readNum',
+            'user_id' => 'owner',
             'create_at' => 'timeStamp',
         ];
         $count = $this->where($where)->count();
@@ -231,7 +233,7 @@ class DynamicLogic extends BaseLogic{
             $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
                 ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
                 ->count();
-            $item['owner'] = []; // todo
+            $item['owner'] = UsersLogic::getBaseInfoById($item['owner']); // todo
         }
 
         $ret = [
