@@ -24,7 +24,7 @@ class PackBase extends Validate{
         'flt_no' => 'require',
         'airport_name' => 'require',
         //'dest_address' => 'require',
-        'start_time' => 'require',
+        'start_time' => 'require|checkTime',
         'start_address' => 'require',
         'user_car_time' => 'require',
         'tour_time' => 'require',
@@ -63,6 +63,17 @@ class PackBase extends Validate{
         'recommend_sleep.require' => '请填写推荐住宿',
     ];
 
+    // 自定义验证规则
+    protected function checkTime($value)
+    {
+        $current_time = time();
+
+        if ($value < $current_time) {
+            return '出发时间请大于当前时间';
+        }
+
+        return true;
+    }
     protected $scene = [
         'rentCarByDay' => ['type','car_type_id','user_name','connect','is_have_pack','adult_num','child_num','dest_address','pack_time'],
         'receiveAirport' => ['type','car_type_id','user_name','connect','is_have_pack','flt_no','airport_name','dest_address','start_time'],
