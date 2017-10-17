@@ -17,10 +17,6 @@ class WxPay{
         header('Access-Control-Allow-Origin: *');
         header('Content-type: text/plain');
 
-
-        // 商品名称
-        $native = "NATIVE";
-
         // 获取支付金额
         $amount = $order['amount'];
         $total = floatval($amount);

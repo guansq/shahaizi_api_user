@@ -1,0 +1,17 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: jiehua
+ * Date: 15/5/2
+ * Time: 下午6:21
+ */
+
+namespace payment\alipay;
+
+class AlipayConfig{
+
+    const APPID = '2017101309278810';
+    const APP_PRIVATE_KEY = 'MIICWwIBAAKBgQCp5Vr4s2QSo75N6lTM94lLaU7dwWt9TpWkI2xjzsu9Yteydfx7JGFNH8ox6YRTiL0ieX4Gy+ADXEnyIe0tH0/M9JIXrNcjbWXcAnX203c/arg8UhEppOrse20HsB6UnAkzQe7PhBo8IJBlMypbgQ/Gtyg5jpBCQGJopALLmDjNuwIDAQABAoGAcOht9s4xeXm8pUdQKA9x/N31fcZnSxWIuVaZWBM8r5Yaxw1GSAg7aefwlg8c0+8R0vFu4dFoBJO2yOXnG4+tlfBJjFNsTR8O7aUcKZTHY8WwPG1LAnzBTdhb2QEpqrKnW0FGDSqdn3pkyUGGFNOQekkAnPI+5iWBKpVVUANuk0ECQQDePMNeSMTkPhpfzZSTQdurrgP+MRRR4kdWHV2ThXH9nN9u6qWJSlYuefnaX3SOmvUeVOkgMkwk6Uh2BMNmniCLAkEAw7Tu8e5BgN4Ljcr259YqqrbudW3MIsdQ7mEjDu8vvHJJu/3EMk4m6BUCvpBkkZVJ0uF01TqQLD2VXhWzIF39kQJAUop08Y7Leg5K02xSk4LxaMk/+GgYKPWHE0fi2ojEtrJOFi8WfnBao/ZvwxiS/Og2xCY7U9b6ivcOD69jN7jhUwJAFmDsKdH6v4ekfpRE44HD4z2Dyv3BKADuqjOFVMHZDY1sDQkZlD8Hh+ZPKAdO2K7fgDOzrmZB8i0glV+Z2gulYQJAaa8QNCn6dIl2GLbYOeQVeUXuBXpONAfK0sz/h32pvsUQ2ph29I8RnxbHHcx0k21UDj8fFlUBJfu1KRDk8PX2OQ==';     //应用私钥
+    const ALI_PUBLIC_KEY = '';      //阿里公钥
+
+} 
