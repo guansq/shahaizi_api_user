@@ -15,6 +15,7 @@
 
 namespace app\api\logic;
 
+use app\common\logic\UserCollectLogic;
 use app\common\logic\UserPraiseLogic;
 use app\common\logic\UsersLogic;
 use think\Page;
