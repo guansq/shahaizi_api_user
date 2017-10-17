@@ -8,7 +8,6 @@
     <div class="circuit_img">
         <img src="{$packCarProduct.imgs[0]|default='/application/web/view/static/image/2.png'}" alt="">
         <div class="synopsis">
-<!--<?php print_r($packCarProduct); ?>-->
             <h3>
                 <span class="syn_title">{$packCarProduct.title}</span>
                 <span class="service_scope">{$packCarProduct.serviceCityName}·{$packCarProduct.serviceCountryName} </span>
@@ -31,11 +30,11 @@
             </li>
             <li>
                 <h3><span>{$packCarProduct.serviceMaxPerson}</span>人</h3>
-                <p>服务里程</p>
+                <p>最多接待</p>
             </li>
             <li>
                 <h3><span>{$packCarProduct.serviceMaxTime}</span>小时</h3>
-                <p>服务里程</p>
+                <p>服务时长</p>
             </li>
         </ul>
     </div>
