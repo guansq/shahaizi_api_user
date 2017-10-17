@@ -8,12 +8,14 @@
     <div class="circuit_img">
         <img src="{$packCarProduct.imgs[0]|default='/application/web/view/static/image/2.png'}" alt="">
         <div class="synopsis">
+<!--<?php print_r($packCarProduct); ?>-->
             <h3>
                 <span class="syn_title">{$packCarProduct.title}</span>
+                <span class="service_scope">{$packCarProduct.serviceCityName}·{$packCarProduct.serviceCountryName} </span>
             </h3>
             <div class="pri">
                 <span class="w30b col_ff7"><b class="price">{$packCarProduct.priceFmt}</b><small>/天</small></span>
-                <span class="w30b">{$packCarProduct.orderCnt}人出游</span>
+                <!--<span class="w30b">{$packCarProduct.orderCnt}人出游</span>-->
                 <div class="xing_b">
                     <img src="/application/web/view/static/image/heart_5@2x.png" alt="">
                 </div>
@@ -101,7 +103,7 @@
     </div>
     <div class="cir_con box4">
         <ul>
-            <li><span class="s-head">退订政策</span><span class="s-con">{$packCarProduct.isAllowReturnFmt}</span></li>
+            <li><span class="s-head">退订政策</span><span id="zc_click" class="s-con">{$packCarProduct.isAllowReturnFmt}</span></li>
             <li><span class="s-head">儿童座椅</span><span class="s-con"><span>{$packCarProduct.childSeatPriceFmt} </span>/ 个</span></li>
             <li><span class="s-head">轮椅</span><span class="s-con">￥{$packCarProduct.wheelChairPrice}</span></li>
             <li><span class="s-head">超时加收</span><span class="s-con"><span>{$packCarProduct.overtimePriceFmt}</span>/小时</span></li>
@@ -114,6 +116,44 @@
     </div>
 
 </main>
+<div class="bomb_box">
+    <div class="bomb_con">
+        <h1 class="title-h1">
+            改退补偿
+            <i></i>
+        </h1>
+        <div class="bomb-div">
+            <h2>
+                这是二级标题
+            </h2>
+            <div class="two-con-div">
+                <p>
+                    这是二级标题的内容
+                </p>
+                <p>
+                    这是二级标题的内容
+                </p>
+                <p>
+                    这是二级标题的内容
+                </p>
+            </div>
+            <h2>
+                这是二级标题
+            </h2>
+            <div class="two-con-div">
+                <p>
+                    这是二级标题的内容
+                </p>
+                <p>
+                    这是二级标题的内容
+                </p>
+                <p>
+                    这是二级标题的内容
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 {/block}
 
 {block name="script"}
@@ -139,6 +179,16 @@
                 eachAppraiseList($("#appraise"),".ass_con",2);
             }
         })
+
+        $("#zc_click").click(function () {
+            $(".bomb_box").css("display","block");
+            var h =$(".bomb-div").height() + $(".title-h1").height();
+            $(".bomb_con").height(h);
+        })
+        $(".title-h1 i").click(function () {
+            $(".bomb_box").css("display","none");
+        })
+
 
     });
 </script>
