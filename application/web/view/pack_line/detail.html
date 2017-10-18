@@ -19,10 +19,10 @@
       </div>
       <div class="rig_d">
         <span class="level">
-          <img src="/application/web/view/static/image/star_{$driver.plat_start|default=4}@2x.png" alt="">
+          <!--<img src="/application/web/view/static/image/star_{$driver.plat_start|default=4}@2x.png" alt="">-->
         </span>
         <span class="level">
-          <img src="/application/web/view/static/image/heart_{$line.plat_start}@2x.png" alt="">
+          <img src="/application/web/view/static/image/heart_{$line.score|default=5}@2x.png" alt="">
         </span>
       </div>
     </div>
@@ -51,73 +51,33 @@
     </p>
   </div>
 
-  <div id="appraise" class="cir_con appraise">
-    <h1>收到的评价
-      <span>共4条</span>
+  <div id="appraise" class="dr_repeat mt_10 dr_assess">
+    <h1>
+      收到的评价
+      <span>共{$comments.total}条</span>
     </h1>
-    <div class="appraise_con">
-      <section class="appra_peo">
-        <img src="/application/web/view/static/image/avatar@2x.png" alt="">
-        <span class="peo_name">王浩</span>
-        <span class="peo_level">
-            <img src="/application/web/view/static/image/heart_5@2x.png" alt="">
-        </span>
-        <span class="peo_time">
-            2017-3-26
-        </span>
-      </section>
-      <p class="appr_text">
-        提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
+    {volist name="comments.list" id="comment"}
+    <div class="ass_con">
+      <img src="{$comment.owner.avatar|default='/application/web/view/static/image/avatar@2x.png'}" alt="">
+      <div class="left_d">
+        <p>{$comment.owner.nickname|default='****'}</p>
+        <p><span>{$comment.commemt_time_fmt}</span> </p>
+      </div>
+      <div class="right_d">
+        <p><img src="/application/web/view/static/image/heart_{$comment.pack_order_score|default=5}@2x.png" alt=""></p>
+        <p></p>
+      </div>
+      <p class="dr_text">
+        {$comment.content}
       </p>
     </div>
-    <div class="appraise_con">
-      <section class="appra_peo">
-        <img src="/application/web/view/static/image/avatar@2x.png" alt="">
-        <span class="peo_name">谢小雨</span>
-        <span class="peo_level">
-            <img src="/application/web/view/static/image/heart_4@2x.png" alt="">
-        </span>
-        <span class="peo_time">
-            2017-3-26
-        </span>
-      </section>
-      <p class="appr_text">
-        接机师傅很准时地在机场等候接我们，但我们第一次到 新加坡，英文又不好，取行李，取现，花了很多时间。 谢谢师傅。
-      </p>
-    </div>
-    <div class="appraise_con">
-      <section class="appra_peo">
-        <img src="/application/web/view/static/image/avatar@2x.png" alt="">
-        <span class="peo_name">王浩</span>
-        <span class="peo_level">
-            <img src="/application/web/view/static/image/heart_4@2x.png" alt="">
-        </span>
-        <span class="peo_time">
-            2017-3-26
-        </span>
-      </section>
-      <p class="appr_text">
-        提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
-      </p>
-    </div>
-    <div class="appraise_con">
-      <section class="appra_peo">
-        <img src="/application/web/view/static/image/avatar@2x.png" alt="">
-        <span class="peo_name">谢小雨</span>
-        <span class="peo_level">
-            <img src="/application/web/view/static/image/heart_4@2x.png" alt="">
-        </span>
-        <span class="peo_time">
-            2017-3-26
-        </span>
-      </section>
-      <p class="appr_text">
-        接机师傅很准时地在机场等候接我们，但我们第一次到 新加坡，英文又不好，取行李，取现，花了很多时间。 谢谢师傅。
-      </p>
-    </div>
+    {/volist}
+
+    {if condition="$comments.total>2"}
     <div class="look">
       <a class="look_whole" href="javascript:void(0);">查看更多</a>
     </div>
+    {/if}
   </div>
 
   <div class="cir_con line">
