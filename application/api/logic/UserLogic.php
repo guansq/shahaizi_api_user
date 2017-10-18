@@ -15,21 +15,19 @@
 
 namespace app\api\logic;
 
-use payment\alipay\Alipay;
-use payment\alipay\AlipayOpenCommon;
 use payment\PaymentBizParam;
 use payment\PaymentHelper;
-use payment\wxpay\WxPay;
 use think\Log;
 use think\Page;
+
+use app\common\logic\UsersLogic;
 
 /**
  * 用户逻辑定义
  * Class CatsLogic
  * @package common\Logic
  */
-class UserLogic extends BaseLogic{
-    protected $table = 'ruit_users';
+class UserLogic extends UsersLogic{
 
     /**
      * Author: WILL<314112362@qq.com>
@@ -159,64 +157,6 @@ class UserLogic extends BaseLogic{
         ];
         return resultArray(2000, '', $ret);
 
-
-    }
-
-    /**
-     * Author: WILL<314112362@qq.com>
-     * Describe:
-     * @param $user
-     * @param $userId
-     *
-     * avatar      头像.
-     * nickname    昵称.
-     * sex      性别 0=保密 1=男 2=女.
-     * level    等级.
-     * fansNum    粉丝数量.
-     * attentionNum    关注数量.
-     * praiseNum    被赞数量.
-     * collectNum    被收藏数量.
-     */
-    public static function getBaseInfo($user, $userId = 0, $isAnonymous = 0){
-        if($isAnonymous){
-            $user['nickname'] = hidMiddleStr($user['nickname']);
-        }
-        $baseInfo = [
-            'avatar' => empty($user['head_pic']) ? config('APP_DEFAULT_USER_AVATAR') : $user['head_pic'],
-            'nickname' => $user['nickname'],
-            'sex' => $user['sex'],
-            'level' => $user['level'],
-            'fansNum' => $user['attention_num'],
-            'attentionNum' => $user['attention_num'],
-            'praiseNum' => $user['good_num'],
-            'collectNum' => $user['collection_num'],
-        ];
-        return resultArray(2000, '', $baseInfo);
-
-    }
-
-    /**
-     * Author: WILL<314112362@qq.com>
-     * Describe:
-     * @param $user
-     * @param $userId
-     *
-     * avatar      头像.
-     * nickname    昵称.
-     * sex      性别 0=保密 1=男 2=女.
-     * level    等级.
-     * fansNum    粉丝数量.
-     * attentionNum    关注数量.
-     * praiseNum    被赞数量.
-     * collectNum    被收藏数量.
-     */
-    public static function getBaseInfoById($userId, $viewerId = 0, $isAnonymous = 0){
-        if(empty($userId)){
-            return resultArray(4004);
-        }
-        $baseFields = ['head_pic', 'nickname', 'sex', 'level', 'attention_num', 'good_num', 'collection_num'];
-        $user = self::field($baseFields)->find($userId);
-        return self::getBaseInfo($user, $viewerId, $isAnonymous);
 
     }
 

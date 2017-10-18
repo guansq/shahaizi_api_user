@@ -2,6 +2,7 @@
 
 namespace app\web\controller;
 
+use app\common\logic\OrderCommentLogic;
 use app\common\logic\PackLineLogic;
 use app\common\logic\SellerLogic;
 use app\common\logic\PackCarInfo;
@@ -29,6 +30,18 @@ class Driver extends WebBase{
         $de_json=html_json($line_detail);
         $line['line_detail'] =object_to_array($de_json);
         $this->assign('line_array',$line);
+
+        $where =[
+            'seller_id'=>$id,
+            'deleted'=>0
+        ];
+        $commentLogic = new OrderCommentLogic();
+        $list = $commentLogic->getListByWere($where);
+        $comments =[
+            'total'=>count($list),
+            'list'=>$list,
+        ];
+        $this->assign('comments',$comments);
         return $this->fetch('detail');
      }
 }

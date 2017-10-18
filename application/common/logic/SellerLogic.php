@@ -15,8 +15,6 @@
 
 namespace app\common\logic;
 
-use think\Model;
-
 /**
  *  逻辑类
  */
@@ -24,7 +22,7 @@ class SellerLogic extends BaseLogic{
     protected $table = 'ruit_seller';
 
     public static function findByDrvCode($drv_code){
-        return self::where('drv_code',$drv_code)->find();
+        return self::where('drv_code', $drv_code)->find();
     }
 
     /**
@@ -57,18 +55,18 @@ class SellerLogic extends BaseLogic{
      * Describe: 根据ID查询seller详情
      * @param $id
      */
-    public static function getBaseInfoById($id){
+    public static function getBaseInfoById($id, $viewerId = 0, $isAnonymous = 0){
         $regCouLogic = new RegionCountryLogic();
         $regionLogic = new RegionLogic();
-        $filed =[
-            'seller_id'=>'sellerId',
+        $filed = [
+            'seller_id' => 'sellerId',
             'nickname',
-            'seller_name'=>'sellerName',
-            'hx_user_name'=>'hxName',
-            'head_pic'=>'avatar',
-            'country_id'=>'countryId',
-            'city'=>'cityId',
-            'plat_start'=>'platStart',
+            'seller_name' => 'sellerName',
+            'hx_user_name' => 'hxName',
+            'head_pic' => 'avatar',
+            'country_id' => 'countryId',
+            'city' => 'cityId',
+            'plat_start' => 'platStart',
         ];
         $seller = self::field($filed)->find($id);
         if(empty($seller)){
@@ -77,6 +75,7 @@ class SellerLogic extends BaseLogic{
 
         $seller = $seller->toArray();
         $seller['countryName'] = $regCouLogic->where('id', $seller['countryId'])->value('name').'';
+        $seller['nickname'] = $isAnonymous == 1 ? hidMiddleStr($seller['nickname']) : $seller['nickname'];
         $seller['cityName'] = $regionLogic->where('id', $seller['city'])->value('name').'';
         $seller['platStart'] = intval($seller['platStart']);
         return $seller;
