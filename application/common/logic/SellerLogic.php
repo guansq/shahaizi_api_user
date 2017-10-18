@@ -57,7 +57,7 @@ class SellerLogic extends BaseLogic{
      * Describe: 根据ID查询seller详情
      * @param $id
      */
-    public function getBaseInfoById($id){
+    public static function getBaseInfoById($id){
         $regCouLogic = new RegionCountryLogic();
         $regionLogic = new RegionLogic();
         $filed =[
@@ -70,7 +70,7 @@ class SellerLogic extends BaseLogic{
             'city'=>'cityId',
             'plat_start'=>'platStart',
         ];
-        $seller = $this->field($filed)->find($id);
+        $seller = self::field($filed)->find($id);
         if(empty($seller)){
             return [];
         }
