@@ -2428,5 +2428,8 @@ class User extends Base{
     }
 
 
-
+    public function test_push(){
+        pushInfo('18071adc0335ded0a63','这是我要推送的信息','这是我要推送的信息');
+        //echo '11111111111';
+    }
 }

@@ -186,10 +186,10 @@ function sendSMSbyApi($phone, $content){
 /*
  * 推送信息 推送给货主为$rt_key='wztx_shipper' 推送给司机为 $rt_key='wztx_driver'
  */
-function pushInfo($token, $title, $content, $rt_key = 'wztx_driver', $type = 'private'){
+function pushInfo($token, $title, $content, $type = 'private'){
     $sendData = [
         "platform" => "all",
-        "rt_appkey" => $rt_key,
+        "rt_appkey" => '2017ShaHaiZiSeller_kiXhfpZs7XdfjwE1_QPhJn8lSkWVtt1RR',
         "req_time" => time(),
         "req_action" => 'push',
         "alert" => $title,
@@ -207,9 +207,10 @@ function pushInfo($token, $title, $content, $rt_key = 'wztx_driver', $type = 'pr
     ];
     $desClass = new DesUtils();
     $arrOrder = $desClass->naturalOrdering([$sendData['rt_appkey'], $sendData['req_time'], $sendData['req_action']]);
-    $skArr = explode('_', config('app_access_key'));
+    $skArr = explode('_', config('bus_app_access_key'));//像司机推送
     $sendData['sign'] = $desClass->strEnc($arrOrder, $skArr[0], $skArr[1], $skArr[2]);//签名
-    $result = HttpService::post(getenv('APP_API_HOME').'push', http_build_query($sendData));
+    $result = HttpService::post('http://mps.ruitukeji.com/'.'push', http_build_query($sendData));
+    //print_r($result);
 }
 
 /*
