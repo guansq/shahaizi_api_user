@@ -654,10 +654,11 @@ class User extends Base{
             I('post.nickname') ? $post['nickname'] = I('post.nickname') : false; //昵称
             I('post.qq') ? $post['qq'] = I('post.qq') : false;  //QQ号码
             I('post.head_pic') ? $post['head_pic'] = I('post.head_pic') : false; //头像地址
-            if(in_array(I('post.sex'), [0, 1, 2])){
+            if(I('post.sex') !== ''){
                 $post['sex'] = I('post.sex');
             }
             I('post.birthday') ? $post['birthday'] = strtotime(I('post.birthday')) : false;  // 生日
+            //print_r($post);die;
             I('post.personalized_signature') ? $post['personalized_signature'] = I('post.personalized_signature') : false;  // 个性签名
             if(I('post.is_update_address')){
                 $post['province'] = I('post.province');  //省份
