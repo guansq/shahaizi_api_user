@@ -60,6 +60,8 @@ class PackOrder extends Base{
      * "drv_phone": null,
      * "total_price": 100,
      * "real_price": "100.00"
+     * "seller_order_status": "1"//司导的订单状态 0是待评价 1是已评价
+     * "user_order_status": "0"//用户的订单状态 0是待评价 1是已评价
      * },
      * ]
      * }

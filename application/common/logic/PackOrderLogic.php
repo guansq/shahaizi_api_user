@@ -106,6 +106,8 @@ class PackOrderLogic extends BaseLogic{
             'ord.customer_name',
             'ord.create_at',
             'ord.total_price',
+            'ord.seller_order_status',
+            'ord.user_order_status',
             'ord.real_price'
         ];
         $count = M('pack_order')->where($where)->count();
