@@ -358,7 +358,8 @@ class User extends Base{
      * @api         {POST}  /index.php?m=Api&c=User&a=BindMail      绑定用户邮箱done  管少秋
      * @apiName     BindMail
      * @apiGroup    User
-     * @apiParam    {String}    token       token
+     * @apiParam    {String}    openid     第三方唯一标识
+     * @apiParam    {String}    from       同第三方登录接口
      * @apiParam    {String}    mail        绑定邮箱
      * @apiParam    {String}    code        绑定邮箱code
      */
@@ -372,6 +373,11 @@ class User extends Base{
         if(!empty($user)){
             $this->ajaxReturn(['status' => -1, 'msg' => '该邮箱已被绑定']);
         }
+        $thirdUser = get_user_info(I('openid'), 3, I('from'));
+        if(empty($thirdUser)){
+            return $this->returnJson(4004, '绑定失败,无效的第三方用户');
+        }
+
         $code = I('code');
         //校验code
         $msgService = new MsgService();
@@ -379,18 +385,14 @@ class User extends Base{
         if($result['status'] != 1){
             $this->ajaxReturn(['status' => -1, 'msg' => $result['msg']]);
         }
-        $where = [
-            'user_id' => $this->user_id
-        ];
-        $updateData = [
-            'mail' => $mail,
-            'mail_validated' => 1
-        ];
-        $result = M('users')->where($where)->update($updateData);
-        if($result === false){
-            $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
+        $thirdUser->email = $mail;
+        $thirdUser->email_validated = 1;
+
+        if(!$thirdUser->save()){
+            return $this->returnJson(5020, '绑定失败');
         }
-        $this->ajaxReturn(['status' => 1, 'msg' => '绑定成功']);
+        return $this->returnJson(2000, '绑定成功');
+
     }
 
     /**
