@@ -15,23 +15,13 @@
 
 namespace app\api\logic;
 
-
+use app\common\logic\OrderCommentLogic as BaseLogic;
 /**
  *  包车订单评论
  * Class CatsLogic
  * @package common\Logic
  */
 class OrderCommentLogic extends BaseLogic{
-
-    protected $table = 'ruit_order_comment';
-
-    /*
-     * 1是普通用户 2是司导
-     */
-
-    const TYPE_USER   = 1;
-    const TYPE_SYSTEM = 2;
-    const TYPE_DRIVER = 3;
 
     /**
      * Author: W.W <will.wxx@qq.com>
@@ -107,7 +97,7 @@ class OrderCommentLogic extends BaseLogic{
         ];
         $userComm = $this->where('order_id', $orderId)->where('type', self::TYPE_USER)->field($fields)->find();
         $sysComm = $this->where('order_id', $orderId)->where('type', self::TYPE_SYSTEM)->field($fields)->find();
-        $drvComm = $this->where('order_id', $orderId)->where('type', self::TYPE_DRIVER)->field($fields)->find();
+        $drvComm = $this->where('order_id', $orderId)->where('type', self::TYPE_SELLER)->field($fields)->find();
         $ret = [
             'userComm' => $userComm,
             'sysComm' => $sysComm,
@@ -124,5 +114,4 @@ class OrderCommentLogic extends BaseLogic{
         $userComm['owner'] =  UserLogic::getBaseInfoById($userComm['comm_user_id'],0,$userComm['isAnonymous'])['result'];
         return resultArray(2000, '', $ret);
     }
-
 }

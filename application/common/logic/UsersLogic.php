@@ -1093,4 +1093,6 @@ class UsersLogic extends BaseLogic{
         $user = self::field($fields)->find($id);
         return $user;
     }
+
+
 }
