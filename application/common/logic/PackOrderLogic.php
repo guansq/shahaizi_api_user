@@ -90,6 +90,9 @@ class PackOrderLogic extends BaseLogic{
         if($statusCode == 'FINISH'){
             $where['user_order_status'] = 1;
         }
+        if($statusCode == 'UN_COMMENT'){
+            $where['user_order_status'] = 0;
+        }
 
         $field = [
             'ord.air_id',
