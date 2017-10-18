@@ -41,7 +41,7 @@ class OrderCommentLogic extends BaseLogic{
         foreach($list as $item){
             $item['imgs'] = explode('|', $item['img']);
             $item['commemt_time_fmt'] = date('Y.m.d', $item['commemt_time']);
-            $item['owner'] = $this->getOwner($item);
+            $item['owner'] = $this->getOwner($item, $item['is_anonymous']);
         }
         return $list;
     }
@@ -51,15 +51,15 @@ class OrderCommentLogic extends BaseLogic{
      * Describe:
      * @param $item
      */
-    public function getOwner($item){
+    public function getOwner($item, $isAnonymous = 0){
         if($item['type'] == self::TYPE_USER){
-            return UsersLogic::getBaseInfoById($item['user_id']);
+            return UsersLogic::getBaseInfoById($item['user_id'], 0, $isAnonymous);
         }elseif($item['type'] == self::TYPE_SELLER){
-            return SellerLogic::getBaseInfoById($item['user_id']);
+            return SellerLogic::getBaseInfoById($item['user_id'], 0, $isAnonymous);
         }elseif($item['type'] == self::TYPE_SYSTEM){
             return [
-                'nickname'=>'平台',
-                'avatar'=>C('APP_DEFAULT_USER_AVATAR'),
+                'nickname' => '平台',
+                'avatar' => C('APP_DEFAULT_USER_AVATAR'),
             ];
         }
     }

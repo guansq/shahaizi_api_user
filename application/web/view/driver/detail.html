@@ -47,67 +47,30 @@
     <div id="appraise" class="dr_repeat mt_10 dr_assess">
         <h1>
             收到的评价
-            <span>共90条</span>
+            <span>共{$comments.total}条</span>
         </h1>
+        {volist name="comments.list" id="comment"}
         <div class="ass_con">
-            <img src="/application/web/view/static/image/avatar@2x.png" alt="">
+            <img src="{$comment.owner.avatar|default='/application/web/view/static/image/avatar@2x.png'}" alt="">
             <div class="left_d">
-                <p>王浩</p>
-                <p><span>2017-3-26 </span>出行</p>
+                <p>{$comment.owner.nickname|default='****'}</p>
+                <p><span>{$comment.commemt_time_fmt}</span> </p>
             </div>
             <div class="right_d">
-                <p><img src="/application/web/view/static/image/star_full@2x.png" alt=""></p>
-                <p>接机服务</p>
+                <p><img src="/application/web/view/static/image/heart_{$comment.pack_order_score|default=5}@2x.png" alt=""></p>
+                <p></p>
             </div>
             <p class="dr_text">
-                提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
+                {$comment.content}
             </p>
         </div>
-        <div class="ass_con">
-            <img src="/application/web/view/static/image/avatar@2x.png" alt="">
-            <div class="left_d">
-                <p>王浩</p>
-                <p><span>2017-3-26 </span>出行</p>
-            </div>
-            <div class="right_d">
-                <p><img src="/application/web/view/static/image/star_full@2x.png" alt=""></p>
-                <p>接机服务</p>
-            </div>
-            <p class="dr_text">
-                提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
-            </p>
-        </div>
-        <div class="ass_con">
-            <img src="/application/web/view/static/image/avatar@2x.png" alt="">
-            <div class="left_d">
-                <p>王浩</p>
-                <p><span>2017-3-26 </span>出行</p>
-            </div>
-            <div class="right_d">
-                <p><img src="/application/web/view/static/image/star_full@2x.png" alt=""></p>
-                <p>接机服务</p>
-            </div>
-            <p class="dr_text">
-                提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
-            </p>
-        </div>
-        <div class="ass_con">
-            <img src="/application/web/view/static/image/avatar@2x.png" alt="">
-            <div class="left_d">
-                <p>王浩</p>
-                <p><span>2017-3-26 </span>出行</p>
-            </div>
-            <div class="right_d">
-                <p><img src="/application/web/view/static/image/star_full@2x.png" alt=""></p>
-                <p>接机服务</p>
-            </div>
-            <p class="dr_text">
-                提前联系了，很热情，定的豪华型车，对4大2小，2个行 李箱，够宽敞。
-            </p>
-        </div>
+        {/volist}
+
+        {if condition="$comments.total>2"}
         <div class="look">
             <a class="look_whole" href="javascript:void(0);">查看更多</a>
         </div>
+        {/if}
     </div>
 
     <div class="dr_repeat mt_10 photo">

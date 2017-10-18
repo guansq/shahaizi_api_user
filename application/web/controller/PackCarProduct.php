@@ -15,6 +15,8 @@ class PackCarProduct extends WebBase{
         if(empty($pcpRet) || $pcpRet['status'] != 2000){
             return $this->error($pcpRet['msg'] );
         }
+        $this->assign('packCarProduct',$pcpRet['result']);
+
         $where =[
             'car_product_id'=>$id,
             'deleted'=>0
@@ -25,7 +27,6 @@ class PackCarProduct extends WebBase{
             'total'=>count($list),
             'list'=>$list,
         ];
-        $this->assign('packCarProduct',$pcpRet['result']);
         $this->assign('comments',$comments);
         return $this->fetch();
     }

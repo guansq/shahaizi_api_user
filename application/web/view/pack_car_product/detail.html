@@ -57,9 +57,9 @@
     {volist name="comments.list" id="comment"}
     <!--{$comment} <br>-->
     <div class="ass_con">
-      <img src="{$comment.owner.avatar}" alt="">
+      <img src="{$comment.owner.avatar|default='/application/web/view/static/image/avatar@2x.png'}" alt="">
       <div class="left_d">
-        <p>{$comment.owner.nickname}</p>
+        <p>{$comment.owner.nickname|default='****'}</p>
         <p><span>{$comment.commemt_time_fmt}</span> </p>
       </div>
       <div class="right_d">
