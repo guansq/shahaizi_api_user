@@ -103,7 +103,7 @@ class PackLine extends Base{
         //获取轮播图
         $banner = M('ad')
             ->where('pid', AdLogic::AD_POSITION_CAR)
-            ->field(array('ad_name', 'ad_code'))
+            ->field(array('ad_name', 'ad_code', 'ad_link'))
             ->cache(true, TPSHOP_CACHE_TIME)
             ->select();
         //精选路线

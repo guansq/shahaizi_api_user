@@ -23,12 +23,13 @@ class HomeLogic extends BaseLogic
 
         $guideList = M('article_hot_guide')->where('is_hot',1)->order('sort,update_at DESC')->limit(4)->select();//热门攻略
         $newList = M('article_new_action')->order('sort,create_at DESC')->limit(4)->select();//最新动态
-        foreach($newList as $key => $val){
+        foreach($newList as $key => &$val){
             if(!empty($val['cover_img'])){
                 $temp = explode('|',$val['cover_img']);
                 $val['cover_img'] = $temp[0];
             }
         }
+        //print_r($newList);die;
         foreach($localList as &$val){
             $str = '';
             $type = getIDType($val['seller_id']);

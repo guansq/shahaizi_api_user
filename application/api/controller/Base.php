@@ -252,7 +252,7 @@ class Base extends Controller{
                 'flashToken',
                 'bindPhone',
                 'changeBindPhone',
-                'bindMail',
+                //'bindMail',
                 'changeBindMail',
                 'payPackOrderByBalance',
                 'recharge',
