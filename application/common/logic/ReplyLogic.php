@@ -141,6 +141,7 @@ class ReplyLogic extends BaseLogic
             'parent_id' => $parent_id,
             'deleted' => 0,
         );
+        //article_reply表 已删除
         $arr = M('article_reply')->where($reply_where)->order('reply_time desc')->select();
         if (empty($arr)) {
             return array();

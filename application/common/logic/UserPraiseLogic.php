@@ -25,11 +25,13 @@ class UserPraiseLogic extends BaseLogic{
 
     protected $table = 'ruit_user_praise';
 
-    const TYPE_DYNAMIC = 1;    // 动态
-    const TYPE_GUIDE   = 2;    // 攻略
-    const TYPE_LINE    = 3;     // 线路
-    const TYPE_PACKCAR = 4;     // 包车产品
-    const TYPE_TALENT  = 5;     //达人
+    const TYPE_DYNAMIC         = 1;    // 动态
+    const TYPE_GUIDE           = 2;    // 攻略
+    const TYPE_LINE            = 3;     // 线路
+    const TYPE_PACKCAR         = 4;     // 包车产品
+    const TYPE_TALENT          = 5;     //达人
+    const TYPE_ARTICLE         = 6;     // 文章
+    const TYPE_ARTICLE_COMMENT = 7;     // 文章的评论
 
 
     const TYPE_TABLE_ARR = [
@@ -102,8 +104,8 @@ class UserPraiseLogic extends BaseLogic{
      * @param $id
      * @return int|string
      */
-    public function isPraised($id, $userId, $type){
-        return $this->where('obj_type', $type)->where('obj_id', $id)->where('user_id', $userId)->count();
+    public static function isPraised($id, $userId, $type){
+        return self::where('obj_type', $type)->where('obj_id', $id)->where('user_id', $userId)->count();
     }
 
     public function addPraise($userId, $type, $id){

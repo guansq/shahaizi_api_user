@@ -67,9 +67,9 @@ if(!function_exists('resultArray')){
             $msg = $result['msg'];
             $data = $result['result'];
         }
-        if(empty($data)){
-            $data = new stdClass();
-        }
+        // if(empty($data)){
+        //     $data = new stdClass();
+        // }
         $info = [
             'status' => $code,
             'msg' => empty($msg) ? getCodeMsg($code) : $msg,
