@@ -137,7 +137,7 @@ class PackOrder extends Base{
     }
 
     /**
-     * @api         {POST}  /index.php?m=Api&c=PackOrder&a=payPackOrder    订单支付 todo wxx
+     * @api         {POST}  /index.php?m=Api&c=PackOrder&a=payPackOrder    订单支付 todo
      * @apiName     payPackOrder
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token
@@ -193,17 +193,22 @@ class PackOrder extends Base{
         $real_price = $pack_order['total_price'] - $discount_price;//真实价格
         $user_info = M('users')->where('user_id', $this->user_id)->find();
         if($pay_way == 0){  //todo 微信支付
-            return $this->returnJson();
-            $this->ajaxReturn(['status' => -1, 'msg' => '暂未开放']);
+            return $this->returnJson(4000,'暂未开放');
         }elseif($pay_way == 1){ //todo 进行支付宝支付
-            $this->ajaxReturn(['status' => -1, 'msg' => '暂未开放']);
+            $aliPayParams = $this->getAliPayParamsByPackOrder($pack_order);
+            if(empty($aliPayParams)){
+                return $this->returnJson(4004);
+            }
+            $ret=['aliPayParams'=>$aliPayParams];
+            return $this->returnJson(2000,'',$ret);
         }elseif($pay_way == 2){// 余额支付
             //进行付款操作----------》
             ($user_info['user_money'] - $real_price) < 0 && $this->ajaxReturn([
                 'status' => -1,
                 'msg' => '抱歉，您的账户余额不足，请使用其他方式付款'
             ]);
-            $result = payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id);//订单信息,用户信息,优惠价格,支付方式,优惠券ID,优惠券是否可以使用
+            //订单信息,用户信息,优惠价格,支付方式,优惠券ID,优惠券是否可以使用
+            $result = payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id);
             $this->ajaxReturn($result);
         }else{
             $this->ajaxReturn(['status' => -1, 'msg' => '不支持的支付方式']);
@@ -272,5 +277,13 @@ class PackOrder extends Base{
         $this->returnJson($orderLogic->confirmFinish($order, $this->user));
 
 
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe:
+     * @param $pack_order
+     */
+    public function getAliPayParamsByPackOrder($pack_order){
     }
 }
