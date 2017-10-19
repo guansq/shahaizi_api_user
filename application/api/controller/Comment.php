@@ -10,6 +10,8 @@ namespace app\api\controller;
 
 use app\api\logic\OrderCommentLogic;
 use app\api\logic\PackOrderLogic;
+use app\api\logic\ArticleCommentLogic;
+use app\common\logic\UserPraiseLogic;
 use think\Request;
 
 class Comment extends Base{
@@ -223,17 +225,15 @@ class Comment extends Base{
     }
 
     /**
-     * @api     {POST}  /api/comment/newActionComment       最新动态评论
+     * @api     {POST}  /api/comment/newActionComment       最新动态评论(回复)done         管少秋
      * @apiName     newActionComment
      * @apiGroup     Comment
      * @apiParam    {String}    token   token.
      * @apiParam    {Number}    article_id   动态id.
      * @apiParam    {Number}    publish_id   发布人id.
      * @apiParam    {String}    content   评论内容.
-     * @apiParam    {String}    add_time   评论时间.
-     * @apiParam    {String}    img   评论图片.
      * @apiParam    {String}    is_anonymous   是否匿名评论.  是否匿名评价0:是；1不是
-     * @apiParam    {Number}    parent_id   上级评论ID.
+     * @apiParam    {Number}    [parent_id]   上级评论ID.
      */
     public function newActionComment(){
         $reqParams = $this->getReqParams([
@@ -241,8 +241,8 @@ class Comment extends Base{
             'publish_id',
             'content',
             'add_time',
-            'img',
-            'is_anonymous'
+            'is_anonymous',
+            'parent_id'//上级评论的ID
         ]);
         $rule = [
             'article_id' => ['require'],
@@ -252,6 +252,36 @@ class Comment extends Base{
             'is_anonymous' => ['require'],
         ];
         $this->validateParams($reqParams, $rule);
-        echo '成功';die;
+        $reqParams['add_time'] = time();
+        $reqParams['ip_address']  = getIP();
+        $reqParams['user_id']  = $this->user_id;
+        $reqParams['type']  = 0;//最新动态
+        $comment = new ArticleCommentLogic();
+        $result = $comment->saveComment($reqParams);
+        return $result;
+    }
+
+    /**
+     * @api     {POST}  /api/comment/newActionTags      点赞热门动态文章done        管少秋
+     * @apiName     newActionTags
+     * @apiGroup    Comment
+     * @apiParam    {Number}    article_id   动态id.
+     */
+    public function newActionTags(){
+        $id = I('publish_id');
+        $praiseLogic = new UserPraiseLogic();
+        if(M('article_new_action')->where('act_id',$id)->count() == 0){
+            return $this->returnJson(4002, '你要点赞的最新动态已经不存在。');
+        }
+        return $this->returnJson($praiseLogic->addPraise($this->user_id, UserPraiseLogic::TYPE_DYNAMIC, $id));
+    }
+
+    /**
+     * @api     {POST}  /api/comment/doGoodByComment    对评论进行点赞
+     * @apiName     doGoodByComment
+     * @apiGroup    Comment
+     */
+    public function doGoodByComment(){
+
     }
 }
