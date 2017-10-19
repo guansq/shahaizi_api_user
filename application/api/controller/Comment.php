@@ -221,4 +221,37 @@ class Comment extends Base{
         $poCommentLogic = new OrderCommentLogic();
         return $this->returnJson($poCommentLogic->getByOrderId($reqParams['orderId']));
     }
+
+    /**
+     * @api     {POST}  /api/comment/newActionComment       最新动态评论
+     * @apiName     newActionComment
+     * @apiGroup     Comment
+     * @apiParam    {String}    token   token.
+     * @apiParam    {Number}    article_id   动态id.
+     * @apiParam    {Number}    publish_id   发布人id.
+     * @apiParam    {String}    content   评论内容.
+     * @apiParam    {String}    add_time   评论时间.
+     * @apiParam    {String}    img   评论图片.
+     * @apiParam    {String}    is_anonymous   是否匿名评论.  是否匿名评价0:是；1不是
+     * @apiParam    {Number}    parent_id   上级评论ID.
+     */
+    public function newActionComment(){
+        $reqParams = $this->getReqParams([
+            'article_id',
+            'publish_id',
+            'content',
+            'add_time',
+            'img',
+            'is_anonymous'
+        ]);
+        $rule = [
+            'article_id' => ['require'],
+            'publish_id' => ['require'],
+            'content' => ['require'],
+            'add_time' => ['require'],
+            'is_anonymous' => ['require'],
+        ];
+        $this->validateParams($reqParams, $rule);
+        echo '成功';die;
+    }
 }
