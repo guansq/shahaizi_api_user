@@ -280,8 +280,11 @@ class Comment extends Base{
      * @api     {POST}  /api/comment/doGoodByComment    对评论进行点赞
      * @apiName     doGoodByComment
      * @apiGroup    Comment
+     * @apiParam    {Number}    comment_id   动态id.
      */
     public function doGoodByComment(){
-
+        $id = I('comment_id');
+        $praiseLogic = new UserPraiseLogic();
+        return $this->returnJson($praiseLogic->addPraise($this->user_id, UserPraiseLogic::TYPE_ARTICLE_COMMENT, $id));
     }
 }
