@@ -56,6 +56,7 @@ class PackLine extends WebBase{
                 'car_seat_num' => '未知',
             ];
         }
+        $this->assign('car',$car);
         $this->assign('comments',$comments);
         return $this->fetch();
     }
