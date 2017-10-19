@@ -24,10 +24,10 @@ class PackBase extends Validate{
         'flt_no' => 'require',
         'airport_name' => 'require',
         //'dest_address' => 'require',
-        'start_time' => 'require',
+        'start_time' => 'require|checkTime',
         'start_address' => 'require',
         'user_car_time' => 'require|checkTime',//用车时间要大于当前时间
-        'tour_time' => 'require',
+        'tour_time' => 'require|checkTime',
         'end_address' => 'require',
         'tour_days' => 'require',
         'tour_person_num' => 'require',
