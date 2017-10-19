@@ -114,7 +114,7 @@ class LocalTalentLogic extends BaseLogic{
         $info['is_good'] = 0;
         if(!empty($user_id)){
             $user_praise = new UserPraiseLogic();
-            $info['is_good'] = $user_praise->isPraised($talent_id,$user_id,5);
+            $info['is_good'] = $user_praise->isPraised($talent_id,$user_id,UserPraiseLogic::TYPE_TALENT);
         }
         $return = [
             'status' => 1,

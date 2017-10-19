@@ -15,6 +15,7 @@
 
 namespace app\api\logic;
 
+use app\common\logic\ArticleCommentLogic;
 use app\common\logic\UserCollectLogic;
 use app\common\logic\UserPraiseLogic;
 use app\common\logic\UsersLogic;
@@ -127,7 +128,8 @@ class DynamicLogic extends BaseLogic{
         $dynamic['praiseNum'] = UserPraiseLogic::where('obj_id', $id)
             ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
             ->count();
-        $dynamic['owner'] =UsersLogic::getBaseInfo($user,$user_id)['result'];
+        $dynamic['owner'] = UsersLogic::getBaseInfo($user, $user_id)['result'];
+        $dynamic['comments'] = ArticleCommentLogic::getListByTypeAndObjid(ArticleCommentLogic::TYPE_DYNAMIC, $id, $user_id)['result'];
 
         return resultArray(2000, '', $dynamic);
     }
