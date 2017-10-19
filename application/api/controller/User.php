@@ -385,13 +385,16 @@ class User extends Base{
         if($result['status'] != 1){
             $this->ajaxReturn(['status' => -1, 'msg' => $result['msg']]);
         }
-        $thirdUser->email = $mail;
-        $thirdUser->email_validated = 1;
-
-        if(!$thirdUser->save()){
-            return $this->returnJson(5020, '绑定失败');
+        //print_r($thirdUser);die;
+        $updateData = [
+            'email' => $mail,
+            'email_validated' => 1
+        ];
+        $result = M('users')->where(['user_id'=>$thirdUser['user_id']])->update($updateData);
+        if($result === false){
+            $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
-        return $this->returnJson(2000, '绑定成功');
+        $this->ajaxReturn(['status' => 1, 'msg' => '绑定成功']);
 
     }
 

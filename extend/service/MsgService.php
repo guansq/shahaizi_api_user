@@ -326,13 +326,12 @@ class MsgService extends Model{
     public function verifyMailCaptcha($mail, $opt,$captcha){
         $where = [
             'mail' => $mail,
-            'channel' => 1,//1为发送邮件
+            //'channel' => 1,//1为发送邮件
             'type' => $opt,
             'code' => $captcha,
         ];
         //验证码有效时间300s 5分钟
         $info = M('sms_info')->where($where)->find();
-        //dump($info);die;
         if(empty($info)){
             return ['status'=>-1,'msg'=>'验证码验证出错'];
         }else{
