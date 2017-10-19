@@ -304,7 +304,7 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
             'order_id' => $pack_order['air_id'],
             'use_time' => time(),
             'drv_id' => $pack_order['drv_id'],
-            'staus' => 1
+            'status' => 1
         ];
         M('coupon_list')->where(['id' => $coupon_id])->update($coupon_data);//更新优惠券信息
         trace('更新优惠券信息');
