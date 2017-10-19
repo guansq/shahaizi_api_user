@@ -81,4 +81,12 @@ class SellerLogic extends BaseLogic{
         return $seller;
     }
 
+    public function getCarTypeName($id){
+        $ret = M('pack_car_bar')->where('id',$id)->value('car_info');
+        return $ret;
+    }
+    public function getCarInfo($id){
+        $ret = M('pack_car_info')->where('car_id',$id)->find();
+        return $ret;
+    }
 }

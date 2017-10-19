@@ -419,7 +419,19 @@ function get_pack_line($where){
 }
 
 
-
+function get_pack_line_page($where,$firstRow,$listRows){
+    $list = M('pack_line')
+        ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')
+        ->where($where)
+        ->limit($firstRow.','.$listRows)
+        ->select();
+    foreach($list as &$val){
+        $val['star'] = getLineStar($val['seller_id'], 6);
+        $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
+        $val['create_at'] = shzDate($val['create_at']);
+    }
+    return $list;
+}
 
 
 /**
