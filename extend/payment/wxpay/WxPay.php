@@ -37,7 +37,8 @@ class WxPay{
         }
 
         $unifiedOrder->SetBody($order["wxbody"]);//商品或支付单简要描述
-        $unifiedOrder->SetAppid($WxPayConfig::$APPID);//appid
+        //$unifiedOrder->SetAppid($WxPayConfig::$APPID);//appid
+        $unifiedOrder->SetAppid('wx444bb74a6d803478');//appid
         $unifiedOrder->SetMch_id($WxPayConfig::$MCHID);//商户标识
         $unifiedOrder->SetNonce_str($WxPayApi::getNonceStr($length = 32));//随机字符串
         $unifiedOrder->SetDetail($order["detail"]);//详情
