@@ -51,7 +51,11 @@ class ArticleCommentLogic extends BaseLogic{
             'is_anonymous' => 'isAnonymous',
             'parent_id' => 'parentId',
         ];
-        $list = self::where('type', $type)->where('article_id', $articleId)->field($field)->select();
+        $list = self::where('type', $type)
+            ->where('article_id', $articleId)
+            ->where('parent_id', 0)
+            ->field($field)
+            ->select();
         if(empty($list)){
             return resultArray(4004);
         }
@@ -59,7 +63,7 @@ class ArticleCommentLogic extends BaseLogic{
             $comm['owner'] = UsersLogic::getBaseInfoById($comm['owner'], $viewUserId, $comm['isAnonymous'])['result'];
             $comm['createTimeFmt'] = date('Y-m-d', $comm['createTime']);
             $comm['isPraise'] = UserPraiseLogic::isPraised($comm->id, $viewUserId, UserPraiseLogic::TYPE_ARTICLE_COMMENT);
-            $comm['replies'] = self::getListByPid($comm->id, $viewUserId);
+            $comm['replies'] = self::getListByPid($comm->id, $viewUserId)['result'];
         }
         return resultArray(2000, '', $list);
     }
@@ -90,7 +94,7 @@ class ArticleCommentLogic extends BaseLogic{
             $comm['isPraise'] = UserPraiseLogic::isPraised($comm->id, $viewUserId, UserPraiseLogic::TYPE_ARTICLE_COMMENT);
             $comm['replies'] = self::getListByPid($comm->id);
         }
-
+        return resultArray(2000,'',$list);
     }
 
 }
