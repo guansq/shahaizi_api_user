@@ -19,6 +19,7 @@ use app\api\logic\UserAttentionLogic;
 use emchat\EasemobUse;
 use think\Db;
 use think\Page;
+use ruitu\PageVo;
 
 /**
  * 分类逻辑定义
@@ -574,16 +575,21 @@ class UsersLogic extends BaseLogic{
      * 获取路线收藏列表
      */
     public function get_lines_collect($user_id){
+
         $line = M('goods_collect')->where(['user_id' => $user_id, 'model_type' => 0])->column('goods_id');
+        $count = M('goods_collect')->where(['user_id' => $user_id, 'model_type' => 0])->count();
+        $Page = new Page($count, 10);
+
         if(empty($line)){
             return ['status' => -1, 'msg' => '数据为空'];
         }
         $where = implode(',', array_unique($line));
-        $result = get_pack_line(['line_id' => ['in', $where]]);
+        $result = get_pack_line(['line_id' => ['in', $where]],$Page->firstRow,$Page->listRows);
+        $ret = new  PageVo($Page, $result);
         if(empty($result)){
             return ['status' => -1, 'msg' => '数据为空'];
         }
-        return ['status' => 1, 'msg' => '成功', 'result' => $result];
+        return ['status' => 1, 'msg' => '成功', 'result' => $ret];
     }
 
     /**

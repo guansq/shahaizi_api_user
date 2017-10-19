@@ -43,6 +43,19 @@ class PackLine extends WebBase{
             'total'=>count($list),
             'list'=>$list,
         ];
+        //得到车辆信息
+        $carInfo = $sellerLogic->getCarInfo($line['car_id']);
+        if(!empty($carInfo)){
+            $car = [
+                'car_type' => $sellerLogic->getCarTypeName($carInfo['car_type_id']),
+                'car_seat_num' => $carInfo['seat_num'],
+            ];
+        }else{
+            $car = [
+                'car_type' => '未知',
+                'car_seat_num' => '未知',
+            ];
+        }
         $this->assign('comments',$comments);
         return $this->fetch();
     }
