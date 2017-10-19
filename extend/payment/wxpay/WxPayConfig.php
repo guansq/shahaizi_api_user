@@ -10,29 +10,28 @@ class WxPayConfig {
 
     static $_instance;
 
-    static $APPID;
+    static $APPID = 'wx444bb74a6d803478';
 
-    static $SECRET;
+    static $SECRET= '8422d3feec9a93d0dd9465331715c963';
 
-    static $MCHID;
+    static $MCHID = '1489687802';
 
-    static $KEY;
+    static $KEY = '5x5pIE11ct8WTYmpibIAEpkQBPnjMZJN';
 
     static $NOTIFY_URL;
 
     //private标记的构造方法
     private function __construct($code) {
-        if (!$code) {
-            $code = "appWeixinPay";
-        }
-        $wxPay = M('plugin')->where(array('type' => 'payment', 'code' => $code))->find();
-
-        $wxPayVal = unserialize($wxPay['config_value']);
-        self::$APPID = $wxPayVal['appid'];
-        self::$MCHID = $wxPayVal['mchid'];
-        self::$SECRET = $wxPayVal['appsecret'];
-        self::$KEY = $wxPayVal['key'];
-        self::$NOTIFY_URL = U('Api/Wxpay/notify', '', false, true);
+        // if (!$code) {
+        //     $code = "appWeixinPay";
+        // }
+        // $wxPay = M('plugin')->where(array('type' => 'payment', 'code' => $code))->find();
+        // $wxPayVal = unserialize($wxPay['config_value']);
+        // self::$APPID = $wxPayVal['appid'];
+        // self::$MCHID = $wxPayVal['mchid'];
+        // self::$SECRET = $wxPayVal['appsecret'];
+        // self::$KEY = $wxPayVal['key'];
+        self::$NOTIFY_URL =  U("Api/Payment/wxpayNotify", '', false, true);
     }
 
     //创建__clone方法防止对象被复制克隆

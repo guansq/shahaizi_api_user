@@ -25,6 +25,7 @@ class WxPayApi {
      * @return 成功时返回，其他抛异常
      */
     public static function unifiedOrder($inputObj, $timeOut = 6) {
+
         $url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
         //检测必填参数
         if (!$inputObj->IsOut_trade_noSet()) {
@@ -58,18 +59,20 @@ class WxPayApi {
 
         //签名
         $inputObj->SetSign();
+        // print_r($inputObj);
+        // exit();
 
         $xml = $inputObj->ToXml();
-        //print_r($xml);
-        //exit();
+        // print_r($xml);
+        // exit();
         $startTimeStamp = self::getMillisecond();//请求开始时间
         $response = self::postXmlCurl($xml, $url, false, $timeOut);
         //print_r($response);
         //exit();
         $result = WxPayResults::Init($response);
 
-        //print_r($result);
-        //exit();
+        // print_r($result);
+        // exit();
         $time_stamp = time();
         $pack = 'Sign=WXPay';
         //$pack	= 'io.dcloud.h50a170fe';

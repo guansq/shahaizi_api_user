@@ -39,7 +39,7 @@ class WxPay{
         $unifiedOrder->SetBody($order["wxbody"]);//商品或支付单简要描述
         //$unifiedOrder->SetAppid($WxPayConfig::$APPID);//appid
         $unifiedOrder->SetAppid('wx444bb74a6d803478');//appid
-        $unifiedOrder->SetMch_id($WxPayConfig::$MCHID);//商户标识
+        $unifiedOrder->SetMch_id('1489687802');//商户标识
         $unifiedOrder->SetNonce_str($WxPayApi::getNonceStr($length = 32));//随机字符串
         $unifiedOrder->SetDetail($order["detail"]);//详情
         $unifiedOrder->SetOut_trade_no($order["order_id"]);//交易号
@@ -47,7 +47,8 @@ class WxPay{
         $unifiedOrder->SetTrade_type($tradeType);//应用类型
         $unifiedOrder->SetAttach($order["attach"]);//应用类型
         $unifiedOrder->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//发起充值的ip
-        $unifiedOrder->SetNotify_url($WxPayConfig::$NOTIFY_URL);//交易成功通知url
+        $url = U("Api/Payment/wxpayNotify", '', false, true);
+        $unifiedOrder->SetNotify_url($url);//交易成功通知url
         //$unifiedOrder->SetTrade_type($native);//支付类型
         $unifiedOrder->SetProduct_id(time());
 
