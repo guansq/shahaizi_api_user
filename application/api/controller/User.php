@@ -26,6 +26,7 @@ use app\common\logic\PackCarProductLogic;
 use app\common\logic\StoreLogic;
 use app\common\logic\UserCollectLogic;
 use app\common\logic\UsersLogic;
+use app\common\model\GoodsCollect;
 use service\MsgService;
 use think\Page;
 use think\Request;
@@ -1140,7 +1141,7 @@ class User extends Base{
         $where = [
             'user_id' => $this->user_id,
             'goods_id' => $data['line_id'],
-            'model_type' => 0,
+            'model_type' =>  UserCollectLogic::TYPE_LINE,
         ];
         $count = M('goods_collect')->where($where)->count();
         if($data['action'] == 'collect'){
@@ -1152,7 +1153,7 @@ class User extends Base{
                 'goods_id' => $data['line_id'],
                 'cat_id3' => 0,
                 'add_time' => time(),
-                'model_type' => 0,
+                'model_type' => UserCollectLogic::TYPE_LINE,
             ];
             $result = M('goods_collect')->save($add);
             if(!$result){

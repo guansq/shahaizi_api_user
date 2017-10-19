@@ -148,6 +148,7 @@ class PackLineLogic extends BaseLogic{
         if(empty($user)){
             $pkgLine['is_collect'] = 0;
             $pkgLine['is_praise'] = 0;
+            return $pkgLine;
         }
         $pkgLine['is_collect'] = $userCollectLogic->where('user_id', $user['user_id'])
             ->where('goods_id', $pkgLine['line_id'])
