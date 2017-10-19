@@ -34,15 +34,21 @@
     <div>
       <img class="head_img" src="{$driver.head_pic|default='http://img.shahaizi.cn/user_avatar.png'}" alt="">
       <p class="dri_xx">
-        <span class="drive_name">{$driver.nickname}</span>
-        <span class="drive_id">工号:<i> {$driver.drv_code}</i></span>
-        {notempty name="driver.country_name"}
-        <span class="drive_addre"><i></i>{$driver.country_name}·{$driver.province_name}</span>
-        {/notempty}
+        <span class="dis_block drive_name"><i>姓名:</i>{$driver.nickname}</span>
+        <span class="dis_block drive_id">工号:<i> {$driver.drv_code}</i></span>
+        <span class="dis_block drive_addre"><i></i>{$driver.country_name}{$driver.province_name}·{$driver.city_name}</span>
       </p>
     </div>
   </div>
   {/notempty}
+
+  <div class="cir_con box2">
+    <h1>车辆信息</h1>
+    <ul>
+      <li><span class="s-head">车型</span><span class="s-con">{$car.car_type}</span></li>
+      <li><span class="s-head">座位</span><span class="s-con">{$car.car_seat_num}座</span></li>
+    </ul>
+  </div>
 
   <div class="cir_con taste">
     <h1>体验亮点</h1>
