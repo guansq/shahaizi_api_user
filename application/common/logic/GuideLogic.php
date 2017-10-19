@@ -47,6 +47,7 @@ class GuideLogic extends BaseLogic{
         }
         $info->read_num++;
         $info->save();
+        $info['read_num'] = floor($info['read_num']/2);
         $commentLogic = new CommentLogic();
         $commentList = $commentLogic->getArticleComment($guide_id,1);
         $result = [
