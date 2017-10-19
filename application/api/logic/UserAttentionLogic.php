@@ -31,6 +31,17 @@ class UserAttentionLogic extends BaseLogic{
     ];
 
     /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
+     * Describe: $viewUserId 是否关注了 $userId
+     * @param $userId
+     * @param $viewUserId
+     */
+    public static function isAttention($userId, $viewUserId){
+        return self::where('obj_id',$userId)->where('obj_type',self::TYPE_USER)->where('user_id',$viewUserId)->count();
+    }
+
+    /**
      * Author: WILL<314112362@qq.com>
      * Describe:添加关注
      * @param $type

@@ -127,9 +127,7 @@ class DynamicLogic extends BaseLogic{
         $dynamic['praiseNum'] = UserPraiseLogic::where('obj_id', $id)
             ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
             ->count();
-        $dynamic['ownerName'] = $user['nickname'];
-        $dynamic['ownerAvatar'] = $user['head_pic'];
-
+        $dynamic['owner'] =UsersLogic::getBaseInfo($user,$user_id)['result'];
 
         return resultArray(2000, '', $dynamic);
     }

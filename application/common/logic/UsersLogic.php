@@ -15,6 +15,7 @@
 
 namespace app\common\logic;
 
+use app\api\logic\UserAttentionLogic;
 use emchat\EasemobUse;
 use think\Db;
 use think\Page;
@@ -200,7 +201,7 @@ class UsersLogic extends BaseLogic{
             $user['last_login'] = $map['last_login'];
         }
         if(empty($user['mobile'])){
-            return resultArray(4000,'请绑定手机号');
+            return resultArray(4000, '请绑定手机号');
         }else{
             return array('status' => 1, 'msg' => '登陆成功', 'result' => $user);
         }
@@ -417,12 +418,12 @@ class UsersLogic extends BaseLogic{
 
     /**
      * 获取账户资金记录
-     * @param      $user_id      |用户id
+     * @param      $user_id |用户id
      * @param int  $account_type 收入：1,支出:2 所有：0
-     * @param null $order_sn     订单编号
-     * @param null $order_start  查找时间范围-开始时间
-     * @param null $order_end    查找时间范围-结束时间
-     * @param null $desc         备注信息
+     * @param null $order_sn 订单编号
+     * @param null $order_start 查找时间范围-开始时间
+     * @param null $order_end 查找时间范围-结束时间
+     * @param null $desc 备注信息
      * @return mixed
      */
     public function get_account_log($user_id, $account_type = 0, $order_sn = null, $order_start = null, $order_end = null, $desc = null){
@@ -1070,7 +1071,6 @@ class UsersLogic extends BaseLogic{
     }
 
 
-
     /**
      * Author: WILL<314112362@qq.com>
      * Describe:
@@ -1091,14 +1091,16 @@ class UsersLogic extends BaseLogic{
             $user['nickname'] = hidMiddleStr($user['nickname']);
         }
         $baseInfo = [
+            'id' => $user['user_id'],
             'avatar' => empty($user['head_pic']) ? config('APP_DEFAULT_USER_AVATAR') : $user['head_pic'],
-            'nickname' => $user['nickname'],
+            'nickname' => $isAnonymous ? hidMiddleStr($user['nickname']) : $user['nickname'],
             'sex' => $user['sex'],
             'level' => $user['level'],
             'fansNum' => $user['attention_num'],
             'attentionNum' => $user['attention_num'],
             'praiseNum' => $user['good_num'],
             'collectNum' => $user['collection_num'],
+            'isAttention' => UserAttentionLogic::isAttention($user['user_id'], $userId),  //是否关注
         ];
         return resultArray(2000, '', $baseInfo);
 
@@ -1123,7 +1125,16 @@ class UsersLogic extends BaseLogic{
         if(empty($userId)){
             return resultArray(4004);
         }
-        $baseFields = ['head_pic', 'nickname', 'sex', 'level', 'attention_num', 'good_num', 'collection_num'];
+        $baseFields = [
+            'user_id',
+            'head_pic',
+            'nickname',
+            'sex',
+            'level',
+            'attention_num',
+            'good_num',
+            'collection_num'
+        ];
         $user = self::field($baseFields)->find($userId);
         return self::getBaseInfo($user, $viewerId, $isAnonymous);
 
