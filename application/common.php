@@ -276,11 +276,13 @@ function getCityName($id){
 function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id = ''){
     $packLineLogic =  M('pack_line');
     $real_price = $pack_order['total_price'] - $discount_price;//真实价格
-    //需要变更的用户信息
-    $user['user_money'] = $user_info['user_money'] - $real_price;//余额
-    $user['total_amount'] = $user_info['total_amount'] + $real_price;//增加消费金额
-    M('users')->where(['user_id' => $pack_order['user_id']])->update($user);//更新用户余额
-    trace('更新用户余额');
+    if($pay_way == 2){//余额支付需要更改用户金额
+        //需要变更的用户信息
+        $user['user_money'] = $user_info['user_money'] - $real_price;//余额
+        $user['total_amount'] = $user_info['total_amount'] + $real_price;//增加消费金额
+        M('users')->where(['user_id' => $pack_order['user_id']])->update($user);//更新用户余额
+        trace('更新用户余额');
+    }
     //找出消费的产品表（更改产品的销量信息），且只有非精品路线才会增加预订次数1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
     if($pack_order['type'] == 3){
         $line_id = $pack_order['line_id'];
