@@ -104,7 +104,7 @@ class PackLine extends Base{
         $banner = M('ad')
             ->where('pid', AdLogic::AD_POSITION_CAR)
             ->field(array('ad_name', 'ad_code', 'ad_link'))
-            ->cache(true, TPSHOP_CACHE_TIME)
+            //->cache(true, TPSHOP_CACHE_TIME)
             ->select();
         //精选路线
         $packLogic = new PackLineLogic();
