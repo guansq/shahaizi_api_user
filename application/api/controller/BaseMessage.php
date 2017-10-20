@@ -110,6 +110,11 @@ class BaseMessage extends Base{
         if(check_email($data['mail']) && in_array($data['opt'],['reg','resetpwd','login','bind'])){
             switch($data['opt']){
                 case 'reg' :
+                    $user_where = ['email'=>$data['mail']];
+                    $userInfo = M("users") -> where($user_where) -> find();
+                    if($userInfo){
+                        $this->ajaxReturn(['status'=>-1,'msg'=>'账号已存在']);
+                    }
                     $content = '【傻孩子APP】您正在进行[注册]操作，验证码为：'.$code;
                     break;
                 case 'resetpwd' :
