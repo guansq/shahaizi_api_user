@@ -52,10 +52,28 @@ class WithdrawalsLogic extends BaseLogic{
      */
     public function applyWithdrawals($reqParams, $user){
         $userLogic = new UserLogic();
-        $count = $this->where('user_id', $user['user_id'])->where('status', self::STATUS_AUDITTING)->count();
-        if($count > 0){
-            return resultArray(4010, '您有提现申请在处理中。如有疑问请联系客服。');
+        $userObj = $userLogic->find($user['user_id']);
+
+        //C('TOKEN_ON',true);
+        if($userObj->is_lock == 1){
+            return resultArray(4010, '账号异常已被锁定');
         }
+
+        $distributMin = tpCache('basic.min');      //最少提现额度 100
+        $distributNeed = tpCache('basic.need');    //满多少才能提 100
+        //$this->verifyHandle('withdrawals');
+
+        if($reqParams['amount'] < $distributMin){
+            return resultArray(4010, "每次最少提现额度{$distributMin}元");
+        }
+        if($reqParams['amount'] > $userObj->user_money){
+            return resultArray(4010, "你最多可提现{$userObj->user_money}元.");
+        }
+
+        if($userObj->user_money < $distributNeed){
+            return resultArray(4010, '账户余额最少达到'.$distributNeed.'元才能提现');
+        }
+
         switch($reqParams['withdrawalsWay']){
             case 'wx':
                 $bankName = '微信';
@@ -72,7 +90,7 @@ class WithdrawalsLogic extends BaseLogic{
         $userObj->user_money -= $reqParams['amount'];
         $userObj->frozen_money += $reqParams['amount'];
         if(!$userObj->save()){
-            trace("用户userid=$user[user_id]申请提现,冻结余额失败", Log::ERROR);
+            trace("用户userid={$userObj->user_id}申请提现,冻结余额失败", Log::ERROR);
             return resultArray(5010, '提交失败,联系客服!。');
         };
 
@@ -95,6 +113,18 @@ class WithdrawalsLogic extends BaseLogic{
             $userObj->save();
             return resultArray(5010, '提交失败,联系客服!。');
         }
+
+        // 记录log
+        AccountLogLogic::create([
+            'user_id' => $userObj->user_id,
+            'user_money' => 0 - $reqParams['amount'],
+            'user_balance' => $userObj->user_money,
+            'frozen_money' => $reqParams['amount'],
+            'change_time' => time(),
+            'desc' => '提现',
+            'type' => AccountLogLogic::TYPE_WITHDRAW,
+        ]);
+
         return resultArray(2000, '提交成功。', [
             'amount' => number_format($reqParams['amount'], 2),
             'balance' => number_format($userObj->user_money, 2)
@@ -138,7 +168,9 @@ class WithdrawalsLogic extends BaseLogic{
         if($userObj->user_money < $distributNeed){
             return resultArray(4010, '账户余额最少达到'.$distributNeed.'元才能提现');
         }
-        $withdrawalTotal = $this->where('user_id', $userObj->user_id)->where('status', self::STATUS_AUDITTING)->sum('money');
+        $withdrawalTotal = $this->where('user_id', $userObj->user_id)
+            ->where('status', self::STATUS_AUDITTING)
+            ->sum('money');
 
         if($userObj->user_money < ($withdrawalTotal + $reqParams['amount'])){
             return resultArray(4010, "您有提现申请待处理，本次提现余额不足。");
