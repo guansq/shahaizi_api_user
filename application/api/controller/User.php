@@ -318,6 +318,7 @@ class User extends Base{
         $userObj->hx_user_name = $hx_user;
         $userObj->hx_password = $userObj->password;
         $userObj->mobile = $mobile;
+        $userObj->countroy_code = $countroy_code;
         $userObj->mobile_validated = 1;
         if(!$userObj->save()){
             $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
@@ -413,16 +414,7 @@ class User extends Base{
         $userObj->hx_password = $userObj->password;
         $userObj->email = $mail;
         $userObj->email_validated = 1;
-        $userObj->save();
         if(!$userObj->save()){
-            $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
-        }
-        $updateData = [
-            'email' => $mail,
-            'email_validated' => 1
-        ];
-        $result = M('users')->where(['user_id' => $thirdUser['user_id']])->update($updateData);
-        if($result === false){
             $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
         $this->ajaxReturn(['status' => 1, 'msg' => '绑定成功']);
