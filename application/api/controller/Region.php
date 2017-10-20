@@ -32,7 +32,16 @@ class Region extends Base{
     public function getChildCity(){
         $regionLogic = new RegionLogic();
         $where = ['parent_id'=>I('parent_id/d')];//顶级城市
+        $parent_id = I('parent_id/d');
         $result = $regionLogic->get_city_info($where);
+        if($parent_id == 1){
+            foreach($result as $key => &$val){
+                if($val['id'] == 7){//中国
+                    unset($result[$key]);
+                }
+            }
+        }
+
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }
 

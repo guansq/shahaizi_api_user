@@ -180,6 +180,7 @@ class PackLine extends Base{
     public function getQualityLine(){
         $where = [];
         // $city = I('city');
+        $where['is_show'] = 1;
         $time = empty(I('time')) ? '' : strtotime(I('time'));
         $line_buy_num = I('line_buy_num');
         !empty($city) && $where['city'] = ['LIKE', "%{$city}%"];
