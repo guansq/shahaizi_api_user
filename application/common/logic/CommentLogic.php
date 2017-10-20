@@ -497,7 +497,7 @@ class CommentLogic extends BaseLogic
         $page = new Page($count, 10);
         $list = M('article_comment')->alias('c')
             ->field("u.head_pic,u.nickname,c.add_time,c.spec_key_name,c.content,
-                    c.impression,c.comment_id,c.zan_num,c.is_anonymous,c.reply_num,
+                    c.impression,c.comment_id,c.is_anonymous,
                     c.img,c.parent_id,c.parent_id as seller_comment")
             ->join('__USERS__ u', 'u.user_id = c.user_id', 'LEFT')
             ->where($where)
