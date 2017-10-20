@@ -303,14 +303,19 @@ class User extends Base{
         if(empty($thirdUser)){
             return $this->returnJson(4004, '绑定失败,无效的第三方用户');
         }
-
-        $thirdUser->mobile = $mobile;
-        $thirdUser->mobile_validated = 1;
-
-        if(!$thirdUser->save()){
-            return $this->returnJson(5020, '绑定失败');
+        //print_r($thirdUser);die;
+        $where = [
+            'user_id' => $thirdUser['user_id']
+        ];
+        $updateData = [
+            'mobile' => $mobile,
+            'mobile_validated' => 1
+        ];
+        $result = M('users')->where($where)->update($updateData);
+        if($result === false){
+            $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
-        return $this->returnJson(2000, '绑定成功');
+        $this->ajaxReturn(['status' => 1, 'msg' => '绑定成功']);
     }
 
     /**
