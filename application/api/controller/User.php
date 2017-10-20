@@ -400,6 +400,24 @@ class User extends Base{
             $this->ajaxReturn(['status' => -1, 'msg' => $result['msg']]);
         }
         //print_r($thirdUser);die;
+        // 注册+绑定 环信账号
+        $userLogic = new UsersLogic();
+        $userObj = $userLogic->find($thirdUser['user_id']);
+        $easemobUse = new  EasemobUse();
+        $hx_user = md5("hx_user_$userObj->nickname".time());
+        $userObj->password = md5($hx_user.rand(0,PHP_INT_MAX));
+        $easemobUse->setUserName($hx_user);
+        $easemobUse->setPassword($userObj->password); //和用户密码一致
+        $easemobUse->createSingleUser();
+
+        $userObj->hx_user_name = $hx_user;
+        $userObj->hx_password = $userObj->password;
+        $userObj->email = $mail;
+        $userObj->email_validated = 1;
+        $userObj->save();
+        if(!$userObj->save()){
+            $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
+        }
         $updateData = [
             'email' => $mail,
             'email_validated' => 1

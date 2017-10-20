@@ -50,7 +50,7 @@ class Index extends Base{
                 'ad_link',
                 'ad_name',
                 'ad_code'
-            ))//->cache(true, TPSHOP_CACHE_TIME)
+            ))->order('orderby asc')
             ->select();
         //广告地址转换
         foreach($data as $k => $v){

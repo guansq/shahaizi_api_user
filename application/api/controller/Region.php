@@ -41,7 +41,7 @@ class Region extends Base{
                 }
             }
         }
-
+        $result = array_merge($result);
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }
 
