@@ -14,6 +14,7 @@
  */
 
 namespace app\api\logic;
+
 use think\Log;
 
 
@@ -45,7 +46,7 @@ class WithdrawalsLogic extends BaseLogic{
 
     /**
      * Author: WILL<314112362@qq.com>
-     * Describe: 申请提现
+     * Describe: 申请提现 只能提一次 ，申请成功->冻结申请金额，余额减掉-》后台审核
      * @param $reqParams
      * @param $user
      */
@@ -71,7 +72,7 @@ class WithdrawalsLogic extends BaseLogic{
         $userObj->user_money -= $reqParams['amount'];
         $userObj->frozen_money += $reqParams['amount'];
         if(!$userObj->save()){
-            trace("用户userid=$user[user_id]申请提现,冻结余额失败",Log::ERROR);
+            trace("用户userid=$user[user_id]申请提现,冻结余额失败", Log::ERROR);
             return resultArray(5010, '提交失败,联系客服!。');
         };
 
@@ -94,10 +95,87 @@ class WithdrawalsLogic extends BaseLogic{
             $userObj->save();
             return resultArray(5010, '提交失败,联系客服!。');
         }
-        return resultArray(2000, '提交成功。',[
-            'amount'=>number_format($reqParams['amount'],2),
-            'balance'=>number_format($userObj->user_money,2)
+        return resultArray(2000, '提交成功。', [
+            'amount' => number_format($reqParams['amount'], 2),
+            'balance' => number_format($userObj->user_money, 2)
         ]);
+    }
+
+    /**
+     * Author: WILL<314112362@qq.com>
+     * Describe: 申请提现  不限制申请次数,申请中总金额不能大于可提现金额,
+     * @param $reqParams
+     * {number}  amount   提现金额 应当小于等于用户余额.
+     * {string=zfb,wx,bank}  withdrawalsWay 提现方式 zfb=支付宝,wx=微信,bank=银行汇款.
+     * {string}  account 提现账户.
+     * {string}  person  提现人姓名.
+     * {string}  bankName   提现银行  当提现方式为银行汇款时此项必填.
+     * {string}  bankOfDeposit 提现人开户行 当提现方式为银行汇款时此项必填.
+     * {string}  [phone] 提现人联系电话.
+     *
+     * @param $user
+     */
+    public function applyWithdrawalsInShop($reqParams, $user){
+        $userLogic = new UserLogic();
+        $userObj = $userLogic->find($user['user_id']);
+
+        //C('TOKEN_ON',true);
+        if($userObj->is_lock == 1){
+            return resultArray(4010, '账号异常已被锁定');
+        }
+
+        $distributMin = tpCache('basic.min');      //最少提现额度 100
+        $distributNeed = tpCache('basic.need');    //满多少才能提 100
+        //$this->verifyHandle('withdrawals');
+
+        if($reqParams['amount'] < $distributMin){
+            return resultArray(4010, "每次最少提现额度{$distributMin}元");
+        }
+        if($reqParams['amount'] > $userObj->user_money){
+            return resultArray(4010, "你最多可提现{$userObj->user_money}元.");
+        }
+
+        if($userObj->user_money < $distributNeed){
+            return resultArray(4010, '账户余额最少达到'.$distributNeed.'元才能提现');
+        }
+        $withdrawalTotal = $this->where('user_id', $userObj->user_id)->where('status', self::STATUS_AUDITTING)->sum('money');
+
+        if($userObj->user_money < ($withdrawalTotal + $reqParams['amount'])){
+            return resultArray(4010, "您有提现申请待处理，本次提现余额不足。");
+        }
+
+        switch($reqParams['withdrawalsWay']){
+            case 'wx':
+                $bankName = '微信';
+                break;
+            case 'zfb':
+                $bankName = '支付宝';
+                break;
+            case 'bank':
+            default:
+                $bankName = $reqParams['bankName'];
+        }
+
+        $data = [
+            'user_id' => $user['user_id'],
+            'money' => $reqParams['amount'],
+            'bank_name' => $bankName,
+            'bank_card' => $reqParams['account'],
+            'bank_of_deposit' => $reqParams['bankOfDeposit'],
+            'user_phone' => $reqParams['phone'],
+            'realname' => $reqParams['person'],
+            'status' => self::STATUS_AUDITTING,
+            'create_time' => time(),
+        ];
+
+        if(!$this->create($data)){
+            return resultArray(5010, '提交失败,联系客服!。');
+        }
+        return resultArray(2000, '提交成功。', [
+            'amount' => moneyFormat($reqParams['amount']),
+            'balance' => moneyFormat($userObj->user_money)
+        ]);
+
     }
 
 }

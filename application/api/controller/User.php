@@ -1564,7 +1564,7 @@ class User extends Base{
             return $this->returnJson(4001, '开户行必须填写。');
         }
         $withdrawalsLogic = new WithdrawalsLogic();
-        return $this->returnJson($withdrawalsLogic->applyWithdrawals($reqParams, $this->user));
+        return $this->returnJson($withdrawalsLogic->applyWithdrawalsInShop($reqParams, $this->user));
     }
 
     /**
