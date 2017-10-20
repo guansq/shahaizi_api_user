@@ -17,9 +17,9 @@ namespace app\common\logic;
 
 use app\api\logic\UserAttentionLogic;
 use emchat\EasemobUse;
+use ruitu\PageVo;
 use think\Db;
 use think\Page;
-use ruitu\PageVo;
 
 /**
  * 分类逻辑定义
@@ -201,8 +201,8 @@ class UsersLogic extends BaseLogic{
             $user['token'] = $map['token'];
             $user['last_login'] = $map['last_login'];
         }
-        if(empty($user['mobile'])){
-            return resultArray(4000, '请绑定手机号');
+        if(empty($user['mobile']) && empty($user['email'])){
+            return resultArray(4000, '请绑定手机号或邮箱');
         }else{
             return array('status' => 1, 'msg' => '登陆成功', 'result' => $user);
         }
@@ -420,12 +420,12 @@ class UsersLogic extends BaseLogic{
 
     /**
      * 获取账户资金记录
-     * @param      $user_id |用户id
+     * @param      $user_id      |用户id
      * @param int  $account_type 收入：1,支出:2 所有：0
-     * @param null $order_sn 订单编号
-     * @param null $order_start 查找时间范围-开始时间
-     * @param null $order_end 查找时间范围-结束时间
-     * @param null $desc 备注信息
+     * @param null $order_sn     订单编号
+     * @param null $order_start  查找时间范围-开始时间
+     * @param null $order_end    查找时间范围-结束时间
+     * @param null $desc         备注信息
      * @return mixed
      */
     public function get_account_log($user_id, $account_type = 0, $order_sn = null, $order_start = null, $order_end = null, $desc = null){
@@ -584,7 +584,7 @@ class UsersLogic extends BaseLogic{
             return ['status' => -1, 'msg' => '数据为空'];
         }
         $where = implode(',', array_unique($line));
-        $result = get_pack_line(['line_id' => ['in', $where]],$Page->firstRow,$Page->listRows);
+        $result = get_pack_line(['line_id' => ['in', $where]], $Page->firstRow, $Page->listRows);
         $ret = new  PageVo($Page, $result);
         if(empty($result)){
             return ['status' => -1, 'msg' => '数据为空'];
