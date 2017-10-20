@@ -71,6 +71,40 @@ class ArticleCommentLogic extends BaseLogic{
     /**
      * Author: W.W <will.wxx@qq.com>
      * Time:
+     * Describe:
+     * @param $type      int 文章类型
+     * @param $articleId int 文章id
+     */
+    public static function getListByTypeAndObjidByPage($type, $articleId, $viewUserId = 0){
+        $field = [
+            'comment_id' => 'id',
+            'user_id' => 'owner',
+            'content' => 'content',
+            'add_time' => 'createTime',
+            'img' => 'img',
+            'is_anonymous' => 'isAnonymous',
+            'parent_id' => 'parentId',
+        ];
+        $list = self::where('type', $type)
+            ->where('article_id', $articleId)
+            ->where('parent_id', 0)
+            ->field($field)
+            ->select();
+        if(empty($list)){
+            return resultArray(4004);
+        }
+        foreach($list as $comm){
+            $comm['owner'] = UsersLogic::getBaseInfoById($comm['owner'], $viewUserId, $comm['isAnonymous'])['result'];
+            $comm['createTimeFmt'] = date('Y-m-d', $comm['createTime']);
+            $comm['isPraise'] = UserPraiseLogic::isPraised($comm->id, $viewUserId, UserPraiseLogic::TYPE_ARTICLE_COMMENT);
+            $comm['replies'] = self::getListByPid($comm->id, $viewUserId)['result'];
+        }
+        return resultArray(2000, '', $list);
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Time:
      * Describe: 获取回复列表
      * @param $id
      */

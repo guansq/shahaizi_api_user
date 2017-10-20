@@ -255,7 +255,7 @@ class Comment extends Base{
         $reqParams['add_time'] = time();
         $reqParams['ip_address']  = getIP();
         $reqParams['user_id']  = $this->user_id;
-        $reqParams['type']  = 0;//最新动态
+        $reqParams['type']  = 1;//最新动态
         $comment = new ArticleCommentLogic();
         $result = $comment->saveComment($reqParams);
         return $result;
@@ -268,7 +268,7 @@ class Comment extends Base{
      * @apiParam    {Number}    article_id   动态id.
      */
     public function newActionTags(){
-        $id = I('publish_id');
+        $id = I('article_id');
         $praiseLogic = new UserPraiseLogic();
         if(M('article_new_action')->where('act_id',$id)->count() == 0){
             return $this->returnJson(4002, '你要点赞的最新动态已经不存在。');
@@ -280,11 +280,25 @@ class Comment extends Base{
      * @api     {POST}  /api/comment/doGoodByComment    对评论进行点赞
      * @apiName     doGoodByComment
      * @apiGroup    Comment
-     * @apiParam    {Number}    comment_id   动态id.
+     * @apiParam    {String}    token   token.
+     * @apiParam    {Number}    comment_id   评论ID.
      */
     public function doGoodByComment(){
         $id = I('comment_id');
         $praiseLogic = new UserPraiseLogic();
+        //print_r($this->user_id);die;
         return $this->returnJson($praiseLogic->addPraise($this->user_id, UserPraiseLogic::TYPE_ARTICLE_COMMENT, $id));
     }
+
+    /**
+     * @api     {POST}  /api/comment/getAllComment    得到全部评论
+     * @apiName     getAllComment
+     * @apiGroup    Comment
+     * @apiParam    {Number}    article_id   动态id.
+     * @apiParam    {Number}    article_id   动态id.
+     */
+    public function getAllComment(){
+        //ArticleCommentLogic::getListByTypeAndObjid(ArticleCommentLogic::TYPE_DYNAMIC, $id, $user_id)['result'];
+    }
+
 }

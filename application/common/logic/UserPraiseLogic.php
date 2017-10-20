@@ -40,6 +40,7 @@ class UserPraiseLogic extends BaseLogic{
         self::TYPE_LINE => 'pack_line',
         self::TYPE_PACKCAR => 'pack_car_product',
         self::TYPE_TALENT => 'article_local_talent',
+        self::TYPE_ARTICLE_COMMENT => 'article_comment',
     ];
 
     /**

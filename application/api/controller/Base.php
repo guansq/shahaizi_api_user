@@ -158,7 +158,7 @@ class Base extends Controller{
         // 判断哪些控制器的 哪些方法需要登录验证的
         $check_arr = [
             'cart' => ['cart2', 'cart3', 'cart4'],
-            'comment' => ['orderComment'],
+            'comment' => ['orderComment','doGoodByComment'],
             'distribut' => [
                 'add_goods',
                 'goods_list',
