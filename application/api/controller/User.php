@@ -26,6 +26,7 @@ use app\common\logic\PackCarProductLogic;
 use app\common\logic\StoreLogic;
 use app\common\logic\UserCollectLogic;
 use app\common\logic\UsersLogic;
+use emchat\EasemobUse;
 use service\MsgService;
 use think\Page;
 use think\Request;
@@ -269,6 +270,7 @@ class User extends Base{
      * @apiParam    {String}    code        绑定手机code
      */
     public function thirdBindPhone(){
+
         //看该手机号是否被别人绑定
         $reqParams = $this->getReqParams(['openid', 'from', 'mobile', 'countroy_code', 'code']);
         $rule = [
@@ -302,16 +304,23 @@ class User extends Base{
         if(empty($thirdUser)){
             return $this->returnJson(4004, '绑定失败,无效的第三方用户');
         }
-        //print_r($thirdUser);die;
-        $where = [
-            'user_id' => $thirdUser['user_id']
-        ];
-        $updateData = [
-            'mobile' => $mobile,
-            'mobile_validated' => 1
-        ];
-        $result = M('users')->where($where)->update($updateData);
-        if($result === false){
+
+        // 注册+绑定 环信账号
+        $userLogic = new UsersLogic();
+        $userObj = $userLogic->find($thirdUser['user_id']);
+        $easemobUse = new  EasemobUse();
+        $hx_user = md5("hx_user_$userObj->nickname".time());
+        $userObj->password = md5($hx_user.rand(0,PHP_INT_MAX));
+        $easemobUse->setUserName($hx_user);
+        $easemobUse->setPassword($userObj->password); //和用户密码一致
+        $easemobUse->createSingleUser();
+
+        $userObj->hx_user_name = $hx_user;
+        $userObj->hx_password = $userObj->password;
+        $userObj->mobile = $mobile;
+        $userObj->mobile_validated = 1;
+        $userObj->save();
+        if(!$userObj->save()){
             $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
         $this->ajaxReturn(['status' => 1, 'msg' => '绑定成功']);
