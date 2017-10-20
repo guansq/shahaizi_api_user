@@ -576,8 +576,8 @@ class UsersLogic extends BaseLogic{
      */
     public function get_lines_collect($user_id){
 
-        $line = M('goods_collect')->where(['user_id' => $user_id, 'model_type' => 0])->column('goods_id');
-        $count = M('goods_collect')->where(['user_id' => $user_id, 'model_type' => 0])->count();
+        $line = M('goods_collect')->where(['user_id' => $user_id, 'model_type' => 5])->column('goods_id');
+        $count = M('goods_collect')->where(['user_id' => $user_id, 'model_type' => 5])->count();
         $Page = new Page($count, 10);
 
         if(empty($line)){
