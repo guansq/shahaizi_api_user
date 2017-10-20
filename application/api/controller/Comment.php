@@ -11,6 +11,7 @@ namespace app\api\controller;
 use app\api\logic\OrderCommentLogic;
 use app\api\logic\PackOrderLogic;
 use app\api\logic\ArticleCommentLogic;
+use app\common\logic\ArticleCommentLogic as CommentLogic;
 use app\common\logic\UserPraiseLogic;
 use think\Request;
 
@@ -291,14 +292,16 @@ class Comment extends Base{
     }
 
     /**
-     * @api     {POST}  /api/comment/getAllComment    得到全部评论
+     * @api     {GET}  /api/comment/getAllComment    得到全部评论
      * @apiName     getAllComment
      * @apiGroup    Comment
      * @apiParam    {Number}    article_id   动态id.
-     * @apiParam    {Number}    article_id   动态id.
      */
     public function getAllComment(){
-        //ArticleCommentLogic::getListByTypeAndObjid(ArticleCommentLogic::TYPE_DYNAMIC, $id, $user_id)['result'];
+        $id = I('article_id');
+        $user_id = $this->user_id;
+        $data = CommentLogic::getListByTypeAndObjidByPage(CommentLogic::TYPE_DYNAMIC, $id, $user_id);
+        return $this->returnJson($data);
     }
 
 }
