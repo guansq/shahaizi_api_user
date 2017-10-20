@@ -319,7 +319,6 @@ class User extends Base{
         $userObj->hx_password = $userObj->password;
         $userObj->mobile = $mobile;
         $userObj->mobile_validated = 1;
-        $userObj->save();
         if(!$userObj->save()){
             $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
