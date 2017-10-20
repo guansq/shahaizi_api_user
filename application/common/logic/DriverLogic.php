@@ -144,7 +144,7 @@ class DriverLogic extends BaseLogic{
             'customer_name' => $data['user_name'],
             'customer_phone' => $data['connect'],
             'req_car_type' => $data['car_type_id'],
-            'req_car_seat_num' => $data['car_seat_num'], // 座位数
+            'req_car_seat_num' => $data['car_seat_total'], // 座位数
             'drv_code' => $data['drv_code'],
             'use_car_adult' => $data['adult_num'],
             'use_car_children' => $data['child_num'],
