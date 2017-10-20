@@ -114,8 +114,8 @@ class BaseMessage extends Base{
                     break;
                 case 'resetpwd' :
                     //对邮箱号判断
-                    $user_where = "mail = {$data['mail']}";
-                    $userInfo = M("seller") -> where($user_where) -> find();
+                    $user_where = ['email'=>$data['mail']];
+                    $userInfo = M("users") -> where($user_where) -> find();
                     if(empty($userInfo)){
                         $this->ajaxReturn(['status'=>-1,'msg'=>'您的邮箱还没有注册或绑定']);
                     }
@@ -132,6 +132,7 @@ class BaseMessage extends Base{
                     break;
             }
             $msgService = new MsgService();
+            //print_r('test');die;
             $result = $msgService->sendMailCaptcha($data['mail'],$data['opt'],$content,$code);
             $this->ajaxReturn($result);
         }else{
