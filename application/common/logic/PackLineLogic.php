@@ -75,6 +75,7 @@ class PackLineLogic extends BaseLogic{
     public function getCommPackLine($city = ''){
         $where = [
             'is_state' => 1,
+            'is_show' => 1,
             'is_comm' => 1,
         ];
         if(!empty($city)){

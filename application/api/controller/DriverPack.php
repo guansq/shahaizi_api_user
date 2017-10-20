@@ -375,7 +375,7 @@ class DriverPack extends Base{
 
         $data['real_price'] = $data['total_price'] = $pcp['price'];
         $data['car_type_id'] = $pcp['car_type_id'] ;
-        $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
+        $data['car_seat_num'] = $pcp['car_seat_total']; // 座位数
 
         $data['end_address'] = $data['airport_name'];
         $data['status'] = PackOrderLogic::STATUS_UNPAY;
