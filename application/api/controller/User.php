@@ -26,7 +26,6 @@ use app\common\logic\PackCarProductLogic;
 use app\common\logic\StoreLogic;
 use app\common\logic\UserCollectLogic;
 use app\common\logic\UsersLogic;
-use app\common\model\GoodsCollect;
 use service\MsgService;
 use think\Page;
 use think\Request;
@@ -396,7 +395,7 @@ class User extends Base{
             'email' => $mail,
             'email_validated' => 1
         ];
-        $result = M('users')->where(['user_id'=>$thirdUser['user_id']])->update($updateData);
+        $result = M('users')->where(['user_id' => $thirdUser['user_id']])->update($updateData);
         if($result === false){
             $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
@@ -1122,92 +1121,92 @@ class User extends Base{
      * @apiParam    {Number}    model_type  模块类型 0为包车模块1为商城模块2为民宿模块
      * @apiSuccessExample   {json}      Success-Response
      *  Http/1.1    200     OK
-    {
-    "status": 1,
-    "msg": "成功",
-    "result": {
-    "p": 1,
-    "pageSize": 10,
-    "totalRows": 2,
-    "totalPages": 1,
-    "list": [
-    {
-    "seller_id": 0,
-    "line_id": 8,
-    "line_buy_num": 6,
-    "city": "中国.北京",
-    "line_title": "日光两社一寺→华严瀑布→中禅寺湖→那须温泉→日光江户村→鬼怒川 2日游",
-    "cover_img": "http://img.shahaizi.cn/9c55f201710131009419949.jpg",
-    "line_price": "3000.00",
-    "line_detail": [
-    {
-    "summary": "日光市",
-    "date_num": "1",
-    "port_detail": [
-    {
-    "port_num": 1,
-    "port_coverImg": "http://img.shahaizi.cn/72052201710131011512944.jpg",
-    "port_detail": "游览日光的世界文化遗产“两社一寺”",
-    "site_name": "两社一寺"
-    },
-    {
-    "port_num": 2,
-    "port_coverImg": "http://img.shahaizi.cn/1c0cb201710131013249933.jpg",
-    "port_detail": "沿湖而行，感受湖光山色美景",
-    "site_name": "中禅寺湖"
-    }
-    ]
-    },
-    {
-    "summary": "东京",
-    "date_num": "2",
-    "port_detail": [
-    {
-    "port_num": 1,
-    "port_coverImg": "http://img.shahaizi.cn/b001b201710131014036881.jpg",
-    "port_detail": "完整还原德川江户时代的面貌",
-    "site_name": "日光江户村"
-    },
-    {
-    "port_num": 2,
-    "port_coverImg": "http://img.shahaizi.cn/89e45201710131014399471.jpg",
-    "port_detail": "关东最具代表性的一大温泉观光胜地，被称为“秘汤之乡",
-    "site_name": "鬼怒川温泉"
-    }
-    ]
-    }
-    ],
-    "create_at": null,
-    "star": ""
-    },
-    {
-    "seller_id": 0,
-    "line_id": 16,
-    "line_buy_num": 0,
-    "city": null,
-    "line_title": "无锡一日游",
-    "cover_img": "http://img.shahaizi.cn/0c24f20171019175721644.jpg",
-    "line_price": "340.00",
-    "line_detail": [
-    {
-    "summary": "太火",
-    "date_num": "1",
-    "port_detail": [
-    {
-    "port_num": 1,
-    "port_coverImg": "http://img.shahaizi.cn/e199f201710191758228955.png",
-    "port_detail": "斯蒂芬地方",
-    "site_name": "斯蒂芬斯蒂芬斯蒂芬"
-    }
-    ]
-    }
-    ],
-    "create_at": null,
-    "star": ""
-    }
-    ]
-    }
-    }
+     * {
+     * "status": 1,
+     * "msg": "成功",
+     * "result": {
+     * "p": 1,
+     * "pageSize": 10,
+     * "totalRows": 2,
+     * "totalPages": 1,
+     * "list": [
+     * {
+     * "seller_id": 0,
+     * "line_id": 8,
+     * "line_buy_num": 6,
+     * "city": "中国.北京",
+     * "line_title": "日光两社一寺→华严瀑布→中禅寺湖→那须温泉→日光江户村→鬼怒川 2日游",
+     * "cover_img": "http://img.shahaizi.cn/9c55f201710131009419949.jpg",
+     * "line_price": "3000.00",
+     * "line_detail": [
+     * {
+     * "summary": "日光市",
+     * "date_num": "1",
+     * "port_detail": [
+     * {
+     * "port_num": 1,
+     * "port_coverImg": "http://img.shahaizi.cn/72052201710131011512944.jpg",
+     * "port_detail": "游览日光的世界文化遗产“两社一寺”",
+     * "site_name": "两社一寺"
+     * },
+     * {
+     * "port_num": 2,
+     * "port_coverImg": "http://img.shahaizi.cn/1c0cb201710131013249933.jpg",
+     * "port_detail": "沿湖而行，感受湖光山色美景",
+     * "site_name": "中禅寺湖"
+     * }
+     * ]
+     * },
+     * {
+     * "summary": "东京",
+     * "date_num": "2",
+     * "port_detail": [
+     * {
+     * "port_num": 1,
+     * "port_coverImg": "http://img.shahaizi.cn/b001b201710131014036881.jpg",
+     * "port_detail": "完整还原德川江户时代的面貌",
+     * "site_name": "日光江户村"
+     * },
+     * {
+     * "port_num": 2,
+     * "port_coverImg": "http://img.shahaizi.cn/89e45201710131014399471.jpg",
+     * "port_detail": "关东最具代表性的一大温泉观光胜地，被称为“秘汤之乡",
+     * "site_name": "鬼怒川温泉"
+     * }
+     * ]
+     * }
+     * ],
+     * "create_at": null,
+     * "star": ""
+     * },
+     * {
+     * "seller_id": 0,
+     * "line_id": 16,
+     * "line_buy_num": 0,
+     * "city": null,
+     * "line_title": "无锡一日游",
+     * "cover_img": "http://img.shahaizi.cn/0c24f20171019175721644.jpg",
+     * "line_price": "340.00",
+     * "line_detail": [
+     * {
+     * "summary": "太火",
+     * "date_num": "1",
+     * "port_detail": [
+     * {
+     * "port_num": 1,
+     * "port_coverImg": "http://img.shahaizi.cn/e199f201710191758228955.png",
+     * "port_detail": "斯蒂芬地方",
+     * "site_name": "斯蒂芬斯蒂芬斯蒂芬"
+     * }
+     * ]
+     * }
+     * ],
+     * "create_at": null,
+     * "star": ""
+     * }
+     * ]
+     * }
+     * }
      */
     public function getGoodsCollect(){
         $info = input();
@@ -1234,7 +1233,7 @@ class User extends Base{
         $where = [
             'user_id' => $this->user_id,
             'goods_id' => $data['line_id'],
-            'model_type' =>  UserCollectLogic::TYPE_LINE,
+            'model_type' => UserCollectLogic::TYPE_LINE,
         ];
         $count = M('goods_collect')->where($where)->count();
         if($data['action'] == 'collect'){
@@ -1498,19 +1497,19 @@ class User extends Base{
      *   }
      *
      */
-     public function recharge(Request $request){
-         if(!$request->isGet()){
-             return $this->returnJson();
-         }
-         $reqParams = $this->getReqParams(['payWay','amount']);
-         $rule =[
-             'payWay'=>'require|in:wx,zfb',
-             'amount'=>'require|between:0.01,100000000'
-         ];
-         $this->validateParams($reqParams,$rule);
-         $userLogic = new  UserLogic();
-         return $this->returnJson($userLogic->getRechargeParams($reqParams,$this->user));
-     }
+    public function recharge(Request $request){
+        if(!$request->isGet()){
+            return $this->returnJson();
+        }
+        $reqParams = $this->getReqParams(['payWay', 'amount']);
+        $rule = [
+            'payWay' => 'require|in:wx,zfb',
+            'amount' => 'require|between:0.01,100000000'
+        ];
+        $this->validateParams($reqParams, $rule);
+        $userLogic = new  UserLogic();
+        return $this->returnJson($userLogic->getRechargeParams($reqParams, $this->user));
+    }
 
 
     /**
@@ -1553,6 +1552,7 @@ class User extends Base{
 
         $reqParams = $this->getReqParams(['amount', 'withdrawalsWay', 'account', 'person', 'bankOfDeposit', 'phone']);
         $userBlance = $this->user['user_money'];
+        $reqParams['amount'] = floatval($reqParams['amount']);
         $rule = [
             'amount' => "require|between:0.01,$userBlance",
             'withdrawalsWay' => "require|in:wx,zfb,bank",
@@ -2444,8 +2444,6 @@ class User extends Base{
     }
 
 
-
-
     public function collectPackPro(Request $request){
         if($request->isPost()){
             return $this->postCollectPackPro($request);
@@ -2526,7 +2524,7 @@ class User extends Base{
 
 
     public function test_push(){
-        pushInfo('18071adc0335ded0a63','这是我要推送的信息','这是我要推送的信息');
+        pushInfo('18071adc0335ded0a63', '这是我要推送的信息', '这是我要推送的信息');
         //echo '11111111111';
     }
 }
