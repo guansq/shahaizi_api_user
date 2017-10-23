@@ -163,6 +163,9 @@ class PackCarProductLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            if(!$item['is_admin']){
+                $item['line_price'] += floatval($item['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
+            }
         }
 
         $ret = [
