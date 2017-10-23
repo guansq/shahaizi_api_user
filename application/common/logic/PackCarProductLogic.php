@@ -146,6 +146,7 @@ class PackCarProductLogic extends BaseLogic{
             ->column('goods_id');
         $fields = [
             'id',
+            'type',
             'img' => 'img',
             'title',
             'read_num' => 'readNum',

@@ -2499,22 +2499,27 @@ class User extends Base{
     }
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=User&a=collectPackPro   42.我收藏的包车产品列表 todo wxx
-     * @apiDescription  获取当前用户收藏的动态列表 时间倒序排列
+     * @api             {GET}   /index.php?m=Api&c=User&a=collectPackPro   42.我收藏的包车产品列表 ok wxx
+     * @apiDescription  获取当前用户收藏的包车产品列表 时间倒序排列
      * @apiName         getCollectPackProPage
      * @apiGroup        User
      * @apiParam  {string} token    token.
      * @apiParam  {number} [p=1]        页码.
      * @apiParam  {number} [pageSize=20]   每页数据量.
      *
-     * @apiSuccess {number} page        当前页码.
-     * @apiSuccess {number} totalPages  总页码数.
-     * @apiSuccess {array} list         列表.
-     * @apiSuccess {number} list.id     id.
-     * @apiSuccess {string} list.img    封面图片.
-     * @apiSuccess {string} list.title  标题.
-     * @apiSuccess {number} list.timeStamp  发布时间戳.
-     * @apiSuccess {string} list.timeFmt    格式化发布时间.
+     * @apiSuccess {Number} p          当前页码
+     * @apiSuccess {Number} pageSize   列表每页显示行数
+     * @apiSuccess {Number} totalRows  总行数
+     * @apiSuccess {Number} totalPages 分页总页面数
+     * @apiSuccess {Array}  list         列表.
+     * @apiSuccess {Number} list.id             id.
+     * @apiSuccess {Number} list.type           包车类型 1=接机  2=包车 3=送机.
+     * @apiSuccess {Array}  list.imgs           图片.
+     * @apiSuccess {String} list.title          标题.
+     * @apiSuccess {Number} list.publishTime    发布时间戳.
+     * @apiSuccess {String} list.publishTimeFmt 发布时格式化.
+     * @apiSuccess {Number} list.price          单价.
+     * @apiSuccess {String} list.priceFmt       单价格式化.
      *
      *
      */
