@@ -178,6 +178,11 @@ class PackOrderLogic extends BaseLogic{
         $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
         $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
         $info['user_money_fmt'] = moneyFormat($seller['user_money']);
+        $drv_info = M('seller')->where(['seller_id' => $info['seller_id']])->find();
+        $info['drv_phone'] = '';
+        if($drv_info){
+            $info['drv_phone'] = $drv_info['mobile'] ;
+        }
         $return = [
             'status' => 1,
             'msg' => '成功',
