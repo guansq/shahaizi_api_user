@@ -37,6 +37,35 @@ class HotLogic extends BaseLogic{
         return $return;
     }
     /*
+     * 得到攻略列表
+     */
+    public function get_list($city_id){
+        $where = [];
+        if($city_id){
+            $where['city_id'] = $city_id;
+        }
+        $count = M('article_hot_guide')->where($where)->count();
+        $Page = new Page($count, 10);
+        $hot_list = M('article_hot_guide')->where($where)->order('sort,update_at DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();//热门攻略
+        $result = [
+            'totalPages' => $Page->totalPages,
+            'list' => $hot_list
+        ];
+        if(empty($hot_list)){
+            $return = [
+                'status' => -1,
+                'msg' => '数据为空'
+            ];
+        }else{
+            $return = [
+                'status' => 1,
+                'msg' => '成功',
+                'result' => $result
+            ];
+        }
+        return $return;
+    }
+    /*
      * 得到热门攻略详情
      */
     public function get_hot_detail($guide_id){

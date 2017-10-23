@@ -244,6 +244,7 @@ class PackOrderLogic extends BaseLogic{
             'twenty_eight' => $data['twenty_eight'],
             'thirty' => $data['thirty'],
             'work_at' => $data['work_at'],
+            'start_time' => strtotime($data['work_at']),
             'work_address' => $firstSite,
             'dest_address' => $lastSite,
             'discount_id' => $data['discount_id'],
