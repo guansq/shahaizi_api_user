@@ -44,7 +44,7 @@ class Index extends Base{
      */
     public function home(){
         $city = I('city', '');
-        $city = ''; // FIXME 目前去掉地区筛选
+        //$city = '';  FIXME 目前去掉地区筛选
         //获取轮播图
         $data = M('ad')->where('pid', AdLogic::AD_POSITION_HOME)->field(array(
                 'ad_link',
