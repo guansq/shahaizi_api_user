@@ -12,6 +12,7 @@ use app\common\logic\DriverLogic;
 use app\common\logic\PackCarProductLogic;
 use app\common\logic\PackOrderLogic;
 use app\common\logic\SellerLogic;
+use app\common\logic\ConfigSetLogic;
 
 class DriverPack extends Base{
 
@@ -554,11 +555,12 @@ class DriverPack extends Base{
      * }
      */
     public function getConfig(){
+        //得到出行设置
+        $config = new ConfigSetLogic();
+        $trip_choose = $config->get_config_set();
+        //print_r($trip_choose);die;
         $result = [
-            'trip_choose' => [
-                ['id' => 1, 'name' => '吃的地方多一点'],
-                ['id' => 2, 'name' => '玩的地方多一点'],
-            ],
+            'trip_choose' => $trip_choose,
             'restaurant_choose' => [
                 ['id' => 1, 'name' => '0-100'],
                 ['id' => 2, 'name' => '100-200'],
