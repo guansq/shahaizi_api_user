@@ -2,6 +2,7 @@
 
 namespace app\web\controller;
 
+use app\common\logic\ConfigLogic;
 use app\common\logic\OrderCommentLogic;
 use app\common\logic\PackCommentLogic;
 use app\common\logic\PackLineLogic;
@@ -31,6 +32,10 @@ class PackLine extends WebBase{
             'deleted'=>0
         ];
         $line['score'] = intval($orderCommentLogic->where($where)->avg('pack_order_score'));
+        if(!$line['is_admin']){
+            $line['line_price'] += floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
+        }
+
         $line['line_price_fmt'] = moneyFormat($line['line_price']);
         $driverInfo = $sellerLogic->getInfoById($line['seller_id']);
         //dd($line['line_detail'][0]);  //todo 添加数据校验
@@ -49,11 +54,6 @@ class PackLine extends WebBase{
             $car = [
                 'car_type' => $sellerLogic->getCarTypeName($carInfo['car_type_id']),
                 'car_seat_num' => $carInfo['seat_num'],
-            ];
-        }else{
-            $car = [
-                'car_type' => '未知',
-                'car_seat_num' => '未知',
             ];
         }
         $this->assign('car',$car);

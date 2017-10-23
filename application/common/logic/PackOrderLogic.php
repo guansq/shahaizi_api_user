@@ -125,8 +125,8 @@ class PackOrderLogic extends BaseLogic{
         foreach($order_list as &$val){
             // $val['create_at'] = shzDate($val['create_at']);
             $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']] : $val['title'];
-            if($val['status'] == 0 && ($val['create_at'] -time()) > 1800){//未支付的订单 且大于1800秒的时候 自动取消
-                $this->where(['air_id'=>$val['air_id']])->update(['stauts'=>10]);//取消操作
+            if($val['status'] == 0 && ($val['create_at'] - time()) > 1800){//未支付的订单 且大于1800秒的时候 自动取消
+                $this->where(['air_id' => $val['air_id']])->update(['stauts' => 10]);//取消操作
             }
             $val['real_price_fmt'] = moneyFormat($val['real_price']);
             $val['total_price_fmt'] = moneyFormat($val['total_price']);
@@ -181,7 +181,7 @@ class PackOrderLogic extends BaseLogic{
         $drv_info = M('seller')->where(['seller_id' => $info['seller_id']])->find();
         $info['drv_phone'] = '';
         if($drv_info){
-            $info['drv_phone'] = $drv_info['mobile'] ;
+            $info['drv_phone'] = $drv_info['mobile'];
         }
         $return = [
             'status' => 1,
@@ -213,6 +213,7 @@ class PackOrderLogic extends BaseLogic{
      * 生成路线订单
      */
     public function create_pack_order($data, $user){
+        $data['line_id'] = 2;
         $line = PackLineLogic::find($data['line_id']);
         if(empty($line)){
             return ['status' => -1, 'msg' => '当前线路不存在'];
@@ -228,6 +229,10 @@ class PackOrderLogic extends BaseLogic{
             return ['status' => -1, 'msg' => '无法获取目的地'];
         }
         $discountPrice = 0; // FIXME 获取优惠券金额
+        $brokerage = 0;
+        if(!$line['is_admin']){
+            $brokerage = floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
+        }
         $order_data = [
             'order_sn' => $this->get_order_sn(),
             'user_id' => $user['user_id'],
@@ -249,7 +254,7 @@ class PackOrderLogic extends BaseLogic{
             'dest_address' => $lastSite,
             'discount_id' => $data['discount_id'],
             'total_price' => $line['line_price'],
-            'real_price' => $line['line_price'] - $discountPrice,
+            'real_price' => $line['line_price'] + $brokerage - $discountPrice,
             'remark' => $data['remark'],
             'title' => $line['line_title'],
             'status' => PackOrderLogic::STATUS_UNPAY,
