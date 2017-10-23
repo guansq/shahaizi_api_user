@@ -98,7 +98,7 @@ class PackLine extends Base{
      */
     public function home(){
         $city = input('city');
-        $city = '';
+        //$city = '';
         $index = M('pack_index')->where('type','pack_index')->order('sort asc')->select();
         //获取轮播图
         $banner = M('ad')
@@ -181,6 +181,7 @@ class PackLine extends Base{
         $where = [];
         // $city = I('city');
         $where['is_show'] = 1;
+        $where['is_del'] = 0;
         $time = empty(I('time')) ? '' : strtotime(I('time'));
         $line_buy_num = I('line_buy_num');
         !empty($city) && $where['city'] = ['LIKE', "%{$city}%"];

@@ -102,4 +102,26 @@ class RegionLogic extends BaseLogic{
             ->where('is_hot', 1)
             ->select();
     }
+
+
+    public function get_country(){
+        $inter = M('region_country')->where(['parent_id' => 0])->select();
+        $country = M('region_country')->where('parent_id','<>',0)->select();
+        $newArr = [];
+        foreach($inter as $key => $val){
+            $temp = [];
+            foreach($country as $k => $v){
+                if($v['parent_id'] == $val['id']){
+                    //$info = ['inter'=>$val['name']];
+                    //$v['city'] = $val['name'];
+                    //$newArr[$key][] = $v;
+                    $temp[] = $v;
+                }
+            }
+            $val['list'] = $temp;
+            $newArr[] = $val;
+            //$newArr[]['list'] = $temp;
+        }
+        return ['status'=>1,'msg'=>'成功','result'=>$newArr];
+    }
 }

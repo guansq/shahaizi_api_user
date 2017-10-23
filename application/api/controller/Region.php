@@ -132,4 +132,15 @@ class Region extends Base{
         $result = $regionLogic->search_city($name);
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
     }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCountry       得到所有洲下面的国家   管少秋
+     * @apiName     getAllCountry
+     * @apiGroup    Region
+     */
+    public function getAllCountry(){
+        $regionLogic = new RegionLogic();
+        $return = $regionLogic->get_country();
+        $this->ajaxReturn($return);
+    }
 }
