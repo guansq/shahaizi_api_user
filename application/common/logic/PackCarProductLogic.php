@@ -113,7 +113,7 @@ class PackCarProductLogic extends BaseLogic{
         $pcar['isCollect'] = empty($user) ? 0 : $userCollLogic->isCollectPackCar($id, $user['user_id']);
         $pcar['isPraise'] = empty($user) ? 0 : $userPraiceLogic->isPraisePackCar($id, $user['user_id']);
         $pcar['orderCnt'] = $this->countOrder($id);
-        $pcar['score'] = intval($ordCommLogic->where('car_product_id',$pcar['id'])->avg('pack_order_score'));
+        $pcar['score'] = intval($ordCommLogic->where('car_product_id', $pcar['id'])->avg('pack_order_score'));
         ksort($pcar);
         return resultArray(2000, '', $pcar);
     }
@@ -144,28 +144,22 @@ class PackCarProductLogic extends BaseLogic{
             ->limit($page->firstRow, $page->listRows)
             ->order('add_time DESC')
             ->column('goods_id');
+
         $fields = [
             'id',
             'type',
-            'img' => 'img',
+            'publish_time' => 'publishTime',
+            'price',
             'title',
-            'read_num' => 'readNum',
-            'publish_time' => 'timeStamp',
+            'img' => 'imgs',
         ];
 
-        $list = $this->alias('str')
-            ->join('ruit_users user', 'user.user_id=str.user_id', 'LEFT')
-            ->where('guide_id', ['IN', $ids])
-            ->order('sort , create_at DESC')
-            ->field($fields)
-            ->select();
+        $list = $this->where('id', ['IN', $ids])->order('sort , create_at DESC')->field($fields)->select();
 
         foreach($list as &$item){
-            $item['img'] = explode('|', $item['img'])[0];
-            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            if(!$item['is_admin']){
-                $item['line_price'] += floatval($item['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
-            }
+            $item['imgs'] = explode('|', $item['imgs']);
+            $item['priceFmt'] = moneyFormat($item['price']);
+            $item['publishTimeFmt'] = date('Y.m.d', $item['publishTime']);
         }
 
         $ret = [
