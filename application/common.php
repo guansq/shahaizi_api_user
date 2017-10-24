@@ -339,7 +339,7 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         5 => '私人订制',
         6 => '按天包车游',
     ];
-    print_r($user);die;
+    //print_r($user);die;
     $account_arr = [
         'user_id' => $pack_order['user_id'],
         'user_money' => 0-$real_price,//使用的余额
