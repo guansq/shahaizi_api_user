@@ -77,7 +77,10 @@ class RegionLogic extends BaseLogic{
      * 搜索城市
      */
     public function search_city($name){
-        return M('region_country')->where(['name' => ['like', "%{$name}%"]])->select();
+        return M('region')->where([
+            'name' => ['like', "%{$name}%"],
+            'level' => 2
+        ])->select();
     }
 
     /**
@@ -87,7 +90,7 @@ class RegionLogic extends BaseLogic{
      * @param $countryId
      */
     public function getAllCityByCountryId($countryId){
-        return $this->where('country_id', $countryId)->where('level', 1)->select();
+        return $this->where('country_id', $countryId)->where('level', 2)->select();
     }
 
     /**
