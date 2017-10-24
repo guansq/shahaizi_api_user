@@ -51,6 +51,7 @@ class HomeLogic extends BaseLogic
             }else{
                 $val['type_info'] = '';
             }
+            $val['good_num'] = $praiseLogic->countLocalTalent($val['talent_id']);
         }
         foreach($guideList as &$val){
             $country =   $regCtrLogic->where('id',$val['country_id'])->value('name');

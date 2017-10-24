@@ -9,7 +9,7 @@
 namespace app\api\controller;
 
 use app\api\logic\MessageLogic;
-
+//use app\common\logic\;
 /**
  * Description of Message
  *
@@ -91,6 +91,15 @@ class Message extends Base{
 
     }
 
+    /**
+     * @api         {GET}   /index.php?m=Api&c=Message&a=getSystemMessage   得到系统消息
+     * @apiName     getSystemMessage
+     * @apiGroup    Message
+     *
+     */
+    public function getSystemMessage(){
+
+    }
 
     /**
      * @api         {GET}   /Api/Message/getHxUserList    11.得到进行中订单关联的环信用户列表 ok wxx

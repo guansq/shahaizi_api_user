@@ -40,7 +40,7 @@ class GuideLogic extends BaseLogic{
     /*
      * 得到热门攻略详情
      */
-    public function get_hot_detail($guide_id){
+    public function get_hot_detail($guide_id,$user_id){
         $info = $this->find($guide_id);
         if(empty($info)){
             return ['status'=>-1,'msg'=>'没有该记录'];
@@ -48,6 +48,12 @@ class GuideLogic extends BaseLogic{
         $info->read_num++;
         $info->save();
         $info['read_num'] = floor($info['read_num']/2);
+        if($info){
+            //是否点赞
+            $info['isPraise'] = UserPraiseLogic::where('obj_id', $guide_id)->where('obj_type', UserPraiseLogic::TYPE_GUIDE)->where('user_id', $user_id)->count();
+            //是否收藏
+            $info['isCollect'] = UserCollectLogic::where('goods_id',$guide_id)->where('model_type',UserCollectLogic::TYPE_STRATEGY)->where('user_id', $user_id)->count();
+        }
         $commentLogic = new CommentLogic();
         $commentList = $commentLogic->getArticleComment($guide_id,1);
         $result = [

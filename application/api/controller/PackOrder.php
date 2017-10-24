@@ -10,6 +10,8 @@ namespace app\api\controller;
 
 use app\common\logic\CouponListLogic;
 use app\common\logic\PackOrderLogic;
+use payment\PaymentBizParam;
+use payment\PaymentHelper;
 use think\Request;
 
 class PackOrder extends Base{
@@ -155,6 +157,7 @@ class PackOrder extends Base{
             ->where(array('air_id' => $air_id, 'status' => PackOrderLogic::STATUS_UNPAY))
             ->find();//订单详情
         $time = time();
+        //print_r($pack_order);die;
         if(empty($pack_order)){
             $this->ajaxReturn(['status' => -1, 'msg' => '该订单不可进行付款操作']);
         }
@@ -195,11 +198,16 @@ class PackOrder extends Base{
         if($pay_way == 0){  //todo 微信支付
             return $this->returnJson(4000,'暂未开放');
         }elseif($pay_way == 1){ //todo 进行支付宝支付
-            $aliPayParams = $this->getAliPayParamsByPackOrder($pack_order);
-            if(empty($aliPayParams)){
+
+            $alipayHelper = new PaymentHelper();
+            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,'');
+            $payString = $alipayHelper->getAliPayParam($aliPayParams);
+            if(empty($payString)){
                 return $this->returnJson(4004);
             }
-            $ret=['aliPayParams'=>$aliPayParams];
+            $ret=['aliPayParams'=>$payString];
+            //$result = payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id);
+            $ret['realPrice'] = shzMoney($real_price,true);
             return $this->returnJson(2000,'',$ret);
         }elseif($pay_way == 2){// 余额支付
             //进行付款操作----------》
