@@ -55,12 +55,12 @@ class Payment extends Base{
         if($resp["trade_status"] != "TRADE_SUCCESS"){
             exit("fail");
         }
-
+        // $resp['body'] ='{"userId":63,"amount":1,"orderSn":"RC201723443234565432345432"}';
+        $extend = json_decode(urldecode($resp['passback_params']), true);
         // 用户充值 充值订单号是RC开头
         if(substr($orderSn, 0, 2) == 'RC'){
             // 充值逻辑
-            // $resp['body'] ='{"userId":63,"amount":1,"orderSn":"RC201723443234565432345432"}';
-            $extend = json_decode(urldecode($resp['passback_params']), true);
+
             if(empty($extend)){
                 exit("fail");
             }
@@ -76,6 +76,9 @@ class Payment extends Base{
         }
 
         //todo 其他支付回到处理
+
+        payPackOrder($extend['pack_order'], $extend['user_info'], $extend['discount_price'], $extend['pay_way'], $extend['is_coupon'], $extend['coupon_id']);
+
         exit("fail");
     }
 
