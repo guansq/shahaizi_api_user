@@ -84,7 +84,7 @@ class Dynamic extends Base {
      */
     private function getPage(){
         $dynamicLogic = new DynamicLogic();
-        return $this->returnJson($dynamicLogic->getDynamicPage());
+        $this->returnJson($dynamicLogic->getDynamicPage());
     }
 
 
