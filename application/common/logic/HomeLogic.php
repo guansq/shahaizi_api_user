@@ -20,8 +20,12 @@ class HomeLogic extends BaseLogic
         }else{
             $localList = M('article_local_talent')->where(['city'=>['like',"%{$city}%"]])->limit(4)->order('good_num desc')->select();//当地达人
         }
+        if(empty($city)){
+            $guideList = M('article_hot_guide')->where('is_hot',1)->order('sort,update_at DESC')->limit(4)->select();//热门攻略
+        }else{
+            $guideList = M('article_hot_guide')->where(['city'=>['like',"%{$city}%"],'is_hot'=>1])->order('sort,update_at DESC')->limit(4)->select();//热门攻略
+        }
 
-        $guideList = M('article_hot_guide')->where('is_hot',1)->order('sort,update_at DESC')->limit(4)->select();//热门攻略
         $newList = M('article_new_action')->order('sort,create_at DESC')->limit(4)->select();//最新动态
         foreach($newList as $key => &$val){
             if(!empty($val['cover_img'])){

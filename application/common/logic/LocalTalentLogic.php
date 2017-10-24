@@ -44,6 +44,12 @@ class LocalTalentLogic extends BaseLogic{
         ];
 
         $dbRet = self::where($where)->order('sort,create_at DESC')->limit(3)->field($field)->select();
+        if($dbRet){
+            $user_praise = new UserPraiseLogic();
+            foreach($dbRet as &$v){
+                $v['praiseNum'] = $user_praise->countLocalTalent($v['id']);
+            }
+        }
         return $dbRet;
     }
 
@@ -112,10 +118,12 @@ class LocalTalentLogic extends BaseLogic{
             $info['type_info'] = substr($str, 0, -1);
         }
         $info['is_good'] = 0;
+        $user_praise = new UserPraiseLogic();
         if(!empty($user_id)){
-            $user_praise = new UserPraiseLogic();
+
             $info['is_good'] = $user_praise->isPraised($talent_id,$user_id,UserPraiseLogic::TYPE_TALENT);
         }
+        $info['good_num'] = $user_praise->countLocalTalent($talent_id);
         $return = [
             'status' => 1,
             'msg' => '',
