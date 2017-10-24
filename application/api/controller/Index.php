@@ -59,7 +59,7 @@ class Index extends Base{
             }
             $data[$k]['ad_link'] = $v['ad_link'];
         }
-
+        //print_r($city);die;
         //获取大分类
         // $category_arr = M('goods_category')->where('id in(4,5,7)')->field('id,name')->limit(3)->cache(true,TPSHOP_CACHE_TIME)->select();
         $homeLogic = new HomeLogic();

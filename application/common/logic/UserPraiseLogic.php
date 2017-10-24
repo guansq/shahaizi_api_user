@@ -98,6 +98,11 @@ class UserPraiseLogic extends BaseLogic{
         return $this->where('obj_type', self::TYPE_PACKCAR)->where('obj_id', $id)->where('user_id', $userId)->count();
     }
 
+
+    public function countLocalTalent($id){
+        return $this->where('obj_type', self::TYPE_TALENT)->where('obj_id', $id)->count();
+    }
+
     /**
      * Author: W.W <will.wxx@qq.com>
      * Time:
