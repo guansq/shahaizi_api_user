@@ -200,7 +200,17 @@ class PackOrder extends Base{
         }elseif($pay_way == 1){ //todo 进行支付宝支付
 
             $alipayHelper = new PaymentHelper();
-            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,'');
+            $extraParam = [
+                'pack_order' => $pack_order,
+                'user_info' => $user_info,
+                'discount_price' => $discount_price,
+                'pay_way' => $pay_way,
+                'is_coupon' => $is_coupon,
+                'coupon_id' => $coupon_id,
+            ];
+            $extraString = json_encode($extraParam);
+            //传递需要通过服务器
+            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,$extraString);
             $payString = $alipayHelper->getAliPayParam($aliPayParams);
             if(empty($payString)){
                 return $this->returnJson(4004);
@@ -210,6 +220,7 @@ class PackOrder extends Base{
             $ret['realPrice'] = shzMoney($real_price,true);
             return $this->returnJson(2000,'',$ret);
         }elseif($pay_way == 2){// 余额支付
+            //print_r($this->user_id);die;
             //进行付款操作----------》
             ($user_info['user_money'] - $real_price) < 0 && $this->ajaxReturn([
                 'status' => -1,
