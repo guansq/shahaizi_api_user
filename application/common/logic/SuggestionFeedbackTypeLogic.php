@@ -12,11 +12,11 @@ class SuggestionFeedbackTypeLogic extends BaseLogic{
     protected $table = 'ruit_suggestion_feedback_type';
 
     public function getList(){
-        $ret = $this->where('enabled',1)->select();
+        $ret = $this->where('enabled', 1)->field('enabled', true)->select();
         if(empty($ret)){
             return resultArray(4004);
         }
-        return resultArray(2000, '', $ret);
+        return resultArray(2000, '', ['list' => $ret]);
     }
 
 }
