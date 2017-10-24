@@ -276,12 +276,12 @@ class UsersLogic extends BaseLogic{
 
         $easemobUse = new  EasemobUse();
         $hx_user = md5("hx_user_$username".time());
-        $hx_password = $password;//和用户密码一致
+        //$hx_password = $password;//和用户密码一致
         $easemobUse->setUserName($hx_user);
         $easemobUse->setPassword($password);
         $easemobUse->createSingleUser();
         $map['hx_user_name'] = $hx_user;
-        $map['hx_password'] = $hx_password;
+        $map['hx_password'] = $password;
         $user_id = M('users')->add($map);
         if(!$user_id){
             return array('status' => -1, 'msg' => '注册失败', 'result' => '');

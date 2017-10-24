@@ -51,7 +51,7 @@ class DriverLogic extends BaseLogic{
     public function get_person_info($seller_id){
         $where = ['seller_id' => $seller_id];
         $info = M('seller')
-            ->field('seller_id,drv_id,drv_code,head_pic,seller_name,briefing,country,putonghua,language')
+            ->field('seller_id,cover_img,drv_id,drv_code,head_pic,seller_name,briefing as content,country,putonghua,language')
             ->where($where)
             ->find();
         if(empty($info)){
