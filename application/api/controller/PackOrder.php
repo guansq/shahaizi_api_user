@@ -200,6 +200,8 @@ class PackOrder extends Base{
                 return $this->returnJson(4004);
             }
             $ret=['aliPayParams'=>$aliPayParams];
+            $result = payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id);
+            $ret['payReturn'] = $result;
             return $this->returnJson(2000,'',$ret);
         }elseif($pay_way == 2){// 余额支付
             //进行付款操作----------》

@@ -81,6 +81,8 @@ class HotGuide extends Base{
     "result": {
     "info": {
     "guide_id": 5,
+    "isPraise": 0,是否点赞
+    "isCollect": 0,是否收藏
     "title": "敲开斜角巷的石砖，探寻巫师们的魔法世界",
     "cover_img": "https://z0.muscache.com/im/pictures/a35b3599-8a40-4022-8337-6677d9b94f52.jpg?aki_policy=large",
     "summary": "英国魔法之旅",
@@ -142,7 +144,8 @@ class HotGuide extends Base{
     public function getHotGuideDetail(){
         $guide_id = I('guide_id', 0);
         $guideLogic = new GuideLogic();
-        $result = $guideLogic->get_hot_detail($guide_id);
+        $user_id = $this->user_id;
+        $result = $guideLogic->get_hot_detail($guide_id,$user_id);
         $this->ajaxReturn($result);
     }
 

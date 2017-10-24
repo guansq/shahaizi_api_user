@@ -292,6 +292,20 @@ class Comment extends Base{
     }
 
     /**
+     * @api     {POST}  /api/comment/doGoodByGuide    对攻略进行点赞
+     * @apiName     doGoodByGuide
+     * @apiGroup    Comment
+     * @apiParam    {String}    token   token.
+     * @apiParam    {Number}    guide_id   攻略ID.
+     */
+    public function doGoodByGuide(){
+        $id = I('guide_id');
+        $praiseLogic = new UserPraiseLogic();
+        //print_r($this->user_id);die;
+        return $this->returnJson($praiseLogic->addPraise($this->user_id, UserPraiseLogic::TYPE_GUIDE, $id));
+    }
+
+    /**
      * @api     {GET}  /api/comment/getAllComment    得到全部评论
      * @apiName     getAllComment
      * @apiGroup    Comment
