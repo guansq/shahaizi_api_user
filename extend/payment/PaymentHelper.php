@@ -58,7 +58,7 @@ class PaymentHelper{
         $order["wxbody"] = '傻孩子';
         $order["order_id"] = $payparam->orderSn;
         $order["amount"] = $payparam->amount;
-        $order["attach"] = json_encode($payparam->extend);
+        $order["attach"] = $payparam->extend;
         $wxPay = new WxPay();
         return $wxPay->dopay($order);
     }

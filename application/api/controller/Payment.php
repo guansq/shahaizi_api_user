@@ -15,7 +15,7 @@
 namespace app\api\controller;
 
 use app\api\logic\UserLogic;
-use payment\alipay\AlipayNotify;
+use app\common\logic\RechargeLogic;
 use think\Request;
 
 class Payment extends Base{
@@ -24,7 +24,7 @@ class Payment extends Base{
      * http://www.tp-shop.cn/index.php/Api/Payment/alipayNotify
      *
      */
-    public function alipayNotify(Request $request ){
+    public function alipayNotify(Request $request){
         if(!$request->isPost()){
             exit("fail");
         }
@@ -47,8 +47,8 @@ class Payment extends Base{
         //    exit("fail"); //验证失败
         //}
 
-        $order_sn = $out_trade_no = trim($resp['out_trade_no']); //商户订单号
-        $trade_no = $resp['trade_no'];//支付宝交易号
+        $orderSn = $out_trade_no = trim($resp['out_trade_no']); //商户订单号
+        $tradeNo = $resp['trade_no'];//支付宝交易号
         $trade_status = $resp['trade_status'];//交易状态
 
         //用户支付失败
@@ -57,17 +57,18 @@ class Payment extends Base{
         }
 
         // 用户充值 充值订单号是RC开头
-        if(substr($order_sn, 0,2) == 'RC'){
+        if(substr($orderSn, 0, 2) == 'RC'){
             // 充值逻辑
             // $resp['body'] ='{"userId":63,"amount":1,"orderSn":"RC201723443234565432345432"}';
-            $extend = json_decode(urldecode($resp['passback_params']),true);
+            $extend = json_decode(urldecode($resp['passback_params']), true);
             if(empty($extend)){
                 exit("fail");
             }
+
             $userLogic = new UserLogic();
             trace("用户充值 =========》");
             trace($extend);
-            if($userLogic->doRecharge($extend['userId'],$extend['amount'],$order_sn)){
+            if($userLogic->doRecharge($extend['userId'], $extend['amount'], $orderSn, 'alipay','支付宝',$tradeNo,'')){
                 exit("success");
             }else{
                 exit("fail");
@@ -88,30 +89,41 @@ class Payment extends Base{
         $result = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
         trace("微信支付回调==============》");
         trace($result);
-        $return_result = 'FAIL';
-        file_put_contents('./notify.log', json_encode($result)."\n", FILE_APPEND);
-        if($result['return_code'] == 'SUCCESS'){
-            $order_sn = substr($result['out_trade_no'], 0, 18);
-            $wx_total_fee = $result['total_fee'];
-            //用户在线充值
-            if(stripos($order_sn, 'recharge') === 0){
-                $order_amount = M('recharge')->where(['order_sn' => $order_sn, 'pay_status' => 0])->value('account');
-            }else{
-                $order_amount = M('order')
-                    ->where(['master_order_sn' => "$order_sn"])
-                    ->whereOr(['order_sn' => "$order_sn"])
-                    ->sum('order_amount');
-            }
-            file_put_contents('./notify.log', $order_amount."\n", FILE_APPEND);
-            if(($order_amount*100) == $wx_total_fee){
-                update_pay_status($order_sn);
-                $return_result = 'SUCCESS';
-            }
-        }
 
-        $test = array('return_code' => $return_result, 'return_msg' => 'OK');
         header('Content-Type:text/xml; charset=utf-8');
-        exit(arrayToXml($test));
+
+        if($result['return_code'] == 'SUCCESS'){
+            $orderSn = $result['out_trade_no'];
+            $tradeNo = $result['transaction_id'];
+            $wx_total_fee = $result['total_fee'];
+            // 用户充值 充值订单号是RC开头
+            if(substr($orderSn, 0, 2) == 'RC'){
+                // 充值逻辑
+                // $resp['body'] ='{"userId":63,"amount":1,"orderSn":"RC201723443234565432345432"}';
+                $extend = json_decode(urldecode($result['attach']), true);
+                if(empty($extend)){
+                    trace("attach格式错误");
+                    $test = ['return_code' => 'FAIL', 'return_msg' => 'attach格式错误'];
+                    exit(arrayToXml($test));
+                }
+
+                $userLogic = new UserLogic();
+                trace("用户充值 =========》");
+                trace($extend);
+                if($userLogic->doRecharge($extend['userId'], $extend['amount'], $orderSn,'wx','微信',$tradeNo,'')){
+                    trace("用户充值成功");
+                    $test = ['return_code' => 'SUCCESS', 'return_msg' => 'SUCCESS'];
+                    exit(arrayToXml($test));
+                }else{
+                    trace("用户充值失败");
+                    $test = ['return_code' => 'FAIL', 'return_msg' => '用户充值失败'];
+                    exit(arrayToXml($test));
+                }
+            }
+
+            //todo 其他支付回到处理
+
+        }
     }
 
 
