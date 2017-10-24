@@ -95,6 +95,9 @@ class DriverPack extends Base{
                 $this->ajaxReturn(['status' => -1, 'msg' => '没有数据']);
             }
         }
+        if(!empty($city)){
+            $where['city'] = ['like', "%{$city}%"];
+        }
         $result = $this->driverLogic->get_driver_list($where);
 
         if(!empty($whereInfo)){//3个筛选条件不为空
@@ -107,12 +110,14 @@ class DriverPack extends Base{
                 }
             }
             $all_drv = [];
-            foreach($result['result']['list'] as $val){
-                if(in_array($val['seller_id'], $tmp_arr)){//全部筛选出来的司导 符合 3个条件
-                    $all_drv[] = $val;
+            if($result['status'] == 1){
+                foreach($result['result']['list'] as $val){
+                    if(in_array($val['seller_id'], $tmp_arr)){//全部筛选出来的司导 符合 3个条件
+                        $all_drv[] = $val;
+                    }
                 }
+                $result['result']['list'] = $all_drv;
             }
-            $result['result']['list'] = $all_drv;
             $this->ajaxReturn($result);
         }
 
