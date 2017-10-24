@@ -260,6 +260,7 @@ class Base extends Controller{
                 'collectPackPro',
                 'getGoodsCollect',
             ],
+            'userinfo' => ['attention'],
             'driverpack' => ['rentCarByDay', 'receiveAirport', 'sendAirport', 'oncePickup', 'privateMake'],
             'packorder' => ['getPackOrder', 'getPackOrderDetail', 'payPackOrderByBalance', 'createPackOrder','confirmFinish'],
             'localtalent' => ['praise'],

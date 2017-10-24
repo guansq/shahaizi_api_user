@@ -10,14 +10,15 @@
  * 如果商业用途务必到官方购买正版授权, 以免引起不必要的法律纠纷.
  * ============================================================================
  * $Author: IT宇宙人 2015-08-10 $
- */ 
+ */
+
 namespace app\api\controller;
+
 use app\api\logic\UserAttentionLogic;
 use app\api\logic\UserLogic;
-use think\Page;
 use think\Request;
 
-class UserInfo extends Base {
+class UserInfo extends Base{
     /**
      * @api         {GET}   index.php?m=Api&c=UserInfo&a=baseInfo     00.查看别人基本信息 ok wxx
      * @apiName     baseInfo
@@ -38,12 +39,12 @@ class UserInfo extends Base {
     public function baseInfo(){
         $userId = input('userId');
         $userLogic = new UserLogic();
-        $user =  $userLogic->where('user_id',$userId)->find();
+        $user = $userLogic->where('user_id', $userId)->find();
         if(empty($user)){
-            return $this->returnJson(4004,'要查看的用户已经不存在');
+            return $this->returnJson(4004, '要查看的用户已经不存在');
         }
         $this->checkToken();
-        return $this->returnJson($userLogic->getBaseInfo($user,$this->user_id));
+        return $this->returnJson($userLogic->getBaseInfo($user, $this->user_id));
 
     }
 
@@ -62,7 +63,6 @@ class UserInfo extends Base {
     }
 
 
-
     /**
      * @api         {GET}   index.php?m=Api&c=UserInfo&a=attention     11.进行关注 ok wxx
      * @apiName     doAttention
@@ -72,13 +72,16 @@ class UserInfo extends Base {
      */
     private function doAttention(Request $request){
         $userId = input('userId');
+        if($userId == $this->user_id){
+            return $this->returnJson(4000, '关注无效');
+        }
         $userLogic = new UserLogic();
-        $user =  $userLogic->where('user_id',$userId)->find();
+        $user = $userLogic->where('user_id', $userId)->find();
         if(empty($user)){
-            return $this->returnJson(4004,'要查看的用户已经不存在');
+            return $this->returnJson(4004, '要查看的用户已经不存在');
         }
         $uaLogic = new UserAttentionLogic();
-        return $this->returnJson($uaLogic->addAttention($this->user_id,UserAttentionLogic::TYPE_USER, $userId));
+        return $this->returnJson($uaLogic->addAttention($this->user_id, UserAttentionLogic::TYPE_USER, $userId));
     }
 
     /*
@@ -102,14 +105,13 @@ class UserInfo extends Base {
     private function cancelAttention(Request $request){
         $userId = input('userId');
         $userLogic = new UserLogic();
-        $user =  $userLogic->where('user_id',$userId)->find();
+        $user = $userLogic->where('user_id', $userId)->find();
         if(empty($user)){
-            return $this->returnJson(4004,'要查看的用户已经不存在');
+            return $this->returnJson(4004, '要查看的用户已经不存在');
         }
         $uaLogic = new UserAttentionLogic();
-        return $this->returnJson($uaLogic->removeAttention($this->user_id,UserAttentionLogic::TYPE_USER, $userId));
+        return $this->returnJson($uaLogic->removeAttention($this->user_id, UserAttentionLogic::TYPE_USER, $userId));
     }
-
 
 
 }
