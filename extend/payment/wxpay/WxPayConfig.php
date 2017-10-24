@@ -41,10 +41,8 @@ class WxPayConfig {
 
     //单例方法,用于访问实例的公共的静态方法
     public static function getInstance($code) {
-        if (!(self::$_instance instanceof self)) {
-
+        if (empty(self::$_instance)) {
             self::$_instance = new self($code);
-
         }
         return self::$_instance;
     }

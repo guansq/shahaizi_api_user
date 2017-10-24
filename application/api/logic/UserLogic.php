@@ -15,12 +15,12 @@
 
 namespace app\api\logic;
 
+use app\common\logic\RechargeLogic;
+use app\common\logic\UsersLogic;
 use payment\PaymentBizParam;
 use payment\PaymentHelper;
 use think\Log;
 use think\Page;
-
-use app\common\logic\UsersLogic;
 
 /**
  * 用户逻辑定义
@@ -47,14 +47,14 @@ class UserLogic extends UsersLogic{
             ]))
         ];
         trace($paymentParams);
-        $aliPayparam = new PaymentBizParam($paymentParams['orderSn'],$paymentParams['amount'],$paymentParams['extend']);
+        $aliPayparam = new PaymentBizParam($paymentParams['orderSn'], $paymentParams['amount'], $paymentParams['extend']);
         $aliPayHelper = new PaymentHelper();
         $result = [];
         if($reqParams['payWay'] == 'zfb'){
             $result = ['aliPayParams' => $aliPayHelper->getAliPayParam($aliPayparam)];
             //$result = ['aliPayParams' => 'app_id=2017061607503256&biz_content={"body":"17051335257\u5145\u503c","subject":"\u5145\u503c","out_trade_no":"2017091652991025","timeout_express":"90m","total_amount":"0.01","product_code":"QUICK_MSECURITY_PAY","passback_params":"recharge"}&charset=UTF-8&format=json&method=alipay.trade.app.pay&notify_url=http://wztx.shp.api.zenmechi.cc/callback/alipay_callback&sign_type=RSA2&timestamp=2017-09-16 13:36:36&version=1.0&sign=C3CYMHfeoPjxpg947K25PF76Y7Q5BhA6dI6vdu+iPH2bfaRBkmIExVVG8b2/UqkhNRpY1hO5BJuim5hOrpi003kMIyb9yfao6MyJyQ6LVIqbcNlRTJOAameTqJe6O4oo7jeOq9X+lTWGH+wVwQi3Oz3eiS892ilBUJPnubtwrTpvT/to74M43/mAy5UtdCkiS6XkkO4PmW2YqTHj5/roB6JzbCqOxlPUsZhqlxssS3jyMM8Id1x3yeuP5o65NX5BB73ivSPh03HdV/E3PgtnG7Ni0KVzRUXJdIr2ez4AHh4h80QW8PecZ4aCIA7wGnLrrkkBViOx9S3WQIYhpiy6AQ=='];
         }elseif($reqParams['payWay'] == 'wx'){
-            $result = ['wxPayParams' =>  $aliPayHelper->getWxPayParam($aliPayparam)];
+            $result = ['wxPayParams' => $aliPayHelper->getWxPayParam($aliPayparam)];
         }else{
             return resultArray(4000, '不支持的支付方式');
         }
@@ -66,15 +66,42 @@ class UserLogic extends UsersLogic{
      * Author: WILL<314112362@qq.com>
      * Describe: 充值操作
      */
-    public function doRecharge($userId, $amount, $orderSn){
+    public function doRecharge($userId, $amount, $orderSn, $payCode = '', $payName = '', $transactionSn = '', $remark = ''){
+
+        //充值记录
+        $rechargeLogic = new RechargeLogic();
+        $order = $rechargeLogic->findByOrderSn($orderSn);
+        if(!empty($order) && $order->pay_status != RechargeLogic::STATUS_UNPAY){
+            // 已经做了充值处理
+            return true;
+        }
+
         $user = $this->where('user_id', $userId)->find();
         if(empty($user)){
             trace('充值失败,无效的用户id='.$userId, Log::ERROR);
             return false;
         }
+
+        // 记录
+        $rechargeLogic->save([
+            'user_id' => $userId,
+            'nickname' => $user->nickname,
+            'order_sn' => $orderSn,
+            'account' => $amount,
+            'ctime' => time(),
+            'pay_time' => time(),
+            'pay_code' => $payCode,
+            'pay_name' => $payName,
+            'pay_status' => RechargeLogic::STATUS_PAID,
+            'transaction_id' => $transactionSn,
+            'remark' => $remark,
+        ], empty($order) ? null : ['order_id', $order->order_id]);
+
+        // 增加用户余额
         $user->user_money += $amount;
         $user->save();
 
+        //记录账号明细
         $accountLogLogic = new AccountLogLogic();
         $data = [
             'user_id' => $userId,
