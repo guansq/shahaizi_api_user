@@ -1996,7 +1996,7 @@ class User extends Base{
      *
      */
     private function postStrategy(Request $request){
-        $reqParams = $this->getReqParams(['img', 'title', 'content', 'countryId', 'cityId', 'summary']);
+        $reqParams = $this->getReqParams(['img', 'title', 'content', 'countryId', 'cityId','city', 'summary']);
         $rule = [
             'img' => 'require|max:1000',
             'title' => 'require|max:200',
@@ -2004,6 +2004,7 @@ class User extends Base{
             'content' => 'require|max:1000',
             'countryId' => 'require',
             'cityId' => 'require',
+            'city' => 'require',
         ];
         $this->validateParams($reqParams, $rule);
         $userLogic = new StrategyLogic();
