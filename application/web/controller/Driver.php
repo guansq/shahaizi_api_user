@@ -31,12 +31,8 @@ class Driver extends WebBase{
         $seller_car =  $CarInfo->where("seller_id",$id)->where('is_state',PackCarInfoLogic::STATUS_PASS)->select();
         $this->assign('seller_car',$seller_car);
         $lineLogic = new PackLineLogic();
-        $line = $lineLogic->find($id);
-        $line_detail=$line['line_detail'];
-        $de_json=html_json($line_detail);
-        $line['line_detail'] =object_to_array($de_json);
+        $line = $lineLogic->selectShowListBySellerId($id);
         $this->assign('line_array',$line);
-
         $where =[
             'seller_id'=>$id,
             'deleted'=>0
