@@ -70,6 +70,7 @@ class LocalTalentLogic extends BaseLogic{
             ->order('good_num desc')
             ->limit($Page->firstRow.','.$Page->listRows)
             ->select();
+        $user_praise = new UserPraiseLogic();
         foreach($local_list as &$val){
             $str = '';
             $type = getIDType($val['seller_id']);
@@ -85,6 +86,7 @@ class LocalTalentLogic extends BaseLogic{
             if(!empty($str)){
                 $val['type_info'] = substr($str, 0, -1);
             }
+            $val['good_num'] = $user_praise->countLocalTalent($val['talent_id']);
         }
         $result = ['totalPages' => $Page->totalPages, 'list' => $local_list];
         $return = [
@@ -124,6 +126,7 @@ class LocalTalentLogic extends BaseLogic{
             $info['is_good'] = $user_praise->isPraised($talent_id,$user_id,UserPraiseLogic::TYPE_TALENT);
         }
         $info['good_num'] = $user_praise->countLocalTalent($talent_id);
+        //print_r($info);die;
         $return = [
             'status' => 1,
             'msg' => '',

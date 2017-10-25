@@ -99,6 +99,7 @@ class Message extends Base{
      */
     public function getSystemMessage(){
 
+
     }
 
     /**

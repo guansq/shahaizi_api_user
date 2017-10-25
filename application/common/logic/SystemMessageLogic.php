@@ -12,5 +12,5 @@ use think\Db;
 
 class SystemMessageLogic extends BaseLogic
 {
-
+    //public function
 }
