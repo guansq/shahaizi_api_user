@@ -3,6 +3,7 @@
 namespace app\web\controller;
 
 use app\common\logic\OrderCommentLogic;
+use app\common\logic\PackCarInfoLogic;
 use app\common\logic\PackLineLogic;
 use app\common\logic\RegionCountryLogic;
 use app\common\logic\RegionLogic;
@@ -26,8 +27,8 @@ class Driver extends WebBase{
         $regionCtLogic = new RegionCountryLogic();
         $seller['cityFullName'] = $regionCtLogic->getNameByid($seller['country_id']).'·'.$regionLogic->getNameByid($seller['city']);
         $this->assign('seller',$seller);
-        $CarInfo = new PackCarInfo();
-        $seller_car =  $CarInfo->where(["seller_id"=>$id])->select();
+        $CarInfo = new PackCarInfoLogic();
+        $seller_car =  $CarInfo->where("seller_id",$id)->where('is_state',PackCarInfoLogic::STATUS_PASS)->select();
         $this->assign('seller_car',$seller_car);
         $lineLogic = new PackLineLogic();
         $line = $lineLogic->find($id);

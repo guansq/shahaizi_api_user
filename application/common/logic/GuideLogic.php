@@ -45,8 +45,6 @@ class GuideLogic extends BaseLogic{
         if(empty($info)){
             return ['status'=>-1,'msg'=>'没有该记录'];
         }
-        $info->read_num++;
-        $info->save();
         $info['read_num'] = floor($info['read_num']/2);
         if($info){
             //是否点赞
