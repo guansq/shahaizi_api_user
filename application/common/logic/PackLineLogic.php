@@ -57,7 +57,6 @@ class PackLineLogic extends BaseLogic{
             'enabled' => 1,
         ];
         if($city){
-            //匹配city_id
             $where['gps_name'] = ['LIKE', "%$city%"];
         }
         $drv = M('seller')
@@ -74,6 +73,34 @@ class PackLineLogic extends BaseLogic{
         return $drv;
     }
 
+    public function get_all_drv($city){
+        $where = [
+            'is_driver' => 1,
+            'enabled' => 1,
+        ];
+        if($city){
+            $where['gps_name'] = ['LIKE', "%$city%"];
+        }
+
+        $count = M('seller')->where($where)->count();
+        $page = new Page($count);
+        $drv = M('seller')
+            ->field('seller_id,head_pic,nickname,drv_code,province,city,plat_start')
+            ->where($where)
+            ->limit($page->firstRow, $page->listRows)
+            ->select();
+
+        foreach($drv as &$val){
+            $result = getDrvIno($val['seller_id']);
+            $val['province'] = getCityName($val['province']);
+            $val['city'] = getCityName($val['city']);
+            $val['star'] = $result['star'];
+            $val['line'] = $result['line'];
+        }
+        //$list = $this->getPackLineByWhereLimit($where, $page->firstRow, $page->listRows);
+        $ret = new  PageVo($page, $drv);
+        return $ret;
+    }
     /**
      * Author: W.W <will.wxx@qq.com>
      * Describe: 获取精品线路

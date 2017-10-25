@@ -688,7 +688,7 @@ class User extends Base{
             //print_r($post);die;
             I('post.personalized_signature') ? $post['personalized_signature'] = I('post.personalized_signature') : false;  // 个性签名
             if(I('post.is_update_address')){
-                $post['country'] = I('post.country');  //省份
+                $post['country'] = I('post.country');  //国家
                 $post['city'] = I('post.city');  // 城市
                 //$post['district'] = I('post.district');  //地区
             }
