@@ -11,4 +11,9 @@ use think\Model;
 
 class RegionCountryLogic extends BaseLogic{
     protected $table = 'ruit_region_country';
+
+
+    public function getNameByid($id){
+        return $this->where('id', $id)->value('name');
+    }
 }
