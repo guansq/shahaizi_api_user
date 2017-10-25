@@ -12,6 +12,10 @@ class User extends WebBase{
         $this->assign("country_code", $result);
         return $this->fetch();
     }
+
+    public function regSuccess(){
+        return $this->fetch();
+    }
 }
 
 ?>

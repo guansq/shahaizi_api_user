@@ -126,7 +126,7 @@
         };
         $.ajax({
             type: "POST",
-            data: {comment_id:comment_id,parent_id:0,content:content,user_name:user_name,to_name:to_name},
+            data: {comment_id:comment_id,parent_id:0,content:content,username:user_name,to_name:to_name},
             dataType: 'json',
             url: "/index.php?m=Mobile&c=Order&a=replyComment",
             success: function (data) {
