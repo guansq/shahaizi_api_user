@@ -13,6 +13,7 @@ use app\common\logic\PackCarProductLogic;
 use app\common\logic\PackOrderLogic;
 use app\common\logic\SellerLogic;
 use app\common\logic\ConfigSetLogic;
+use app\common\logic\PackLineLogic;
 
 class DriverPack extends Base{
 
@@ -27,9 +28,7 @@ class DriverPack extends Base{
      * @api         {POST}   /index.php?m=Api&c=DriverPack&a=getAllDriver     得到全部司导done  管少秋
      * @apiName     getAllDriver
      * @apiGroup    DriverPack
-     * @apiParam    {Number}    [partner_num]     伴侣人数 根据人数取得符合座位的司机
-     * @apiParam    {Number}    [dest_address]     目的地
-     * @apiParam    {Number}    [date]     日期
+     * @apiParam    {String}    [city]     通过city名得到司导
      * @apiSuccessExample {json}    Success-Response
      *  Http/1.1    200 OK
      *{
@@ -43,85 +42,17 @@ class DriverPack extends Base{
      *}
      */
     public function getAllDriver(){
-        $partner = I('partner_num');
-        $dest_address = I('dest_address');
-        $date = I('date');
-        $city = I('dest_address');
         $where = [];
         $where['is_driver'] = 1;
         $where['drv_id'] = ['<>', 0];
-        $whereInfo = [];
-        if(!empty($partner)){//通过伴侣人数去
-            $map = [
-                1 => 4,
-                2 => 4,
-                3 => 4,
-                4 => 4,
-                5 => 5,
-                6 => 6,
-                7 => 7,
-                8 => 8,
-                9 => 9,
-                10 => 10,
-            ];
-            $num = $map[$partner];//人数座位对应表->取满足的drv_id
-            $result = M('pack_car_info')->where('seat_num', ['egt', $num])->select();
-            if(!empty($result)){
-                $seller_arr = array_unique(get_arr_column($result, 'seller_id'));
-                $whereInfo[] = $seller_arr;
-            }else{
-                $this->ajaxReturn(['status' => -1, 'msg' => '没有数据']);
-            }
-        }
+        $city = I('city');
 
-
-        if(!empty($dest_address)){
-            $result = M('pack_line')->where(['city' => ['like', "%{$city}%"]])->select();
-            if(!empty($result)){
-                $dest_arr = array_unique(get_arr_column($result, 'seller_id'));
-                $whereInfo[] = $dest_arr;
-            }else{
-                $this->ajaxReturn(['status' => -1, 'msg' => '没有数据']);
-            }
-        }
-
-
-        if(!empty($date)){
-            $result = M('pack_line')->where(['start_time' => ['egt', $date], 'end_time' => ['elt', $date]])->select();
-            if(!empty($result)){
-                $date_arr = array_unique(get_arr_column($result, 'seller_id'));
-                $whereInfo[] = $date_arr;
-            }else{
-                $this->ajaxReturn(['status' => -1, 'msg' => '没有数据']);
-            }
-        }
         if(!empty($city)){
             $where['city'] = ['like', "%{$city}%"];
         }
-        $result = $this->driverLogic->get_driver_list($where);
-
-        if(!empty($whereInfo)){//3个筛选条件不为空
-            $tmp_arr = [];
-            foreach($whereInfo as $k => $v){
-                if($k == 0){
-                    $tmp_arr = $v;
-                }else{
-                    $tmp_arr = array_intersect($tmp_arr, $v);//符合3个条件的数组
-                }
-            }
-            $all_drv = [];
-            if($result['status'] == 1){
-                foreach($result['result']['list'] as $val){
-                    if(in_array($val['seller_id'], $tmp_arr)){//全部筛选出来的司导 符合 3个条件
-                        $all_drv[] = $val;
-                    }
-                }
-                $result['result']['list'] = $all_drv;
-            }
-            $this->ajaxReturn($result);
-        }
-
-        $this->ajaxReturn($result);
+        $packLogic = new PackLineLogic();
+        $result = $packLogic->get_all_drv($city);
+        $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $result]);
     }
 
     /**

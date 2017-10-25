@@ -665,9 +665,8 @@ class User extends Base{
      * @apiParam    {String}    [sex]           性别（0 保密 1 男 2 女）
      * @apiParam    {String}    [birthday]      生日 （2015-01-05）
      * @apiParam    {String}    is_update_address     是否修改省市区   0 不修改   1   修改
-     * @apiParam    {String}    [province]      省份
+     * @apiParam    {String}    [country]      国家
      * @apiParam    {String}    [city]          城市
-     * @apiParam    {String}    [district]      地区
      * @apiParam    {String}    [personalized_signature]      个性签名
      * @apiParam    {String}    [shz_code]      傻孩子号
      * @apiParam    {String}    token      token
@@ -689,9 +688,9 @@ class User extends Base{
             //print_r($post);die;
             I('post.personalized_signature') ? $post['personalized_signature'] = I('post.personalized_signature') : false;  // 个性签名
             if(I('post.is_update_address')){
-                $post['province'] = I('post.province');  //省份
+                $post['country'] = I('post.country');  //国家
                 $post['city'] = I('post.city');  // 城市
-                $post['district'] = I('post.district');  //地区
+                //$post['district'] = I('post.district');  //地区
             }
 
             I('post.email') ? $post['email'] = I('post.email') : false;
