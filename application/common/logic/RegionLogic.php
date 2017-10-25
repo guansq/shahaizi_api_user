@@ -8,8 +8,6 @@
 
 namespace app\common\logic;
 
-use think\Model;
-
 class RegionLogic extends BaseLogic{
 
     const CHINA_ID = 7;
@@ -100,16 +98,13 @@ class RegionLogic extends BaseLogic{
      * @param $countryId
      */
     public function getHotCityByCountryId($countryId){
-        return $this->where('country_id', $countryId)
-            ->where('level', 2)
-            ->where('is_hot', 1)
-            ->select();
+        return $this->where('country_id', $countryId)->where('level', 2)->where('is_hot', 1)->select();
     }
 
 
     public function get_country(){
         $inter = M('region_country')->where(['parent_id' => 0])->select();
-        $country = M('region_country')->where('parent_id','<>',0)->select();
+        $country = M('region_country')->where('parent_id', '<>', 0)->select();
         $newArr = [];
         foreach($inter as $key => $val){
             $temp = [];
@@ -125,6 +120,10 @@ class RegionLogic extends BaseLogic{
             $newArr[] = $val;
             //$newArr[]['list'] = $temp;
         }
-        return ['status'=>1,'msg'=>'成功','result'=>$newArr];
+        return ['status' => 1, 'msg' => '成功', 'result' => $newArr];
+    }
+
+    public function getNameByid($id){
+        return $this->where('id', $id)->value('name');
     }
 }

@@ -9,14 +9,14 @@ var $password = $("#password");//密码
 var $inviteCode = $("#invite_Code");//邀请码
 var $submit = $("#reg_sub");//注册
 var countdown = 60;
-var codeParams = {mobile:'', opt:'reg', "country_code":""};
+var codeParams = {mobile:'', opt:'reg', "countroy_code":""};
 var postCodeParams = {username:'', type:'reg', code:''};
 var registerParams = {
   username:'',
   code:'',
   password:'',
   type:'phone',
-  countroy_code:'phone',
+  countroy_code:'',
   apply_code:''
 };
 $(function(){
@@ -38,7 +38,7 @@ function sendCaptcha(e){
   }else{
     $phone.attr("readonly", "readonly");
     codeParams.mobile = tel;
-    codeParams.country_code = code_select;
+    codeParams.countroy_code = code_select;
     // console.log(codeParams);
     toCode(e.target)
   }
