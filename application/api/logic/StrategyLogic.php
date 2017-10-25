@@ -50,6 +50,7 @@ class StrategyLogic extends BaseLogic{
             'publish_time' => time(),    //.
             'country_id' => $reqParams['countryId'],
             'city_id' => $reqParams['cityId'],
+            'city' => $reqParams['city'],
             'user_id' => $user['user_id'],
             'user_name' => $user['nickname'],
             'type' => self::TYPE_REGION,
@@ -57,6 +58,7 @@ class StrategyLogic extends BaseLogic{
             'is_admin' => 0,
             'is_hot' => 0,
         ];
+
         if(!$this->create($data)){
             return resultArray(5020);
         };

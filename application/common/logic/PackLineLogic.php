@@ -51,7 +51,15 @@ class PackLineLogic extends BaseLogic{
         return $list;
     }
 
-    public function get_local_drv(){
+    public function get_local_drv($city){
+        $where = [
+            'is_driver' => 1,
+            'enabled' => 1,
+        ];
+        if($city){
+            //匹配city_id
+
+        }
         $drv = M('seller')
             ->field('seller_id,head_pic,nickname,drv_code,province,city,plat_start')
             ->where(['is_driver' => 1])
