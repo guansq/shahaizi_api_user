@@ -1,0 +1,37 @@
+{extend name="public/web_html"}
+
+{block name="style"}
+
+{/block}
+
+{block name="body"}
+<div >
+  <ul >
+    <li>
+      <span>区号</span>
+      <select id="country_code_slc">
+        {foreach $country_code as $code}
+        <option value="{$code.mobile_prefix}">{$code.country}+{$code.mobile_prefix}</option>
+        {/foreach}
+      </select>
+    </li>
+    <li>
+      <span>手机号</span><input id="phone" type="tel" placeholder="请输入手机号码"/></li>
+    <li>
+      <span>验证码</span><input class="code" id="register_code_ipt" type="number" placeholder="请输入验证码"/>
+      <input type="button" id="send_captcha_btn" value="获取验证码">
+    </li>
+    <li><span>密码</span><input id="password" type="password" placeholder="请输入密码"/></li>
+    <li><span>邀请码</span><input id="apply_code" type="text" value="{:input('apply_code')}" placeholder="必填"/></li>
+    <li class="explain">点击注册，即表示您同意 <p>《傻孩子注册协议》</p></li>
+    <li id="register" class="register">
+      <button class="btn-blue" id="reg_sub">注册</button>
+    </li>
+  </ul>
+</div>
+{/block}
+
+{block name="script"}
+<script src="/application/web/view/user/register.js"></script>
+{/block}
+
