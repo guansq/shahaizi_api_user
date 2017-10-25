@@ -16,6 +16,9 @@ class User extends WebBase{
     public function regSuccess(){
         return $this->fetch();
     }
+    public function regProtocol(){
+        return $this->fetch();
+    }
 }
 
 ?>
