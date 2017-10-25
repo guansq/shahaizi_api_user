@@ -9,5 +9,15 @@
 {block name="body"}{/block}
 </body>
 <script src="/application/web/view/static/lib/jQuery/jquery-min.js"></script>
+<script src="/application/web/view/static/lib/layer/layer.js"></script>
+<script>
+  /**
+   * Created by songh on 2017/7/6 0006.
+   */
+  var API_HOST = "{:$_SERVER['REQUEST_SCHEME']}://{:$_SERVER['HTTP_HOST']}";
+  var API_SEND_CAPTCHA = API_HOST + "/api/BaseMessage/sendInterCaptcha";//获取验证码
+  var API_USER_REGISTER = API_HOST + "/api/user/reg";// 注册
+</script>
+
 {block name="script"}{/block}
 </html>
