@@ -126,7 +126,7 @@ class LocalTalentLogic extends BaseLogic{
             $info['is_good'] = $user_praise->isPraised($talent_id,$user_id,UserPraiseLogic::TYPE_TALENT);
         }
         $info['good_num'] = $user_praise->countLocalTalent($talent_id);
-        //print_r($info);die;
+        $info['content'] = htmlspecialchars_decode($info['content']);
         $return = [
             'status' => 1,
             'msg' => '',

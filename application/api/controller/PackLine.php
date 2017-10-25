@@ -113,7 +113,7 @@ class PackLine extends Base{
             unset($val['line_detail']);
         }
         //当地司导
-        $driver = $packLogic->get_local_drv();
+        $driver = $packLogic->get_local_drv($city);
         $home = [
             'index' => $index,
             'banner' => $banner,

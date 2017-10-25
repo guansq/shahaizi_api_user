@@ -320,6 +320,7 @@ class User extends Base{
         $userObj->mobile = $mobile;
         $userObj->countroy_code = $countroy_code;
         $userObj->mobile_validated = 1;
+        $userObj->shz_code = get_shz_code();
         if(!$userObj->save()){
             $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
@@ -414,6 +415,7 @@ class User extends Base{
         $userObj->hx_password = $userObj->password;
         $userObj->email = $mail;
         $userObj->email_validated = 1;
+        $userObj->shz_code = get_shz_code();
         if(!$userObj->save()){
             $this->ajaxReturn(['status' => -1, 'msg' => '绑定失败']);
         }
@@ -1989,11 +1991,12 @@ class User extends Base{
      * @apiParam {string} content 内容.
      * @apiParam {number} countryId 国家id.
      * @apiParam {number} cityId    城市id.
+     * @apiParam {string} city    国家·城市.
      * @apiParam {string} summary 简介.
      *
      */
     private function postStrategy(Request $request){
-        $reqParams = $this->getReqParams(['img', 'title', 'content', 'countryId', 'cityId', 'summary']);
+        $reqParams = $this->getReqParams(['img', 'title', 'content', 'countryId', 'cityId','city', 'summary']);
         $rule = [
             'img' => 'require|max:1000',
             'title' => 'require|max:200',
@@ -2001,6 +2004,7 @@ class User extends Base{
             'content' => 'require|max:1000',
             'countryId' => 'require',
             'cityId' => 'require',
+            'city' => 'require',
         ];
         $this->validateParams($reqParams, $rule);
         $userLogic = new StrategyLogic();

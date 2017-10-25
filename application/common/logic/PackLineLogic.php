@@ -51,11 +51,18 @@ class PackLineLogic extends BaseLogic{
         return $list;
     }
 
-    public function get_local_drv(){
+    public function get_local_drv($city){
+        $where = [
+            'is_driver' => 1,
+            'enabled' => 1,
+        ];
+        if($city){
+            //匹配city_id
+            $where['gps_name'] = ['LIKE', "%$city%"];
+        }
         $drv = M('seller')
             ->field('seller_id,head_pic,nickname,drv_code,province,city,plat_start')
-            ->where(['is_driver' => 1])
-            ->where(['enabled' => 1])
+            ->where($where)
             ->select();
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
