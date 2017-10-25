@@ -414,7 +414,11 @@ class UsersLogic extends BaseLogic{
         $cartLogic = new CartLogic();
         $cartLogic->setUserId($user_id);
         $user['cart_goods_num'] = $cartLogic->getUserCartGoodsNum(); //购物车商品数量
-
+        $info = get_user_collect_info($user_id);
+        $user['fans_num'] = $info['fans_num'];
+        $user['attention_num'] = $info['attention_num'];
+        $user['good_num'] = $info['good_num'];
+        $user['collection_num'] = $info['collection_num'];
         return ['status' => 1, 'msg' => '获取成功', 'result' => $user];
     }
 

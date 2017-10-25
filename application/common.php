@@ -462,7 +462,16 @@ function get_user_info($user_id_or_name, $type = 0, $oauth = '')
     $user = M('users')->where($map)->find();
     return $user;
 }
-
+/*
+ * 获取用户的fans_num粉丝数attention_num关注数good_num被赞数collection_num被收藏数
+ */
+function get_user_collect_info($user_id){
+    $info = [];
+    $info['fans_num'] = M('user_attention')->where(['obj_id'=>$user_id,'obj_type'=>1])->count();
+    $info['attention_num'] = M('user_attention')->where(['user_id'=>$user_id,'obj_type'=>1])->count();
+    $info['good_num'] = M('user_praise')->where(['obj_id'=>$user_id])->count();
+    $info['collection_num'] = M('goods_collect')->where(['obj_owner_id'=>$user_id])->count();
+}
 /**
  * 更新会员等级,折扣，消费总额
  * @param $user_id  用户ID
