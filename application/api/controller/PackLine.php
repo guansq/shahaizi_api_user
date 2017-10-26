@@ -182,6 +182,7 @@ class PackLine extends Base{
         // $city = I('city');
         $where['is_show'] = 1;
         $where['is_del'] = 0;
+        $where['is_state'] = 1;
         $time = empty(I('time')) ? '' : strtotime(I('time'));
         $line_buy_num = I('line_buy_num');
         !empty($city) && $where['city'] = ['LIKE', "%{$city}%"];

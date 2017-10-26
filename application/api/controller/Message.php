@@ -92,14 +92,35 @@ class Message extends Base{
     }
 
     /**
-     * @api         {GET}   /index.php?m=Api&c=Message&a=getSystemMessage   得到系统消息
+     * @api         {GET}   /index.php?m=Api&c=Message&a=getSystemMessage   得到系统消息     管少秋
      * @apiName     getSystemMessage
      * @apiGroup    Message
-     *
+     * @apiSuccessExample   {json}  Success-Response
+     *  Http/1.1    200 OK
+    {
+    "status": -1,
+    "msg": "成功",
+    "result": {
+    "p": 1,
+    "pageSize": 20,
+    "totalRows": 1,
+    "totalPages": 1,
+    "list": [
+    {
+    "id": 1,
+    "title": "消息标题",
+    "message": "我123123",
+    "push_users": "1,",
+    "create_at": 1508730051,
+    "content": "&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;13z2x4c56asd&lt;/span&gt;&lt;/p&gt;"
+    }
+    ]
+    }
+    }
      */
     public function getSystemMessage(){
-
-
+        $msgLgc = new MessageLogic();
+        return $this->returnJson($msgLgc->getSystemList());
     }
 
     /**

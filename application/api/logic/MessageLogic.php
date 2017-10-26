@@ -16,8 +16,8 @@
 namespace app\api\logic;
 
 use app\common\logic\SellerLogic;
-
-
+use think\Page;
+use ruitu\PageVo;
 /**
  *  消息
  * Class CatsLogic
@@ -30,6 +30,9 @@ class MessageLogic extends BaseLogic{
     //  状态 1:显示 0:隐藏
     const STATUS_HIDE = 0;
     const STATUS_SHOW = 1;
+
+    const PUSH_USER = 1;
+    const PUSH_BUSINESS = 2;
 
     public function getSystemMsgPage(){
         $count = $this->where('is_open', self::STATUS_SHOW)->count();
@@ -83,4 +86,20 @@ class MessageLogic extends BaseLogic{
 
     }
 
+    public function getSystemList(){
+        $push_user = self::PUSH_USER;
+        $where['push_users'] = ['like',"%$push_user%"];
+        $list =  M('system_message')->where($where)->select();
+        $count = M('system_message')->where($where)->count();
+
+        $page = new Page($count);
+        $ret = new PageVo($page,$list);
+        foreach($list as &$val){
+            $val['content'] = htmlspecialchars_decode($val['content']);
+        }
+        if(empty($list)){
+            return resultArray(-1,'没有数据',[]);
+        }
+        return resultArray(1,'成功',$ret);
+    }
 }
