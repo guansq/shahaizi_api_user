@@ -16,6 +16,10 @@ class PackLineLogic extends BaseLogic{
 
     protected $table = 'ruit_pack_line';
 
+    const STATUS_UNCHECK = 0;//0:待审核1:审核通过2:驳回
+    const STATUS_PASS    = 1;//0:待审核1:审核通过2:驳回
+    const STATUS_REFUSE  = 2;//0:待审核1:审核通过2:驳回
+
     public function get_all_pack_line($where){
         $count = $this->where($where)->count();
         $page = new Page($count);
@@ -194,5 +198,18 @@ class PackLineLogic extends BaseLogic{
             ->where('obj_type', UserPraiseLogic::TYPE_LINE)
             ->count();
         return $pkgLine;
+    }
+
+    /**
+     * Author: W.W <will.wxx@qq.com>
+     * Describe:
+     * @param $sellerId
+     */
+    public function selectShowListBySellerId($sellerId){
+        return $this->where('seller_id',$sellerId)
+            ->where('is_state',self::STATUS_PASS)
+            ->where('is_del',0)
+            ->where('is_show',1)
+            ->select();
     }
 }
