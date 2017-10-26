@@ -99,6 +99,22 @@ function createSign($sendData){
     return $desClass->strEnc($arrOrder, $skArr[0], $skArr[1], $skArr[2]);//签名
 }
 
+/*
+ * 敏感词过滤
+ */
+function wordFilter($text){
+    $words = M('words_text')->where(['is_show'=>1])->select();
+    if(empty($words)){
+        return $text;
+    }
+    $check_arr = [];
+    foreach($words as $val){
+        $check_arr[$val['name']] = '*';
+    }
+    $check_arr = array_unique($check_arr);
+    //print_r(strtr($text,$check_arr));die;
+    return strtr($text,$check_arr);
+}
 /**
  * Auther: WILL<314112362@qq.com>
  * Time: 2017-3-20 17:51:09

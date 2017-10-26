@@ -2,8 +2,15 @@
 {block name="style"}
 <link rel="stylesheet" href="/application/web/view/static/lib/swiper/css/swiper.min.css">
 <style>
-  .photo_con .swiper-wrapper .swiper-slide img {
+  .photo_con .swiper-wrapper .swiper-slide img{
     width: 100%;
+  }
+  .xl .swiper-slide:nth-child(n){
+    width: 45%;
+  }
+  .xl .swiper-container {
+    width: 100%;
+    height: 100%;
   }
 </style>
 {/block}
@@ -36,10 +43,6 @@
       <li>
         <span class="ski_span1">家乡</span>
         <span class="ski_span2">{$seller.cityFullName ? $seller.cityFullName  : "" }</span>
-      </li>
-      <li>
-        <span class="ski_span1">平台星级</span>
-        <span class="ski_span2">{$seller.plat_start ? $seller.plat_start  : "保密" }</span>
       </li>
     </ul>
   </div>
@@ -76,7 +79,7 @@
   <div class="dr_repeat mt_10 photo">
     <h1>我的相册</h1>
     <div class="photo_con">
-      <div class="swiper-container">
+      <div class="swiper-container auto_swiper">
         <div class="swiper-wrapper">
           {volist name="seller.img_url" id="url" key="k" }
           <div class="swiper-slide"><img src="{$url}" alt=""></div>
@@ -87,34 +90,18 @@
     </div>
   </div>
 
-  <!--<div id="old" class="dr_repeat mt_10 old">-->
-  <!--<h1>我的故事</h1>-->
-  <!--<div class="old_box">-->
-  <!--<section>-->
-  <!--<img src="/application/web/view/static/image/2.png" alt="">-->
-  <!--</section>-->
-  <!--<h2>新加坡 “世界的小红点”</h2>-->
-  <!--<p> 我是一名全职专职司导，在新加坡大街小巷都有我的足迹，有 30年的开车经验和5年的司导经验...</p>-->
-  <!--</div>-->
-  <!--<div class="old_box">-->
-  <!--<section>-->
-  <!--<img src="/application/web/view/static/image/2.png" alt="">-->
-  <!--</section>-->
-  <!--<h2>新加坡 “世界的小红点2”</h2>-->
-  <!--<p> 我是一名全职专职司导，在新加坡大街小巷都有我的足迹，有 30年的开车经验和5年的司导经验...</p>-->
-  <!--</div>-->
-  <!--<div class="look">-->
-  <!--<a class="look_whole2" href="javascript:void(0);">查看更多</a>-->
-  <!--</div>-->
-  <!--</div>-->
-
   <div class="dr_repeat mt_10 xl">
     <h1>我的线路</h1>
     <div class="photo_con">
-      <div class="swiper-container">
+      <div class="swiper-container noauto_swiper">
         <div class="swiper-wrapper">
           {volist name="line_array" id="line" key="k" }
-            <div class="swiper-slide"><img src="{$line.cover_img|default=''}" alt=""></div>
+            <div class="swiper-slide">
+              <img src="{$line.cover_img|default=''}" alt="">
+              <p class="line_title">
+                {$line.line_title}
+              </p>
+            </div>
           {/volist}
         </div>
       </div>
@@ -124,7 +111,7 @@
   <div class="dr_repeat mt_10 car">
     <h1>我的车辆</h1>
     <div class="car_con">
-      <div class="swiper-container">
+      <div class="swiper-container auto_swiper">
         <div class="swiper-wrapper">
           {volist name="seller_car" id="car" key="k" }
           <div class="swiper-slide">
@@ -148,19 +135,28 @@
 {block name="script"}
 <script src="/application/web/view/static/lib/swiper/js/swiper.min.js"></script>
 <script>
-  var mySwiper = new Swiper('.swiper-container', {
-    pagination:'.swiper-pagination',
-    loop:true,
-    grabCursor:true,
-    paginationClickable:true,
-    autoplay:4000,//可选选项，自动滑动
-    paginationType:'fraction',
-    spaceBetween:30,
-    centeredSlides:true,
-    autoplayDisableOnInteraction:false
-  })
 
   $(function(){
+    var mySwiper = new Swiper('.auto_swiper', {
+        pagination:'.swiper-pagination',
+        slidesPerView: 'auto',
+        loop:true,
+        grabCursor:true,
+        paginationClickable:true,
+        autoplay:4000,//可选选项，自动滑动
+        paginationType:'fraction',
+        spaceBetween:30,
+        centeredSlides:true,
+        autoplayDisableOnInteraction:false
+    })
+    var mySwipers = new Swiper('.noauto_swiper', {
+        pagination: '.swiper-pagination',
+        loop:true,
+        slidesPerView: 'auto',
+        paginationClickable: true,
+        spaceBetween: 30
+    })
+
     // 遍历 显示两个 其余隐藏
     function eachAppraiseList(ele, eleT, num){
       var appraConLength = ele.find(eleT).length;
