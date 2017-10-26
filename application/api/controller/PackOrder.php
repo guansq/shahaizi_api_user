@@ -201,8 +201,8 @@ class PackOrder extends Base{
 
             $alipayHelper = new PaymentHelper();
             $extraParam = [
-                'pack_order' => $pack_order,
-                'user_info' => $user_info,
+                'order_id' => $pack_order['air_id'],
+                //'user_info' => $user_info,
                 'discount_price' => $discount_price,
                 'pay_way' => $pay_way,
                 'is_coupon' => $is_coupon,
@@ -210,7 +210,7 @@ class PackOrder extends Base{
             ];
             $extraString = json_encode($extraParam);
             //传递需要通过服务器
-            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,$extraString);
+            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,'');
             $payString = $alipayHelper->getAliPayParam($aliPayParams);
             if(empty($payString)){
                 return $this->returnJson(4004);
