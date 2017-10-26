@@ -969,6 +969,11 @@ body{
     height: 37px;
     border-radius: 4px;
 }
+.line_title{
+    padding-top: 10px;
+    color: #666;
+    font-size: 14px;
+}
 
 
 
