@@ -213,7 +213,7 @@ class PackOrderLogic extends BaseLogic{
      * 生成路线订单
      */
     public function create_pack_order($data, $user){
-        $data['line_id'] = 2;
+        //$data['line_id'] = 2;
         $line = PackLineLogic::find($data['line_id']);
         if(empty($line)){
             return ['status' => -1, 'msg' => '当前线路不存在'];
