@@ -206,11 +206,11 @@ class DynamicLogic extends BaseLogic{
         return resultArray(2000, '', $ret);
     }
 
-    public function getDynamicPage(){
-        return $this->getDynamicPageByWhere();
+    public function getDynamicPage($sortField = 'create_at', $sortType = 'DESC'){
+        return $this->getDynamicPageByWhere([], $sortField, $sortType);
     }
 
-    private function getDynamicPageByWhere($where = []){
+    private function getDynamicPageByWhere($where = [], $sortField = 'create_at', $sortType = 'DESC'){
         $fields = [
             'act_id' => 'id',
             'cover_img' => 'img',
@@ -224,7 +224,7 @@ class DynamicLogic extends BaseLogic{
         $page = new Page($count);
         $list = $this->where($where)
             ->limit($page->firstRow, $page->listRows)
-            ->order('create_at DESC')
+            ->order("$sortField $sortType , sort")
             ->field($fields)
             ->select();
 

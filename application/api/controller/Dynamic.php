@@ -2,14 +2,13 @@
 /**
  * 动态相关控制器
  */
+
 namespace app\api\controller;
+
 use app\api\logic\DynamicLogic;
-use app\api\logic\UserAttentionLogic;
-use app\api\logic\UserLogic;
-use think\Page;
 use think\Request;
 
-class Dynamic extends Base {
+class Dynamic extends Base{
 
     public function index(Request $request){
         if($request->isGet()){
@@ -27,7 +26,7 @@ class Dynamic extends Base {
 
 
     /**
-     * @api             {GET}   /index.php?m=Api&c=Dynamic   02.动态列表 ok wxx
+     * @api             {GET}   /Api/Dynamic   02.动态列表 ok wxx
      * @apiDescription  获取全部动态 时间倒序排列
      * @apiName         getPage
      * @apiGroup        Dynamic
@@ -83,8 +82,19 @@ class Dynamic extends Base {
      *
      */
     private function getPage(){
+        $reqParams = $this->getReqParams(['sort_field' => 'time', 'sort_type' => 'DESC']);
+        $rule = [
+            'sort_field' => 'require|in:time,praise',
+            'sort_type' => 'require|in:asc,desc',
+        ];
+        $this->validateParams($reqParams, $rule);
+        $sortField = 'create_at';
+        if($reqParams['sort_field'] == 'praise'){
+            $sortField = 'good_num';
+        }
+
         $dynamicLogic = new DynamicLogic();
-        $this->returnJson($dynamicLogic->getDynamicPage());
+        $this->returnJson($dynamicLogic->getDynamicPage($sortField, $reqParams['sort_type']));
     }
 
 
