@@ -129,6 +129,7 @@ class DynamicLogic extends BaseLogic{
             ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
             ->count();
         $dynamic['owner'] = UsersLogic::getBaseInfo($user, $user_id)['result'];
+        $dynamic['owner'] = empty($dynamic['owner']) ? new \stdClass() : $dynamic['owner'];
         $dynamic['comments'] = ArticleCommentLogic::getListByTypeAndObjid(ArticleCommentLogic::TYPE_DYNAMIC, $id, $user_id)['result'];
 
         return resultArray(2000, '', $dynamic);

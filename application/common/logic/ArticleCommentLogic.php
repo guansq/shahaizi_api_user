@@ -16,6 +16,7 @@
 namespace app\common\logic;
 
 use think\Page;
+
 /**
  * 文章评论表
  * @package common\Logic
@@ -85,9 +86,7 @@ class ArticleCommentLogic extends BaseLogic{
             'is_anonymous' => 'isAnonymous',
             'parent_id' => 'parentId',
         ];
-        $count = self::where('type', $type)
-            ->where('article_id', $articleId)
-            ->where('parent_id', 0)->count();
+        $count = self::where('type', $type)->where('article_id', $articleId)->where('parent_id', 0)->count();
         //print_r($count);die;
         $page = new Page($count);
         $list = self::where('type', $type)
@@ -101,6 +100,7 @@ class ArticleCommentLogic extends BaseLogic{
         }
         foreach($list as $comm){
             $comm['owner'] = UsersLogic::getBaseInfoById($comm['owner'], $viewUserId, $comm['isAnonymous'])['result'];
+            $comm['owner'] = empty($comm['owner']) ? new \stdClass() : $comm['owner'];
             $comm['createTimeFmt'] = date('Y-m-d', $comm['createTime']);
             $comm['isPraise'] = UserPraiseLogic::isPraised($comm->id, $viewUserId, UserPraiseLogic::TYPE_ARTICLE_COMMENT);
             $comm['replies'] = self::getListByPid($comm->id, $viewUserId)['result'];
@@ -135,11 +135,12 @@ class ArticleCommentLogic extends BaseLogic{
         }
         foreach($list as $comm){
             $comm['owner'] = UsersLogic::getBaseInfoById($comm['owner'], $viewUserId, $comm['isAnonymous'])['result'];
+            $comm['owner'] = empty($comm['owner']) ? new \stdClass() : $comm['owner'];
             $comm['createTimeFmt'] = date('Y-m-d', $comm['createTime']);
             $comm['isPraise'] = UserPraiseLogic::isPraised($comm->id, $viewUserId, UserPraiseLogic::TYPE_ARTICLE_COMMENT);
-            $comm['replies'] = self::getListByPid($comm->id);
+            $comm['replies'] = self::getListByPid($comm->id)['result'];
         }
-        return resultArray(2000,'',$list);
+        return resultArray(2000, '', $list);
     }
 
 }
