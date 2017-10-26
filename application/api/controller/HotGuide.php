@@ -21,6 +21,7 @@ class HotGuide extends Base{
     /**
      * @api {GET}   /index.php?m=Api&c=HotGuide&a=getHotGuideList   得到热门攻略列表done  管少秋
      * @apiName getHotGuideList
+     * @apiParam    {String}    city    城市名
      * @apiParam    {String}    p   页数
      * @apiGroup HotGuide
      * @apiSuccessExample   Success-Response
@@ -38,7 +39,9 @@ class HotGuide extends Base{
      * }
      */
     public function getHotGuideList(){
-        $return = $this->hotLogic->get_hot_list();
+        $city = I('city');
+//        print_r($city);die;
+        $return = $this->hotLogic->get_hot_list($city);
         $this->ajaxReturn($return);
     }
 
