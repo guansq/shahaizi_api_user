@@ -2,8 +2,15 @@
 {block name="style"}
 <link rel="stylesheet" href="/application/web/view/static/lib/swiper/css/swiper.min.css">
 <style>
-  .photo_con .swiper-wrapper .swiper-slide img {
+  .photo_con .swiper-wrapper .swiper-slide img{
     width: 100%;
+  }
+  .xl .swiper-slide:nth-child(n){
+    width: 45%;
+  }
+  .xl .swiper-container {
+    width: 100%;
+    height: 100%;
   }
 </style>
 {/block}
@@ -72,7 +79,7 @@
   <div class="dr_repeat mt_10 photo">
     <h1>我的相册</h1>
     <div class="photo_con">
-      <div class="swiper-container">
+      <div class="swiper-container auto_swiper">
         <div class="swiper-wrapper">
           {volist name="seller.img_url" id="url" key="k" }
           <div class="swiper-slide"><img src="{$url}" alt=""></div>
@@ -86,7 +93,7 @@
   <div class="dr_repeat mt_10 xl">
     <h1>我的线路</h1>
     <div class="photo_con">
-      <div class="swiper-container">
+      <div class="swiper-container noauto_swiper">
         <div class="swiper-wrapper">
           {volist name="line_array" id="line" key="k" }
             <div class="swiper-slide">
@@ -104,7 +111,7 @@
   <div class="dr_repeat mt_10 car">
     <h1>我的车辆</h1>
     <div class="car_con">
-      <div class="swiper-container">
+      <div class="swiper-container auto_swiper">
         <div class="swiper-wrapper">
           {volist name="seller_car" id="car" key="k" }
           <div class="swiper-slide">
@@ -128,19 +135,28 @@
 {block name="script"}
 <script src="/application/web/view/static/lib/swiper/js/swiper.min.js"></script>
 <script>
-  var mySwiper = new Swiper('.swiper-container', {
-    pagination:'.swiper-pagination',
-    loop:true,
-    grabCursor:true,
-    paginationClickable:true,
-    autoplay:4000,//可选选项，自动滑动
-    paginationType:'fraction',
-    spaceBetween:30,
-    centeredSlides:true,
-    autoplayDisableOnInteraction:false
-  })
 
   $(function(){
+    var mySwiper = new Swiper('.auto_swiper', {
+        pagination:'.swiper-pagination',
+        slidesPerView: 'auto',
+        loop:true,
+        grabCursor:true,
+        paginationClickable:true,
+        autoplay:4000,//可选选项，自动滑动
+        paginationType:'fraction',
+        spaceBetween:30,
+        centeredSlides:true,
+        autoplayDisableOnInteraction:false
+    })
+    var mySwipers = new Swiper('.noauto_swiper', {
+        pagination: '.swiper-pagination',
+        loop:true,
+        slidesPerView: 'auto',
+        paginationClickable: true,
+        spaceBetween: 30
+    })
+
     // 遍历 显示两个 其余隐藏
     function eachAppraiseList(ele, eleT, num){
       var appraConLength = ele.find(eleT).length;
