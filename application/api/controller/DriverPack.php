@@ -173,7 +173,7 @@ class DriverPack extends Base{
         }
         $data['real_price'] = $data['total_price'] = $pcp['price'];
         $data['car_type_id'] = $pcp['car_type_id'] ;
-        $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
+        $data['car_seat_num'] = $pcp['car_seat_total']; //车的总座位数
         $data['type'] = 6;
 
         //验证通过

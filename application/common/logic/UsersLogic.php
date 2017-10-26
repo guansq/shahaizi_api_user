@@ -419,6 +419,7 @@ class UsersLogic extends BaseLogic{
         $user['attention_num'] = $info['attention_num'];
         $user['good_num'] = $info['good_num'];
         $user['collection_num'] = $info['collection_num'];
+
         return ['status' => 1, 'msg' => '获取成功', 'result' => $user];
     }
 

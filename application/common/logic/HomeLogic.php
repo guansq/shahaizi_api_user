@@ -31,6 +31,7 @@ class HomeLogic extends BaseLogic
             if(!empty($val['cover_img'])){
                 $temp = explode('|',$val['cover_img']);
                 $val['cover_img'] = $temp[0];
+
             }
         }
         //print_r($newList);die;
@@ -62,7 +63,7 @@ class HomeLogic extends BaseLogic
             $val['owner'] =  $usersLogic->getBaseInfoById($val['user_id']);
         }
         foreach($newList as &$val){
-            $val['praiseNum'] = $praiseLogic->countPraiseOfDynamic($val['act']);
+            $val['praiseNum'] = $praiseLogic->countPraiseOfDynamic($val['act_id']);
             $val['owner'] =  $usersLogic->getBaseInfoById($val['user_id']);
         }
 

@@ -50,7 +50,7 @@ class Comment extends Base{
         ]);
 
         if(!empty($commetInfo)){
-            $commetInfo['post_time'] = wztxDate($commetInfo['post_time']);
+            $commetInfo['post_time'] = shzDate($commetInfo['post_time']);
             return returnJson(2000, '成功', $commetInfo);
         }
         returnJson(4004, '未获取到订单信息');
@@ -274,7 +274,11 @@ class Comment extends Base{
         if(M('article_new_action')->where('act_id',$id)->count() == 0){
             return $this->returnJson(4002, '你要点赞的最新动态已经不存在。');
         }
-        return $this->returnJson($praiseLogic->addPraise($this->user_id, UserPraiseLogic::TYPE_DYNAMIC, $id));
+        $result = $praiseLogic->addPraise($this->user_id, UserPraiseLogic::TYPE_DYNAMIC, $id);
+        if($result['status'] == 2000){
+            $praiseLogic->setIncNewActionGood($id);//对自身表的点赞数+1
+        }
+        return $this->returnJson($result);
     }
 
     /**

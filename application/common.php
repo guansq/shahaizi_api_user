@@ -469,8 +469,9 @@ function get_user_collect_info($user_id){
     $info = [];
     $info['fans_num'] = M('user_attention')->where(['obj_id'=>$user_id,'obj_type'=>1])->count();
     $info['attention_num'] = M('user_attention')->where(['user_id'=>$user_id,'obj_type'=>1])->count();
-    $info['good_num'] = M('user_praise')->where(['obj_id'=>$user_id])->count();
+    $info['good_num'] = M('user_praise')->where(['obj_owner_id'=>$user_id])->count();
     $info['collection_num'] = M('goods_collect')->where(['obj_owner_id'=>$user_id])->count();
+    return $info;
 }
 /**
  * 更新会员等级,折扣，消费总额
