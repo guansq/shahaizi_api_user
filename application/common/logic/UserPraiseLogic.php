@@ -139,6 +139,10 @@ class UserPraiseLogic extends BaseLogic{
         return resultArray(2000);
 
     }
-
-
+    /*
+     * 增加动态的点赞数
+     */
+    public function setIncNewActionGood($act_id){
+        M('article_new_action')->where(['act_id'=>$act_id])->setInc('good_num');
+    }
 }
