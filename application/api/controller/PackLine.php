@@ -179,7 +179,7 @@ class PackLine extends Base{
      */
     public function getQualityLine(){
         $where = [];
-        // $city = I('city');
+        $city = I('city');
         $where['is_show'] = 1;
         $where['is_del'] = 0;
         $where['is_state'] = 1;
