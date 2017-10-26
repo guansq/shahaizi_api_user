@@ -62,6 +62,7 @@ class ArticleCommentLogic extends BaseLogic{
         }
         foreach($list as $comm){
             $comm['owner'] = UsersLogic::getBaseInfoById($comm['owner'], $viewUserId, $comm['isAnonymous'])['result'];
+            $comm['owner'] = empty($comm['owner']) ? new \stdClass() : $comm['owner'];
             $comm['createTimeFmt'] = date('Y-m-d', $comm['createTime']);
             $comm['isPraise'] = UserPraiseLogic::isPraised($comm->id, $viewUserId, UserPraiseLogic::TYPE_ARTICLE_COMMENT);
             $comm['replies'] = self::getListByPid($comm->id, $viewUserId)['result'];
