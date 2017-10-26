@@ -153,5 +153,7 @@ class Message extends Base{
         return $this->returnJson($msgLgc->getHxUserPage($this->user_id, $type));
     }
 
-
+    public function test(){
+        echo wordFilter('我就是要差评你了');
+    }
 }

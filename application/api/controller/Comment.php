@@ -164,7 +164,7 @@ class Comment extends Base{
             'content' => ['require'],
         ];
         $this->validateParams($reqParams, $rule);
-
+        $reqParams['content'] = wordFilter($reqParams['content']);
         $packOrderLogic = new PackOrderLogic();
         $poCommentLogic = new OrderCommentLogic();
         //获取订单详情
@@ -252,6 +252,7 @@ class Comment extends Base{
             'add_time' => ['require'],
             'is_anonymous' => ['require'],
         ];
+        $reqParams['content'] = wordFilter($reqParams['content']);
         $this->validateParams($reqParams, $rule);
         $reqParams['add_time'] = time();
         $reqParams['ip_address']  = getIP();
