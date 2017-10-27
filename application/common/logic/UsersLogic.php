@@ -1105,7 +1105,7 @@ class UsersLogic extends BaseLogic{
         $baseInfo = [
             'id' => $user['user_id'],
             'avatar' => empty($user['head_pic']) ? config('APP_DEFAULT_USER_AVATAR') : $user['head_pic'],
-            'nickname' => $isAnonymous ? hidMiddleStr($user['nickname']) : $user['nickname'],
+            'nickname' => $user['nickname'],
             'sex' => $user['sex'],
             'level' => $user['level'],
             'fansNum' => $user['attention_num'],
@@ -1134,9 +1134,6 @@ class UsersLogic extends BaseLogic{
      * collectNum    被收藏数量.
      */
     public static function getBaseInfoById($userId, $viewerId = 0, $isAnonymous = 0){
-        if(empty($userId)){
-            return resultArray(4004);
-        }
         $baseFields = [
             'user_id',
             'head_pic',
@@ -1148,6 +1145,16 @@ class UsersLogic extends BaseLogic{
             'collection_num'
         ];
         $user = self::field($baseFields)->find($userId);
+        $user = empty($user) ? [
+            'user_id' => $userId,
+            'head_pic' => config('APP_DEFAULT_USER_AVATAR'),
+            'nickname' => '',
+            'sex' => 0,
+            'level' => 0,
+            'attention_num' => 0,
+            'good_num' => 0,
+            'collection_num' => 0,
+        ] : $user;
         return self::getBaseInfo($user, $viewerId, $isAnonymous);
 
     }
