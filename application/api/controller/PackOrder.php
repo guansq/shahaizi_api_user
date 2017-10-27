@@ -145,7 +145,6 @@ class PackOrder extends Base{
      * @apiParam    {String}    token   token
      * @apiParam    {Number}    air_id  订单ID
      * @apiParam    {Number}    pay_way    支付方式 0微信支付 1支付宝支付 2余额支付
-     * @apiParam    {Float}    [real_price]   优惠的价格
      * @apiParam    {Number}    [coupon_id]   优惠券ID 无优惠券传空进来
      */
     public function payPackOrder(){
