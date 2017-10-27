@@ -96,8 +96,10 @@
       <div class="swiper-container noauto_swiper">
         <div class="swiper-wrapper">
           {volist name="line_array" id="line" key="k" }
-            <div class="swiper-slide">
+          <div class="swiper-slide">
+            <a class="line_a" href="/index.php/web/packLine/detail?id={$line.line_id}">
               <img src="{$line.cover_img|default=''}" alt="">
+            </a>
               <p class="line_title">
                 {$line.line_title}
               </p>
@@ -119,7 +121,10 @@
             <div class="car_info">
               <h2>{$car.plate_number}</h2>
               <p>
-                舒适{$car.seat_num}座
+                舒适 {$car.seat_num}座
+              </p>
+              <p class="line_title">
+                车牌 {$car.brand_id}
               </p>
             </div>
           </div>
@@ -143,7 +148,7 @@
         loop:true,
         grabCursor:true,
         paginationClickable:true,
-        autoplay:4000,//可选选项，自动滑动
+//        autoplay:4000,//可选选项，自动滑动
         paginationType:'fraction',
         spaceBetween:30,
         centeredSlides:true,
