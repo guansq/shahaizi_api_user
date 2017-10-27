@@ -480,6 +480,15 @@ function get_user_info($user_id_or_name, $type = 0, $oauth = '')
     $user = M('users')->where($map)->find();
     return $user;
 }
+
+/**
+ * 获取司导用户信息
+ *
+ */
+function get_drv_info($seller_id){
+    $seller = M('seller')->where(['seller_id'=>$seller_id])->find();
+    return $seller;
+}
 /*
  * 获取用户的fans_num粉丝数attention_num关注数good_num被赞数collection_num被收藏数
  */

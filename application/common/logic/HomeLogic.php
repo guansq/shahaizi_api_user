@@ -57,8 +57,8 @@ class HomeLogic extends BaseLogic
                 $user_info = get_user_info($val['user_id'],0);
                 $val['name'] = $user_info['nickname'];
             }else{
-                $user_info = get_user_info($val['user_id'],0);
-                $val['name'] = $user_info['nickname'];
+                $seller_info = get_drv_info($val['user_id']);
+                $val['name'] = $seller_info['nickname'];
             }
             $val['good_num'] = $praiseLogic->countLocalTalent($val['talent_id']);
         }

@@ -230,9 +230,7 @@ class PackOrderLogic extends BaseLogic{
         }
         $discountPrice = 0; // FIXME 获取优惠券金额
         $brokerage = 0;
-        // if(!$line['is_admin']){
-        //     $brokerage = floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
-        // }
+
         $order_data = [
             'order_sn' => $this->get_order_sn(),
             'user_id' => $user['user_id'],
@@ -254,15 +252,21 @@ class PackOrderLogic extends BaseLogic{
             'dest_address' => $lastSite,
             'discount_id' => $data['discount_id'],
             'total_price' => $line['line_price'],
-            'real_price' => $line['line_price'] + $brokerage - $discountPrice,
+            'real_price' => $line['line_price'] - $discountPrice,
             'remark' => $data['remark'],
             'title' => $line['line_title'],
             'status' => PackOrderLogic::STATUS_UNPAY,
             'type' => 3,//1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游
             'user_message' => $data['user_message'],
+            //'commission_money' => //佣金金额
+            //'seller_money' => //订单金额 扣除佣金的金额
             'create_at' => time(),
             'update_at' => time(),
         ];
+        if(!$line['is_admin']){
+            $order_data['commission_money'] = $commission_money = floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 佣金金额
+            $order_data['seller_money'] = $line['line_price'] -  $commission_money; // 佣金金额
+        }
         $result = M('pack_order')->save($order_data);
 
         if($result){
