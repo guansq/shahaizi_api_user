@@ -86,6 +86,7 @@ class MessageLogic extends BaseLogic{
 
     }
 
+    //得到系统消息列表
     public function getSystemList(){
         $push_user = self::PUSH_USER;
         $where['push_users'] = ['like',"%$push_user%"];
@@ -101,5 +102,18 @@ class MessageLogic extends BaseLogic{
             return resultArray(-1,'没有数据',[]);
         }
         return resultArray(1,'成功',$ret);
+    }
+
+    //得到系统消息详情
+    public function getSystemInfo($id){
+        $push_user = self::PUSH_USER;
+        $where['push_users'] = ['like',"%$push_user%"];
+        $where['id'] = $id;
+        $info = M('system_message')->where($where)->find();
+        if(empty($info)){
+            return resultArray(-1,'没有数据',[]);
+        }
+        $info['content'] = htmlspecialchars_decode($info['content']);
+        return resultArray(1,'成功',$info);
     }
 }
