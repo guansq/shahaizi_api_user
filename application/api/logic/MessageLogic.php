@@ -92,15 +92,15 @@ class MessageLogic extends BaseLogic{
         $where['push_users'] = ['like',"%$push_user%"];
         $list =  M('system_message')->where($where)->select();
         $count = M('system_message')->where($where)->count();
-
-        $page = new Page($count);
-        $ret = new PageVo($page,$list);
-        foreach($list as &$val){
-            $val['content'] = htmlspecialchars_decode($val['content']);
-        }
         if(empty($list)){
             return resultArray(-1,'没有数据',[]);
         }
+        $page = new Page($count);
+        foreach($list as &$val){
+            $val['content'] = htmlspecialchars_decode($val['content']);
+            $val['create_at'] = shzDate($val['create_at']);
+        }
+        $ret = new PageVo($page,$list);
         return resultArray(1,'成功',$ret);
     }
 
@@ -114,6 +114,7 @@ class MessageLogic extends BaseLogic{
             return resultArray(-1,'没有数据',[]);
         }
         $info['content'] = htmlspecialchars_decode($info['content']);
+        $info['create_at'] = shzDate($info['create_at']);
         return resultArray(1,'成功',$info);
     }
 }
