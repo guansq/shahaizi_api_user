@@ -120,7 +120,21 @@ class Message extends Base{
      */
     public function getSystemMessage(){
         $msgLgc = new MessageLogic();
-        return $this->returnJson($msgLgc->getSystemList());
+        return $this->ajaxReturn($msgLgc->getSystemList());
+    }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Message&a=getSystemMessageInfo   得到系统消息详情    管少秋
+     * @apiName     getSystemMessageInfo
+     * @apiGroup    Message
+     * @apiParam    {String}    id      消息ID
+     */
+    public function getSystemMessageInfo(){
+        $id = I('id');
+        $msgLgc = new MessageLogic();
+        $ret = $msgLgc->getSystemInfo($id);
+        return $this->ajaxReturn($ret);
+        //print_r($ret);
     }
 
     /**
