@@ -312,6 +312,10 @@ class PackOrder extends Base{
     }
 
     /**
+     * @api     {GET}   /index.php?m=Api&c=
+     */
+
+    /**
      * Author: W.W <will.wxx@qq.com>
      * Describe:
      * @param $pack_order
