@@ -32,9 +32,9 @@ class PackLine extends WebBase{
             'deleted'=>0
         ];
         $line['score'] = intval($orderCommentLogic->where($where)->avg('pack_order_score'));
-        if(!$line['is_admin']){
-            $line['line_price'] += floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
-        }
+        //if(!$line['is_admin']){
+        //    $line['line_price'] += floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
+        //}
 
         $line['line_price_fmt'] = moneyFormat($line['line_price']);
         $driverInfo = $sellerLogic->getInfoById($line['seller_id']);

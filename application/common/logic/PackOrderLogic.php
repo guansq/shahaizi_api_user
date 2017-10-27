@@ -230,9 +230,9 @@ class PackOrderLogic extends BaseLogic{
         }
         $discountPrice = 0; // FIXME 获取优惠券金额
         $brokerage = 0;
-        if(!$line['is_admin']){
-            $brokerage = floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
-        }
+        // if(!$line['is_admin']){
+        //     $brokerage = floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 平台收取的佣金
+        // }
         $order_data = [
             'order_sn' => $this->get_order_sn(),
             'user_id' => $user['user_id'],
