@@ -195,19 +195,32 @@ class PackOrder extends Base{
         }
         $real_price = $pack_order['total_price'] - $discount_price;//真实价格
         $user_info = M('users')->where('user_id', $this->user_id)->find();
+        $extraParam = [
+            'air_id' => $pack_order['air_id'],
+            //'user_info' => $user_info,
+            'discount_price' => $discount_price,
+            'pay_way' => $pay_way,
+            'is_coupon' => $is_coupon,
+            'coupon_id' => $coupon_id,
+        ];
+
         if($pay_way == 0){  //todo 微信支付
-            return $this->returnJson(4000,'暂未开放');
+            $wxHelper = new PaymentHelper();
+            $extraString = urlencode(json_encode($extraParam));
+            $wxParams = new PaymentBizParam($pack_order['order_sn'],$real_price,$extraString);
+            $payString = $wxHelper->getWxPayParam($wxParams);
+            if(empty($payString)){
+                return $this->returnJson(4004);
+            }
+            $ret=['aliPayParams'=>$payString];
+            //$result = payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id);
+            $ret['realPrice'] = shzMoney($real_price,true);
+            return $this->returnJson(2000,'',$ret);
+            //return $this->returnJson(4000,'暂未开放');
         }elseif($pay_way == 1){ //todo 进行支付宝支付
 
             $alipayHelper = new PaymentHelper();
-            $extraParam = [
-                'air_id' => $pack_order['air_id'],
-                //'user_info' => $user_info,
-                'discount_price' => $discount_price,
-                'pay_way' => $pay_way,
-                'is_coupon' => $is_coupon,
-                'coupon_id' => $coupon_id,
-            ];
+
             $extraString = urlencode(json_encode($extraParam));
             //传递需要通过服务器
             $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,$extraString);

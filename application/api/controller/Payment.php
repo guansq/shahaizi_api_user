@@ -107,11 +107,12 @@ class Payment extends Base{
             $orderSn = $result['out_trade_no'];
             $tradeNo = $result['transaction_id'];
             $wx_total_fee = $result['total_fee'];
+            $extend = json_decode(urldecode($result['attach']), true);
             // 用户充值 充值订单号是RC开头
             if(substr($orderSn, 0, 2) == 'RC'){
                 // 充值逻辑
                 // $resp['body'] ='{"userId":63,"amount":1,"orderSn":"RC201723443234565432345432"}';
-                $extend = json_decode(urldecode($result['attach']), true);
+
                 if(empty($extend)){
                     trace("attach格式错误");
                     $test = ['return_code' => 'FAIL', 'return_msg' => 'attach格式错误'];
@@ -133,7 +134,13 @@ class Payment extends Base{
             }
 
             //todo 其他支付回到处理
-
+            $air_id = $extend['air_id'];
+            $pack_order = M('pack_order')
+                ->where(array('air_id' => $air_id, 'status' => PackOrderLogic::STATUS_UNPAY))
+                ->find();
+            $user_info = M('users')->where('user_id', $pack_order['user_id'])->find();
+            payPackOrder($pack_order, $user_info, $extend['discount_price'], $extend['pay_way'], $extend['is_coupon'], $extend['coupon_id']);
+            trace("支付订单后续处理 =========》");
         }
     }
 
