@@ -161,9 +161,9 @@ class PackOrder extends Base{
         if(empty($pack_order)){
             $this->ajaxReturn(['status' => -1, 'msg' => '该订单不可进行付款操作']);
         }
-        if($time - $pack_order['create_at'] > 86400){//超过一天
+        /*if($time - $pack_order['create_at'] > 86400){//超过一天
             $this->ajaxReturn(['status' => -1, 'msg' => '该订单已超时']);
-        }
+        }*/
         $coupon_id = I('coupon_id');
         $pay_way = I('pay_way');//获取支付方式
         $discount_price = 0;//优惠价格
@@ -201,16 +201,16 @@ class PackOrder extends Base{
 
             $alipayHelper = new PaymentHelper();
             $extraParam = [
-                'order_id' => $pack_order['air_id'],
+                'air_id' => $pack_order['air_id'],
                 //'user_info' => $user_info,
                 'discount_price' => $discount_price,
                 'pay_way' => $pay_way,
                 'is_coupon' => $is_coupon,
                 'coupon_id' => $coupon_id,
             ];
-            $extraString = json_encode($extraParam);
+            $extraString = urlencode(json_encode($extraParam));
             //传递需要通过服务器
-            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,'');
+            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,$extraString);
             $payString = $alipayHelper->getAliPayParam($aliPayParams);
             if(empty($payString)){
                 return $this->returnJson(4004);

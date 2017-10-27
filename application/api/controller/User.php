@@ -1695,6 +1695,8 @@ class User extends Base{
             'content' => 'require|max:1000',
         ];
         $this->validateParams($reqParams, $rule);
+        $reqParams['title'] = wordFilter($reqParams['title']);
+        $reqParams['content'] = wordFilter($reqParams['content']);
         $dynamicLogic = new DynamicLogic();
         return $this->returnJson($dynamicLogic->createDynamic($reqParams, $this->user));
 
@@ -2006,6 +2008,8 @@ class User extends Base{
             'city' => 'require',
         ];
         $this->validateParams($reqParams, $rule);
+        $reqParams['title'] = wordFilter($reqParams['title']);
+        $reqParams['content'] = wordFilter($reqParams['content']);
         $userLogic = new StrategyLogic();
         return $this->returnJson($userLogic->createStrategy($reqParams, $this->user));
     }
