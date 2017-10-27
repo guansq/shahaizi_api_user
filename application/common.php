@@ -111,7 +111,8 @@ function wordFilter($text){
     foreach($words as $val){
         $check_arr[$val['name']] = '*';
     }
-    $check_arr = array_unique($check_arr);
+    //$check_arr = array_unique($check_arr);
+    //print_r($check_arr);die;
     //print_r(strtr($text,$check_arr));die;
     return strtr($text,$check_arr);
 }
