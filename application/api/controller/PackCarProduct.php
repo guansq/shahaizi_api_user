@@ -105,6 +105,8 @@ class PackCarProduct extends Base{
      * @apiSuccess {number} isCollect           是否收藏.
      * @apiSuccess {number} isPraise            是否点赞.
      * @apiSuccess {String} flyName            机场名.
+     * @apiSuccess {String} costStatement      费用说明.
+     * @apiSuccess {String} costCompensation   补偿改退.
      */
     private function getDetail($id){
         $this->checkToken();
