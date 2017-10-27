@@ -198,20 +198,23 @@ class PackOrder extends Base{
             'air_id' => $pack_order['air_id'],
             //'user_info' => $user_info,
             'discount_price' => $discount_price,
-            'pay_way' => $pay_way,
             'is_coupon' => $is_coupon,
             'coupon_id' => $coupon_id,
         ];
 
         if($pay_way == 0){  //todo 微信支付
+            $paymentParams = [
+                'orderSn' => $pack_order['order_sn'],
+                'amount' => $real_price,
+                'extend' => urlencode(json_encode($extraParam))
+            ];
             $wxHelper = new PaymentHelper();
-            $extraString = urlencode(json_encode($extraParam));
-            $wxParams = new PaymentBizParam($pack_order['order_sn'],$real_price,$extraString);
+            $wxParams = new PaymentBizParam($paymentParams['orderSn'], $paymentParams['amount'], $paymentParams['extend']);
             $payString = $wxHelper->getWxPayParam($wxParams);
             if(empty($payString)){
                 return $this->returnJson(4004);
             }
-            $ret=['aliPayParams'=>$payString];
+            $ret=['wxPayParams'=>$payString];
             //$result = payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id);
             $ret['realPrice'] = shzMoney($real_price,true);
             return $this->returnJson(2000,'',$ret);
@@ -311,8 +314,15 @@ class PackOrder extends Base{
     }
 
     /**
-     * @api     {GET}   /index.php?m=Api&c=
+     * @api     {GET}   /index.php?m=Api&c=PackOrder&a=getOrderAround       得到我的订单相关数据  管少秋
+     * @apiName       getOrderAround
+     * @apiGroup      PackOrder
+     * @apiParam      {String}  token   token
+     * @apiParam      {Number}  id      订单ID
      */
+    public function getOrderAround(){
+
+    }
 
     /**
      * Author: W.W <will.wxx@qq.com>
@@ -320,5 +330,6 @@ class PackOrder extends Base{
      * @param $pack_order
      */
     public function getAliPayParamsByPackOrder($pack_order){
+
     }
 }

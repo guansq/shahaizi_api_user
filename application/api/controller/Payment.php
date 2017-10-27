@@ -85,7 +85,8 @@ class Payment extends Base{
             ->where(array('air_id' => $air_id, 'status' => PackOrderLogic::STATUS_UNPAY))
             ->find();
         $user_info = M('users')->where('user_id', $pack_order['user_id'])->find();
-        payPackOrder($pack_order, $user_info, $extend['discount_price'], $extend['pay_way'], $extend['is_coupon'], $extend['coupon_id']);
+        //支付方式 0微信支付 1支付宝支付 2余额支付
+        payPackOrder($pack_order, $user_info, $extend['discount_price'], 1, $extend['is_coupon'], $extend['coupon_id']);
         trace("支付订单后续处理 =========》");
         exit("fail");
     }
@@ -139,7 +140,8 @@ class Payment extends Base{
                 ->where(array('air_id' => $air_id, 'status' => PackOrderLogic::STATUS_UNPAY))
                 ->find();
             $user_info = M('users')->where('user_id', $pack_order['user_id'])->find();
-            payPackOrder($pack_order, $user_info, $extend['discount_price'], $extend['pay_way'], $extend['is_coupon'], $extend['coupon_id']);
+            //支付方式 0微信支付 1支付宝支付 2余额支付
+            payPackOrder($pack_order, $user_info, $extend['discount_price'], 0, $extend['is_coupon'], $extend['coupon_id']);
             trace("支付订单后续处理 =========》");
         }
     }
