@@ -49,7 +49,7 @@ class HotGuide extends Base{
      * @api {GET}   /index.php?m=Api&c=HotGuide&a=getGuideList   得到攻略列表done  管少秋
      * @apiName getGuideList
      * @apiParam    {String}    p   页数
-     * @apiParam    {String}    country_id   城市ID
+     * @apiParam    {String}    country_name   国家名称
      * @apiGroup HotGuide
      * @apiSuccessExample   Success-Response
      *      Http/1.1    200 OK
@@ -66,8 +66,8 @@ class HotGuide extends Base{
      * }
      */
     public function getGuideList(){
-        $country_id = I('country_id');
-        $return = $this->hotLogic->get_list($country_id);
+        $country_name = I('country_name');
+        $return = $this->hotLogic->get_list($country_name);
         $this->ajaxReturn($return);
     }
 

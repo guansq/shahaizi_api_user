@@ -45,10 +45,10 @@ class HotLogic extends BaseLogic{
     /*
      * 得到攻略列表
      */
-    public function get_list($country_id){
+    public function get_list($country_name){
         $where = [];
-        if($country_id){
-            $where['country_id'] = $country_id;
+        if($country_name){
+            $where['city'] = ['like',"%$country_name%"];
         }
         $count = M('article_hot_guide')->where($where)->count();
         $Page = new Page($count, 10);

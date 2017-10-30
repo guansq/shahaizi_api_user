@@ -104,5 +104,29 @@ class Config extends Base{
         $this->returnJson($sFeedbackLogic->addFeedback($params, $this->user));
     }
 
+    /**
+     * @api     {GET}       /api/Config/vipTelephone    Vip电话
+     * @apiName     vipTelephone
+     * @apiGroup    Config
+     * @apiSuccessExample {json}    Success-Response:
+     *           Http/1.1   200 OK
+    {
+    "status": 1,
+    "msg": "成功",
+    "result": {
+    "id": 2,
+    "telephone": "1201",
+    "content": "120救援电话",
+    "created_at": 1506395417,
+    "order_desc": 2,
+    "is_show": 1
+    }
+    }
+     */
+    public function vipTelephone(){
+        $result = $this->configLogic->getServiceTel();
+        $this->ajaxReturn($result);
+    }
+
 
 }

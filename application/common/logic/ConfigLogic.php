@@ -49,4 +49,16 @@ class ConfigLogic extends BaseLogic{
             return self::update($data, ['name' => $name]);
         }
     }
+
+
+    /**
+     * 获取客服电话
+     */
+    public function getServiceTel(){
+        $list = M('vip_telephone')->where('is_show',1)->select();
+        if(empty($list)){
+            return resultArray(-1,'数据为空',[]);
+        }
+        return resultArray(1,'成功',$list[0]);
+    }
 }

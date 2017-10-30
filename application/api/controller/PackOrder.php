@@ -145,7 +145,6 @@ class PackOrder extends Base{
      * @apiParam    {String}    token   token
      * @apiParam    {Number}    air_id  订单ID
      * @apiParam    {Number}    pay_way    支付方式 0微信支付 1支付宝支付 2余额支付
-     * @apiParam    {Float}    [real_price]   优惠的价格
      * @apiParam    {Number}    [coupon_id]   优惠券ID 无优惠券传空进来
      */
     public function payPackOrder(){
@@ -161,9 +160,9 @@ class PackOrder extends Base{
         if(empty($pack_order)){
             $this->ajaxReturn(['status' => -1, 'msg' => '该订单不可进行付款操作']);
         }
-        if($time - $pack_order['create_at'] > 86400){//超过一天
+        /*if($time - $pack_order['create_at'] > 86400){//超过一天
             $this->ajaxReturn(['status' => -1, 'msg' => '该订单已超时']);
-        }
+        }*/
         $coupon_id = I('coupon_id');
         $pay_way = I('pay_way');//获取支付方式
         $discount_price = 0;//优惠价格
@@ -195,22 +194,39 @@ class PackOrder extends Base{
         }
         $real_price = $pack_order['total_price'] - $discount_price;//真实价格
         $user_info = M('users')->where('user_id', $this->user_id)->find();
+        $extraParam = [
+            'air_id' => $pack_order['air_id'],
+            //'user_info' => $user_info,
+            'discount_price' => $discount_price,
+            'is_coupon' => $is_coupon,
+            'coupon_id' => $coupon_id,
+        ];
+
         if($pay_way == 0){  //todo 微信支付
-            return $this->returnJson(4000,'暂未开放');
+            $paymentParams = [
+                'orderSn' => $pack_order['order_sn'],
+                'amount' => $real_price,
+                'extend' => urlencode(json_encode($extraParam))
+            ];
+            $wxHelper = new PaymentHelper();
+            $orderSn = date('YmdHis').rand(10000, 99999);
+            $wxParams = new PaymentBizParam($orderSn, $paymentParams['amount'], $paymentParams['extend']);
+            $payString = $wxHelper->getWxPayParam($wxParams);
+            if(empty($payString)){
+                return $this->returnJson(4004);
+            }
+            $ret=['wxPayParams'=>$payString];
+            //$result = payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_coupon, $coupon_id);
+            $ret['realPrice'] = shzMoney($real_price,true);
+            return $this->returnJson(2000,'',$ret);
+            //return $this->returnJson(4000,'暂未开放');
         }elseif($pay_way == 1){ //todo 进行支付宝支付
 
             $alipayHelper = new PaymentHelper();
-            $extraParam = [
-                'order_id' => $pack_order['air_id'],
-                //'user_info' => $user_info,
-                'discount_price' => $discount_price,
-                'pay_way' => $pay_way,
-                'is_coupon' => $is_coupon,
-                'coupon_id' => $coupon_id,
-            ];
-            $extraString = json_encode($extraParam);
+
+            $extraString = urlencode(json_encode($extraParam));
             //传递需要通过服务器
-            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,'');
+            $aliPayParams = new PaymentBizParam($pack_order['order_sn'],$real_price,$extraString);
             $payString = $alipayHelper->getAliPayParam($aliPayParams);
             if(empty($payString)){
                 return $this->returnJson(4004);
@@ -299,10 +315,35 @@ class PackOrder extends Base{
     }
 
     /**
+     * @api     {GET}   /index.php?m=Api&c=PackOrder&a=getOrderAround       得到我的订单相关数据  管少秋
+     * @apiName       getOrderAround
+     * @apiGroup      PackOrder
+     * @apiParam      {String}  token   token
+     * @apiSuccessExample {json}    Success-Response:
+     *           Http/1.1   200 OK
+     {
+    "status": 1,
+    "msg": "成功",
+    "result": {
+    "ALL": 4,
+    "UN_PAY": 1,
+    "DOING": 2,
+    "UN_COMMENT": 0,
+    "FINISH": 1
+    }
+    }
+     */
+    public function getOrderAround(){
+        $result = $this->packLogic->get_order_around($this->user_id);
+        $this->ajaxReturn($result);
+    }
+
+    /**
      * Author: W.W <will.wxx@qq.com>
      * Describe:
      * @param $pack_order
      */
     public function getAliPayParamsByPackOrder($pack_order){
+
     }
 }

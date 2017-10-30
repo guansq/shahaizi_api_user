@@ -52,6 +52,14 @@ class HomeLogic extends BaseLogic
             }else{
                 $val['type_info'] = '';
             }
+            //1:用户2:司导3:房东4:店主
+            if($val['lable'] == 1){
+                $user_info = get_user_info($val['user_id'],0);
+                $val['name'] = $user_info['nickname'];
+            }else{
+                $seller_info = get_drv_info($val['user_id']);
+                $val['name'] = $seller_info['nickname'];
+            }
             $val['good_num'] = $praiseLogic->countLocalTalent($val['talent_id']);
         }
         foreach($guideList as &$val){
