@@ -980,7 +980,11 @@ body{
 }
 .dr_imgbox{
     padding-left: 60px;
+    padding-top: 5px;
     overflow: hidden;
+}
+.dr_imgbox img{
+    width: 30%;
 }
 
 
