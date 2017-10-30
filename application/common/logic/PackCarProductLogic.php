@@ -139,6 +139,10 @@ class PackCarProductLogic extends BaseLogic{
         $userColl = new  UserCollectLogic();
 
         $count = $userColl->where('user_id', $user_id)->where('model_type', UserCollectLogic::TYPE_PACKCAR)->count();
+        if(empty($count)){
+            return resultArray(4004);
+        }
+
         $page = new Page($count);
 
         $ids = $userColl->where('user_id', $user_id)

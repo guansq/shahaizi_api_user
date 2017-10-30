@@ -33,7 +33,7 @@ class OrderCommentLogic extends BaseLogic{
     const TYPE_SELLER = 3;
 
 
-    public function getListByWere($where){
+    public function getListByWere($where, $viewUserId = 0){
         $list = $this->where($where)->select();
         if(empty($list)){
             return [];
@@ -41,7 +41,7 @@ class OrderCommentLogic extends BaseLogic{
         foreach($list as $item){
             $item['imgs'] = explode('|', $item['img']);
             $item['commemt_time_fmt'] = date('Y.m.d', $item['commemt_time']);
-            $item['owner'] = $this->getOwner($item, $item['is_anonymous']);
+            $item['owner'] = $this->getOwner($item, $viewUserId, $item['is_anonymous']);
         }
         return $list;
     }
@@ -51,11 +51,11 @@ class OrderCommentLogic extends BaseLogic{
      * Describe:
      * @param $item
      */
-    public function getOwner($item, $isAnonymous = 0){
+    public function getOwner($item, $viewUserId = 0, $isAnonymous = 0){
         if($item['type'] == self::TYPE_USER){
-            return UsersLogic::getBaseInfoById($item['user_id'], 0, $isAnonymous);
+            return UsersLogic::getBaseInfoById($item['user_id'], $viewUserId, $isAnonymous)['result'];
         }elseif($item['type'] == self::TYPE_SELLER){
-            return SellerLogic::getBaseInfoById($item['user_id'], 0, $isAnonymous);
+            return SellerLogic::getBaseInfoById($item['user_id'], $viewUserId, $isAnonymous);
         }elseif($item['type'] == self::TYPE_SYSTEM){
             return [
                 'nickname' => '平台',
