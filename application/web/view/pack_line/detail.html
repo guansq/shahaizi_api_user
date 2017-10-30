@@ -79,7 +79,9 @@
         {$comment.content}
       </p>
       {volist name="comment.imgs" id="img"}
-      <img src="{$img}" alt="">
+      <div class="dr_imgbox">
+        <img src="{$img}" alt="">
+      </div>
       {/volist}
     </div>
     {/volist}
@@ -119,6 +121,10 @@
     {/volist}
 
 
+  </div>
+  <div class="cir_con box5">
+    <h1>温馨提示</h1>
+    <p>下单前可以先与客服联系哦</p>
   </div>
 </main>
 {/block}

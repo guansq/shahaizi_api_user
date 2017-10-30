@@ -978,7 +978,10 @@ body{
     font-size: 14px;
     color: #666;
 }
-
+.dr_imgbox{
+    padding-left: 60px;
+    overflow: hidden;
+}
 
 
 
