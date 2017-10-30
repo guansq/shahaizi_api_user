@@ -152,6 +152,31 @@ class PackOrderLogic extends BaseLogic{
     }
 
     /*
+     * 得到我的订单数据 {String=ALL,UN_PAY,DOING,UN_COMMENT,FINISH}
+     */
+    public function get_order_around($user_id){
+        $field = ['ALL','UN_PAY','DOING','UN_COMMENT','FINISH'];
+        $returnArr = [];
+        foreach($field as $val){
+            $returnArr[$val] = $this->get_my_order_count($val,$user_id);
+        }
+        return resultArray(1,'成功',$returnArr);
+    }
+
+    public function get_my_order_count($statusCode, $user_id){
+        $where = [
+            'status' => self::STATUS_WHERE_ARR[$statusCode],
+            'user_id' => $user_id
+        ];
+        if($statusCode == 'FINISH'){
+            $where['user_order_status'] = 1;
+        }
+        if($statusCode == 'UN_COMMENT'){
+            $where['user_order_status'] = 0;
+        }
+        return $count = M('pack_order')->where($where)->count();
+    }
+    /*
      * 得到我的订单详情
      */
     public function get_pack_order_info($air_id, $user_id){

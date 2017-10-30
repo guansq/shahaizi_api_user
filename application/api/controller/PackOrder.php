@@ -319,10 +319,23 @@ class PackOrder extends Base{
      * @apiName       getOrderAround
      * @apiGroup      PackOrder
      * @apiParam      {String}  token   token
-     * @apiParam      {Number}  id      订单ID
+     * @apiSuccessExample {json}    Success-Response:
+     *           Http/1.1   200 OK
+     {
+    "status": 1,
+    "msg": "成功",
+    "result": {
+    "ALL": 4,
+    "UN_PAY": 1,
+    "DOING": 2,
+    "UN_COMMENT": 0,
+    "FINISH": 1
+    }
+    }
      */
     public function getOrderAround(){
-
+        $result = $this->packLogic->get_order_around($this->user_id);
+        $this->ajaxReturn($result);
     }
 
     /**
