@@ -28,7 +28,9 @@ class Driver extends WebBase{
         $seller['cityFullName'] = $regionCtLogic->getNameByid($seller['country_id']).'·'.$regionLogic->getNameByid($seller['city']);
         $this->assign('seller',$seller);
         $CarInfo = new PackCarInfoLogic();
-        $seller_car =  $CarInfo->where("seller_id",$id)->where('is_state',PackCarInfoLogic::STATUS_PASS)->select();
+        $seller_car = $CarInfo->getMyCar($id);
+        //$seller_car =  $CarInfo->field()->where("seller_id",$id)->where('is_state',PackCarInfoLogic::STATUS_PASS)->select();
+        //print_r(collection($seller_car)->toArray());die;
         $this->assign('seller_car',$seller_car);
         $lineLogic = new PackLineLogic();
         $line = $lineLogic->selectShowListBySellerId($id);
