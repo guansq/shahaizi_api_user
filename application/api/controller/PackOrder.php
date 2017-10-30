@@ -209,7 +209,8 @@ class PackOrder extends Base{
                 'extend' => urlencode(json_encode($extraParam))
             ];
             $wxHelper = new PaymentHelper();
-            $wxParams = new PaymentBizParam($paymentParams['orderSn'], $paymentParams['amount'], $paymentParams['extend']);
+            $orderSn = date('YmdHis').rand(10000, 99999);
+            $wxParams = new PaymentBizParam($orderSn, $paymentParams['amount'], $paymentParams['extend']);
             $payString = $wxHelper->getWxPayParam($wxParams);
             if(empty($payString)){
                 return $this->returnJson(4004);
