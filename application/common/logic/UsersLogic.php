@@ -1102,6 +1102,7 @@ class UsersLogic extends BaseLogic{
         if($isAnonymous){
             $user['nickname'] = hidMiddleStr($user['nickname']);
         }
+
         $baseInfo = [
             'id' => $user['user_id'],
             'avatar' => empty($user['head_pic']) ? config('APP_DEFAULT_USER_AVATAR') : $user['head_pic'],
@@ -1155,6 +1156,7 @@ class UsersLogic extends BaseLogic{
             'good_num' => 0,
             'collection_num' => 0,
         ] : $user;
+
         return self::getBaseInfo($user, $viewerId, $isAnonymous);
 
     }
