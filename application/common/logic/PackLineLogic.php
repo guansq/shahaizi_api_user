@@ -98,7 +98,7 @@ class PackLineLogic extends BaseLogic{
             $result = getDrvIno($val['seller_id']);
             $val['country'] = getCountryName($val['country_id']);
             $val['city'] = getCityName($val['city']);
-            $val['star'] = $result['star'];
+            $val['star'] = floor($result['star']);
             $val['line'] = $result['line'];
         }
         //$list = $this->getPackLineByWhereLimit($where, $page->firstRow, $page->listRows);
