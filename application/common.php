@@ -163,6 +163,7 @@ function getDrvIno($seller_id){
     $where = [
         'seller_id' => $seller_id,
         'is_del' => 1,
+        'is_state' => 1,
     ];
     $star = Db::name('pack_comment')->where('seller_id', $seller_id)->avg('star');
     $line = Db::name('pack_line')
