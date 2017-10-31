@@ -19,7 +19,7 @@
 <main class="drive_main">
 
   <div class="drive_img">
-    <img src={$seller.cover_img} alt="">
+    <img src={$seller.cover_img|default='/application/web/view/static/image/bg_sidao.png'} alt="">
     <div class="dr_info">
       <p class="dr_name">{$seller.nickname}</p>
       <p class="dr_id">工号: <span>{$seller.drv_code}</span></p>
@@ -37,11 +37,11 @@
         <span class="ski_span2">{$seller.mandarin ? $seller.mandarin  : "" }</span>
       </li>
       <li>
-        <span class="ski_span1">精通外语</span>
+        <span class="ski_span1">语言</span>
         <span class="ski_span2">{$seller.language ? $seller.language  : "" }</span>
       </li>
       <li>
-        <span class="ski_span1">家乡</span>
+        <span class="ski_span1">地区</span>
         <span class="ski_span2">{$seller.cityFullName ? $seller.cityFullName  : "" }</span>
       </li>
     </ul>
@@ -97,7 +97,7 @@
         <div class="swiper-wrapper">
           {volist name="line_array" id="line" key="k" }
           <div class="swiper-slide">
-            <a class="line_a" href="/index.php/web/packLine/detail?id={$line.line_id}">
+            <a class="line_a" href="Intent;/linedetails/{$line.line_id}">
               <img src="{$line.cover_img|default=''}" alt="">
             </a>
               <p class="line_title">
@@ -121,10 +121,13 @@
             <div class="car_info">
               <h2>{$car.plate_number}</h2>
               <p>
-                舒适 {$car.seat_num}座
+                {$car.seat_num}座
               </p>
               <p class="line_title">
-                车牌 {$car.brand_id}
+                品牌： {$car.brand_name}
+              </p>
+              <p class="line_title">
+                车型： {$car.type_name}
               </p>
             </div>
           </div>
