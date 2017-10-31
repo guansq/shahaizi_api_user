@@ -348,7 +348,7 @@ class PackOrder extends Base{
     }
 
     /**
-     * @api     {POST}  /index.php?m=Api&c=PackOrder&delPackOrder       删除订单        管少秋
+     * @api     {POST}  /index.php?m=Api&c=PackOrder&a=delPackOrder       删除订单        管少秋
      * @apiName     delPackOrder
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token
@@ -356,13 +356,18 @@ class PackOrder extends Base{
      */
     public function delPackOrder(){
         $air_id = I('air_id');
+        $where = [
+            'air_id' => $air_id,
+            'status' => ['in',[PackOrderLogic::STATUS_UNPAY,PackOrderLogic::STATUS_CANCEL]],//未支付的  已取消的
+        ];
         $pack_order = M('pack_order')
-            ->where(array('air_id' => $air_id, 'status' => PackOrderLogic::STATUS_UNPAY))
+            ->where($where)
             ->find();//订单详情
-        $time = time();
-        //print_r($pack_order);die;
         if(empty($pack_order)){
-            $this->ajaxReturn(['status' => -1, 'msg' => '该订单状态异常，不是未付款订单']);
+            $this->ajaxReturn(['status' => -1, 'msg' => '该订单状态异常']);
         }
+        $packLgc = new packOrderLogic();
+        $result = $packLgc->delPackOrder($air_id);
+        $this->ajaxReturn($result);
     }
 }

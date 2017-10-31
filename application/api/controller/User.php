@@ -543,7 +543,7 @@ class User extends Base{
         $session_id = I('unique_id', session_id());// 唯一id  类似于 pc 端的session id
         $scene = I('scene', 1);
         $push_id = I('post.push_id', '');
-
+        $apply_code = I('post.apply_code',0);
         //是否开启注册验证码机制 check_mobile($username)
         $msgService = new MsgService();
         if($type == 'phone'){
@@ -560,7 +560,7 @@ class User extends Base{
             }
         }
 
-        $data = $this->userLogic->reg($username, $password, $password, $push_id, $countroy_code);
+        $data = $this->userLogic->reg($username, $password, $password, $push_id, $countroy_code,$apply_code);
         if($data['status'] == 1){
             $cartLogic = new CartLogic();
             $cartLogic->setUserId($data['result']['user_id']);

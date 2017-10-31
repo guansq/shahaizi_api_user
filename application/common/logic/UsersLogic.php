@@ -217,7 +217,7 @@ class UsersLogic extends BaseLogic{
      * @param $password2 确认密码
      * @return array
      */
-    public function reg($username, $password, $password2, $push_id = 0, $countroy_code = 0){
+    public function reg($username, $password, $password2, $push_id = 0, $countroy_code = 0,$up_apply_code=""){
         $is_validated = 0;
         if(check_email($username)){
             $is_validated = 1;
