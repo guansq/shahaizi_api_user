@@ -69,6 +69,12 @@
       <p class="dr_text">
         {$comment.content}
       </p>
+
+      <div class="dr_imgbox">
+        {volist name="comment.imgs" id="img"}
+        <img src="{$img}" alt="">
+        {/volist}
+      </div>
     </div>
     {/volist}
 
