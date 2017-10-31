@@ -167,6 +167,7 @@ class PackOrderLogic extends BaseLogic{
     public function get_my_order_count($statusCode, $user_id){
         $where = [
             'status' => self::STATUS_WHERE_ARR[$statusCode],
+            'is_del' => 0,
             'user_id' => $user_id
         ];
         if($statusCode == 'FINISH'){

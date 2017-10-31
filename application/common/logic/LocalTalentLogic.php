@@ -46,8 +46,18 @@ class LocalTalentLogic extends BaseLogic{
         $dbRet = self::where($where)->order('sort,create_at DESC')->limit(3)->field($field)->select();
         if($dbRet){
             $user_praise = new UserPraiseLogic();
+            //1:用户2:司导3:房东4:店主
             foreach($dbRet as &$v){
                 $v['praiseNum'] = $user_praise->countLocalTalent($v['id']);
+                $v['city'] = getCountryName($v['countryId']).'·'.getCityName($v['cityId']);
+                //1:用户2:司导3:房东4:店主
+                if($v['lable'] == 1){
+                    $user_info = get_user_info($v['user_id'],0);
+                    $val['name'] = $user_info['nickname'];
+                }else{
+                    $seller_info = get_drv_info($v['user_id']);
+                    $val['name'] = $seller_info['nickname'];
+                }
             }
         }
         return $dbRet;
@@ -87,6 +97,7 @@ class LocalTalentLogic extends BaseLogic{
                 $val['type_info'] = substr($str, 0, -1);
             }
             $val['good_num'] = $user_praise->countLocalTalent($val['talent_id']);
+
         }
         $result = ['totalPages' => $Page->totalPages, 'list' => $local_list];
         $return = [
