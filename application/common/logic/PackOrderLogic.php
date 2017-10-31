@@ -67,7 +67,7 @@ class PackOrderLogic extends BaseLogic{
     /**
      * 不在用户端显示的状态
      */
-    const UN_SHOW_STATUS_ARR = [self::STATUS_UNCONFIRM, self::STATUS_CANCEL];
+    const UN_SHOW_STATUS_ARR = [self::STATUS_UNCONFIRM];//, self::STATUS_CANCEL
 
     // ALL,UN_PAY,DOING,UN_COMMENT,FINISH
     const STATUS_WHERE_ARR = [
@@ -84,6 +84,7 @@ class PackOrderLogic extends BaseLogic{
     public function get_pack_order($statusCode, $user_id){
         $where = [
             'status' => self::STATUS_WHERE_ARR[$statusCode],
+            'is_del' => 0,
             'user_id' => $user_id
         ];
 
@@ -323,5 +324,13 @@ class PackOrderLogic extends BaseLogic{
             return resultArray(2000);
         };
         return resultArray(5020);
+    }
+
+    public function delPackOrder($air_id){
+        $result = M('pack_order')->where('air_id',$air_id)->update(['is_del'=>1]);
+        if($result !== false){
+            return ['status' => -1, 'msg' => '失败'];
+        }
+        return ['status' => 1, 'msg' => '成功'];
     }
 }

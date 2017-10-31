@@ -160,10 +160,15 @@ function getDrvIno($seller_id){
     if(empty($seller_id)){
         return 0;
     }
+    $where = [
+        'seller_id' => $seller_id,
+        'is_del' => 0,
+        'is_state' => 1,
+    ];
     $star = Db::name('pack_comment')->where('seller_id', $seller_id)->avg('star');
     $line = Db::name('pack_line')
         ->field('line_title')
-        ->where('seller_id', $seller_id)
+        ->where($where)
         ->order('create_at desc')
         ->limit(1)
         ->find();
