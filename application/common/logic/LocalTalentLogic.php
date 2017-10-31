@@ -32,6 +32,7 @@ class LocalTalentLogic extends BaseLogic{
         }
         $field = [
             'talent_id' => 'id',
+            'user_id' => 'user_id',
             'title' => 'title',
             'cover_img' => 'img',
             'summary' => 'summary',
@@ -53,10 +54,10 @@ class LocalTalentLogic extends BaseLogic{
                 //1:用户2:司导3:房东4:店主
                 if($v['lable'] == 1){
                     $user_info = get_user_info($v['user_id'],0);
-                    $val['name'] = $user_info['nickname'];
+                    $v['name'] = $user_info['nickname'];
                 }else{
                     $seller_info = get_drv_info($v['user_id']);
-                    $val['name'] = $seller_info['nickname'];
+                    $v['name'] = $seller_info['nickname'];
                 }
             }
         }
@@ -95,6 +96,15 @@ class LocalTalentLogic extends BaseLogic{
             }
             if(!empty($str)){
                 $val['type_info'] = substr($str, 0, -1);
+            }
+            $val['city'] = getCountryName($val['country_id']).'·'.getCityName($val['city_id']);
+            //1:用户2:司导3:房东4:店主
+            if($val['lable'] == 1){
+                $user_info = get_user_info($val['user_id'],0);
+                $val['name'] = $user_info['nickname'];
+            }else{
+                $seller_info = get_drv_info($val['user_id']);
+                $val['name'] = $seller_info['nickname'];
             }
             $val['good_num'] = $user_praise->countLocalTalent($val['talent_id']);
 
