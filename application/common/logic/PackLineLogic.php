@@ -69,7 +69,7 @@ class PackLineLogic extends BaseLogic{
             ->select();
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
-            $val['country'] = getCityName($val['country_id']);
+            $val['country'] = getCountryName($val['country_id']);
             $val['city'] = getCityName($val['city']);
             $val['star'] = floor($result['star']);
             $val['line'] = $result['line'];
