@@ -262,7 +262,7 @@ class Base extends Controller{
             ],
             'userinfo' => ['attention'],
             'driverpack' => ['rentCarByDay', 'receiveAirport', 'sendAirport', 'oncePickup', 'privateMake'],
-            'packorder' => ['getPackOrder', 'payPackOrder', 'getPackOrderDetail', 'payPackOrderByBalance', 'createPackOrder','confirmFinish'],
+            'packorder' => ['getPackOrder', 'payPackOrder', 'getPackOrderDetail', 'payPackOrderByBalance', 'createPackOrder','confirmFinish','delPackOrder'],
             'localtalent' => ['praise'],
         ];
 

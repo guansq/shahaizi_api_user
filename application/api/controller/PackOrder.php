@@ -346,4 +346,23 @@ class PackOrder extends Base{
     public function getAliPayParamsByPackOrder($pack_order){
 
     }
+
+    /**
+     * @api     {POST}  /index.php?m=Api&c=PackOrder&delPackOrder       删除订单        管少秋
+     * @apiName     delPackOrder
+     * @apiGroup    PackOrder
+     * @apiParam    {String}    token   token
+     * @apiParam    {String}    air_id      包车订单ID
+     */
+    public function delPackOrder(){
+        $air_id = I('air_id');
+        $pack_order = M('pack_order')
+            ->where(array('air_id' => $air_id, 'status' => PackOrderLogic::STATUS_UNPAY))
+            ->find();//订单详情
+        $time = time();
+        //print_r($pack_order);die;
+        if(empty($pack_order)){
+            $this->ajaxReturn(['status' => -1, 'msg' => '该订单状态异常，不是未付款订单']);
+        }
+    }
 }
