@@ -144,27 +144,20 @@
 <script src="/application/web/view/static/lib/swiper/js/swiper.min.js"></script>
 <script>
 
-  $(function(){
     var mySwiper = new Swiper('.auto_swiper', {
         pagination:'.swiper-pagination',
         slidesPerView: 'auto',
         loop:true,
         grabCursor:true,
         paginationClickable:true,
-//        autoplay:4000,//可选选项，自动滑动
         paginationType:'fraction',
         spaceBetween:30,
         centeredSlides:true,
         autoplayDisableOnInteraction:false
     })
-    var mySwipers = new Swiper('.noauto_swiper', {
-        pagination: '.swiper-pagination',
-        loop:true,
-        slidesPerView: 'auto',
-        paginationClickable: true,
-        spaceBetween: 30
-    })
+    var mySwipers = new Swiper('.noauto_swiper', {});
 
+  $(function(){
     // 遍历 显示两个 其余隐藏
     function eachAppraiseList(ele, eleT, num){
       var appraConLength = ele.find(eleT).length;
