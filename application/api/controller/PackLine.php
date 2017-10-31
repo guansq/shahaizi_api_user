@@ -202,6 +202,8 @@ class PackLine extends Base{
      * @apiParam    {String}  [token]    token.
      * @apiSuccess  {Number}  id        id.
      * @apiSuccess  {String}  coverImg      封面图.
+     * @apiSuccess  {String}  title         title.
+     * @apiSuccess  {String}  linePrice     价格.
      * @apiSuccess  {Number}  isCollect     是否收藏.
      * @apiSuccess  {Number}  isPraise      是否点赞.
      * @apiSuccess  {Number}  isAdmin       是否是平台路线.
@@ -221,6 +223,7 @@ class PackLine extends Base{
             'id'=>$pkgLine['line_id'],
             'title'=>$pkgLine['line_title'],
             'coverImg'=>$pkgLine['cover_img'],
+            'linePrice'=>moneyFormat($pkgLine['line_price']),
             'isAdmin'=>$pkgLine['is_admin'],
             'isCollect'=>$pkgLine['is_collect'],
             'isPraise'=>$pkgLine['is_praise'],
