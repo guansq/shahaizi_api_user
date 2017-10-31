@@ -330,8 +330,8 @@ class PackOrderLogic extends BaseLogic{
     public function delPackOrder($air_id){
         $result = M('pack_order')->where('air_id',$air_id)->update(['is_del'=>1]);
         if($result !== false){
-            return ['status' => -1, 'msg' => '失败'];
+            return ['status' => 1, 'msg' => '成功'];
         }
-        return ['status' => 1, 'msg' => '成功'];
+        return ['status' => -1, 'msg' => '失败'];
     }
 }
