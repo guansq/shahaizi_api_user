@@ -165,7 +165,7 @@ function getDrvIno($seller_id){
         'is_del' => 0,
         'is_state' => 1,
     ];
-    $star = Db::name('pack_comment')->where('seller_id', $seller_id)->avg('star');
+    $star = Db::name('order_comment')->where('seller_id', $seller_id)->avg('pack_order_score');
     $line = Db::name('pack_line')
         ->field('line_title')
         ->where($where)
@@ -291,6 +291,14 @@ function getCityName($id){
     return empty($name)?'':$name;
 }
 
+/*
+ * 得到国家
+ */
+
+function getCountryName($id){
+    $name = M('region_country')->where('id', $id)->value('name');
+    return empty($name)?'':$name;
+}
 /*
  * 进行支付成功后的后续操作 //订单信息,用户信息,优惠价格,支付方式,是否可以用优惠券,优惠券ID
  */

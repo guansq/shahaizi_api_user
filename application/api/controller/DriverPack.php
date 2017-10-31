@@ -48,7 +48,7 @@ class DriverPack extends Base{
         $city = I('city');
 
         if(!empty($city)){
-            $where['city'] = ['like', "%{$city}%"];
+            $where['gps_name'] = ['like', "%{$city}%"];
         }
         $packLogic = new PackLineLogic();
         $result = $packLogic->get_all_drv($city);

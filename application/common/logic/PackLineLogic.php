@@ -89,14 +89,14 @@ class PackLineLogic extends BaseLogic{
         $count = M('seller')->where($where)->count();
         $page = new Page($count);
         $drv = M('seller')
-            ->field('seller_id,head_pic,nickname,drv_code,province,city,plat_start')
+            ->field('seller_id,head_pic,nickname,drv_code,province,country_id,city,plat_start')
             ->where($where)
             ->limit($page->firstRow, $page->listRows)
             ->select();
 
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
-            $val['province'] = getCityName($val['province']);
+            $val['country'] = getCountryName($val['country_id']);
             $val['city'] = getCityName($val['city']);
             $val['star'] = $result['star'];
             $val['line'] = $result['line'];
