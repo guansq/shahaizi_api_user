@@ -206,7 +206,7 @@ function sendSMSbyApi($phone, $content){
 }
 
 /*
- * 推送信息
+ * 推送信息 推送的对象，用户为0司导为1
  */
 function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'private'){
     $sendData = [
@@ -216,7 +216,7 @@ function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'priva
         "req_action" => 'push',
         "alert" => $title,
         "regIds" => $token,
-        //"platform" => "all",
+        "platform" => "all",
         "androidNotification" => [
             "alert" => $title,
             "title" => $content,
@@ -231,7 +231,9 @@ function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'priva
     $arrOrder = $desClass->naturalOrdering([$sendData['rt_appkey'], $sendData['req_time'], $sendData['req_action']]);
     $skArr = explode('_', config('bus_app_access_key'));//像司机推送
     $sendData['sign'] = $desClass->strEnc($arrOrder, $skArr[0], $skArr[1], $skArr[2]);//签名
+    //print_r($sendData);die;
     $result = HttpService::post('http://mps.ruitukeji.com/'.'push', http_build_query($sendData));
+    print_r($result);die;
     $data = [
         'title' => $title,
         'message' => $content,
@@ -240,8 +242,7 @@ function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'priva
         'type' => $obj_type,
         'receive_id' => $receive_id,
     ];
-    M('message')->save($data);//保存推送消息到数据库
-    //print_r($result);
+    M('system_message')->save($data);//保存推送消息到数据库
 }
 
 /*

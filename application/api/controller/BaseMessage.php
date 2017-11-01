@@ -127,7 +127,7 @@ class BaseMessage extends Base{
                     $content = '【傻孩子APP】您正在进行[重置密码]操作，验证码为：'.$code;
                     break;
                 case 'bind' :
-                    $content = '【傻孩子APP】您正在进行[绑定手机]操作，验证码为：'.$code;
+                    $content = '【傻孩子APP】您正在进行[绑定]操作，验证码为：'.$code;
                     break;
                 case 'login' :
                     $content = '【傻孩子APP】您正在进行[登录]操作，验证码为：'.$code;
