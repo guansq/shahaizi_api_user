@@ -112,6 +112,7 @@ class PackOrderLogic extends BaseLogic{
             'ord.total_price',
             'ord.seller_order_status',
             'ord.user_order_status',
+            'ord.line_id',
             'ord.real_price'
         ];
         $count = M('pack_order')->where($where)->count();
@@ -205,6 +206,16 @@ class PackOrderLogic extends BaseLogic{
         $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
         $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
         $info['user_money_fmt'] = moneyFormat($seller['user_money']);
+        if($info['type'] == 6){
+            $base_day = M('pack_base_by_day')->where(['base_id'=>$air_id])->find();
+            $info['pack_start_time'] = [];
+            if(!empty($base_day)){
+                $info['pack_start_time'] = explode('|',$base_day['pack_time']);
+                foreach($info['pack_start_time'] as &$val){
+                    $val = shzDate($val);
+                }
+            }
+        }
         $drv_info = M('seller')->where(['seller_id' => $info['seller_id']])->find();
         $info['drv_phone'] = '';
         if($drv_info){
@@ -342,7 +353,7 @@ class PackOrderLogic extends BaseLogic{
                 $employee = getPlatformCharge(1);
                 $real_price = floatval($pack_order["real_price"]);
                 $user_money = $real_price + floatval($pack_order["add_recharge"]) - ($real_price * $employee/100);
-                M("seller") -> where("seller_id = {$pack_order["seller_id"]}") -> setInc('user_money',$user_money);//["user_money" => $user_money]
+                M("seller") -> where("seller_id = {$pack_order['seller_id']}") -> setInc('user_money',$user_money);//["user_money" => $user_money]
             }
         }
     }

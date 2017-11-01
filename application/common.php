@@ -206,9 +206,9 @@ function sendSMSbyApi($phone, $content){
 }
 
 /*
- * 推送信息 推送给货主为$rt_key='wztx_shipper' 推送给司机为 $rt_key='wztx_driver'
+ * 推送信息
  */
-function pushInfo($token, $title, $content, $type = 'private'){
+function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'private'){
     $sendData = [
         "platform" => "all",
         "rt_appkey" => '2017ShaHaiZiSeller_kiXhfpZs7XdfjwE1_QPhJn8lSkWVtt1RR',
@@ -232,6 +232,15 @@ function pushInfo($token, $title, $content, $type = 'private'){
     $skArr = explode('_', config('bus_app_access_key'));//像司机推送
     $sendData['sign'] = $desClass->strEnc($arrOrder, $skArr[0], $skArr[1], $skArr[2]);//签名
     $result = HttpService::post('http://mps.ruitukeji.com/'.'push', http_build_query($sendData));
+    $data = [
+        'title' => $title,
+        'message' => $content,
+        'create_at' => time(),
+        'content' => $content,
+        'type' => $obj_type,
+        'receive_id' => $receive_id,
+    ];
+    M('message')->save($data);//保存推送消息到数据库
     //print_r($result);
 }
 

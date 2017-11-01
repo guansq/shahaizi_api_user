@@ -130,6 +130,7 @@ class PackOrder extends Base{
      * "is_use_car": 1,
      * "remark": null,
      * "drv_phone": null
+     * "pack_start_time" : 包车时间段
      * }
      */
     public function getPackOrderDetail(){
