@@ -299,6 +299,14 @@ function getCountryName($id){
     $name = M('region_country')->where('id', $id)->value('name');
     return empty($name)?'':$name;
 }
+
+function getPlatformCharge($return_value = 0)
+{
+    $config = M("config") -> where("inc_type = 'car_setting_money' AND name = 'name_line'") -> find();
+    if($return_value)
+        return $config["value"];
+    return  $config["value"]."%";
+}
 /*
  * 进行支付成功后的后续操作 //订单信息,用户信息,优惠价格,支付方式,是否可以用优惠券,优惠券ID
  */

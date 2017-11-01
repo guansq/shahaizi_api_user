@@ -321,11 +321,33 @@ class PackOrderLogic extends BaseLogic{
      */
     public function confirmFinish(Model $order, $user){
         $order->status = PackOrderLogic::STATUS_UNCOMMENT;
+        $order->user_confirm = 1;//更改用户确认为1
+        $this->addUserRecharge($order->air_id);//如果商家确认
         if($order->save()){
             return resultArray(2000);
         };
         return resultArray(5020);
     }
+
+    /**
+     * 根据订单号增加用户余额
+     */
+    public function addUserRecharge ($air_id)
+    {
+        $pack_order = M("pack_order") -> where("air_id = $air_id") -> find();
+        if($pack_order["seller_confirm"])
+        {
+            if($pack_order["seller_id"])
+            {
+                $employee = getPlatformCharge(1);
+                $real_price = floatval($pack_order["real_price"]);
+                $user_money = $real_price + floatval($pack_order["add_recharge"]) - ($real_price * $employee/100);
+                M("seller") -> where("seller_id = {$pack_order["seller_id"]}") -> setInc('user_money',$user_money);//["user_money" => $user_money]
+            }
+        }
+    }
+
+
 
     public function delPackOrder($air_id){
         $result = M('pack_order')->where('air_id',$air_id)->update(['is_del'=>1]);
