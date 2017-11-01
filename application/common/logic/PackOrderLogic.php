@@ -112,6 +112,7 @@ class PackOrderLogic extends BaseLogic{
             'ord.total_price',
             'ord.seller_order_status',
             'ord.user_order_status',
+            'ord.line_id',
             'ord.real_price'
         ];
         $count = M('pack_order')->where($where)->count();
@@ -167,6 +168,7 @@ class PackOrderLogic extends BaseLogic{
     public function get_my_order_count($statusCode, $user_id){
         $where = [
             'status' => self::STATUS_WHERE_ARR[$statusCode],
+            'is_del' => 0,
             'user_id' => $user_id
         ];
         if($statusCode == 'FINISH'){
@@ -204,6 +206,16 @@ class PackOrderLogic extends BaseLogic{
         $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
         $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
         $info['user_money_fmt'] = moneyFormat($seller['user_money']);
+        if($info['type'] == 6){
+            $base_day = M('pack_base_by_day')->where(['base_id'=>$air_id])->find();
+            $info['pack_start_time'] = [];
+            if(!empty($base_day)){
+                $info['pack_start_time'] = explode('|',$base_day['pack_time']);
+                foreach($info['pack_start_time'] as &$val){
+                    $val = shzDate($val);
+                }
+            }
+        }
         $drv_info = M('seller')->where(['seller_id' => $info['seller_id']])->find();
         $info['drv_phone'] = '';
         if($drv_info){
@@ -320,17 +332,39 @@ class PackOrderLogic extends BaseLogic{
      */
     public function confirmFinish(Model $order, $user){
         $order->status = PackOrderLogic::STATUS_UNCOMMENT;
+        $order->user_confirm = 1;//更改用户确认为1
+        $this->addUserRecharge($order->air_id);//如果商家确认
         if($order->save()){
             return resultArray(2000);
         };
         return resultArray(5020);
     }
 
+    /**
+     * 根据订单号增加用户余额
+     */
+    public function addUserRecharge ($air_id)
+    {
+        $pack_order = M("pack_order") -> where("air_id = $air_id") -> find();
+        if($pack_order["seller_confirm"])
+        {
+            if($pack_order["seller_id"])
+            {
+                $employee = getPlatformCharge(1);
+                $real_price = floatval($pack_order["real_price"]);
+                $user_money = $real_price + floatval($pack_order["add_recharge"]) - ($real_price * $employee/100);
+                M("seller") -> where("seller_id = {$pack_order['seller_id']}") -> setInc('user_money',$user_money);//["user_money" => $user_money]
+            }
+        }
+    }
+
+
+
     public function delPackOrder($air_id){
         $result = M('pack_order')->where('air_id',$air_id)->update(['is_del'=>1]);
         if($result !== false){
-            return ['status' => -1, 'msg' => '失败'];
+            return ['status' => 1, 'msg' => '成功'];
         }
-        return ['status' => 1, 'msg' => '成功'];
+        return ['status' => -1, 'msg' => '失败'];
     }
 }

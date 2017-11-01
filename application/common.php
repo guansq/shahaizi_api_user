@@ -165,7 +165,7 @@ function getDrvIno($seller_id){
         'is_del' => 0,
         'is_state' => 1,
     ];
-    $star = Db::name('pack_comment')->where('seller_id', $seller_id)->avg('star');
+    $star = Db::name('order_comment')->where('seller_id', $seller_id)->avg('pack_order_score');
     $line = Db::name('pack_line')
         ->field('line_title')
         ->where($where)
@@ -206,9 +206,9 @@ function sendSMSbyApi($phone, $content){
 }
 
 /*
- * 推送信息 推送给货主为$rt_key='wztx_shipper' 推送给司机为 $rt_key='wztx_driver'
+ * 推送信息
  */
-function pushInfo($token, $title, $content, $type = 'private'){
+function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'private'){
     $sendData = [
         "platform" => "all",
         "rt_appkey" => '2017ShaHaiZiSeller_kiXhfpZs7XdfjwE1_QPhJn8lSkWVtt1RR',
@@ -232,6 +232,15 @@ function pushInfo($token, $title, $content, $type = 'private'){
     $skArr = explode('_', config('bus_app_access_key'));//像司机推送
     $sendData['sign'] = $desClass->strEnc($arrOrder, $skArr[0], $skArr[1], $skArr[2]);//签名
     $result = HttpService::post('http://mps.ruitukeji.com/'.'push', http_build_query($sendData));
+    $data = [
+        'title' => $title,
+        'message' => $content,
+        'create_at' => time(),
+        'content' => $content,
+        'type' => $obj_type,
+        'receive_id' => $receive_id,
+    ];
+    M('message')->save($data);//保存推送消息到数据库
     //print_r($result);
 }
 
@@ -291,6 +300,22 @@ function getCityName($id){
     return empty($name)?'':$name;
 }
 
+/*
+ * 得到国家
+ */
+
+function getCountryName($id){
+    $name = M('region_country')->where('id', $id)->value('name');
+    return empty($name)?'':$name;
+}
+
+function getPlatformCharge($return_value = 0)
+{
+    $config = M("config") -> where("inc_type = 'car_setting_money' AND name = 'name_line'") -> find();
+    if($return_value)
+        return $config["value"];
+    return  $config["value"]."%";
+}
 /*
  * 进行支付成功后的后续操作 //订单信息,用户信息,优惠价格,支付方式,是否可以用优惠券,优惠券ID
  */

@@ -66,4 +66,17 @@ class PackCommentLogic extends BaseLogic{
         return $start;
     }
 
+    /*
+     * 保存到司导评价表&&线路评价表
+     */
+    public function saveDrvAndLineCommentInfo($drv_data,$line_data){
+        $drvResult = M('drv_comment')->save($drv_data);
+        $lineResult = M('line_comment')->save($line_data);
+        if($drvResult && $lineResult){
+            return resultArray(1,'成功',[]);
+        }
+        return resultArray(-1,'失败',[]);
+    }
+
+
 }

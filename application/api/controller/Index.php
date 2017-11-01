@@ -64,11 +64,11 @@ class Index extends Base{
         // $category_arr = M('goods_category')->where('id in(4,5,7)')->field('id,name')->limit(3)->cache(true,TPSHOP_CACHE_TIME)->select();
         $homeLogic = new HomeLogic();
         $result = $homeLogic->getHomeInfo($city);
-        $talents = LocalTalentLogic::getListAtHome($city);
+        //$talents = LocalTalentLogic::getListAtHome($city);, 'talent' => $talents
         $this->ajaxReturn(array(
             'status' => 1,
             'msg' => '获取成功',
-            'result' => array('action' => $result, 'ad' => $data, 'talent' => $talents)
+            'result' => array('action' => $result, 'ad' => $data)
         ));
     }
 

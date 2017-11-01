@@ -538,7 +538,9 @@ class UsersLogic extends BaseLogic{
 
         $page = new Page($count, 10);
         $list = $activityLogic->getUserCouponList($page->firstRow, $page->listRows, $user_id, $type, $orderBy, $belone, $store_id, $order_money, $model_type);
-
+        if(empty($list)){
+            returnJson(-1,'暂无数据',[]);
+        }
         $return['status'] = 1;
         $return['msg'] = '获取成功';
         $return['result'] = $list;

@@ -62,6 +62,31 @@ class Config extends Base{
 
     }
 
+
+    /**
+     * @api {GET}  /index.php?m=Api&c=Config&a=articleInfo&id=25     改退|费用补偿done
+     * @apiName     articleInfo
+     * @apiGroup    Config
+     * @apiParam {string} id  文章列表的article_id值   id 24费用补偿|25改退补偿
+     */
+    /**
+     * 司导学院文章详情
+     */
+    public function articleInfo ()
+    {
+        $id = I("id");
+        if(!$id)
+            $this->ajaxReturn(resultArray(-1,"文章id不能为空！",[]));
+
+        $article = M("article")->field('title,content') -> where("article_id = $id") -> find();
+        if(empty($article)){
+            $this->ajaxReturn(resultArray(-1,"数据为空！",[]));
+        }
+        //        print_r($article);die;
+        $article["content"] = htmlspecialchars_decode($article["content"]);
+        $this->ajaxReturn(resultArray(1,"成功！",$article));
+    }
+
     /**
      * @api         {GET}   /api/config/feedBackType    获取意见反馈类型 ok wxx
      * @apiName     feedBackType

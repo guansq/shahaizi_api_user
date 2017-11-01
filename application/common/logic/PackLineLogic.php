@@ -64,14 +64,14 @@ class PackLineLogic extends BaseLogic{
             $where['gps_name'] = ['LIKE', "%$city%"];
         }
         $drv = M('seller')
-            ->field('seller_id,head_pic,nickname,drv_code,province,city,plat_start')
+            ->field('seller_id,head_pic,nickname,drv_code,province,country_id,city,plat_start')
             ->where($where)
             ->select();
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
-            $val['province'] = getCityName($val['province']);
+            $val['country'] = getCountryName($val['country_id']);
             $val['city'] = getCityName($val['city']);
-            $val['star'] = $result['star'];
+            $val['star'] = floor($result['star']);
             $val['line'] = $result['line'];
         }
         return $drv;
@@ -89,16 +89,18 @@ class PackLineLogic extends BaseLogic{
         $count = M('seller')->where($where)->count();
         $page = new Page($count);
         $drv = M('seller')
-            ->field('seller_id,head_pic,nickname,drv_code,province,city,plat_start')
+            ->field('seller_id,head_pic,nickname,drv_code,province,country_id,city,plat_start')
             ->where($where)
             ->limit($page->firstRow, $page->listRows)
             ->select();
-
+        if(empty($drv)){
+            return ajaxReturn(resultArray(-1,'没有数据',[]));
+        }
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
-            $val['province'] = getCityName($val['province']);
+            $val['country'] = getCountryName($val['country_id']);
             $val['city'] = getCityName($val['city']);
-            $val['star'] = $result['star'];
+            $val['star'] = floor($result['star']);
             $val['line'] = $result['line'];
         }
         //$list = $this->getPackLineByWhereLimit($where, $page->firstRow, $page->listRows);

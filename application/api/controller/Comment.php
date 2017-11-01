@@ -13,6 +13,7 @@ use app\api\logic\PackOrderLogic;
 use app\api\logic\ArticleCommentLogic;
 use app\common\logic\ArticleCommentLogic as CommentLogic;
 use app\common\logic\UserPraiseLogic;
+use app\common\logic\PackCommentLogic;
 use think\Request;
 
 class Comment extends Base{
@@ -323,4 +324,76 @@ class Comment extends Base{
         return $this->returnJson($data);
     }
 
+    /**
+     * @api     {POST}   /api/comment/lineDrvComment    对路线司导进行评论
+     * @apiName     lineDrvComment
+     * @apiGroup    Comment
+     * @apiParam    {String}    token   token.
+     * @apiParam    {String}    air_id   订单ID.
+     * @apiParam    {String}    seller_id   司导ID.
+     * @apiParam    {String}    drv_rank    司导评分
+     * @apiParam    {String}    drv_content     司导评论内容
+     * @apiParam    {String}    drv_img     司导评论图片
+     * @apiParam    {String}    drv_is_anonymous     是否匿名
+     * @apiParam    {String}    line_id     平台ID
+     * @apiParam    {String}    line_rank    线路评分
+     * @apiParam    {String}    line_content     线路评论内容
+     * @apiParam    {String}    line_img     线路评论图片
+     * @apiParam    {String}    line_is_anonymous     是否匿名
+     */
+    public function lineDrvComment(){
+        $packLgc = new PackCommentLogic();
+        $reqParams = $this->getReqParams([
+            'drv_rank',
+            'drv_content',
+            'drv_is_anonymous',
+            'line_rank',
+            'line_content',
+            'line_is_anonymous',
+        ]);
+        $rule = [
+            'drv_rank' => ['require'],
+            'drv_content' => ['require'],
+            'drv_is_anonymous' => ['require'],
+            'line_rank' => ['require'],
+            'line_content' => ['require'],
+            'line_is_anonymous' => ['require'],
+        ];
+        $this->validateParams($reqParams, $rule);
+        //订单为待评价
+        $packOrderLogic = new PackOrderLogic();
+        $order = $packOrderLogic->find($reqParams['air_id']);
+        if(empty($order)){
+            return $this->returnJson(4004, '未获取到订单信息');
+        }
+        if($order['status'] != PackOrderLogic::STATUS_UNCOMMENT){
+            return $this->returnJson(4004, '当前订单不允许评价');
+        }
+        $reqParams['drv_content'] = wordFilter($reqParams['drv_content']);
+        $reqParams['line_content'] = wordFilter($reqParams['line_content']);
+        $current_time = time();
+        $drv_data = [
+            'air_id' => $reqParams['air_id'],
+            'drv_rank' => floatval($reqParams['drv_rank']),
+            'seller_id' => $reqParams['seller_id'],
+            'drv_content' => $reqParams['drv_content'],
+            'drv_is_anonymous' => $reqParams['drv_is_anonymous'],
+            'create_at' => $current_time,
+            'update_at' => $current_time,
+        ];
+        !empty($reqParams['drv_img']) && $drv_data['drv_img'] = $reqParams['drv_img'];
+
+        $line_data = [
+            'air_id' => $reqParams['air_id'],
+            'line_rank' => floatval($reqParams['line_rank']),
+            'line_id' => $reqParams['line_id'],
+            'line_content' => $reqParams['line_content'],
+            'line_is_anonymous' => $reqParams['line_is_anonymous'],
+            'create_at' => $current_time,
+            'update_at' => $current_time,
+        ];
+        !empty($reqParams['line_img']) && $line_data['line_img'] = $reqParams['line_img'];
+        $result = $packLgc->saveDrvAndLineCommentInfo($drv_data,$line_data);
+        $this->ajaxReturn($result);
+    }
 }

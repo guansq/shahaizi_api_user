@@ -78,7 +78,7 @@ class BaseMessage extends Base{
                 /*if(!$user){
                     $this->ajaxReturn(['status' => -1, 'msg' => '该手机号已注册过了']);
                 }*/
-                $content = '【傻孩子APP】您正在进行[绑定手机]操作，验证码为：'.$code;
+                $content = '【傻孩子APP】您正在进行[绑定]操作，验证码为：'.$code;
                 break;
             case 'login' :
                 $content = '【傻孩子APP】您正在进行[登录]操作，验证码为：'.$code;
