@@ -93,7 +93,9 @@ class PackLineLogic extends BaseLogic{
             ->where($where)
             ->limit($page->firstRow, $page->listRows)
             ->select();
-
+        if(empty($drv)){
+            return ajaxReturn(resultArray(-1,'没有数据',[]));
+        }
         foreach($drv as &$val){
             $result = getDrvIno($val['seller_id']);
             $val['country'] = getCountryName($val['country_id']);
