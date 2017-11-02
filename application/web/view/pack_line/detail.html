@@ -137,9 +137,9 @@
     $(function(){
         // 遍历 显示两个 其余隐藏
         function eachAppraiseList(){
-            var appraConLength =$("#appraise").find(".appraise_con").length;
+            var appraConLength =$("#appraise").find(".ass_con").length;
             for(var i =2; i<appraConLength; i++){
-                $("#appraise").find(".appraise_con").eq(i).css("display","none");
+                $("#appraise").find(".ass_con").eq(i).css("display","none");
             }
         }
         eachAppraiseList();
@@ -147,7 +147,7 @@
        $(".look_whole").click(function(){
 
            if(!$(this).hasClass("close")){
-               $("#appraise").find(".appraise_con").css("display","block");
+               $("#appraise").find(".ass_con").css("display","block");
                $(this).text("收起内容");
                $(this).addClass("close");
            }else{
