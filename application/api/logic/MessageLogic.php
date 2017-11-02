@@ -94,7 +94,7 @@ class MessageLogic extends BaseLogic{
         }else{
             $where = "push_users like '%{$push_user}%' AND (receive_id is null OR receive_id = $user_id)";
         }
-        $list =  M('system_message')->where($where)->select();//echo die;->fetchSql(ture)
+        $list =  M('system_message')->where($where)->order('create_at desc')->select();//echo die;->fetchSql(ture)
         $count = M('system_message')->where($where)->count();
         if(empty($list)){
             return resultArray(-1,'没有数据',[]);

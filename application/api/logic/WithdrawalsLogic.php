@@ -124,7 +124,7 @@ class WithdrawalsLogic extends BaseLogic{
             'desc' => '提现',
             'type' => AccountLogLogic::TYPE_WITHDRAW,
         ]);
-
+        pushMessage('提现申请', '您申请的一笔金额提现，正在处理中，请耐心等候', $user['push_id'], $user['user_id'], 0);
         return resultArray(2000, '提交成功。', [
             'amount' => number_format($reqParams['amount'], 2),
             'balance' => number_format($userObj->user_money, 2)
