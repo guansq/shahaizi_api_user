@@ -401,6 +401,7 @@ class Comment extends Base{
         ];
         !empty($reqParams['line_img']) && $line_data['line_img'] = $reqParams['line_img'];
         $result = $packLgc->saveDrvAndLineCommentInfo($drv_data,$line_data);
+        M("order") -> where("air_id = ".$reqParams['air_id']) -> save(["status" => 6]);
         $this->ajaxReturn($result);
     }
 }
