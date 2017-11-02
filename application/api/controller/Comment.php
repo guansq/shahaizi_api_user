@@ -344,11 +344,16 @@ class Comment extends Base{
     public function lineDrvComment(){
         $packLgc = new PackCommentLogic();
         $reqParams = $this->getReqParams([
+            'air_id',
+            'seller_id',
             'drv_rank',
             'drv_content',
+            'drv_img',
             'drv_is_anonymous',
             'line_rank',
             'line_content',
+            'line_img',
+            'line_id',
             'line_is_anonymous',
         ]);
         $rule = [
@@ -362,10 +367,12 @@ class Comment extends Base{
         $this->validateParams($reqParams, $rule);
         //订单为待评价
         $packOrderLogic = new PackOrderLogic();
+        //print_r($reqParams);die;
         $order = $packOrderLogic->find($reqParams['air_id']);
         if(empty($order)){
             return $this->returnJson(4004, '未获取到订单信息');
         }
+        //print_r($order);die;
         if($order['status'] != PackOrderLogic::STATUS_UNCOMMENT){
             return $this->returnJson(4004, '当前订单不允许评价');
         }

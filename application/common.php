@@ -233,7 +233,6 @@ function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'priva
     $sendData['sign'] = $desClass->strEnc($arrOrder, $skArr[0], $skArr[1], $skArr[2]);//签名
     //print_r($sendData);die;
     $result = HttpService::post('http://mps.ruitukeji.com/'.'push', http_build_query($sendData));
-    print_r($result);die;
     $data = [
         'title' => $title,
         'message' => $content,
@@ -243,6 +242,28 @@ function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'priva
         'receive_id' => $receive_id,
     ];
     M('system_message')->save($data);//保存推送消息到数据库
+}
+
+/*
+ * 推送消息  推送的对象，用户为0司导为1
+ */
+function pushMessage($title, $content, $pushId = '',$receive_id = '',$obj_type = '', $type = 'private'){
+    $push = new \app\api\controller\Push();
+    $push->title = $title;
+    $push->content = $content;
+    $push->pushId = ($type == 'all') ?  '' : $pushId;
+    $result = $push->index();
+    if($result['status'] == 1){//将推送的消息保存到数据库
+        $data = [
+            'title' => $title,
+            'message' => $content,
+            'create_at' => time(),
+            'content' => $content,
+            'type' => $obj_type,
+            'receive_id' => $receive_id,
+        ];
+        M('system_message')->save($data);//保存推送消息到数据库
+    }
 }
 
 /*
