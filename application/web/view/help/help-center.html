@@ -7,19 +7,20 @@
 <main class="main">
     <div class="help-content">
         <ul>
+            {volist name="list" id="data"}
             <li>
                 <div class="show_d">
-                    <span>当地人服务安全吗？</span>
+                    <span>{$data.title}</span>
                     <i></i>
                 </div>
                 <div class="panel">
                     <p class="detail_con">
-                        游客的需求千变万化，当地人已发布的服务很难适合所 有游客，但是没关系，您可以先私信咨询当地人，
-                        当地人会通过快速定制功能为您定制独一无二的专属服务， 您在私信窗口内即可直接预订为您定制的服务
+                        {$data.content}
                     </p>
                 </div>
             </li>
-            <li>
+            {/volist}
+            <!--<li>
                 <div class="show_d">
                     <span>如何购买当地人服务？</span>
                     <i></i>
@@ -90,7 +91,7 @@
                         当地人会通过快速定制功能为您定制独一无二的专属服务， 您在私信窗口内即可直接预订为您定制的服务
                     </p>
                 </div>
-            </li>
+            </li>-->
         </ul>
     </div>
 </main>
