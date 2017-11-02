@@ -113,6 +113,8 @@ class PackOrderLogic extends BaseLogic{
             'ord.seller_order_status',
             'ord.user_order_status',
             'ord.line_id',
+            'ord.user_confirm',
+            'ord.seller_confirm',
             'ord.real_price'
         ];
         $count = M('pack_order')->where($where)->count();
@@ -335,7 +337,6 @@ class PackOrderLogic extends BaseLogic{
      * @param $user
      */
     public function confirmFinish(Model $order, $user){
-        $order->status = PackOrderLogic::STATUS_UNCOMMENT;
         $order->user_confirm = 1;//更改用户确认为1
         $this->addUserRecharge($order->air_id);//如果商家确认
 
@@ -345,13 +346,11 @@ class PackOrderLogic extends BaseLogic{
         }
         if($order["seller_confirm"])
         {
-            if($order->save()){
-                return resultArray(2000);
-            };
-        }else{
-            return resultArray(-1,'请等待司导确认订单',[]);
+            $order->status = PackOrderLogic::STATUS_UNCOMMENT;//两边都确认才进行待评价
         }
-        return resultArray(5020);
+        if($order->save()){
+            return resultArray(2000);
+        };
     }
 
     /**
