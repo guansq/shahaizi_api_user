@@ -78,13 +78,13 @@
       <p class="dr_text">
         {$comment.content}
       </p>
-      {empty name="$comment.imgs"}
       <div class="dr_imgbox">
         {volist name="comment.imgs" id="img"}
+        {notempty name="img"}
         <img src="{$img}" alt="">
+        {/notempty}
         {/volist}
       </div>
-      {/empty}
     </div>
     {/volist}
 
