@@ -8,7 +8,11 @@ use think\Request;
 
 class Help extends WebBase{
     public function index(){
-        $list = M('help_content')->select();
+        $where = [
+            'cat_id' => 64,
+            'is_open' => 1,
+        ];
+        $list = M('article')->where($where)->select();
         foreach($list as &$val){
             $val['content'] = htmlspecialchars_decode($val['content']);
         }

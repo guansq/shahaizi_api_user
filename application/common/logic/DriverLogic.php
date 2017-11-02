@@ -158,7 +158,7 @@ class DriverLogic extends BaseLogic{
             'start_time' => $data['start_time'], //
             'work_address' => $data['start_address'], //
             'dest_address' => $data['end_address'], //
-
+            'produce_id'=> $data['pcpid'],
             'tour_favorite' => $data['tour_favorite'], //
             'order_day' => $data['order_day'], //
             'eating_ave' => $data['eating_ave'], //
