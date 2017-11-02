@@ -334,6 +334,12 @@ class PackOrderLogic extends BaseLogic{
         $order->status = PackOrderLogic::STATUS_UNCOMMENT;
         $order->user_confirm = 1;//更改用户确认为1
         $this->addUserRecharge($order->air_id);//如果商家确认
+
+        $seller = SellerLogic::findByDrvCode($order['seller_id']);
+        if(!empty($seller)){
+            pushMessage('订单确认结束', '您有一条订单，客人已确认结束', $seller['device_no'], $seller['seller_id'], 1);
+        }
+
         if($order->save()){
             return resultArray(2000);
         };

@@ -253,6 +253,10 @@ function pushMessage($title, $content, $pushId = '',$receive_id = '',$obj_type =
     $push->title = $title;
     $push->content = $content;
     $push->pushId = ($type == 'all') ?  '' : $pushId;
+    if($obj_type == 1){//设置推送为司导端
+        $push->app_key = '17f7ed4f812eeb340553963d';//司导的app_key
+        $push->master_secret = '7f49e6a381ee00c4b3a7507a';//司导的app_key
+    }
     $result = $push->index();
     if($result['status'] == 1){//将推送的消息保存到数据库
         $data = [
@@ -264,6 +268,9 @@ function pushMessage($title, $content, $pushId = '',$receive_id = '',$obj_type =
             'push_users' => 1,
             'receive_id' => $receive_id,
         ];
+        if($obj_type == 1){
+            $data['push_users'] = 2;
+        }
         M('system_message')->save($data);//保存推送消息到数据库
     }
 }

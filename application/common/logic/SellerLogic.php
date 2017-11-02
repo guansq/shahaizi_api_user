@@ -25,6 +25,10 @@ class SellerLogic extends BaseLogic{
         return self::where('drv_code', $drv_code)->find();
     }
 
+    public static function findByDrvId($seller_id){
+        return self::where('seller_id', $seller_id)->find();
+    }
+
     /**
      * Author: W.W <will.wxx@qq.com>
      * Describe: 根据ID查询seller详情

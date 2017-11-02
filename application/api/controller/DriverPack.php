@@ -376,6 +376,7 @@ class DriverPack extends Base{
             if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004, '指定司导不存在。');
             }
+            pushMessage('客人指定司导', '您有一条新订单，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
         }
         //验证通过
         $data['start_time'] = $data['user_car_time'];
@@ -435,6 +436,7 @@ class DriverPack extends Base{
             if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004, '指定司导不存在。');
             }
+            pushMessage('客人指定司导', '您有一条新订单，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
         }
         //验证通过
         $data['start_time'] = $data['tour_time'];
