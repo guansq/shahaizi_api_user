@@ -18,6 +18,7 @@ use app\api\logic\UserLogic;
 use app\common\logic\RechargeLogic;
 use think\Request;
 use app\common\logic\PackOrderLogic;
+use app\common\logic\SellerLogic;
 
 class Payment extends Base{
     /**
@@ -85,6 +86,16 @@ class Payment extends Base{
             ->where(array('air_id' => $air_id, 'status' => PackOrderLogic::STATUS_UNPAY))
             ->find();
         $user_info = M('users')->where('user_id', $pack_order['user_id'])->find();
+        if($pack_order['type'] == 3){//对路线进行推送
+            $line_id = $pack_order['line_id'];
+            $line = M('pack_line')->where('line_id',$line_id)->find();
+            if(!empty($line) && $line['is_admin'] == 0){
+                $seller = SellerLogic::findByDrvId($line['seller_id']);
+                if(!empty($seller)){
+                    pushMessage('线路已支付', '您的线路，客人已支付，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
+                }
+            }
+        }
         //支付方式 0微信支付 1支付宝支付 2余额支付
         payPackOrder($pack_order, $user_info, $extend['discount_price'], 1, $extend['is_coupon'], $extend['coupon_id']);
         trace("支付订单后续处理 =========》");
@@ -139,6 +150,16 @@ class Payment extends Base{
             $pack_order = M('pack_order')
                 ->where(array('air_id' => $air_id, 'status' => PackOrderLogic::STATUS_UNPAY))
                 ->find();
+            if($pack_order['type'] == 3){//对路线进行推送
+                $line_id = $pack_order['line_id'];
+                $line = M('pack_line')->where('line_id',$line_id)->find();
+                if(!empty($line) && $line['is_admin'] == 0){
+                    $seller = SellerLogic::findByDrvId($line['seller_id']);
+                    if(!empty($seller)){
+                        pushMessage('线路已支付', '您的线路，客人已支付，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
+                    }
+                }
+            }
             $user_info = M('users')->where('user_id', $pack_order['user_id'])->find();
             //支付方式 0微信支付 1支付宝支付 2余额支付
             payPackOrder($pack_order, $user_info, $extend['discount_price'], 0, $extend['is_coupon'], $extend['coupon_id']);

@@ -304,6 +304,10 @@ class PackOrderLogic extends BaseLogic{
         if(!$line['is_admin']){
             $order_data['commission_money'] = $commission_money = floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 佣金金额
             $order_data['seller_money'] = $line['line_price'] -  $commission_money; // 佣金金额
+            $seller = SellerLogic::findByDrvId($line['seller_id']);
+            if(!empty($seller)){
+                pushMessage('线路预订未支付', '您的线路已被客人预订，请保持通话畅通，随时与客人联系', $seller['device_no'], $seller['seller_id'], 1);
+            }
         }
         $result = M('pack_order')->save($order_data);
 
@@ -335,7 +339,7 @@ class PackOrderLogic extends BaseLogic{
         $order->user_confirm = 1;//更改用户确认为1
         $this->addUserRecharge($order->air_id);//如果商家确认
 
-        $seller = SellerLogic::findByDrvCode($order['seller_id']);
+        $seller = SellerLogic::findByDrvId($order['seller_id']);
         if(!empty($seller)){
             pushMessage('订单确认结束', '您有一条订单，客人已确认结束', $seller['device_no'], $seller['seller_id'], 1);
         }

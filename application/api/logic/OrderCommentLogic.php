@@ -16,6 +16,7 @@
 namespace app\api\logic;
 
 use app\common\logic\OrderCommentLogic as BaseLogic;
+use app\common\logic\SellerLogic;
 /**
  *  包车订单评论
  * Class CatsLogic
@@ -52,7 +53,7 @@ class OrderCommentLogic extends BaseLogic{
             return resultArray(5020);
         }
         //进行评价后的推送
-        $seller = SellerLogic::findByDrvCode($order['seller_id']);
+        $seller = SellerLogic::findByDrvId($order['seller_id']);
         if(!empty($seller)){
             pushMessage('客人评价订单', '您有一条订单，客人已评价，请尽快评价，评价完成才能获得收益哦', $seller['device_no'], $seller['seller_id'], 1);
         }
