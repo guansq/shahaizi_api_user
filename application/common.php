@@ -246,6 +246,7 @@ function pushInfo($receive_id,$obj_type,$token, $title, $content, $type = 'priva
 
 /*
  * 推送消息  推送的对象，用户为0司导为1
+ * type 为all推送给全部对象
  */
 function pushMessage($title, $content, $pushId = '',$receive_id = '',$obj_type = '', $type = 'private'){
     $push = new \app\api\controller\Push();
@@ -260,11 +261,13 @@ function pushMessage($title, $content, $pushId = '',$receive_id = '',$obj_type =
             'create_at' => time(),
             'content' => $content,
             'type' => $obj_type,
+            'push_users' => 1,
             'receive_id' => $receive_id,
         ];
         M('system_message')->save($data);//保存推送消息到数据库
     }
 }
+
 
 /*
  * 发送邮件

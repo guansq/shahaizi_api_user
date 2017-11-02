@@ -87,10 +87,14 @@ class MessageLogic extends BaseLogic{
     }
 
     //得到系统消息列表
-    public function getSystemList(){
+    public function getSystemList($user_id){
         $push_user = self::PUSH_USER;
-        $where['push_users'] = ['like',"%$push_user%"];
-        $list =  M('system_message')->where($where)->select();
+        if(empty($user_id)){
+            $where = "push_users like '%{$push_user}%' AND receive_id is null";
+        }else{
+            $where = "push_users like '%{$push_user}%' AND (receive_id is null OR receive_id = $user_id)";
+        }
+        $list =  M('system_message')->where($where)->select();//echo die;->fetchSql(ture)
         $count = M('system_message')->where($where)->count();
         if(empty($list)){
             return resultArray(-1,'没有数据',[]);

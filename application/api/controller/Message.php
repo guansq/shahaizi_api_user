@@ -120,7 +120,8 @@ class Message extends Base{
      */
     public function getSystemMessage(){
         $msgLgc = new MessageLogic();
-        return $this->ajaxReturn($msgLgc->getSystemList());
+        $user = $this->user_id;
+        return $this->ajaxReturn($msgLgc->getSystemList($user));
     }
 
     /**

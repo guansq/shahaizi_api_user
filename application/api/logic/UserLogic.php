@@ -96,7 +96,7 @@ class UserLogic extends UsersLogic{
             'transaction_id' => $transactionSn,
             'remark' => $remark,
         ], empty($order) ? null : ['order_id', $order->order_id]);
-
+        pushMessage('用户充值', '您有一笔金额充值成功，请到我的钱包中查看充值记录', $user['push_id'], $user['user_id'], 0);
         // 增加用户余额
         $user->user_money += $amount;
         $user->save();
