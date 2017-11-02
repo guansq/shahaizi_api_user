@@ -343,10 +343,14 @@ class PackOrderLogic extends BaseLogic{
         if(!empty($seller)){
             pushMessage('订单确认结束', '您有一条订单，客人已确认结束', $seller['device_no'], $seller['seller_id'], 1);
         }
-
-        if($order->save()){
-            return resultArray(2000);
-        };
+        if($order["seller_confirm"])
+        {
+            if($order->save()){
+                return resultArray(2000);
+            };
+        }else{
+            return resultArray(-1,'请等待司导确认订单',[]);
+        }
         return resultArray(5020);
     }
 
