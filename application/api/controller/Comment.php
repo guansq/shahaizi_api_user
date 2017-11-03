@@ -159,6 +159,7 @@ class Comment extends Base{
             'content',
             'isAnonymous'
         ]);
+
         $rule = [
             'orderId' => ['require'],
             'score' => ['require', 'regex' => '[1-5]'],
@@ -168,6 +169,7 @@ class Comment extends Base{
         $reqParams['content'] = wordFilter($reqParams['content']);
         $packOrderLogic = new PackOrderLogic();
         $poCommentLogic = new OrderCommentLogic();
+
         //获取订单详情
         $order = $packOrderLogic->find($reqParams['orderId']);
         if(empty($order)){
@@ -180,6 +182,7 @@ class Comment extends Base{
             return $this->returnJson(4005, '您已经评论过');
         }
         $order['order_id'] = $reqParams['orderId'];  //
+
         return $this->returnJson($poCommentLogic->commentOrder($order, $reqParams, $this->user));
     }
 
@@ -372,6 +375,7 @@ class Comment extends Base{
         if(empty($order)){
             return $this->returnJson(4004, '未获取到订单信息');
         }
+
         //print_r($order);die;
         if($order['status'] != PackOrderLogic::STATUS_UNCOMMENT){
             return $this->returnJson(4004, '当前订单不允许评价');
@@ -401,7 +405,7 @@ class Comment extends Base{
         ];
         !empty($reqParams['line_img']) && $line_data['line_img'] = $reqParams['line_img'];
         $result = $packLgc->saveDrvAndLineCommentInfo($drv_data,$line_data);
-        M("order") -> where("air_id = ".$reqParams['air_id']) -> save(["status" => 6]);
+        M("pack_order") -> where("air_id = ".$reqParams['air_id']) -> save(["user_order_status"=> 1]);
         $this->ajaxReturn($result);
     }
 }
