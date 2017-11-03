@@ -114,12 +114,12 @@ class PackLineLogic extends BaseLogic{
      */
     public function getCommPackLine($city = ''){
         $where = [
-            'is_state' => 1,
-            'is_show' => 1,
-            'is_comm' => 1,
+            'l.is_state' => 1,
+            'l.is_show' => 1,
+            'l.is_comm' => 1,
         ];
         if(!empty($city)){
-            $where['city'] = ['LIKE', "%$city%"];
+            $where['l.city'] = ['LIKE', "%$city%"];
         }
         $list = $this->getPackLineByWhereLimit($where, 0, 3);
         return $list;
