@@ -169,6 +169,6 @@ class Message extends Base{
     }
 
     public function test(){
-        echo wordFilter('我就是差评要然后垃圾你了');
+        echo wordFilter('垃圾我就是差评要然后你了');
     }
 }

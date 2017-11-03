@@ -2009,6 +2009,7 @@ class User extends Base{
         ];
         $this->validateParams($reqParams, $rule);
         $reqParams['title'] = wordFilter($reqParams['title']);
+        $reqParams['summary'] = wordFilter($reqParams['summary']);
         $reqParams['content'] = wordFilter($reqParams['content']);
         $userLogic = new StrategyLogic();
         return $this->returnJson($userLogic->createStrategy($reqParams, $this->user));
