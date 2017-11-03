@@ -40,7 +40,7 @@ class HomeLogic extends BaseLogic
             ->join('ruit_users u','a.user_id = u.user_id','LEFT')
             ->where(['u.is_lock'=>0])
             //->fetchSql(ture)
-            ->order('sort,create_at DESC')
+            ->order('a.sort,a.create_at DESC')
             ->limit(4)->select();
 
         foreach($newList as $key => &$val){

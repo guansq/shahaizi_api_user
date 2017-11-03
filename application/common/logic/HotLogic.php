@@ -18,8 +18,20 @@ class HotLogic extends BaseLogic{
         $count = M('article_hot_guide')->count();
         $Page = new Page($count, 10);
         $where['is_hot'] = 1;
-        $city && $where['city'] = ['like',"%$city%"];
-        $hot_list = M('article_hot_guide')->where($where)->order('sort,update_at DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();//热门攻略
+        //$city && $where['city'] = ['like',"%$city%"];
+        if(empty($city)){
+            $where = "(u.is_lock = 0 OR a.user_id = 0) AND a.is_hot = 1";
+        }else{
+            $where = "(u.is_lock = 0 OR a.user_id = 0) AND a.is_hot = 1 AND a.city like '%{$city}%'";
+        }
+        //热门攻略-->用户未被锁定的才可以查出
+        $hot_list = M('article_hot_guide')->alias('a')
+            ->field('a.*')
+            ->join('ruit_users u','a.user_id = u.user_id', 'LEFT')
+            ->where($where)
+            ->order('a.sort,a.update_at DESC')
+            ->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        //$hot_list = M('article_hot_guide')->where($where)->order('sort,update_at DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();//热门攻略
         $praiseLogic = new UserPraiseLogic();
         foreach($hot_list as $k => &$v){
             $v['good_num'] = $praiseLogic->countPraiseOfGuide($v['guide_id']);

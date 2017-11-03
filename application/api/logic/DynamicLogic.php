@@ -208,7 +208,43 @@ class DynamicLogic extends BaseLogic{
     }
 
     public function getDynamicPage($sortField = 'create_at', $sortType = 'DESC'){
-        return $this->getDynamicPageByWhere([], $sortField, $sortType);
+        $fields = [
+            'a.act_id' => 'id',
+            'a.cover_img' => 'img',
+            'a.title',
+            'a.summary' => 'subTitle',
+            'a.read_num' => 'readNum',
+            'a.user_id' => 'owner',
+            'a.create_at' => 'timeStamp',
+        ];
+        $count = M('article_new_action')->alias('a')
+                ->join('ruit_users u','a.user_id = u.user_id','LEFT')
+                ->where(['u.is_lock'=>0])
+                ->count();
+        $page = new Page($count);
+        $list = M('article_new_action')->alias('a')
+            ->field($fields)
+            ->join('ruit_users u','a.user_id = u.user_id','LEFT')
+            ->where(['u.is_lock'=>0])
+            //->fetchSql(ture)
+            ->order('a.sort,a.create_at DESC')
+            ->limit($page->firstRow, $page->listRows)->select();
+
+        foreach($list as &$item){
+            $item['img'] = explode('|', $item['img'])[0];
+            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
+                ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
+                ->count();
+            $item['owner'] = UsersLogic::getBaseInfoById($item['owner'])['result']; // todo
+        }
+
+        $ret = [
+            'p' => $page->nowPage,
+            'totalPages' => $page->totalPages,
+            'list' => $list,
+        ];
+        return resultArray(2000, '', $ret);
     }
 
     private function getDynamicPageByWhere($where = [], $sortField = 'create_at', $sortType = 'DESC'){
