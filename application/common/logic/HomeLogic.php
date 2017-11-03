@@ -16,10 +16,26 @@ class HomeLogic extends BaseLogic
         $sellerLogic = new SellerLogic();
         $usersLogic = new UsersLogic();
         if(empty($city)){
-            $localList = M('article_local_talent')->limit(4)->order('good_num desc')->select();//当地达人
+            $localList = M('article_local_talent')
+                ->field('l.*')
+                ->alias('l')
+                ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
+                ->where("l.is_admin = 1 OR s.enabled = 1")
+                ->limit(10)
+                ->order('good_num desc')
+                ->select();//当地达人
         }else{
-            $localList = M('article_local_talent')->where(['city'=>['like',"%{$city}%"]])->limit(4)->order('good_num desc')->select();//当地达人
+            $localList = M('article_local_talent')
+                ->field('l.*')
+                ->alias('l')
+                ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
+                ->where(['l.city'=>['like',"%{$city}%"]])
+                ->where("l.is_admin = 1 OR s.enabled = 1")
+                ->limit(10)
+                ->order('good_num desc')
+                ->select();//当地达人
         }
+
         if(empty($city)){
             $where = "(u.is_lock = 0 OR a.user_id = 0) AND a.is_hot = 1";
         }else{
@@ -32,7 +48,7 @@ class HomeLogic extends BaseLogic
             ->join('ruit_users u','a.user_id = u.user_id', 'LEFT')
             ->where($where)
             ->order('a.sort,a.update_at DESC')
-            ->limit(4)->select();
+            ->limit(10)->select();
 
         //最新动态-->用户未被锁定的才可以查出
         $newList = M('article_new_action')->alias('a')
@@ -41,7 +57,7 @@ class HomeLogic extends BaseLogic
             ->where(['u.is_lock'=>0])
             //->fetchSql(ture)
             ->order('a.sort,a.create_at DESC')
-            ->limit(4)->select();
+            ->limit(10)->select();
 
         foreach($newList as $key => &$val){
             if(!empty($val['cover_img'])){
