@@ -278,7 +278,9 @@ function pushMessage($title, $content, $pushId = '',$receive_id = '',$obj_type =
 /*
  * 判断是否在黑名单
  */
+function userIsLock(){
 
+}
 /*
  * 发送邮件
  */

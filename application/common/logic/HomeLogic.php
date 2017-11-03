@@ -21,12 +21,28 @@ class HomeLogic extends BaseLogic
             $localList = M('article_local_talent')->where(['city'=>['like',"%{$city}%"]])->limit(4)->order('good_num desc')->select();//当地达人
         }
         if(empty($city)){
-            $guideList = M('article_hot_guide')->where('is_hot',1)->order('sort,update_at DESC')->limit(4)->select();//热门攻略
+            $where = "(u.is_lock = 0 OR a.user_id = 0) AND a.is_hot = 1";
         }else{
-            $guideList = M('article_hot_guide')->where(['city'=>['like',"%{$city}%"],'is_hot'=>1])->order('sort,update_at DESC')->limit(4)->select();//热门攻略
+            $where = "(u.is_lock = 0 OR a.user_id = 0) AND a.is_hot = 1 AND a.city like '%{$city}%'";
+            //$guideList = M('article_hot_guide')->where(['city'=>['like',"%{$city}%"],'is_hot'=>1])->order('sort,update_at DESC')->limit(4)->select();//热门攻略
         }
+        //热门攻略-->用户未被锁定的才可以查出
+        $guideList = M('article_hot_guide')->alias('a')
+            ->field('a.*')
+            ->join('ruit_users u','a.user_id = u.user_id', 'LEFT')
+            ->where($where)
+            ->order('a.sort,a.update_at DESC')
+            ->limit(4)->select();
 
-        $newList = M('article_new_action')->order('sort,create_at DESC')->limit(4)->select();//最新动态
+        //最新动态-->用户未被锁定的才可以查出
+        $newList = M('article_new_action')->alias('a')
+            ->field('a.*')
+            ->join('ruit_users u','a.user_id = u.user_id','LEFT')
+            ->where(['u.is_lock'=>0])
+            //->fetchSql(ture)
+            ->order('sort,create_at DESC')
+            ->limit(4)->select();
+
         foreach($newList as $key => &$val){
             if(!empty($val['cover_img'])){
                 $temp = explode('|',$val['cover_img']);
