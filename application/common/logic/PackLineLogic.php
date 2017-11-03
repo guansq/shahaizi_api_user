@@ -131,7 +131,11 @@ class PackLineLogic extends BaseLogic{
      * @return array
      */
     public function getPackLinePageByWhere($where){
-        $count = $this->where($where)->count();
+        $count = $this->alias('l')
+            ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
+            ->where($where)
+            ->where("l.is_admin = 1 OR s.enabled = 1")
+            ->count();
         $page = new Page($count);
         $list = $this->getPackLineByWhereLimit($where, $page->firstRow, $page->listRows);
         $ret = new  PageVo($page, $list);
@@ -145,10 +149,14 @@ class PackLineLogic extends BaseLogic{
      */
     public function getPackLineByWhereLimit($where, $start = 0, $limit = 20){
         $sellerLogic = new SellerLogic();
-        $list = $this->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,is_admin,create_at')
+        $list = $this->field('l.seller_id,l.line_id,l.line_buy_num,l.city,l.line_title,l.cover_img,l.line_price,l.seller_id,l.line_detail,l.is_admin,l.create_at')
+            ->alias('l')
+            ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
             ->where($where)
+            ->where("l.is_admin = 1 OR s.enabled = 1")
             ->order('order_by')
             ->limit($start, $limit)
+//            ->fetchSql(true)
             ->select();
         foreach($list as &$val){
             $val['star'] = getLineStar($val['seller_id'], 6);

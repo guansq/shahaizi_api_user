@@ -180,14 +180,14 @@ class PackLine extends Base{
     public function getQualityLine(){
         $where = [];
         $city = I('city');
-        $where['is_show'] = 1;
-        $where['is_del'] = 0;
-        $where['is_state'] = 1;
+        $where['l.is_show'] = 1;
+        $where['l.is_del'] = 0;
+        $where['l.is_state'] = 1;
         $time = empty(I('time')) ? '' : strtotime(I('time'));
         $line_buy_num = I('line_buy_num');
-        !empty($city) && $where['city'] = ['LIKE', "%{$city}%"];
-        !empty($time) && $where['update_at'] = ['between', [$time, $time + 86400]];//更新时间
-        !empty($line_buy_num) && $where['line_buy_num'] = ['egt', $line_buy_num];
+        !empty($city) && $where['l.city'] = ['LIKE', "%{$city}%"];
+        !empty($time) && $where['l.update_at'] = ['between', [$time, $time + 86400]];//更新时间
+        !empty($line_buy_num) && $where['l.line_buy_num'] = ['egt', $line_buy_num];
         //精选路线
         $packLogic = new PackLineLogic();
         $line = $packLogic->getPackLinePageByWhere($where);
