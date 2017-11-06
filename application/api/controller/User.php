@@ -2558,4 +2558,22 @@ class User extends Base{
         pushInfo(35,0,'140fe1da9e932ec8628', '这是我要推送的信息', '这是我要推送的信息');
         //echo '11111111111';
     }
+    /**
+     * @api     {POST}      /index.php?m=Api&c=User&a=changeShzCode     更改傻孩子账号
+     * @apiName             changeShzCode
+     * @apiGroup            User
+     * @apiParam    {String}    token   token.
+     * @apiParam    {String}    shz_code   傻孩子号.
+     */
+    public function changeShzCode(){
+        $userLgc = new UsersLogic();
+        //判断用户更改了几次
+        $reqParams = $this->getReqParams(['shz_code']);
+        $rule = [
+            'shz_code' => 'require',
+        ];
+        $this->validateParams($reqParams,$rule);
+        $result = $userLgc->change_shz_code($this->user_id,$reqParams['shz_code']);
+        $this->ajaxReturn($result);
+    }
 }

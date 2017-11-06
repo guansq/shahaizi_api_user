@@ -259,6 +259,7 @@ class Base extends Controller{
                 'collectLine',
                 'collectPackPro',
                 'getGoodsCollect',
+                'changeShzCode',
             ],
             'userinfo' => ['attention'],
             'driverpack' => ['rentCarByDay', 'receiveAirport', 'sendAirport', 'oncePickup', 'privateMake'],

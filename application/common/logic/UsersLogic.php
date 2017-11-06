@@ -108,6 +108,26 @@ class UsersLogic extends BaseLogic{
     }
 
     /*
+     * 更改傻孩子号
+     */
+    public function change_shz_code($user_id,$shz_code){
+        $times = M('users')->where("user_id='{$user_id}'")->value('shz_update');//获取傻孩子更改次数
+        if($times >= 2){//只能更改两次
+            return resultArray(-1,'只能更改傻孩子号两次',[]);
+        }
+        //查询傻孩子号是否重复
+        $shz_code_count = M('users')->where("shz_code = '$shz_code' AND user_id != '{$user_id}'")->count();
+        if($shz_code_count > 0){
+            return resultArray(-1,'该傻孩子号已存在，请更换新的账号',[]);
+        }
+        $result = M('users')->where("user_id='{$user_id}'")->update(['shz_code' => $shz_code]);
+        if($result === false){//更改失败
+            return resultArray(-1,'更改失败',[]);
+        }
+        M('users')->where("user_id='{$user_id}'")->setInc('shz_update');
+        return resultArray(1,'成功',[]);
+    }
+    /*
      * app端登出
      */
     public function app_logout($token = ''){
