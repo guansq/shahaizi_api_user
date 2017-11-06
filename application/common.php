@@ -491,6 +491,20 @@ function get_shz_code(){
     return $shz_code;
 }
 
+/**
+ * 得到推荐码
+ */
+function get_apply_code(){
+    $apply_code = null;
+    while(true){
+        $apply_code = get_rand_str(6,0);
+        $apply_code_count = M('users')->where("apply_code = '$apply_code'")->count();
+        if($apply_code_count == 0){
+            break;
+        }
+    }
+    return $apply_code;
+}
 function get_pack_line($where){
     $list = M('pack_line')
         ->field('seller_id,line_id,line_buy_num,city,line_title,cover_img,line_price,seller_id,line_detail,create_at')

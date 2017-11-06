@@ -272,7 +272,9 @@ class UsersLogic extends BaseLogic{
         $map['password'] = $password;
         $map['reg_time'] = time();
         $map['shz_code'] = get_shz_code();//生成傻孩子号
-        $map['first_leader'] = cookie('first_leader'); // 推荐人id
+        $map['apply_code'] = get_apply_code();//生成傻孩子号
+        //$up_apply_code通过上级推荐码
+        $map['first_leader'] = M('users')->where("apply_code = '{$up_apply_code}'")->value('user_id'); // 得到推荐人id
         // 如果找到他老爸还要找他爷爷他祖父等
         if($map['first_leader']){
             $first_leader = M('users')->where("user_id = {$map['first_leader']}")->find();
