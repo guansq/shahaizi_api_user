@@ -136,6 +136,17 @@ class UserPraiseLogic extends BaseLogic{
         if(!$this->create($data)){
             return resultArray(5020);
         }
+        //记录到消息表
+        if($type == self::TYPE_DYNAMIC){
+            $title = '动态点赞';
+            $content = '您发布的动态有新的点赞';
+            send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_DYNAMIC);
+        }
+        if($type == self::TYPE_GUIDE){
+            $title = '攻略点赞';
+            $content = '您发布的攻略有新的点赞';
+            send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_GUIDE);
+        }
         return resultArray(2000);
 
     }

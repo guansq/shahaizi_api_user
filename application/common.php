@@ -581,6 +581,23 @@ function get_user_collect_info($user_id){
     $info['collection_num'] = M('goods_collect')->where(['obj_owner_id'=>$user_id])->count();
     return $info;
 }
+/*
+ * 发送消息给用户通过攻略或动态的点赞动作
+ * 动态1攻略2
+ */
+function send_msg_by_article($title,$content,$receive_id,$article_id,$article_type){
+    $data = [
+        'title' => $title,
+        'message' => $content,
+        'push_users' => 1,
+        'create_at' => time(),
+        'content' => $content,
+        'receive_id' => $receive_id,
+        'article_id' => $article_id,
+        'article_type' => $article_type,
+    ];
+    M('system_message')->save($data);//保存消息到数据库
+}
 /**
  * 更新会员等级,折扣，消费总额
  * @param $user_id  用户ID
