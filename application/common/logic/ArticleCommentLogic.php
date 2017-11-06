@@ -87,12 +87,16 @@ class ArticleCommentLogic extends BaseLogic{
             'is_anonymous' => 'isAnonymous',
             'parent_id' => 'parentId',
         ];
-        $count = self::where('type', $type)->where('article_id', $articleId)->where('parent_id', 0)->count();
+        $where = [
+            'parent_id' => 0,
+            'deleted' => 0,
+        ];
+        $count = self::where('type', $type)->where('article_id', $articleId)->where($where)->count();
         //print_r($count);die;
         $page = new Page($count);
         $list = self::where('type', $type)
             ->where('article_id', $articleId)
-            ->where('parent_id', 0)
+            ->where($where)
             ->limit($page->firstRow, $page->listRows)
             ->field($field)
             ->select();
