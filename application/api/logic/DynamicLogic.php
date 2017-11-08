@@ -227,7 +227,7 @@ class DynamicLogic extends BaseLogic{
             ->join('ruit_users u','a.user_id = u.user_id','LEFT')
             ->where(['u.is_lock'=>0])
             //->fetchSql(ture)
-            ->order('a.sort,a.create_at DESC')
+            ->order("a.$sortField $sortType ,a.sort")
             ->limit($page->firstRow, $page->listRows)->select();
 
         foreach($list as &$item){
