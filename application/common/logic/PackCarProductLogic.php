@@ -20,11 +20,14 @@ class PackCarProductLogic extends BaseLogic{
     const TYPE_PACKCAR          = 2;  // 包车
 
 
-    public function getPageByType($type){
+    public function getPageByType($type,$city){
         $where = [
             'is_show' => 1,
             'type' => $type
         ];
+        if(!empty($city)){
+            $where['full_cityname'] = ['like',"%{$city}%"];
+        }
         $total = $this->where($where)->count();
 
         $page = new Page($total);
