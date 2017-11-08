@@ -151,4 +151,22 @@ class Region extends Base{
         $return = $regionLogic->get_country();
         $this->ajaxReturn($return);
     }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getCountry       得到所有的国家   管少秋
+     * @apiName     getCountry
+     * @apiGroup    Region
+     */
+    public function getCountry(){
+        $regionLogic = new RegionLogic();
+        $where = ['level'=>2];//顶级城市
+        $result = $regionLogic->get_city_info($where);
+        $temp = [];
+        foreach($result as $val){
+            if($val['id'] != 7){
+                $temp[] = $val;
+            }
+        }
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$temp]);
+    }
 }
