@@ -53,7 +53,15 @@ class Region extends Base{
     public function getAllCity(){
         $regionLogic = new RegionLogic();
         $result = $regionLogic->get_all_city();
-        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+        $temp = [];
+        $filter_arr = ['县','市辖区','市辖县','省属虚拟市','省直辖行政单位'];
+        foreach($result as $val){
+            if(!in_array($val['name'],$filter_arr)){
+                $temp[] = $val;
+            }
+        }
+        //print_r($temp);die;
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$temp]);
     }
 
     /**
