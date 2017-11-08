@@ -214,6 +214,7 @@ class DynamicLogic extends BaseLogic{
             'a.title',
             'a.summary' => 'subTitle',
             'a.read_num' => 'readNum',
+            'a.good_num' => 'praiseNum',
             'a.user_id' => 'owner',
             'a.create_at' => 'timeStamp',
         ];
@@ -233,10 +234,10 @@ class DynamicLogic extends BaseLogic{
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
             $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
-            $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
-                ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
-                ->count();
-            $item['owner'] = UsersLogic::getBaseInfoById($item['owner'])['result']; // todo
+            //$item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
+            //    ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
+            //    ->count();
+            $item['owner'] = UsersLogic::getBaseInfoById($item['owner'])['result'];
         }
 
         $ret = [
