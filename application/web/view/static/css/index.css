@@ -651,6 +651,7 @@ body{
     width: 45px;
     margin-right: 8px;
     vertical-align: sub;
+    border-radius: 50% 50%;
 }
 .ass_con .left_d{
     display: inline-block;
@@ -970,9 +971,9 @@ body{
     border-radius: 4px;
 }
 .line_title{
-    padding-top: 10px;
+    padding-top: 15px;
     color: #666;
-    font-size: 13px;
+    font-size: 15px;
 }
 .box5 p{
     font-size: 14px;
