@@ -22,7 +22,7 @@ class HomeLogic extends BaseLogic
                 ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
                 ->where("l.is_admin = 1 OR s.enabled = 1")
                 ->limit(10)
-                ->order('good_num desc')
+                ->order('sort asc')
                 ->select();//当地达人
         }else{
             $localList = M('article_local_talent')
@@ -32,7 +32,7 @@ class HomeLogic extends BaseLogic
                 ->where(['l.city'=>['like',"%{$city}%"]])
                 ->where("l.is_admin = 1 OR s.enabled = 1")
                 ->limit(10)
-                ->order('good_num desc')
+                ->order('sort asc')
                 ->select();//当地达人
         }
 
