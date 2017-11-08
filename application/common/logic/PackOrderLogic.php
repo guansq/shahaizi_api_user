@@ -129,7 +129,8 @@ class PackOrderLogic extends BaseLogic{
         foreach($order_list as &$val){
             // $val['create_at'] = shzDate($val['create_at']);
             $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']] : $val['title'];
-            if($val['status'] == 0 && (time() - $val['create_at']) > 1800){//未支付的订单 且大于1800秒的时候 自动取消
+            //把自动转化的create_at转化时间戳
+            if($val['status'] == 0 && (time() - strtotime($val['create_at'])) > 1800){//未支付的订单 且大于1800秒的时候 自动取消
                 $result = $this->where(['air_id' => $val['air_id']])->update(['status' => 10]);//取消操作
                 if($result !== fasle){
                     $val['status'] = 10;
