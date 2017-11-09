@@ -15,6 +15,14 @@ class PackCarProduct extends WebBase{
         if(empty($pcpRet) || $pcpRet['status'] != 2000){
             return $this->error($pcpRet['msg'] );
         }
+        $map = [
+            'cover_img_k' => '宽松',
+            'cover_img_z' => '中等',
+            'cover_img_y' => '严格',
+            'cover_img_n' => '不退订',
+        ];
+        $pcpRet['result']['costCompensationLevel'] = $map[explode('###',$pcpRet['result']['costCompensation'])[0]];
+        $pcpRet['result']['costCompensation'] = explode('###',$pcpRet['result']['costCompensation'])[1];
         $this->assign('packCarProduct',$pcpRet['result']);
 
         $where =[
