@@ -44,7 +44,7 @@ class PackLine extends WebBase{
 
         $commentLogic = new OrderCommentLogic();
         $list = $commentLogic->getListByWere($where);
-
+        //print_r(collection($list)->toArray());die;
         $comments =[
             'total'=>count($list),
             'list'=>$list,
