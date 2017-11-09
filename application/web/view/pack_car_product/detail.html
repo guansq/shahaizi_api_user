@@ -106,6 +106,7 @@
   </div>
 
 </main>
+
 <div class="bomb_box">
   <div class="bomb_con">
     <h1 class="title-h1">
@@ -114,9 +115,18 @@
     </h1>
     <div class="bomb-div">
       <div class="two-con-div">
-        <p>
-          {$packCarProduct.returnPolicy}
-        </p>
+        {$packCarProduct.costCompensation}
+      </div>
+    </div>
+  </div>
+  <div class="bomb_con2">
+    <h1 class="title-h1">
+      费用说明
+      <i></i>
+    </h1>
+    <div class="bomb-div">
+      <div class="two-con-div">
+        {$packCarProduct.costStatement}
       </div>
     </div>
   </div>
@@ -149,9 +159,18 @@
     })
 
     $("#zc_click").click(function(){
-      $(".bomb_box").css("display", "block");
-      var h = $(".bomb-div").height() + $(".title-h1").height();
-      $(".bomb_con").height(h);
+        $(".bomb_box").css("display", "block");
+        $(".bomb_con").css("display", "block");
+        $(".bomb_con2").css("display", "none");
+        var h = $(".bomb_con .bomb-div").height() + $(".bomb_con .title-h1").height();
+        $(".bomb_con").height(h);
+    })
+    $("#fy_click").click(function(){
+        $(".bomb_box").css("display", "block");
+        $(".bomb_con").css("display", "none")
+        $(".bomb_con2").css("display", "block");
+        var h = $(".bomb_con2 .bomb-div").height() + $(".bomb_con2 .title-h1").height();
+        $(".bomb_con2").height(h);
     })
     $(".title-h1 i").click(function(){
       $(".bomb_box").css("display", "none");

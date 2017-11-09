@@ -804,7 +804,8 @@ body{
     font-size: 15px;
 
 }
-.bomb_con{
+.bomb_con,.bomb_con2{
+    display: none;
     position: absolute;
     margin: auto;
     top: 0;
