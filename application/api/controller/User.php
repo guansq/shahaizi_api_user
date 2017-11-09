@@ -1987,9 +1987,8 @@ class User extends Base{
      * @apiName         postStrategy
      * @apiGroup        User
      * @apiParam {string} token    token.
-     * @apiParam {string} img    图片  多张用“|” 分割 ，第一张为默认封面.
      * @apiParam {string} title  标题.
-     * @apiParam {string} content 内容.
+     * @apiParam {string} content 内容.[{"img":"xxx.jpg","content":"111111111"},{"img":"xxx.jpg","content":"111111111"}]默认第一张为封面图
      * @apiParam {number} countryId 国家id.
      * @apiParam {number} cityId    城市id.
      * @apiParam {string} city    国家·城市.
@@ -1997,9 +1996,8 @@ class User extends Base{
      *
      */
     private function postStrategy(Request $request){
-        $reqParams = $this->getReqParams(['img', 'title', 'content', 'countryId', 'cityId','city', 'summary']);
+        $reqParams = $this->getReqParams(['title', 'content', 'countryId', 'cityId','city', 'summary']);
         $rule = [
-            'img' => 'require|max:1000',
             'title' => 'require|max:200',
             'summary' => 'require|max:200',
             'content' => 'require|max:1000',

@@ -22,7 +22,16 @@
       <p>{$guide.summary}</p>
     </div>
     <div class="detail_p">
-      <p>{$guide.content}</p>
+    {if $guide.is_admin eq 0}
+      {volist name="guide.content" id="vo"}
+      <div class="detail_img">
+      <img  src="{$vo.img}">
+      </div>
+      <p>{$vo.content}</p>
+      {/volist}
+    {else /}
+      {$guide.content}
+    {/if}
     </div>
   </div>
 </main>
