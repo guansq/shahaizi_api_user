@@ -126,4 +126,11 @@ class RegionLogic extends BaseLogic{
     public function getNameByid($id){
         return $this->where('id', $id)->value('name');
     }
+
+    public function get_all_country_city(){
+        return M('region')->where([
+            'country_id' => ['neq', 7],
+            'level' => 2
+        ])->select();
+    }
 }

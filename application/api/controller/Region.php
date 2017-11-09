@@ -169,4 +169,15 @@ class Region extends Base{
         }
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$temp]);
     }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getAllCountryCity       得到所有全部国家城市   管少秋
+     * @apiName     getAllCountryCity
+     * @apiGroup    Region
+     */
+    public function getAllCountryCity(){
+        $regionLogic = new RegionLogic();
+        $list = $regionLogic->get_all_country_city();
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$list]);
+    }
 }
