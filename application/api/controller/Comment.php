@@ -245,7 +245,6 @@ class Comment extends Base{
             'article_id',
             'publish_id',
             'content',
-            'add_time',
             'is_anonymous',
             'parent_id'//上级评论的ID
         ]);
@@ -253,7 +252,6 @@ class Comment extends Base{
             'article_id' => ['require'],
             'publish_id' => ['require'],
             'content' => ['require'],
-            'add_time' => ['require'],
             'is_anonymous' => ['require'],
         ];
         $reqParams['content'] = wordFilter($reqParams['content']);
