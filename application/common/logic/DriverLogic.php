@@ -147,7 +147,7 @@ class DriverLogic extends BaseLogic{
             'req_car_seat_num' => $data['car_seat_num'], // 座位数
             'drv_code' => $data['drv_code'],
             'use_car_adult' => empty($data['adult_num']) ? 0 : intval($data['adult_num']),
-            'use_car_children' => empty($data['use_car_children']) ? 0 : intval($data['use_car_children']),
+            'use_car_children' => empty($data['child_num']) ? 0 : intval($data['child_num']),
             'user_identity' => $data['user_identity'],
             'twenty_four' => empty($data['twenty_four']) ? 0 : intval($data['twenty_four']),
             'twenty_six' => empty($data['twenty_six']) ? 0 : intval($data['twenty_six']),
