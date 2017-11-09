@@ -53,10 +53,10 @@ class GuideLogic extends BaseLogic{
             $info['isCollect'] = UserCollectLogic::where('goods_id',$guide_id)->where('model_type',UserCollectLogic::TYPE_STRATEGY)->where('user_id', $user_id)->count();
         }
         $commentLogic = new CommentLogic();
-        $commentList = $commentLogic->getArticleComment($guide_id,1);
+        //$commentList = $commentLogic->getArticleComment($guide_id,1);
         $result = [
             'info' => $info,
-            'comment' => $commentList['list'],
+            //'comment' => $commentList['list'],
         ];
 
         return ['status'=>1,'msg'=>'成功','result'=>$result];

@@ -90,6 +90,7 @@ class ArticleCommentLogic extends BaseLogic{
         $where = [
             'parent_id' => 0,
             'deleted' => 0,
+            'is_show' => 1,//评论显示
         ];
         $count = self::where('type', $type)->where('article_id', $articleId)->where($where)->count();
         //print_r($count);die;

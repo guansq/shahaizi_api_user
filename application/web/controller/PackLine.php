@@ -44,7 +44,7 @@ class PackLine extends WebBase{
 
         $commentLogic = new OrderCommentLogic();
         $list = $commentLogic->getListByWere($where);
-
+        //print_r(collection($list)->toArray());die;
         $comments =[
             'total'=>count($list),
             'list'=>$list,
@@ -52,8 +52,11 @@ class PackLine extends WebBase{
         //得到车辆信息
         $carInfo = $sellerLogic->getCarInfo($line['car_id']);
         if(!empty($carInfo)){
+            $carType = $sellerLogic->getCarTypeName($carInfo['car_type_id']);
+            $carBrand = $sellerLogic->getCarTypeName($carType['pid']);
             $car = [
-                'car_type' => $sellerLogic->getCarTypeName($carInfo['car_type_id']),
+                'car_type' => $carType['car_info'],
+                'car_brand' => $carBrand['car_info'],
                 'car_seat_num' => $carInfo['seat_num'],
             ];
         }

@@ -53,7 +53,15 @@ class Region extends Base{
     public function getAllCity(){
         $regionLogic = new RegionLogic();
         $result = $regionLogic->get_all_city();
-        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$result]);
+        $temp = [];
+        $filter_arr = ['县','市辖区','市辖县','省属虚拟市','省直辖行政单位'];
+        foreach($result as $val){
+            if(!in_array($val['name'],$filter_arr)){
+                $temp[] = $val;
+            }
+        }
+        //print_r($temp);die;
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$temp]);
     }
 
     /**
@@ -142,5 +150,23 @@ class Region extends Base{
         $regionLogic = new RegionLogic();
         $return = $regionLogic->get_country();
         $this->ajaxReturn($return);
+    }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getCountry       得到所有的国家   管少秋
+     * @apiName     getCountry
+     * @apiGroup    Region
+     */
+    public function getCountry(){
+        $regionLogic = new RegionLogic();
+        $where = ['level'=>2];//顶级城市
+        $result = $regionLogic->get_city_info($where);
+        $temp = [];
+        foreach($result as $val){
+            if($val['id'] != 7){
+                $temp[] = $val;
+            }
+        }
+        $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$temp]);
     }
 }

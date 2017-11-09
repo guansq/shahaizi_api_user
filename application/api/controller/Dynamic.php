@@ -82,7 +82,7 @@ class Dynamic extends Base{
      *
      */
     private function getPage(){
-        $reqParams = $this->getReqParams(['sort_field' => 'time', 'sort_type' => 'DESC']);
+        $reqParams = $this->getReqParams(['sort_field' => 'time', 'sort_type' => 'desc']);
         $rule = [
             'sort_field' => 'require|in:time,praise',
             'sort_type' => 'require|in:asc,desc',

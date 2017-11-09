@@ -42,10 +42,17 @@ class StrategyLogic extends BaseLogic{
      * @param $user
      */
     public function createStrategy($reqParams, $user){
+        $de_json=html_json($reqParams['content']);
+        $content =object_to_array($de_json);
+        foreach($content as &$val){
+            $val['content'] = wordFilter($val['content']);
+        }
+        $cover_img = $content[0]['img'];
+        $content = json_encode($content);
         $data = [
             'title' => $reqParams['title'],     // 标题.
-            'cover_img' => explode('|', $reqParams['img'])[0],     // 第一张为默认封面.
-            'content' => $reqParams['content'],    // 内容.
+            'cover_img' => $cover_img,     // 第一张为默认封面.
+            'content' => $content,    // 内容.
             'summary' => $reqParams['summary'],    // 简介.
             'publish_time' => time(),    //.
             'country_id' => $reqParams['countryId'],
@@ -58,7 +65,6 @@ class StrategyLogic extends BaseLogic{
             'is_admin' => 0,
             'is_hot' => 0,
         ];
-
         if(!$this->create($data)){
             return resultArray(5020);
         };

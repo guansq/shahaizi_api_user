@@ -79,14 +79,14 @@ class SellerLogic extends BaseLogic{
 
         $seller = $seller->toArray();
         $seller['countryName'] = $regCouLogic->where('id', $seller['countryId'])->value('name').'';
-        $seller['nickname'] = $isAnonymous == 1 ? hidMiddleStr($seller['nickname']) : $seller['nickname'];
+        $seller['nickname'] = $isAnonymous == 1 ? '司导' : $seller['nickname'];
         $seller['cityName'] = $regionLogic->where('id', $seller['city'])->value('name').'';
         $seller['platStart'] = intval($seller['platStart']);
         return $seller;
     }
 
     public function getCarTypeName($id){
-        $ret = M('pack_car_bar')->where('id',$id)->value('car_info');
+        $ret = M('pack_car_bar')->where('id',$id)->find();
         return $ret;
     }
     public function getCarInfo($id){

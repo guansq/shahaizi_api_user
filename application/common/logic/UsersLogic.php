@@ -1124,7 +1124,7 @@ class UsersLogic extends BaseLogic{
      */
     public static function getBaseInfo($user, $userId = 0, $isAnonymous = 0){
         if($isAnonymous){
-            $user['nickname'] = hidMiddleStr($user['nickname']);
+            $user['nickname'] = firstStr($user['nickname']);
         }
 
         $baseInfo = [

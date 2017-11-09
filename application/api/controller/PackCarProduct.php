@@ -56,10 +56,11 @@ class PackCarProduct extends Base{
     private function getList(Request $request){
         $pcpLogic = new PackCarProductLogic();
         $type = input('type');
+        $city = input('city');
         if(!in_array($type, [PackCarProductLogic::TYPE_AIRPLANE_RECEIVE, PackCarProductLogic::TYPE_PACKCAR,PackCarProductLogic::TYPE_AIRPLANE_SEND])){
             return $this->returnJson(4002);
         }
-        return $this->returnJson($pcpLogic->getPageByType($type));
+        return $this->returnJson($pcpLogic->getPageByType($type,$city));
     }
 
 
