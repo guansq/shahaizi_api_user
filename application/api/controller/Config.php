@@ -64,27 +64,50 @@ class Config extends Base{
 
 
     /**
-     * @api {GET}  /index.php?m=Api&c=Config&a=articleInfo&id=25     改退|费用补偿done
+     * @api {GET}  /index.php?m=Api&c=Config&a=articleInfo&type=0     单次接送以及私人定制的 退订政策|费用说明done
      * @apiName     articleInfo
      * @apiGroup    Config
-     * @apiParam {string} id  文章列表的article_id值   id 24费用补偿|25改退补偿
-     */
-    /**
-     * 司导学院文章详情
+     * @apiParam {string} type  单次接送0 私人定制1
+     * @apiSuccessExample {json} SUCCESS
+    {
+    "status": 1,
+    "msg": "成功！",
+    "result": {
+    "policy": {
+    "title": "单次接送严格退订政策",
+    "content": "<p><img src=\"http://img.shahaizi.cn/2e1cb201711090900555650.png\" title=\"\" alt=\"\"/></p>"
+    },
+    "explain": {
+    "title": "单次接送费用说明",
+    "content": "<p>这里是单次接送费用说明</p>"
+    }
+    }
+    }
      */
     public function articleInfo ()
     {
-        $id = I("id");
-        if(!$id)
-            $this->ajaxReturn(resultArray(-1,"文章id不能为空！",[]));
-
-        $article = M("article")->field('title,content') -> where("article_id = $id") -> find();
-        if(empty($article)){
-            $this->ajaxReturn(resultArray(-1,"数据为空！",[]));
+        //40(私人定制退订政策)-45(私人定制费用说明)
+        //39(单次接送退订政策)-46(单次接送费用说明)
+        $type = I("type",0);
+        $info = [
+            0 =>[
+                'policy' => 39,
+                'explain' => 46,
+            ],
+            1 =>[
+                'policy' => 40,
+                'explain' => 45,
+            ]
+        ];
+        $arrInfo = [];
+        foreach($info[$type] as $key=>$val){
+            $article = M("article")->field('title,content') -> where("article_id = $val") -> find();
+            if(!empty($article)){
+                $article["content"] = htmlspecialchars_decode($article["content"]);
+            }
+            $arrInfo[$key] = $article;
         }
-        //        print_r($article);die;
-        $article["content"] = htmlspecialchars_decode($article["content"]);
-        $this->ajaxReturn(resultArray(1,"成功！",$article));
+        $this->ajaxReturn(resultArray(1,"成功！",$arrInfo));
     }
 
     /**
