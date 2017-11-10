@@ -327,6 +327,7 @@ class PackOrderLogic extends BaseLogic{
             'user_message' => $data['user_message'],
             //'commission_money' => //佣金金额
             //'seller_money' => //订单金额 扣除佣金的金额
+            'city' => $data['city'],
             'create_at' => time(),
             'update_at' => time(),
         ];

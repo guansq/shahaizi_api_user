@@ -166,6 +166,7 @@ class DriverLogic extends BaseLogic{
             'total_price' => $data['total_price'], //
             'real_price' => $data['real_price'], //
             'status' => $data['status'], //
+            'city' => $data['city'],
             'create_at' => time(),
             'update_at' => time(),
         ];
