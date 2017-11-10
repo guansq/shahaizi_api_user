@@ -204,8 +204,31 @@ class PackOrderLogic extends BaseLogic{
         $info['con_car_type_name'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
         $info['real_price_fmt'] = moneyFormat($info['real_price']);
         $info['total_price_fmt'] = moneyFormat($info['total_price']);
-
-
+        $info['costStatement'] = '';//费用说明
+        $info['costCompensation'] = '';//补偿改退
+        $info['costCompensationLevel'] = '';//补偿改退的等级
+        $map = [
+            'cover_img_k' => '宽松',
+            'cover_img_z' => '中等',
+            'cover_img_y' => '严格',
+            'cover_img_n' => '不退订',
+        ];
+        if(in_array($info['type'],[1,2,6,7]) ){//1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游7快捷订单
+            if($info['car_product_id']){//车产品ID
+                $car_product = M('pack_car_product')->where("id={$info['car_product_id']}")->find();
+                $info['costStatement'] = $car_product['cost_statement'];
+                $info['costCompensationLevel'] = $map[explode('###',$car_product['costCompensation'])[0]];
+                $info['costCompensation'] = explode('###',$car_product['costCompensation'])[1];
+            }
+        }
+        if($info['type'] == 3){//线路单独进行取出退订政策和费用说明
+            if($info['line_id']){//线路ID
+                $car_line = M('pack_line')->where("line_id={$info['line_id']}")->find();
+                $info['costStatement'] = $car_line['cost_statement'];
+                $info['costCompensationLevel'] = $map[explode('###',$car_line['costCompensation'])[0]];
+                $info['costCompensation'] = explode('###',$car_line['costCompensation'])[1];
+            }
+        }
         $carBar = $carBarLogic->find($info['req_car_type']);
         $info['req_car_type'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
         $info['hx_user_name'] = empty($seller['hx_user_name']) ? '' : $seller['hx_user_name'];
