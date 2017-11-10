@@ -46,7 +46,7 @@ class WithdrawalsLogic extends BaseLogic{
 
     /**
      * Author: WILL<314112362@qq.com>
-     * Describe: 申请提现 只能提一次 ，申请成功->冻结申请金额，余额减掉-》后台审核
+     * Describe: 申请提现 可申请多次 不能超过限制，申请成功后会减用户余额（冻结提现申请的金额） ，申请成功->冻结申请金额，余额减掉-》后台审核
      * @param $reqParams
      * @param $user
      */
