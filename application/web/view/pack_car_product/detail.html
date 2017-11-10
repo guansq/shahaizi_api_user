@@ -159,6 +159,13 @@
     })
 
     $("#zc_click").click(function(){
+        $(document).on("touchmove",function(e) {
+            if(e.target.className.indexOf("bomb_box") >= 0) {
+                e.preventDefault();
+            } else {
+                e.stopPropagation();
+            }
+        })
         $(".bomb_box").css("display", "block");
         $(".bomb_con").css("display", "block");
         $(".bomb_con2").css("display", "none");
@@ -166,6 +173,13 @@
         $(".bomb_con").height(h);
     })
     $("#fy_click").click(function(){
+        $(document).on("touchmove",function(e) {
+            if(e.target.className.indexOf("bomb_box") >= 0) {
+                e.preventDefault();
+            } else {
+                e.stopPropagation();
+            }
+        })
         $(".bomb_box").css("display", "block");
         $(".bomb_con").css("display", "none")
         $(".bomb_con2").css("display", "block");
