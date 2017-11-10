@@ -293,11 +293,14 @@ class PackOrder extends Base{
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token
      * @apiParam    {Number}    id  订单ID
+     * @apiParam    {Float}    work_pointlng  服务经度
+     * @apiParam    {Float}    work_pointlat  服务纬度
      */
     public function confirmFinish(Request $request){
         if(!$request->isPut()){
             $this->returnJson(4000);
         }
+        $data = I('post.');
         $id = I('id');
         $orderLogic = new PackOrderLogic();
         $order = $orderLogic->find($id);
@@ -310,7 +313,7 @@ class PackOrder extends Base{
         if($order->status == PackOrderLogic::STATUS_UNCOMMENT){
             $this->returnJson(4005);
         }
-        $this->returnJson($orderLogic->confirmFinish($order, $this->user));
+        $this->returnJson($orderLogic->confirmFinish($order, $this->user, $data));
 
 
     }

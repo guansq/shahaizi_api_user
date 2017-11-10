@@ -364,8 +364,10 @@ class PackOrderLogic extends BaseLogic{
      * @param $order
      * @param $user
      */
-    public function confirmFinish(Model $order, $user){
+    public function confirmFinish(Model $order, $user,$data){
         $order->user_confirm = 1;//更改用户确认为1
+        $order->work_pointlng = $data['work_pointlng'];//更改用户确认为1
+        $order->work_pointlat = $data['work_pointlat'];//更改用户确认为1
         $this->addUserRecharge($order->air_id);//如果商家确认
 
         $seller = SellerLogic::findByDrvId($order['seller_id']);
