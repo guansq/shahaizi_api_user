@@ -802,9 +802,11 @@ body{
     bottom: 0;
     z-index: 100000;
     font-size: 15px;
-
 }
 .bomb_con,.bomb_con2{
+    max-height: 90%;
+    overflow-y: auto;
+    overflow-x: auto;
     display: none;
     position: absolute;
     margin: auto;
