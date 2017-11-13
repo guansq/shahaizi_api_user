@@ -25,7 +25,7 @@ class GuideLogic extends BaseLogic{
         $guide->read_num++;
         $guide->save();
         $guide = $guide->toArray();
-        $guide['timeFmt'] = date('Y.m.d', $guide['publish_time']);
+        $guide['timeFmt'] = date('Y-m-d', $guide['publish_time']);
         $guide['isCollect'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_STRATEGY)->where('user_id', $user_id)->count();
         $guide['isPraise'] = UserPraiseLogic::where('obj_id', $id)->where('obj_type', UserPraiseLogic::TYPE_GUIDE)->where('user_id', $user_id)->count();
         $guide['collectNum'] = UserCollectLogic::where('goods_id',$id)->where('model_type',UserCollectLogic::TYPE_STRATEGY)->count();

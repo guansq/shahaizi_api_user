@@ -113,7 +113,7 @@ class DynamicLogic extends BaseLogic{
         }
         $user = UserLogic::where('user_id', $dynamic['ownerId'])->find();
 
-        $dynamic['timeFmt'] = date('Y.m.d', $dynamic['timeStamp']);
+        $dynamic['timeFmt'] = date('Y-m-d', $dynamic['timeStamp']);
         $dynamic['isCollect'] = UserCollectLogic::where('goods_id', $id)
             ->where('model_type', UserCollectLogic::TYPE_DYNAMIC)
             ->where('user_id', $user_id)
@@ -193,7 +193,7 @@ class DynamicLogic extends BaseLogic{
 
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
-            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['timeFmt'] = date('Y-m-d', $item['timeStamp']);
             $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
                 ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
                 ->count();
@@ -233,7 +233,7 @@ class DynamicLogic extends BaseLogic{
 
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
-            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['timeFmt'] = date('Y-m-d', $item['timeStamp']);
             //$item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
             //    ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
             //    ->count();
@@ -268,7 +268,7 @@ class DynamicLogic extends BaseLogic{
 
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
-            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['timeFmt'] = date('Y-m-d', $item['timeStamp']);
             $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
                 ->where('obj_type', UserPraiseLogic::TYPE_DYNAMIC)
                 ->count();
