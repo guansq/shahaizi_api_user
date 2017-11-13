@@ -293,6 +293,7 @@ class PackOrderLogic extends BaseLogic{
         if(empty($line)){
             return ['status' => -1, 'msg' => '当前线路不存在'];
         }
+
         $lineDetail = json_decode(htmlspecialchars_decode($line['line_detail']), true);
         $firstSite = $lineDetail[0]['port_detail'][0]['site_name'];
         $lastPort = $lineDetail[count($lineDetail) - 1]['port_detail'];
@@ -339,6 +340,11 @@ class PackOrderLogic extends BaseLogic{
             'create_at' => time(),
             'update_at' => time(),
         ];
+        if(!empty($line['city'])){
+            $full_arr = explode('·',$line['city']);
+            $order_data['country'] = $full_arr[1];//添加路线的出行国家
+            $order_data['city'] = $full_arr[2];//添加路线的出行城市
+        }
         if(!$line['is_admin']){
             $order_data['commission_money'] = $commission_money = floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 佣金金额
             $order_data['seller_money'] = $line['line_price'] -  $commission_money; // 佣金金额

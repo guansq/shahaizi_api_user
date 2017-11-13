@@ -171,7 +171,11 @@ class DriverPack extends Base{
         if(empty($pcp)){
             return $this->returnJson(4004, '缺少参数pcpId');
         }
-
+        if(!empty($pcp['full_cityname'])){
+            $full_arr = explode('·',$pcp['full_cityname']);
+            $data['country'] = $full_arr[1];
+            $data['city'] = $full_arr[2];
+        }
         $data['car_type_id'] = $pcp['car_type_id'] ;
         $data['car_seat_num'] = $pcp['car_seat_total']; //车的总座位数
         $data['type'] = 6;
@@ -245,6 +249,11 @@ class DriverPack extends Base{
         if(empty($pcp)){
             return $this->returnJson(4004, '缺少参数pcpId');
         }
+        if(!empty($pcp['full_cityname'])){
+            $full_arr = explode('·',$pcp['full_cityname']);
+            $data['country'] = $full_arr[1];
+            $data['city'] = $full_arr[2];
+        }
         $data['real_price'] = $data['total_price'] = $pcp['price'];
         $data['car_type_id'] = $pcp['car_type_id'] ;
         $data['car_seat_num'] = $pcp['car_seat_total']; // 座位数
@@ -307,7 +316,11 @@ class DriverPack extends Base{
         if(empty($pcp)){
             return $this->returnJson(4004, '缺少参数pcpId');
         }
-
+        if(!empty($pcp['full_cityname'])){
+            $full_arr = explode('·',$pcp['full_cityname']);
+            $data['country'] = $full_arr[1];
+            $data['city'] = $full_arr[2];
+        }
         // 校验指定司导
         if(!empty($data['drv_code'])){
             $seller = SellerLogic::findByDrvCode($data['drv_code']);
@@ -350,7 +363,7 @@ class DriverPack extends Base{
      * @apiParam    {String}    car_type_id     需求车型ID
      * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    connect         联系方式
-     * @apiParam    {String}    drv_code        指定司导
+     * @apiParam    {String}    [drv_code]        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
      * @apiParam    {Number}    total_num       出行总人数
      * @apiParam    {Number}    adult_num       成人乘客数
@@ -359,6 +372,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    start_address    起始地地址
      * @apiParam    {String}    end_address       目的地地址
      * @apiParam    {String}    user_car_time     用车时间
+     * @apiParam    {String}    [country]     出行国家 后台筛选订单用
+     * @apiParam    {String}    [city]        出行城市 后台筛选订单用
      * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
      * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
      * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
@@ -376,6 +391,7 @@ class DriverPack extends Base{
             if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004, '指定司导不存在。');
             }
+            $data['allot_seller_id'] = $seller['seller_id'];
             pushMessage('客人指定司导', '您有一条新订单，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
         }
         //验证通过
@@ -415,6 +431,8 @@ class DriverPack extends Base{
      * @apiParam    {String}    end_address     目的地
      * @apiParam    {String}    tour_days       游玩天数
      * @apiParam    {String}    tour_person_num       游玩人数
+     * @apiParam    {String}    [country]     出行国家 后台筛选订单用
+     * @apiParam    {String}    [city]        出行城市 后台筛选订单用
      * @apiParam    {String}    [tour_favorite]       出行偏好
      * @apiParam    {String}    [recommend_diner]       推荐餐馆
      * @apiParam    {String}    [recommend_sleep]       推荐住宿
@@ -436,6 +454,7 @@ class DriverPack extends Base{
             if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004, '指定司导不存在。');
             }
+            $data['allot_seller_id'] = $seller['seller_id'];
             pushMessage('客人指定司导', '您有一条新订单，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
         }
         //验证通过

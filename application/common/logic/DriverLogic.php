@@ -167,9 +167,13 @@ class DriverLogic extends BaseLogic{
             'real_price' => $data['real_price'], //
             'status' => $data['status'], //
             'city' => $data['city'],
+            'country' => $data['country'],
             'create_at' => time(),
             'update_at' => time(),
         ];
+        !empty($data['allot_seller_id']) && $saveData['allot_seller_id'] = $data['allot_seller_id'];//指定司导
+        !empty($data['country']) && $saveData['country'] = $data['country'];//出行国家
+        !empty($data['city']) && $saveData['city'] = $data['city'];//出行城市
         $return = M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
         return $id;
