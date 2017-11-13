@@ -9,7 +9,7 @@ use think\Request;
 class Help extends WebBase{
     public function index(){
         $where = [
-            'cat_id' => 64,
+            'cat_id' => 49,
             'is_open' => 1,
         ];
         $list = M('article')->where($where)->select();
