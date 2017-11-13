@@ -47,7 +47,7 @@ class PackCarProductLogic extends BaseLogic{
             ->limit($page->firstRow, $page->listRows)
             ->select();
         foreach($list as &$item){
-            $item['publishTimeFmt'] = date('Y.m.d', $item['publishTime']);
+            $item['publishTimeFmt'] = date('Y-m-d', $item['publishTime']);
             $item['priceFmt'] = moneyFormat($item['price']);
             $item['imgs'] = explode('|', $item['imgs']);
         }
@@ -104,7 +104,7 @@ class PackCarProductLogic extends BaseLogic{
             return resultArray(4004);
         }
         $pcar = $pcar->toArray();
-        $pcar['publishTimeFmt'] = date('Y.m.d', $pcar['publishTime']);
+        $pcar['publishTimeFmt'] = date('Y-m-d', $pcar['publishTime']);
         $pcar['priceFmt'] = moneyFormat($pcar['price']);
         $pcar['childSeatPriceFmt'] = moneyFormat($pcar['childSeatPrice']);
         $pcar['wheelChairPriceFmt'] = moneyFormat($pcar['wheelChairPrice']);
@@ -168,7 +168,7 @@ class PackCarProductLogic extends BaseLogic{
         foreach($list as &$item){
             $item['imgs'] = explode('|', $item['imgs']);
             $item['priceFmt'] = moneyFormat($item['price']);
-            $item['publishTimeFmt'] = date('Y.m.d', $item['publishTime']);
+            $item['publishTimeFmt'] = date('Y-m-d', $item['publishTime']);
         }
 
         $ret = [

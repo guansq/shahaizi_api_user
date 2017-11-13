@@ -102,7 +102,7 @@ class StrategyLogic extends BaseLogic{
 
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
-            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['timeFmt'] = date('Y-m-d', $item['timeStamp']);
             $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
                 ->where('obj_type', UserPraiseLogic::TYPE_GUIDE)
                 ->count();
@@ -157,7 +157,7 @@ class StrategyLogic extends BaseLogic{
         }
         $user = UserLogic::where('user_id', $Strategy['ownerId'])->find();
 
-        $Strategy['timeFmt'] = date('Y.m.d', $Strategy['timeStamp']);
+        $Strategy['timeFmt'] = date('Y-m-d', $Strategy['timeStamp']);
         $Strategy['isCollect'] = UserCollectLogic::where('goods_id', $id)
             ->where('model_type', UserCollectLogic::TYPE_Strategy)
             ->where('user_id', $user_id)
@@ -239,7 +239,7 @@ class StrategyLogic extends BaseLogic{
 
         foreach($list as &$item){
             $item['img'] = explode('|', $item['img'])[0];
-            $item['timeFmt'] = date('Y.m.d', $item['timeStamp']);
+            $item['timeFmt'] = date('Y-m-d', $item['timeStamp']);
             $item['praiseNum'] = UserPraiseLogic::where('obj_id', $item['id'])
                 ->where('obj_type', UserPraiseLogic::TYPE_GUIDE)
                 ->count();

@@ -40,7 +40,7 @@ class OrderCommentLogic extends BaseLogic{
         }
         foreach($list as $item){
             $item['imgs'] = explode('|', $item['img']);
-            $item['commemt_time_fmt'] = date('Y.m.d', $item['commemt_time']);
+            $item['commemt_time_fmt'] = date('Y-m-d', $item['commemt_time']);
             $item['owner'] = $this->getOwner($item, $viewUserId, $item['is_anonymous']);
         }
         return $list;

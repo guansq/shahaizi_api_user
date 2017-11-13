@@ -115,7 +115,7 @@ class OrderCommentLogic extends BaseLogic{
         }
         foreach($ret as $k => $comm){
             $comm['imgs'] = explode('|', $comm['imgs']);
-            $comm['commentTimeFmt'] = date('Y.m.d H:s', $comm['commentTime']);
+            $comm['commentTimeFmt'] = date('Y-m-d H:s', $comm['commentTime']);
         }
 
         $userComm['owner'] =  UserLogic::getBaseInfoById($userComm['comm_user_id'],0,$userComm['isAnonymous'])['result'];
