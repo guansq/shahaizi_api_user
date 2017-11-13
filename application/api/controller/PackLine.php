@@ -204,6 +204,8 @@ class PackLine extends Base{
      * @apiSuccess  {String}  coverImg      封面图.
      * @apiSuccess  {String}  title         title.
      * @apiSuccess  {String}  linePrice     价格.
+     * @apiSuccess  {String}  costStatement     费用说明.
+     * @apiSuccess  {String}  costCompensation     补偿说明.
      * @apiSuccess  {Number}  isCollect     是否收藏.
      * @apiSuccess  {Number}  isPraise      是否点赞.
      * @apiSuccess  {Number}  isAdmin       是否是平台路线.
@@ -228,6 +230,8 @@ class PackLine extends Base{
             'isCollect'=>$pkgLine['is_collect'],
             'isPraise'=>$pkgLine['is_praise'],
             'playDay'=>intval($pkgLine['play_day']),
+            'costStatement'=>$pkgLine['cost_statement'],
+            'costCompensation'=>$pkgLine['cost_compensation'],
         ];
         return $this->returnJson(2000,'',$ret);
 
