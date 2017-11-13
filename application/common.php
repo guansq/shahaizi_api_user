@@ -165,7 +165,7 @@ function getDrvIno($seller_id){
         'is_del' => 0,
         'is_state' => 1,
     ];
-    $star = Db::name('order_comment')->where('seller_id', $seller_id)->avg('pack_order_score');
+    $star = Db::name('order_comment')->where('seller_id', $seller_id)->avg('drv_rank');
     $line = Db::name('pack_line')
         ->field('line_title')
         ->where($where)
@@ -183,18 +183,35 @@ function getDrvIno($seller_id){
  * 得到评价星级type 6为路线
  */
 
-function getLineStar($seller_id, $type){
-    if(empty($seller_id)){
+function getLineStar($line_id){
+    if(empty($line_id)){
         return '';
     }
     $where = [
-        'seller_id' => $seller_id,
-        'type' => $type
+        'line_id' => $line_id,
     ];
-    $star = Db::name('pack_comment')->where($where)->avg('star');
+    $star = Db::name('order_comment')->where($where)->avg('line_rank');
     return $star;
 }
 
+/*
+ * 自动计算会员等级并保存到用户表
+ */
+function autoNumberLevel($user_id,$total_amount){
+    $level = M('user_level')->order('amount desc')->select();
+    $level_id = 1;
+    foreach($level as $val){
+        if($total_amount >= $val['amount']){
+            $level_id = $val['level_id'];
+            return $level_id;//取到对应的等级ID
+        }
+    }
+    //保存level_id入库
+    M('users')->where(['user_id'=>$user_id])->update(['level'=>$level_id]);
+    $levelName = M("user_level")->cache(true)->where("level_id = {$level_id}")->getField("level_name");
+    return $levelName;
+    //$user['level_name'] = $levelName;
+}
 /*
  * 发送短信
  */
@@ -511,7 +528,7 @@ function get_pack_line($where){
         ->where($where)
         ->select();
     foreach($list as &$val){
-        $val['star'] = getLineStar($val['seller_id'], 6);
+        $val['star'] = getLineStar($val['line_id']);
         $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
         $val['create_at'] = shzDate($val['create_at']);
     }
@@ -526,7 +543,7 @@ function get_pack_line_page($where,$firstRow,$listRows){
         ->limit($firstRow.','.$listRows)
         ->select();
     foreach($list as &$val){
-        $val['star'] = getLineStar($val['seller_id'], 6);
+        $val['star'] = getLineStar($val['line_id']);
         $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
         $val['create_at'] = shzDate($val['create_at']);
     }

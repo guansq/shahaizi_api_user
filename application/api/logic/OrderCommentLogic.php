@@ -41,6 +41,8 @@ class OrderCommentLogic extends BaseLogic{
             'car_product_id' => $order['car_product_id'],
             'seller_id' => $order['seller_id'],
             'pack_order_score' => $reqParams['score'],
+            'drv_rank' => $reqParams['drv_rank'],
+            'line_rank' => $reqParams['line_rank'],
             'is_anonymous' => $reqParams['isAnonymous'],
             'commemt_time' => time(),
             'deleted' => 0,
@@ -57,7 +59,6 @@ class OrderCommentLogic extends BaseLogic{
         if(!empty($seller)){
             pushMessage('客人评价订单', '您有一条订单，客人已评价，请尽快评价，评价完成才能获得收益哦', $seller['device_no'], $seller['seller_id'], 1);
         }
-
         $order->user_order_status = 1;
         if( $order->seller_order_status){
             $order->status = PackOrderLogic::STATUS_FINISH;

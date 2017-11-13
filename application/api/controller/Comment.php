@@ -147,6 +147,8 @@ class Comment extends Base{
      * @apiParam {String}  token  token.
      * @apiParam  {Number} orderId            订单id.
      * @apiParam  {Number={1-5}} score        评分.
+     * @apiParam  {Number={1-5}} [drv_rank]     司导评分.
+     * @apiParam  {Number={1-5}} [line_rank]    线路评分.
      * @apiParam  {String} content            评论文字.
      * @apiParam  {String} [img]                图片,多张用“|”分割.
      * @apiParam  {Number} [isAnonymous=0]        是否匿名.
@@ -155,6 +157,8 @@ class Comment extends Base{
         $reqParams = $this->getReqParams([
             'orderId',
             'score',
+            'drv_rank',
+            'line_rank',
             'img',
             'content',
             'isAnonymous'
@@ -163,6 +167,8 @@ class Comment extends Base{
         $rule = [
             'orderId' => ['require'],
             'score' => ['require', 'regex' => '[1-5]'],
+            'drv_rank' => ['regex' => '[1-5]'],
+            'line_rank' => ['regex' => '[1-5]'],
             'content' => ['require'],
         ];
         $this->validateParams($reqParams, $rule);

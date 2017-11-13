@@ -30,7 +30,7 @@ class PackLineLogic extends BaseLogic{
             ->select();
         // dd($this->getLastSql());
         foreach($list as &$val){
-            $val['star'] = getLineStar($val['seller_id'], 6);
+            $val['star'] = getLineStar($val['line_id']);
             $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
             $val['create_at'] = shzDate($val['create_at']);
         }
@@ -48,7 +48,7 @@ class PackLineLogic extends BaseLogic{
             ->limit(9)
             ->select();
         foreach($list as &$val){
-            $val['star'] = getLineStar($val['seller_id'], 6);
+            $val['star'] = getLineStar($val['line_id']);
             $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
             $val['create_at'] = shzDate($val['create_at']);
         }
@@ -159,7 +159,7 @@ class PackLineLogic extends BaseLogic{
 //            ->fetchSql(true)
             ->select();
         foreach($list as &$val){
-            $val['star'] = getLineStar($val['seller_id'], 6);
+            $val['star'] = getLineStar($val['line_id']);
             $val['line_detail'] = json_decode(htmlspecialchars_decode($val['line_detail']));
             $val['create_at'] = shzDate($val['create_at']);
             $sellerInfo = $sellerLogic->getInfoById($val['seller_id']);
