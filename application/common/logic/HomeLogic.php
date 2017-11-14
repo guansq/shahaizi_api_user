@@ -92,7 +92,7 @@ class HomeLogic extends BaseLogic
                 $seller_info = get_drv_info($val['user_id']);
                 $val['name'] = $seller_info['nickname'];
             }
-            $val['city'] = getCountryName($val['country_id']).'·'.getCityName($val['city_id']);
+            //$val['city'] = getCountryName($val['country_id']).'·'.getCityName($val['city_id']);
             $val['good_num'] = $praiseLogic->countLocalTalent($val['talent_id']);
         }
         foreach($guideList as &$val){
