@@ -26,6 +26,9 @@ class Driver extends WebBase{
         $regionLogic = new RegionLogic();
         $regionCtLogic = new RegionCountryLogic();
         $seller['cityFullName'] = $regionCtLogic->getNameByid($seller['country_id']).'·'.$regionLogic->getNameByid($seller['city']);
+        if(empty($seller['cover_img'])){
+            $seller['cover_img'] = '/application/web/view/static/image/bg_sidao.png';
+        }
         $this->assign('seller',$seller);
         $CarInfo = new PackCarInfoLogic();
         $seller_car = $CarInfo->getMyCar($id);
