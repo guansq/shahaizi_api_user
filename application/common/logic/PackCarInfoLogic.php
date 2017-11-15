@@ -9,8 +9,8 @@
 namespace app\common\logic;
 
 class PackCarInfoLogic extends BaseLogic{
-    protected $table = 'ruit_pack_car_info';
-
+    protected $table = 'ruit_pack_car_bar';
+    protected $resultSetType = 'collection';
     const STATUS_UNCHECK = 0;//0:待审核1:审核通过2:驳回
     const STATUS_PASS    = 1;//0:待审核1:审核通过2:驳回
     const STATUS_REFUSE  = 2;//0:待审核1:审核通过2:驳回
@@ -49,5 +49,22 @@ class PackCarInfoLogic extends BaseLogic{
             ->select();
         return $seller_car;
     }
+
+    /*
+     * 得到车位数
+     */
+    public function getAllWhereInfo(){
+        $list = $this->field('seat_num,car_level')->select();
+        $list = $list->toArray();
+        //print_r($list);die;
+        if(empty($list)){
+            return resultArray(-1,'暂无数据',[]);
+        }
+        $seat_list = array_unique(get_arr_column($list,'seat_num'));
+        //print_r($seat_list);die;
+        $level_list = array_unique(get_arr_column($list,'car_level'));
+        return resultArray(1,'成功',['seat_list'=>$seat_list,'level_list'=>$level_list]);
+    }
+
 
 }

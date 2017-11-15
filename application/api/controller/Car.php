@@ -60,4 +60,31 @@ class Car extends Base{
         $result = $carLogic->getList();
         return $this->returnJson(['status'=>2000,'msg'=>'成功','result'=>['list'=>$result]]);
     }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Car&a=getCarWhere    得到筛选条件      管少秋
+     * @apiName     getCarWhere
+     * @apiGroup    Car
+     * @apiSuccessExample {json}    Success-Response
+     *  Http/1.1    200 OK
+    {
+    "status": 1,
+    "msg": "成功",
+    "result": {
+    "seat_list": [
+    0,
+    2
+    ],
+    "level_list": [
+    0
+    ]
+    }
+    }
+     */
+    public function getCarWhere(){
+        $carLogic = new PackCarInfoLogic();
+        $result = $carLogic->getAllWhereInfo();//得到所有的座位数
+        $this->ajaxReturn($result);
+        //return $this->returnJson($result);
+    }
 }
