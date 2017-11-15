@@ -76,7 +76,7 @@ class Car extends Base{
     2
     ],
     "level_list": [
-    0
+    0   车型级别 1:舒适2:豪华
     ]
     }
     }

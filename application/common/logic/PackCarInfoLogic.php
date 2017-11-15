@@ -15,6 +15,14 @@ class PackCarInfoLogic extends BaseLogic{
     const STATUS_PASS    = 1;//0:待审核1:审核通过2:驳回
     const STATUS_REFUSE  = 2;//0:待审核1:审核通过2:驳回
 
+    const LEVEL_ONE = 1;
+    const LEVEL_TWO = 2;
+    const LEVEL_THREE = 3;
+    const LEVEL_ARR = [
+        self::LEVEL_ONE => '经济型',//1=>jinji,2=>shushi         2=>'shushixing'
+        self::LEVEL_TWO => '舒适型',
+        self::LEVEL_THREE => '豪华型',
+    ];
     /**
      * Author: W.W <will.wxx@qq.com>
      * Time:
@@ -61,9 +69,22 @@ class PackCarInfoLogic extends BaseLogic{
             return resultArray(-1,'暂无数据',[]);
         }
         $seat_list = array_unique(get_arr_column($list,'seat_num'));
-        //print_r($seat_list);die;
+        $seat = [];
+        foreach($seat_list as $val){
+            $seat[] = $val;
+        }
+
         $level_list = array_unique(get_arr_column($list,'car_level'));
-        return resultArray(1,'成功',['seat_list'=>$seat_list,'level_list'=>$level_list]);
+        $level = [];
+        foreach($level_list as $val){
+            $temp = [];
+            $temp['id'] = $val;
+            $temp['name'] = self::LEVEL_ARR[$val];
+            $level[] = $temp;
+        }
+        //print_r($seat_list);die;
+
+        return resultArray(1,'成功',['seat_list'=>$seat,'level_list'=>$level]);
     }
 
 
