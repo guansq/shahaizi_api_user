@@ -8,6 +8,7 @@
 
 namespace app\api\controller;
 
+use app\api\logic\DataDicLogic;
 use app\common\logic\DriverLogic;
 use app\common\logic\PackCarProductLogic;
 use app\common\logic\PackOrderLogic;
@@ -520,20 +521,12 @@ class DriverPack extends Base{
     public function getConfig(){
         //得到出行设置
         $config = new ConfigSetLogic();
-        $trip_choose = $config->get_config_set();
+        //1出行偏好2推荐餐饮3推荐住宿
         //print_r($trip_choose);die;
         $result = [
-            'trip_choose' => $trip_choose,
-            'restaurant_choose' => [
-                ['id' => 1, 'name' => '0-100'],
-                ['id' => 2, 'name' => '100-200'],
-                ['id' => 3, 'name' => '200以上'],
-            ],
-            'sleep_choose' => [
-                ['id' => 1, 'name' => '0-100'],
-                ['id' => 2, 'name' => '100-200'],
-                ['id' => 3, 'name' => '200以上'],
-            ],
+            'trip_choose' => DataDicLogic::getDataDic(DataDicLogic::TYPE_TRIP),
+            'restaurant_choose' => DataDicLogic::getDataDic(DataDicLogic::TYPE_RESTAURANT),
+            'sleep_choose' => DataDicLogic::getDataDic(DataDicLogic::TYPE_ROOM),
         ];
         $this->ajaxReturn(['status' => 1, 'msg' => '成功', 'result' => $result]);
     }
