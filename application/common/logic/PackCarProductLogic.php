@@ -20,19 +20,12 @@ class PackCarProductLogic extends BaseLogic{
     const TYPE_PACKCAR          = 2;  // 包车
 
 
-    public function getPageByType($type,$city){
-        $where = [
-            'is_show' => 1,
-            'type' => $type
-        ];
-        if(!empty($city)){
-            $where['full_cityname'] = ['like',"%{$city}%"];
-        }
+    public function getPageByType($where){
         $total = $this->where($where)->count();
 
         $page = new Page($total);
         if(empty($total)){
-            return resultArray(4004);
+            //return resultArray(4004);
         }
         $fields = [
             'id',
@@ -40,6 +33,8 @@ class PackCarProductLogic extends BaseLogic{
             'price',
             'title',
             'img' => 'imgs',
+            'car_level',
+            'car_seat_num',
         ];
         $list = $this->where($where)
             ->field($fields)
@@ -50,6 +45,7 @@ class PackCarProductLogic extends BaseLogic{
             $item['publishTimeFmt'] = date('Y-m-d', $item['publishTime']);
             $item['priceFmt'] = moneyFormat($item['price']);
             $item['imgs'] = explode('|', $item['imgs']);
+            $item['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$item['car_level']];
         }
         $pageVo = new PageVo($page, $list);
         return resultArray(2000, '', $pageVo);
@@ -83,7 +79,7 @@ class PackCarProductLogic extends BaseLogic{
             'has_insurance' => 'hasInsurance',               //是否有乘车险',
             'car_type_id' => 'carTypeId',                //车辆类型id',
             'car_type_name' => 'carTypeName',                //车辆类型名称',
-            'car_seat_total' => 'carSeatTotal',              //座位总数',
+            //'car_seat_total' => 'carSeatTotal',              //座位总数',
             'car_seat_num' => 'carSeatNum',              //行李空间空闲座位数',
             'car_luggage_num' => 'carLuggageNum',                //行李空间行李数',
             'is_allow_return' => 'isAllowReturn',                //是否允许退订',

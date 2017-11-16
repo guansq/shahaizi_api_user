@@ -87,4 +87,5 @@ class Car extends Base{
         $this->ajaxReturn($result);
         //return $this->returnJson($result);
     }
+
 }

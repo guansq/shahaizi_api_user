@@ -36,9 +36,11 @@ class PackCarProduct extends Base{
      * @apiName         getList
      * @apiGroup        PackCarProduct
      * @apiParam  {Number} type         包车类型  1=接机  2=包车 3=送机.
+     * @apiParam  {String} type         包车类型  1=接机  2=包车 3=送机.
+     * @apiParam  {Number} [car_level]   舒适度.
+     * @apiParam  {Number} [car_seat_num]   座位数.
      * @apiParam  {Number} [p=1]        页码.
      * @apiParam  {Number} [pageSize=20]   每页数据量.
-     *
      * @apiSuccess {Number} p          当前页码
      * @apiSuccess {Number} pageSize   列表每页显示行数
      * @apiSuccess {Number} totalRows  总行数
@@ -51,16 +53,37 @@ class PackCarProduct extends Base{
      * @apiSuccess {String} list.publishTimeFmt 发布时格式化.
      * @apiSuccess {Number} list.price          单价.
      * @apiSuccess {String} list.priceFmt       单价格式化.
+     * @apiSuccess {String} list.car_level       车的舒适度.
+     * @apiSuccess {String} list.car_level_name       舒适度名称.
+     * @apiSuccess {String} list.car_seat_num       车的座位数.
      *
      */
     private function getList(Request $request){
         $pcpLogic = new PackCarProductLogic();
         $type = input('type');
         $city = input('city');
+        $car_level = input('car_level');
+        $car_seat_num = input('car_seat_num');
         if(!in_array($type, [PackCarProductLogic::TYPE_AIRPLANE_RECEIVE, PackCarProductLogic::TYPE_PACKCAR,PackCarProductLogic::TYPE_AIRPLANE_SEND])){
             return $this->returnJson(4002);
         }
-        return $this->returnJson($pcpLogic->getPageByType($type,$city));
+
+        //print_r(is_null(input('city')));die;
+        //print_r(isset());
+        $where = [
+            'is_show' => 1,
+            'type' => $type
+        ];
+        if(!empty($city)){
+            $where['full_cityname'] = ['like',"%{$city}%"];
+        }
+        if($car_level != ''){
+            $where['car_level'] = $car_level;
+        }
+        if($car_seat_num != ''){
+            $where['car_seat_num'] = $car_seat_num;
+        }
+        return $this->returnJson($pcpLogic->getPageByType($where));
     }
 
 
