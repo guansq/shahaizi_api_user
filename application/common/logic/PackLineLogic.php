@@ -19,7 +19,8 @@ class PackLineLogic extends BaseLogic{
     const STATUS_UNCHECK = 0;//0:待审核1:审核通过2:驳回
     const STATUS_PASS    = 1;//0:待审核1:审核通过2:驳回
     const STATUS_REFUSE  = 2;//0:待审核1:审核通过2:驳回
-
+    public $where = [];
+    public $order = 'line_buy_num DESC';
     public function get_all_pack_line($where){
         $count = $this->where($where)->count();
         $page = new Page($count);
@@ -130,14 +131,14 @@ class PackLineLogic extends BaseLogic{
      * Describe: 获取精品线路
      * @return array
      */
-    public function getPackLinePageByWhere($where){
+    public function getPackLinePageByWhere(Model $pack){
         $count = $this->alias('l')
             ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
-            ->where($where)
+            ->where($this->where)
             ->where("l.is_admin = 1 OR s.enabled = 1")
             ->count();
         $page = new Page($count);
-        $list = $this->getPackLineByWhereLimit($where, $page->firstRow, $page->listRows);
+        $list = $this->getPackLineByWhereLimit($this->where, $page->firstRow, $page->listRows);
         $ret = new  PageVo($page, $list);
         return $ret;
     }
@@ -149,12 +150,12 @@ class PackLineLogic extends BaseLogic{
      */
     public function getPackLineByWhereLimit($where, $start = 0, $limit = 20){
         $sellerLogic = new SellerLogic();
-        $list = $this->field('l.seller_id,l.line_id,l.line_buy_num,l.city,l.line_title,l.cover_img,l.line_price,l.seller_id,l.line_detail,l.is_admin,l.create_at')
+        $list = $this->field('l.seller_id,l.line_id,l.line_buy_num,l.seat_num,l.car_level,l.city,l.line_title,l.cover_img,l.line_price,l.seller_id,l.line_detail,l.is_admin,l.create_at')
             ->alias('l')
             ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
             ->where($where)
             ->where("l.is_admin = 1 OR s.enabled = 1")
-            ->order('order_by')
+            ->order($this->order)
             ->limit($start, $limit)
 //            ->fetchSql(true)
             ->select();
@@ -167,6 +168,7 @@ class PackLineLogic extends BaseLogic{
                 $val['driver'] = null;  // 不要返回 []  android端会解析失败。
                 continue;
             }
+            $val['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$val['car_level']];
             $val['driver'] = [
                 'id' => $sellerInfo['seller_id'],
                 'avatar' => $sellerInfo['head_pic'],

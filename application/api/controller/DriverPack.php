@@ -179,6 +179,7 @@ class DriverPack extends Base{
         }
         $data['car_type_id'] = $pcp['car_type_id'] ;
         $data['car_seat_num'] = $pcp['car_seat_num']; //车的总座位数
+        $data['car_level'] = $pcp['car_level']; //车的舒适度
         $data['type'] = 6;
         $pack_arr = explode('|',$data['pack_time']);//包车数组
         if(!empty($pack_arr)){
@@ -258,7 +259,7 @@ class DriverPack extends Base{
         $data['real_price'] = $data['total_price'] = $pcp['price'];
         $data['car_type_id'] = $pcp['car_type_id'] ;
         $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
-
+        $data['car_level'] = $pcp['car_level']; //车的舒适度
         $data['start_address'] = $data['airport_name'];
         $data['status'] = PackOrderLogic::STATUS_UNPAY;
         $data['type'] = 1;
@@ -333,7 +334,7 @@ class DriverPack extends Base{
         $data['real_price'] = $data['total_price'] = $pcp['price'];
         $data['car_type_id'] = $pcp['car_type_id'] ;
         $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
-
+        $data['car_level'] = $pcp['car_level']; //车的舒适度
         $data['end_address'] = $data['airport_name'];
         $data['status'] = PackOrderLogic::STATUS_UNPAY;
         $data['type'] = 2;
@@ -363,6 +364,7 @@ class DriverPack extends Base{
      * @apiParam    {String}    user_name       用户
      * @apiParam    {String}    car_type_id     需求车型ID
      * @apiParam    {String}    car_seat_num    需求座位数
+     * @apiParam    {String}    car_level    舒适度
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    [drv_code]        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
@@ -416,15 +418,10 @@ class DriverPack extends Base{
     }
 
     /**
-     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=privateMake    私人定制done 管少秋
+     * @api         {POST}  /index.php?m=Api&c=DriverPack&a=privateMake    私人定制用户提交 done 管少秋
      * @apiName     privateMake
      * @apiGroup    DriverPack
      * @apiParam    {String}    token   token.
-     * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     需求车型ID
-     * @apiParam    {String}    car_seat_num    需求座位数
-     * @apiParam    {String}    connect         联系方式
-     * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    adult_num       成人乘客数
      * @apiParam    {Number}    child_num       儿童乘客数
      * @apiParam    {String}    tour_time       出行时间
@@ -437,10 +434,6 @@ class DriverPack extends Base{
      * @apiParam    {String}    [tour_favorite]       出行偏好
      * @apiParam    {String}    [recommend_diner]       推荐餐馆
      * @apiParam    {String}    [recommend_sleep]       推荐住宿
-     * @apiParam    {Number}    [twenty_four]     24行李箱尺寸
-     * @apiParam    {Number}    [twenty_six]      26行李箱尺寸
-     * @apiParam    {Number}    [twenty_eight]     28行李箱尺寸
-     * @apiParam    {Number}    [thirty]     30行李箱尺寸
      * @apiSuccess  {Number}    id  订单id
      */
     public function privateMake(){
@@ -466,7 +459,7 @@ class DriverPack extends Base{
         $data['use_car_adult'] = intval($data['adult_num']);
         $data['use_car_children'] = intval($data['child_num']);
         $data['type'] = 5;
-
+        $data['status'] = -3;//-3=私人定制用户提交
         $base_id = $this->driverLogic->save_pack_base($data, $this->user);
         $saveData = [
             'base_id' => $base_id,
@@ -499,21 +492,21 @@ class DriverPack extends Base{
      * "result": {
      * "trip_choose": {    //出行偏好
      * {"id": 1,
-     * "name": '吃的地方多一点'},//出行偏好名称
+     * "description": '吃的地方多一点'},//出行偏好名称
      * {"id": 2,
-     * "name": '玩的地方多一点'},//出行偏好名称
+     * "description": '玩的地方多一点'},//出行偏好名称
      * },
      * "restaurant_choose": {    //餐馆
      * {"id": 1,
-     * "name": '北海道大饭店'},//出行偏好名称
+     * "description": '北海道大饭店'},//出行偏好名称
      * {"id": 2,
-     * "name": '东京热大饭店'},//出行偏好名称
+     * "description": '东京热大饭店'},//出行偏好名称
      * },
      * "sleep_choose": {    //个人信息
      * {"id": 1,
-     * "name": '札幌大酒店'},//出行偏好名称
+     * "description": '札幌大酒店'},//出行偏好名称
      * {"id": 2,
-     * "name": '土耳其大宾馆'},//出行偏好名称
+     * "description": '土耳其大宾馆'},//出行偏好名称
      * },
      * }
      * }
@@ -604,5 +597,39 @@ class DriverPack extends Base{
         ];
         $driverInfo = $this->driverLogic->find_driver($where);
         return $this->returnJson($driverInfo);
+    }
+
+
+    /**
+     * @api     {POST}  /index.php?m=Api&c=DriverPack&a=saveUserPrivate   保存用户私人定制信息
+     * @apiName     saveUserPrivate
+     * @apiGroup     DriverPack
+     * @apiParam    {Number}    air_id      订单ID
+     * @apiParam    {String}    customer_name      顾客名称
+     * @apiParam    {String}    customer_phone     顾客手机
+     * @apiParam    {String}    [user_passport]      护照号
+     * @apiParam    {String}    [user_identity]      用户的身份证
+     * @apiParam    {String}    [twenty_four]      24寸行李箱
+     * @apiParam    {String}    [twenty_six]       26寸行李箱
+     * @apiParam    {String}    [twenty_eight]     28寸行李箱
+     * @apiParam    {String}    [thirty]      30寸行李箱
+     */
+    public function savePrivateOne(){
+        $reqParams = $this->getReqParams(['air_id','customer_name', 'customer_phone', 'user_passport', 'user_identity', 'twenty_four', 'twenty_six', 'twenty_eight', 'thirty']);
+        $rule = [
+            'air_id' => 'require',
+            'customer_name' => 'require',
+            'customer_phone' => 'require',
+        ];
+        $where = [
+            'air_id' => $reqParams['air_id']
+        ];
+        $this->validateParams($reqParams, $rule);
+        /*if(!check_mobile($reqParams['description'])){
+            $this->returnJson(['status'=>-1,'msg'=>'不是合法的手机号']);
+        }*/
+        $reqParams['status'] = 0;//改为未支付
+        $result = $this->driverLogic->update_private($where,$reqParams);
+        return $this->returnJson($result);
     }
 }

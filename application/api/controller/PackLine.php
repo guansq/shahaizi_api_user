@@ -163,8 +163,9 @@ class PackLine extends Base{
      * @apiName     getQualityLine
      * @apiGroup    PackLine
      * @apiParam    {String}    [city]    根据城市筛选
-     * @apiParam    {String}    [time]    根据时间筛选   2017-9-14
-     * @apiParam    {Number}    [line_buy_num]    根据时间筛选
+     * @apiParam    {Number}    [seat_num]    座位数
+     * @apiParam    {Number}    [car_level]    舒适度
+     * @apiParam    {String}    [line_buy_num]    asc正序 desc倒序 预订次数
      * @apiSuccessExample {json}    Success-Response
      *  Http/1.1    200 OK
      *{
@@ -180,17 +181,23 @@ class PackLine extends Base{
     public function getQualityLine(){
         $where = [];
         $city = I('city');
+        $seat_num = I('seat_num');
+        $car_level = I('car_level');
         $where['l.is_show'] = 1;
         $where['l.is_del'] = 0;
         $where['l.is_state'] = 1;
         $time = empty(I('time')) ? '' : strtotime(I('time'));
-        $line_buy_num = I('line_buy_num');
+        $line_buy_num = I('line_buy_num','desc');
         !empty($city) && $where['l.city'] = ['LIKE', "%{$city}%"];
-        !empty($time) && $where['l.update_at'] = ['between', [$time, $time + 86400]];//更新时间
-        !empty($line_buy_num) && $where['l.line_buy_num'] = ['egt', $line_buy_num];
+        //!empty($time) && $where['l.update_at'] = ['between', [$time, $time + 86400]];//更新时间
+        //!empty($line_buy_num) && $where['l.line_buy_num'] = ['', $line_buy_num];
+        !empty($seat_num) && $where['seat_num'] = ['eq', $seat_num];
+        !empty($car_level) && $where['car_level'] = ['eq', $car_level];
         //精选路线
         $packLogic = new PackLineLogic();
-        $line = $packLogic->getPackLinePageByWhere($where);
+        $packLogic->where = $where;
+        $packLogic->order = "line_buy_num ".$line_buy_num;
+        $line = $packLogic->getPackLinePageByWhere($packLogic);
         $this->returnJson(2000, '', $line);
     }
 

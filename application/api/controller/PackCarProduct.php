@@ -36,7 +36,7 @@ class PackCarProduct extends Base{
      * @apiName         getList
      * @apiGroup        PackCarProduct
      * @apiParam  {Number} type         包车类型  1=接机  2=包车 3=送机.
-     * @apiParam  {String} type         包车类型  1=接机  2=包车 3=送机.
+     * @apiParam  {Number} [order_times]         预订次数 正序asc 反序desc.
      * @apiParam  {Number} [car_level]   舒适度.
      * @apiParam  {Number} [car_seat_num]   座位数.
      * @apiParam  {Number} [p=1]        页码.
@@ -64,6 +64,7 @@ class PackCarProduct extends Base{
         $city = input('city');
         $car_level = input('car_level');
         $car_seat_num = input('car_seat_num');
+        $order_times = input('order_times','desc');
         if(!in_array($type, [PackCarProductLogic::TYPE_AIRPLANE_RECEIVE, PackCarProductLogic::TYPE_PACKCAR,PackCarProductLogic::TYPE_AIRPLANE_SEND])){
             return $this->returnJson(4002);
         }
@@ -83,7 +84,7 @@ class PackCarProduct extends Base{
         if($car_seat_num != ''){
             $where['car_seat_num'] = $car_seat_num;
         }
-        return $this->returnJson($pcpLogic->getPageByType($where));
+        return $this->returnJson($pcpLogic->getPageByType($where,$order_times));
     }
 
 
@@ -112,8 +113,6 @@ class PackCarProduct extends Base{
      * @apiSuccess {String} serviceMaxPerson      服务范围最多接待人数.
      * @apiSuccess {String} serviceMaxTime       服务范围最长服务时间单位小时.
      * @apiSuccess {String} hasInsurance       是否有乘车险.
-     * @apiSuccess {String} carTypeId       车辆类型id.
-     * @apiSuccess {String} carTypeName       车辆类型名称.
      * @apiSuccess {String} carSeatTotal       座位总数（含司）.
      * @apiSuccess {String} carSeatNum       行李空间空闲座位数.
      * @apiSuccess {String} carLuggageNum       行李空间行李数.
@@ -131,6 +130,9 @@ class PackCarProduct extends Base{
      * @apiSuccess {String} flyName            机场名.
      * @apiSuccess {String} costStatement      费用说明.
      * @apiSuccess {String} costCompensation   补偿改退.
+     * @apiSuccess {String} car_level   车的舒适度.
+     * @apiSuccess {String} car_level_name   舒适度名称.
+     * @apiSuccess {String} car_seat_num   车的座位数.
      */
     private function getDetail($id){
         $this->checkToken();

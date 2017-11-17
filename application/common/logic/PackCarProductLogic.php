@@ -20,7 +20,7 @@ class PackCarProductLogic extends BaseLogic{
     const TYPE_PACKCAR          = 2;  // 包车
 
 
-    public function getPageByType($where){
+    public function getPageByType($where,$order_times){
         $total = $this->where($where)->count();
 
         $page = new Page($total);
@@ -38,7 +38,7 @@ class PackCarProductLogic extends BaseLogic{
         ];
         $list = $this->where($where)
             ->field($fields)
-            ->order('sort,create_at DESC,id DESC')
+            ->order("order_times $order_times")
             ->limit($page->firstRow, $page->listRows)
             ->select();
         foreach($list as &$item){
@@ -70,15 +70,15 @@ class PackCarProductLogic extends BaseLogic{
             'title',
             'img' => 'imgs',
             'service_country_id' => 'serviceCountryId',              //服务范围国家id',
-            'service_country_name' => 'serviceCountryName',                //服务范围国家名称',
+            //'service_country_name' => 'serviceCountryName',                //服务范围国家名称',
             'service_city_id' => 'serviceCityId',               //服务范围城市id',
-            'service_city_name' => 'serviceCityName',             //服务范围城市名称',
+            //'service_city_name' => 'serviceCityName',             //服务范围城市名称',
             'service_max_distance' => 'serviceMaxDistance',             //服务范围服务公里数',
             'service_max_person' => 'serviceMaxPerson',               //服务范围最多接待人数',
             'service_max_time' => 'serviceMaxTime',              //服务范围最长服务时间单位小时',
             'has_insurance' => 'hasInsurance',               //是否有乘车险',
-            'car_type_id' => 'carTypeId',                //车辆类型id',
-            'car_type_name' => 'carTypeName',                //车辆类型名称',
+            //'car_type_id' => 'carTypeId',                //车辆类型id',
+            //'car_type_name' => 'carTypeName',                //车辆类型名称',
             //'car_seat_total' => 'carSeatTotal',              //座位总数',
             'car_seat_num' => 'carSeatNum',              //行李空间空闲座位数',
             'car_luggage_num' => 'carLuggageNum',                //行李空间行李数',
@@ -94,6 +94,8 @@ class PackCarProductLogic extends BaseLogic{
             'fly_name' => 'flyName',             //机场名',
             'cost_statement' => 'costStatement',             //    费用说明.
             'cost_compensation' => 'costCompensation',             // 补偿改退.
+            'car_level',             // 舒适度.
+            'car_seat_num',             // 座位数.
         ];
         $pcar = $this->field($fields)->find($id);
         if(empty($pcar)){
@@ -115,6 +117,9 @@ class PackCarProductLogic extends BaseLogic{
         $pcar['isPraise'] = empty($user) ? 0 : $userPraiceLogic->isPraisePackCar($id, $user['user_id']);
         $pcar['orderCnt'] = $this->countOrder($id);
         $pcar['score'] = intval($ordCommLogic->where('car_product_id', $pcar['id'])->avg('pack_order_score'));
+        $pcar['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$pcar['car_level']];
+        $pcar['serviceCountryName'] = explode('·',$pcar['full_cityname'])[1];//国家名称
+        $pcar['serviceCityName'] = explode('·',$pcar['full_cityname'])[2];//城市名称
         ksort($pcar);
         return resultArray(2000, '', $pcar);
     }

@@ -79,7 +79,7 @@ class PackBase extends Validate{
         'receiveAirport' => ['type','car_type_id','user_name','connect','is_have_pack','flt_no','airport_name','dest_address','start_time'],
         'sendAirport' => ['type','pcpid','car_type_id','user_name','connect','is_have_pack','flt_no','airport_name','start_address','start_time'],
         'oncePickup' => ['type','car_type_id','user_name','connect','is_have_pack','adult_num','child_num','start_address','dest_address','user_car_time'],
-        'privateMake' => ['user_name','connect','tour_time','start_address','end_address','tour_days','adult_num'],
+        'privateMake' => ['tour_time','start_address','end_address','tour_days','adult_num'],
         //'add'   =>  ['name','email'],
     ];
 }

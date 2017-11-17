@@ -174,7 +174,8 @@ class DriverLogic extends BaseLogic{
         !empty($data['allot_seller_id']) && $saveData['allot_seller_id'] = $data['allot_seller_id'];//指定司导
         !empty($data['country']) && $saveData['country'] = $data['country'];//出行国家
         !empty($data['city']) && $saveData['city'] = $data['city'];//出行城市
-        $return = M('pack_order')->save($saveData);
+        !empty($data['car_level']) && $saveData['car_level'] = $data['car_level'];//舒适度
+        M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
         return $id;
     }
@@ -254,5 +255,16 @@ class DriverLogic extends BaseLogic{
         $drv['star'] = $result['star'];
         $drv['line'] = $result['line'];
         return ['status' => 2000, 'msg' => '成功', 'result' => $drv];
+    }
+
+    /*
+     * 更改私人定制
+     */
+    public function update_private($where,$data){
+        $result = M('pack_order')->where($where)->update($data);
+        if($result !== false){
+            return ['status' => 1, 'msg' => '成功'];
+        }
+        return ['status' => -1, 'msg' => '更改失败'];
     }
 }
