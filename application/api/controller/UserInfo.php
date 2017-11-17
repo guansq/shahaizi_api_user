@@ -16,6 +16,8 @@ namespace app\api\controller;
 
 use app\api\logic\UserAttentionLogic;
 use app\api\logic\UserLogic;
+use app\api\logic\DynamicLogic;
+use app\api\logic\StrategyLogic;
 use think\Request;
 
 class UserInfo extends Base{
@@ -53,9 +55,9 @@ class UserInfo extends Base{
         if($request->isPost()){
             return $this->doAttention($request);
         }
-        if($request->isGet()){
+        /*if($request->isGet()){
             return $this->getAttentionList($request);
-        }
+        }*/
         if($request->isDelete()){
             return $this->cancelAttention($request);
         }
@@ -84,16 +86,30 @@ class UserInfo extends Base{
         return $this->returnJson($uaLogic->addAttention($this->user_id, UserAttentionLogic::TYPE_USER, $userId));
     }
 
-    /*
-     * @api         {DELETE}   index.php?m=Api&c=UserInfo&a=attention     13.我关注的列表 todo wxx
+    /**
+     * @api         {GET}   index.php?m=Api&c=UserInfo&a=getAttentionList     我关注的列表 todo wxx
+     * @apiName     getAttentionList
+     * @apiGroup    UserInfo
+     * @apiParam  {string}  token   token.
+     */
+    public function getAttentionList(){
+        $userLogic = new UserLogic();
+        $result = $userLogic->getMeAttention($this->user_id);
+        $this->ajaxReturn($result);
+    }
+
+
+    /**
+     * @api         {GET}   index.php?m=Api&c=UserInfo&a=getAttentionMeList     关注我的列表 todo wxx
      * @apiName     cancelAttention
      * @apiGroup    UserInfo
      * @apiParam  {string}  token   token.
-     * @apiParam  {number}  userId  要关注的用户的id.
      */
-    private function getAttentionList($request){
+    public function getAttentionMeList(){
+        $userLogic = new UserLogic();
+        $result = $userLogic->getAttentionMe($this->user_id);
+        $this->ajaxReturn($result);
     }
-
 
     /**
      * @api         {DELETE}   index.php?m=Api&c=UserInfo&a=attention     13.取消关注 ok wxx
@@ -113,5 +129,34 @@ class UserInfo extends Base{
         return $this->returnJson($uaLogic->removeAttention($this->user_id, UserAttentionLogic::TYPE_USER, $userId));
     }
 
-
+    /**
+     * @api     {GET}   index.php?m=Api&c=UserInfo&a=getOtherInfo      得到其他人动态信息，攻略，收藏的动态以及收藏的攻略
+     * @apiName      getOtherInfo
+     * @apiGroup     UserInfo
+     * @apiParam    {Number}    userId      查看用户的ID
+     * @apiParam    {String}    type      1动态|2攻略|3收藏的动态|4收藏的攻略
+     */
+    public function otherInfo(){
+        $type = I('type');
+        $user_id = I('userId');
+        $userLogic = new UserLogic();
+        $user = $userLogic->where('user_id', $user_id)->find();
+        if(empty($user)){
+            return $this->returnJson(4004, '要查看的用户已经不存在');
+        }
+        $dynamicLogic = new DynamicLogic();
+        $strategyLogic = new StrategyLogic();
+        if($type == 1){
+            return $this->returnJson($dynamicLogic->getDynamicPageByUserId($user_id));
+        }
+        if($type == 2){
+            return $this->returnJson($strategyLogic->getStrategyPageByUserId($user_id));
+        }
+        if($type == 3){
+            return $this->returnJson($dynamicLogic->getCollectDynamicPage($user_id));
+        }
+        if($type == 4){
+            return $this->returnJson($strategyLogic->getCollectStrategyPage($user_id));
+        }
+    }
 }

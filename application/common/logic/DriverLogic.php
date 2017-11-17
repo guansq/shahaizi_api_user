@@ -299,6 +299,7 @@ class DriverLogic extends BaseLogic{
         }else{
             $info['req_car_level'] = PackCarInfoLogic::LEVEL_ARR[$info['req_car_level']];
         }
+        $info['tour_time'] =shzDate($info['tour_time']);
         if(empty($info)){
             return resultArray(-1,'暂无数据',[]);
         }

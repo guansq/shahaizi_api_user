@@ -614,7 +614,7 @@ class DriverPack extends Base{
      * @apiParam    {String}    [twenty_eight]     28寸行李箱
      * @apiParam    {String}    [thirty]      30寸行李箱
      */
-    public function savePrivateOne(){
+    public function saveUserPrivate(){
         $reqParams = $this->getReqParams(['air_id','customer_name', 'customer_phone', 'user_passport', 'user_identity', 'twenty_four', 'twenty_six', 'twenty_eight', 'thirty']);
         $rule = [
             'air_id' => 'require',
