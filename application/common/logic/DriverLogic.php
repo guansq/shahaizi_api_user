@@ -267,4 +267,41 @@ class DriverLogic extends BaseLogic{
         }
         return ['status' => -1, 'msg' => '更改失败'];
     }
+
+    /*
+     * 得到私人定制的行程详情
+     */
+    public function get_private_detail($air_id){
+        $field = [
+            'o.air_id',
+            'o.total_price',
+            'o.customer_name',
+            'o.customer_phone',
+            'p.tour_time',
+            'o.work_address',
+            'o.dest_address',
+            'p.tour_days',
+            'o.use_car_adult',
+            'o.use_car_children',
+            'o.req_car_level',
+            'o.req_car_seat_num',
+            //缺少游玩说明
+            'o.cost_statement',
+            'o.cost_compensation',
+        ];
+        $info = M('pack_order')->alias('o')
+            ->field($field)
+            ->join('ruit_pack_base_private p','o.air_id = p.base_id','LEFT')
+            ->where("o.air_id = $air_id")
+            ->find();
+        if(!in_array($info['req_car_level'],PackCarInfoLogic::LEVEL_ARR)){
+            $info['req_car_level'] = '其他';
+        }else{
+            $info['req_car_level'] = PackCarInfoLogic::LEVEL_ARR[$info['req_car_level']];
+        }
+        if(empty($info)){
+            return resultArray(-1,'暂无数据',[]);
+        }
+        return resultArray(1,'成功',$info);
+    }
 }

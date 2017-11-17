@@ -630,6 +630,19 @@ class DriverPack extends Base{
         }*/
         $reqParams['status'] = 0;//改为未支付
         $result = $this->driverLogic->update_private($where,$reqParams);
-        return $this->returnJson($result);
+        return $this->ajaxReturn($result);
+    }
+
+    /**
+     * @api     {GET}   /index.php?m=Api&c=DriverPack&a=getPrivateDetail     得到私人定制的行程详情
+     * @apiName     getPrivateDetail
+     * @apiGroup    DriverPack
+     * @apiParam    {Number}    air_id      订单ID
+     * @apiParam    {String}    token       token
+     */
+    public function getPrivateDetail(){
+        $air_id = I('air_id');
+        $result = $this->driverLogic->get_private_detail($air_id);
+        return $this->ajaxReturn($result);
     }
 }
