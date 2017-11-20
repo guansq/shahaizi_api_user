@@ -56,6 +56,7 @@ class LocalTalentLogic extends BaseLogic{
                 ->field('l.*')
                 ->alias('l')
                 ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
+                ->join('ruit_users u','l.user_id = u.user_id','LEFT')
                 ->where(['l.city'=>['like',"%{$city}%"],'is_del'=>0])
                 ->where("l.is_admin = 1 OR s.enabled = 1 OR u.is_lock = 0")
                 ->limit(10)
@@ -122,7 +123,7 @@ class LocalTalentLogic extends BaseLogic{
         $info['is_good'] = 0;
         $user_praise = new UserPraiseLogic();
         $info['praiseNum'] = $user_praise->countLocalTalent($info['id']);
-        $info['city'] = getCountryName($info['countryId']).'·'.getCityName($info['cityId']);
+        //$info['city'] = getCountryName($info['country_id']).'·'.getCityName($info['city_id']);
         if(!empty($user_id)){
             $info['is_good'] = $user_praise->isPraised($info['talent_id'],$info['user_id'],UserPraiseLogic::TYPE_TALENT);
         }
