@@ -177,7 +177,7 @@ class DriverPack extends Base{
             $data['country'] = $full_arr[1];
             $data['city'] = $full_arr[2];
         }
-        $data['car_type_id'] = $pcp['car_type_id'] ;
+        //$data['car_type_id'] = $pcp['car_type_id'] ;
         $data['car_seat_num'] = $pcp['car_seat_num']; //车的总座位数
         $data['car_level'] = $pcp['car_level']; //车的舒适度
         $data['type'] = 6;
@@ -257,7 +257,7 @@ class DriverPack extends Base{
             $data['city'] = $full_arr[2];
         }
         $data['real_price'] = $data['total_price'] = $pcp['price'];
-        $data['car_type_id'] = $pcp['car_type_id'] ;
+        //$data['car_type_id'] = $pcp['car_type_id'] ;
         $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
         $data['car_level'] = $pcp['car_level']; //车的舒适度
         $data['start_address'] = $data['airport_name'];
@@ -288,8 +288,6 @@ class DriverPack extends Base{
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {Number}    pcpid          包车产品id
      * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     需求车型ID
-     * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    connect         联系方式
      * @apiParam    {String}    drv_code        指定司导
      * @apiParam    {Number}    is_have_pack    是否有行李0没有行李1有行李
@@ -332,7 +330,7 @@ class DriverPack extends Base{
         }
 
         $data['real_price'] = $data['total_price'] = $pcp['price'];
-        $data['car_type_id'] = $pcp['car_type_id'] ;
+        //$data['car_type_id'] = $pcp['car_type_id'] ;
         $data['car_seat_num'] = $pcp['car_seat_num']; // 座位数
         $data['car_level'] = $pcp['car_level']; //车的舒适度
         $data['end_address'] = $data['airport_name'];
@@ -362,7 +360,6 @@ class DriverPack extends Base{
      * @apiParam    {String}    token   token.
      * @apiParam    {String}    type    （rent_car_by_day按天包车游-receive_airport接机-send_airport送机-once_pickup单次接送-private_person私人定制）
      * @apiParam    {String}    user_name       用户
-     * @apiParam    {String}    car_type_id     需求车型ID
      * @apiParam    {String}    car_seat_num    需求座位数
      * @apiParam    {String}    car_level    舒适度
      * @apiParam    {String}    connect         联系方式

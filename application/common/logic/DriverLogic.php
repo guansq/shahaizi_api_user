@@ -143,8 +143,9 @@ class DriverLogic extends BaseLogic{
             'car_product_id' => intval($data['pcpid']),
             'customer_name' => $data['user_name'],
             'customer_phone' => $data['connect'],
-            'req_car_type' => $data['car_type_id'],
+            //'req_car_type' => $data['car_type_id'],
             'req_car_seat_num' => $data['car_seat_num'], // 座位数
+            'req_car_level' => $data['car_level'], // 舒适度
             'drv_code' => $data['drv_code'],
             'use_car_adult' => empty($data['adult_num']) ? 0 : intval($data['adult_num']),
             'use_car_children' => empty($data['child_num']) ? 0 : intval($data['child_num']),
