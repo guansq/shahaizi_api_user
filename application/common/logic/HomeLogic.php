@@ -7,6 +7,7 @@
  */
 namespace app\common\logic;
 use think\Model;
+use app\common\logic\LocalTalentLogic;
 class HomeLogic extends BaseLogic
 {
     public function getHomeInfo($city){
@@ -20,17 +21,21 @@ class HomeLogic extends BaseLogic
                 ->field('l.*')
                 ->alias('l')
                 ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
-                ->where("l.is_admin = 1 OR s.enabled = 1")
+                ->join('ruit_users u','l.user_id = u.user_id','LEFT')
+                ->where("l.is_admin = 1 OR s.enabled = 1 OR u.is_lock = 0")
+                ->where(['is_del'=>0])
                 ->limit(10)
                 ->order('sort asc')
+                //->fetchSql(true)
                 ->select();//当地达人
+            //echo $localList;die;
         }else{
             $localList = M('article_local_talent')
                 ->field('l.*')
                 ->alias('l')
                 ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
-                ->where(['l.city'=>['like',"%{$city}%"]])
-                ->where("l.is_admin = 1 OR s.enabled = 1")
+                ->where(['l.city'=>['like',"%{$city}%"],'is_del'=>0])
+                ->where("l.is_admin = 1 OR s.enabled = 1 OR u.is_lock = 0")
                 ->limit(10)
                 ->order('sort asc')
                 ->select();//当地达人
@@ -68,32 +73,8 @@ class HomeLogic extends BaseLogic
         }
         //print_r($newList);die;
         foreach($localList as &$val){
-            $str = '';
-            $type = getIDType($val['seller_id']);
-            if(!empty($type['store_id'])){
-                $str .= '店主-';
-            }
-            if(!empty($type['drv_id'])){
-                $str .= '司导-';
-            }
-            if(!empty($type['home_id'])){
-                $str .= '房东-';
-            }
-            if(!empty($str)){
-                $val['type_info'] = substr($str,0,-1);
-            }else{
-                $val['type_info'] = '';
-            }
-            //1:用户2:司导3:房东4:店主
-            if($val['lable'] == 1){
-                $user_info = get_user_info($val['user_id'],0);
-                $val['name'] = $user_info['nickname'];
-            }else{
-                $seller_info = get_drv_info($val['user_id']);
-                $val['name'] = $seller_info['nickname'];
-            }
-            //$val['city'] = getCountryName($val['country_id']).'·'.getCityName($val['city_id']);
-            $val['good_num'] = $praiseLogic->countLocalTalent($val['talent_id']);
+            $local = new LocalTalentLogic();
+            $val = $local->local_info($val);
         }
         foreach($guideList as &$val){
             $country =   $regCtrLogic->where('id',$val['country_id'])->value('name');

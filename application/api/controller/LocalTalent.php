@@ -112,7 +112,7 @@ class LocalTalent extends Base{
         $where = ['talent_id'=>$talent_id];
         //echo $this->user_id;die;
         $user_id = $this->user_id;
-        $result = $this->localLogic->get_local_detail($where,$user_id,$talent_id);
+        $result = $this->localLogic->get_local_detail($where);
         $this->ajaxReturn($result);
     }
 
