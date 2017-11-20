@@ -85,7 +85,7 @@ class LocalTalentLogic extends BaseLogic{
         if(empty($info)){
             $this->ajaxReturn(['status' => -1, 'msg' => '没有该记录']);
         }
-        $this->local_info($info);
+        $info = $this->local_info($info);
         $return = [
             'status' => 1,
             'msg' => '',
