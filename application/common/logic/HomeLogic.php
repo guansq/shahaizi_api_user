@@ -34,6 +34,7 @@ class HomeLogic extends BaseLogic
                 ->field('l.*')
                 ->alias('l')
                 ->join('ruit_seller s','l.seller_id = s.seller_id','LEFT')
+                ->join('ruit_users u','l.user_id = u.user_id','LEFT')s
                 ->where(['l.city'=>['like',"%{$city}%"],'is_del'=>0])
                 ->where("l.is_admin = 1 OR s.enabled = 1 OR u.is_lock = 0")
                 ->limit(10)
