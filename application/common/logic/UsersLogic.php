@@ -1191,20 +1191,28 @@ class UsersLogic extends BaseLogic{
      * 得到关注我的粉丝列表
      */
     public function getAttentionMe($user_id){
+
         $field = [
             'u.user_id',
             'u.attention_num',//别人的粉丝数
             'u.nickname',
             'u.head_pic',
         ];
+        $count = M('user_attention')->alias('a')
+            ->join('ruit_users u','a.user_id = u.user_id','LEFT')//我被关注的user和用户表对应
+            ->where("u.is_lock = 0 AND a.obj_id = $user_id")//关注对象ID=现在的ID
+            ->count();
+        $page = new Page($count, 10);
         $fans_list = M('user_attention')->alias('a')
             ->field($field)
             ->join('ruit_users u','a.user_id = u.user_id','LEFT')//我被关注的user和用户表对应
             ->where("u.is_lock = 0 AND a.obj_id = $user_id")//关注对象ID=现在的ID
+            ->limit($page->firstRow.','.$page->listRows)
             ->select();
         if(empty($fans_list)){
             return resultArray(-1,'数据为空',[]);
         }
+        $fans_list = new  PageVo($page, $fans_list);
         return resultArray(1,'成功',$fans_list);
     }
 
@@ -1218,14 +1226,21 @@ class UsersLogic extends BaseLogic{
             'u.nickname',
             'u.head_pic',
         ];
+        $count = M('user_attention')->alias('a')
+            ->join('ruit_users u','a.obj_id = u.user_id','LEFT')
+            ->where("u.is_lock = 0 AND a.user_id = $user_id")
+            ->count();
+        $page = new Page($count, 10);
         $fans_list = M('user_attention')->alias('a')
             ->field($field)
             ->join('ruit_users u','a.obj_id = u.user_id','LEFT')
             ->where("u.is_lock = 0 AND a.user_id = $user_id")
+            ->limit($page->firstRow.','.$page->listRows)
             ->select();
         if(empty($fans_list)){
             return resultArray(-1,'数据为空',[]);
         }
+        $fans_list = new  PageVo($page, $fans_list);
         return resultArray(1,'成功',$fans_list);
     }
 

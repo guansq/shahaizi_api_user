@@ -91,6 +91,9 @@ class UserInfo extends Base{
      * @apiName     getAttentionList
      * @apiGroup    UserInfo
      * @apiParam  {string}  token   token.
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
+     * @apiSuccess {array} list         列表.
      */
     public function getAttentionList(){
         $userLogic = new UserLogic();
@@ -101,9 +104,12 @@ class UserInfo extends Base{
 
     /**
      * @api         {GET}   index.php?m=Api&c=UserInfo&a=getAttentionMeList     关注我的列表 todo wxx
-     * @apiName     cancelAttention
+     * @apiName     getAttentionMeList
      * @apiGroup    UserInfo
      * @apiParam  {string}  token   token.
+     * @apiSuccess {number} page        当前页码.
+     * @apiSuccess {number} totalPages  总页码数.
+     * @apiSuccess {array} list         列表.
      */
     public function getAttentionMeList(){
         $userLogic = new UserLogic();
