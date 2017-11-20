@@ -15,8 +15,6 @@ class HotLogic extends BaseLogic{
      * 得到热门攻略列表
      */
     public function get_hot_list($city){
-        $count = M('article_hot_guide')->count();
-        $Page = new Page($count, 10);
         $where['is_hot'] = 1;
         //$city && $where['city'] = ['like',"%$city%"];
         if(empty($city)){
@@ -24,6 +22,12 @@ class HotLogic extends BaseLogic{
         }else{
             $where = "(u.is_lock = 0 OR a.user_id = 0) AND a.is_hot = 1 AND a.city like '%{$city}%'";
         }
+        $count = M('article_hot_guide')->alias('a')
+            ->join('ruit_users u','a.user_id = u.user_id', 'LEFT')
+            ->where($where)
+            ->count();
+        $Page = new Page($count, 10);
+
         //热门攻略-->用户未被锁定的才可以查出
         $hot_list = M('article_hot_guide')->alias('a')
             ->field('a.*')
