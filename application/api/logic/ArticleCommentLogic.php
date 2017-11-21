@@ -15,6 +15,9 @@ class ArticleCommentLogic extends BaseLogic{
         if(!$result){
             return ['status'=>-1,'msg'=>'评论失败'];
         }
+        $userLogic = new UserLogic();
+        $user = $userLogic->find($data['publish_id']);
+        pushMessage('动态评论', '您有一条新动态被评论', $user['push_id'], $user['user_id'], 0);
         return ['status'=>1,'msg'=>'评论成功'];
     }
 }
