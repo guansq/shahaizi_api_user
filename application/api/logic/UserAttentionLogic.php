@@ -64,6 +64,7 @@ class UserAttentionLogic extends BaseLogic{
         if(!$this->create($data)){
             return resultArray(5020);
         }
+        M('users')->where(['user_id'=>$userId])->setInc('attention_num');//增加关注数
         return resultArray(2000);
 
     }
@@ -82,6 +83,7 @@ class UserAttentionLogic extends BaseLogic{
             'obj_id' => $id,
         ];
         $this->where($where)->delete();
+        M('users')->where(['user_id'=>$userId])->setDec('attention_num');//减少关注数
         return resultArray(2000);
     }
 }
