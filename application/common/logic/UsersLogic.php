@@ -1131,15 +1131,17 @@ class UsersLogic extends BaseLogic{
 
         $baseInfo = [
             'id' => $user['user_id'],
-            'avatar' => empty($user['head_pic']) ? config('APP_DEFAULT_USER_AVATAR') : $user['head_pic'],
+            'head_pic' => empty($user['head_pic']) ? config('APP_DEFAULT_USER_AVATAR') : $user['head_pic'],
             'nickname' => $user['nickname'],
             'sex' => $user['sex'],
             'level' => $user['level'],
-            'fansNum' => $user['attention_num'],
-            'attentionNum' => $user['attention_num'],
-            'praiseNum' => $user['good_num'],
-            'collectNum' => $user['collection_num'],
+            'fans_num' => UserAttentionLogic::getFansNum($user['user_id']),
+            'attention_num' => $user['attention_num'],
+            'good_num' => $user['good_num'],
+            'collection_num' => $user['collection_num'],
             'isAttention' => UserAttentionLogic::isAttention($user['user_id'], $userId),  //是否关注
+            'country' => $user['country'],
+            'city' => $user['city'],
         ];
         return resultArray(2000, '', $baseInfo);
 

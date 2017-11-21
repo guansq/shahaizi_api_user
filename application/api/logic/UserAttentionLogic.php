@@ -86,4 +86,11 @@ class UserAttentionLogic extends BaseLogic{
         M('users')->where(['user_id'=>$userId])->setDec('attention_num');//减少关注数
         return resultArray(2000);
     }
+
+    /**
+     * 得到粉丝数量
+     */
+    public static function getFansNum($user_id){
+        return M('user_attention')->where(['obj_id'=>$user_id,'obj_type'=>1])->count();
+    }
 }
