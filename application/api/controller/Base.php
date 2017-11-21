@@ -367,7 +367,7 @@ class Base extends Controller{
         if($validate->check($params)){
             return true;
         }
-        return $this->returnJson(-1, '', $validate->getError());
+        return $this->returnJson(-1, $validate->getError(), []);
     }
 
     /**
