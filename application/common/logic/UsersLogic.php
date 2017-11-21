@@ -1190,7 +1190,7 @@ class UsersLogic extends BaseLogic{
     /**
      * 得到关注我的粉丝列表
      */
-    public function getAttentionMe($user_id){
+    public function getAttentionMe($user_id,$me){
 
         $field = [
             'u.user_id',
@@ -1213,7 +1213,7 @@ class UsersLogic extends BaseLogic{
             return resultArray(-1,'数据为空',[]);
         }
         foreach($fans_list as $val){
-            $val['is_attention'] = UserAttentionLogic::isAttention($val['user_id'], $user_id);  //是否关注
+            $val['is_attention'] = UserAttentionLogic::isAttention($val['user_id'], $me);  //是否关注
         }
         $fans_list = new  PageVo($page, $fans_list);
         return resultArray(1,'成功',$fans_list);
@@ -1222,7 +1222,7 @@ class UsersLogic extends BaseLogic{
     /*
      * 得到我关注的列表
      */
-    public function getMeAttention($user_id){
+    public function getMeAttention($user_id,$me){
         $field = [
             'u.user_id',
             'u.attention_num',//别人的粉丝数
@@ -1240,6 +1240,9 @@ class UsersLogic extends BaseLogic{
             ->where("u.is_lock = 0 AND a.user_id = $user_id")
             ->limit($page->firstRow.','.$page->listRows)
             ->select();
+        foreach($fans_list as &$val){
+            $val['is_attention'] = UserAttentionLogic::isAttention($val['user_id'], $me);  //是否关注
+        }
         if(empty($fans_list)){
             return resultArray(-1,'数据为空',[]);
         }

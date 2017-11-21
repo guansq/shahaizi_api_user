@@ -66,7 +66,7 @@ class UserInfo extends Base{
 
 
     /**
-     * @api         {GET}   index.php?m=Api&c=UserInfo&a=attention     11.进行关注 ok wxx
+     * @api         {POST}   index.php?m=Api&c=UserInfo&a=attention     11.进行关注 ok wxx
      * @apiName     doAttention
      * @apiGroup    UserInfo
      * @apiParam  {string}  token   token.
@@ -87,33 +87,37 @@ class UserInfo extends Base{
     }
 
     /**
-     * @api         {GET}   index.php?m=Api&c=UserInfo&a=getAttentionList     我关注的列表 todo wxx
+     * @api         {GET}   index.php?m=Api&c=UserInfo&a=getAttentionList     我（用户）关注的列表 todo wxx
      * @apiName     getAttentionList
      * @apiGroup    UserInfo
      * @apiParam  {string}  token   token.
+     * @apiParam  {number}  user_id   用户ID.
      * @apiSuccess {number} page        当前页码.
      * @apiSuccess {number} totalPages  总页码数.
      * @apiSuccess {array} list         列表.
      */
     public function getAttentionList(){
+        $user_id = I('user_id');
         $userLogic = new UserLogic();
-        $result = $userLogic->getMeAttention($this->user_id);
+        $result = $userLogic->getMeAttention($user_id, $this->user_id);//得到用户关注的列表
         $this->ajaxReturn($result);
     }
 
 
     /**
-     * @api         {GET}   index.php?m=Api&c=UserInfo&a=getAttentionMeList     关注我的列表 todo wxx
+     * @api         {GET}   index.php?m=Api&c=UserInfo&a=getAttentionMeList     关注我（用户）的列表 todo wxx
      * @apiName     getAttentionMeList
      * @apiGroup    UserInfo
      * @apiParam  {string}  token   token.
+     * @apiParam  {string}  user_id   用户ID.
      * @apiSuccess {number} page        当前页码.
      * @apiSuccess {number} totalPages  总页码数.
      * @apiSuccess {array} list         列表.
      */
     public function getAttentionMeList(){
+        $user_id = I('user_id');
         $userLogic = new UserLogic();
-        $result = $userLogic->getAttentionMe($this->user_id);
+        $result = $userLogic->getAttentionMe($user_id, $this->user_id);//得到关注该用户的列表
         $this->ajaxReturn($result);
     }
 
