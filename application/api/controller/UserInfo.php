@@ -146,7 +146,7 @@ class UserInfo extends Base{
      * @apiParam    {Number}    userId      查看用户的ID
      * @apiParam    {String}    type      1动态|2攻略|3收藏的动态|4收藏的攻略
      */
-    public function otherInfo(){
+    public function getOtherInfo(){
         $type = I('type');
         $user_id = I('userId');
         $userLogic = new UserLogic();
