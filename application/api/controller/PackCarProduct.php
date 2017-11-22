@@ -64,7 +64,7 @@ class PackCarProduct extends Base{
         $city = input('city');
         $car_level = input('car_level');
         $car_seat_num = input('car_seat_num');
-        $order_times = input('order_times','desc');
+        $order_times = input('order_times');
         if(!in_array($type, [PackCarProductLogic::TYPE_AIRPLANE_RECEIVE, PackCarProductLogic::TYPE_PACKCAR,PackCarProductLogic::TYPE_AIRPLANE_SEND])){
             return $this->returnJson(4002);
         }

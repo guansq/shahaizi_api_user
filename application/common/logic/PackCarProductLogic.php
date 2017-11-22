@@ -36,11 +36,20 @@ class PackCarProductLogic extends BaseLogic{
             'car_level',
             'car_seat_num',
         ];
-        $list = $this->where($where)
-            ->field($fields)
-            ->order("order_times $order_times")
-            ->limit($page->firstRow, $page->listRows)
-            ->select();
+        if(empty($order_times)){
+            $list = $this->where($where)
+                ->field($fields)
+                ->order("sort asc")
+                ->limit($page->firstRow, $page->listRows)
+                ->select();
+        }else{
+            $list = $this->where($where)
+                ->field($fields)
+                ->order("order_times $order_times")
+                ->limit($page->firstRow, $page->listRows)
+                ->select();
+        }
+
         foreach($list as &$item){
             $item['publishTimeFmt'] = date('Y-m-d', $item['publishTime']);
             $item['priceFmt'] = moneyFormat($item['price']);
