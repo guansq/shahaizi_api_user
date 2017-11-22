@@ -102,7 +102,18 @@ class OrderCommentLogic extends BaseLogic{
             'user_id' => 'comm_user_id',
             'is_anonymous' => 'isAnonymous',
         ];
-        $userComm = $this->where('order_id', $orderId)->where('type', self::TYPE_USER)->field($fields)->find();
+        $usersFields = [
+            'order_commemt_id' => 'id',
+            'pack_order_score' => 'score',
+            'content' => 'content',
+            'img' => 'imgs',
+            'commemt_time' => 'commentTime',
+            'user_id' => 'comm_user_id',
+            'is_anonymous' => 'isAnonymous',
+            'drv_rank' => 'drv_rank',
+            'line_rank' => 'line_rank',
+        ];
+        $userComm = $this->where('order_id', $orderId)->where('type', self::TYPE_USER)->field($usersFields)->find();
         $sysComm = $this->where('order_id', $orderId)->where('type', self::TYPE_SYSTEM)->field($fields)->find();
         $drvComm = $this->where('order_id', $orderId)->where('type', self::TYPE_SELLER)->field($fields)->find();
         $ret = [
