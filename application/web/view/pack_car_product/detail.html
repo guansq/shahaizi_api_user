@@ -13,7 +13,17 @@
         <span class="service_scope">{$packCarProduct.serviceCityName}·{$packCarProduct.serviceCountryName} </span>
       </h3>
       <div class="pri">
-        <span class="w30b col_ff7"><b class="price">{$packCarProduct.priceFmt}</b><small>/天</small></span>
+        <span class="w30b col_ff7"><b class="price">{$packCarProduct.priceFmt}</b>
+          {if $packCarProduct.type eq 1}
+          <small>/次</small>
+          {/if}
+          {if $packCarProduct.type eq 2}
+          <small>/天</small>
+          {/if}
+          {if $packCarProduct.type eq 3}
+          <small>/次</small>
+          {/if}
+        </span>
         <!--<span class="w30b">{$packCarProduct.orderCnt}人出游</span>-->
         <div class="xing_b">
           <img src="/application/web/view/static/image/heart_{$packCarProduct.score|default=5}@2x.png" alt="">
