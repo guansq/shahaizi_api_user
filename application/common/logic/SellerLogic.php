@@ -79,7 +79,7 @@ class SellerLogic extends BaseLogic{
 
         $seller = $seller->toArray();
         $seller['countryName'] = $regCouLogic->where('id', $seller['countryId'])->value('name').'';
-        $seller['nickname'] = $isAnonymous == 1 ? '司导' : $seller['nickname'];
+        $seller['nickname'] = $isAnonymous == 1 ? firstStr($seller['nickname']) : $seller['nickname'];
         $seller['cityName'] = $regionLogic->where('id', $seller['city'])->value('name').'';
         $seller['platStart'] = intval($seller['platStart']);
         return $seller;
