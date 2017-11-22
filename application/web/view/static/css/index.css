@@ -1029,6 +1029,68 @@ body{
     color: #666;
     line-height: 16px;
 }
+/*
+    行程详情
+*/
+.route_head{
+    padding: 17px 20px;
+    background: #fff;
+}
+.route_head h1{
+    font-size: 16px;
+    color: #333;
+    font-weight: normal;
+    padding-bottom: 15px;
+}
+.route_head p{
+    font-size: 15px;
+    color: #FF7F19;
+}
+.route_con{
+    background: #fff;
+    padding: 12px 20px;
+}
+.route_imgtext h1{
+    font-size: 16px;
+}
+.route_imgtext li{
+    padding-bottom: 5px;
+}
+.route_imgtext li img{
+    width: 100%;
+}
+.route_imgtext li p{
+    padding: 8px 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 17px;
+}
+.route_bomb{
+    background: #fff;
+}
+.route_bomb ul{
+    border: none;
+    padding-bottom: 0;
+}
+.route_bomb li{
+    border-bottom: 1px solid #ddd;
+    padding: 0 20px;
+    line-height: 40px;
+}
+.route_bomb li:nth-last-of-type(1){
+    border: none;
+}
+.route_bomb li .s-con{
+    color: #2CD052;
+}
+.route_bomb .s-con i{
+    background: url(../image/icon_enter.png) no-repeat;
+    background-size: 100%;
+    height: 14px;
+}
+.mb_10{
+    margin-bottom: 10px;
+}
 
 
 
