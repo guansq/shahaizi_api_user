@@ -202,6 +202,8 @@ class Comment extends Base{
      *
      * @apiSuccess  {Object} userComm                用户评论内容.
      * @apiSuccess  {Number} userComm.score            评分.
+     * @apiSuccess  {Number} userComm.drv_rank         司导评分.
+     * @apiSuccess  {Number} userComm.line_rank         路线评分.
      * @apiSuccess  {String} userComm.content            评论文字.
      * @apiSuccess  {Array}  userComm.imgs                图片.
      * @apiSuccess  {Number} userComm.commentTime        评论时间.
@@ -210,6 +212,8 @@ class Comment extends Base{
 
      * @apiSuccess  {Object} drvComm                  司导评论内容.
      * @apiSuccess  {Number} drvComm.score            评分.
+     * @apiSuccess  {String} drvComm.head_pic            司导头像.
+     * @apiSuccess  {String} drvComm.nickname            司导昵称.
      * @apiSuccess  {String} drvComm.content            评论文字.
      * @apiSuccess  {Array}  drvComm.imgs                图片.
      * @apiSuccess  {Number} drvComm.commentTime        评论时间.

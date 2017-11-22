@@ -470,6 +470,7 @@ class User extends Base{
      * @apiParam {String} password         密码加密方式：md5(TPSHOP密码)
      * @apiParam {String} type             phone 为手机/mail为邮件
      * @apiParam {String} [countroy_code]    国家代码编号
+     * @apiParam {String} [apply_code]    邀请码
      * @apiParam {String} [code]           手机短信验证码或邮箱验证码
      * @apiParam {String} [push_id]        推送id，相当于第三方的reg_id
      * @apiSuccessExample {json} Success-Response:

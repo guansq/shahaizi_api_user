@@ -116,6 +116,16 @@ class OrderCommentLogic extends BaseLogic{
         $userComm = $this->where('order_id', $orderId)->where('type', self::TYPE_USER)->field($usersFields)->find();
         $sysComm = $this->where('order_id', $orderId)->where('type', self::TYPE_SYSTEM)->field($fields)->find();
         $drvComm = $this->where('order_id', $orderId)->where('type', self::TYPE_SELLER)->field($fields)->find();
+        if(!empty($drvComm)){
+            $drvComm['head_pic'] = '';
+            $drvComm['nickname'] = '';
+            $seller = M('seller')->where("seller_id={$drvComm['seller_id']}")->find();
+            if(!empty($seller)){
+                $drvComm['head_pic'] = $seller['head_pic'];
+                $drvComm['nickname'] = $seller['nickname'];
+            }
+        }
+
         $ret = [
             'userComm' => $userComm,
             'sysComm' => $sysComm,
