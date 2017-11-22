@@ -77,14 +77,16 @@ class HomeLogic extends BaseLogic
             $local = new LocalTalentLogic();
             $val = $local->local_info($val);
         }
+
         foreach($guideList as &$val){
-            $country =   $regCtrLogic->where('id',$val['country_id'])->value('name');
-            $city =  $regionLogic->where('id',$val['city_id'])->value('name');
-            $val['city'] ="{$country}·{$city}";
-            $val['country'] = $regCtrLogic->where('id',$val['country_id'])->value('name');
+            //$country =   $regCtrLogic->where('id',$val['country_id'])->value('name');
+            //$city =  $regionLogic->where('id',$val['city_id'])->value('name');
+            //$val['city'] ="{$country}·{$city}";
+            //$val['country'] = $regCtrLogic->where('id',$val['country_id'])->value('name');
             $val['praiseNum'] = $praiseLogic->countPraiseOfGuide($val['guide_id']);
             $val['owner'] =  $usersLogic->getBaseInfoById($val['user_id']);
         }
+        //echo '111111111111';die;
         foreach($newList as &$val){
             $val['praiseNum'] = $praiseLogic->countPraiseOfDynamic($val['act_id']);
             $val['owner'] =  $usersLogic->getBaseInfoById($val['user_id']);

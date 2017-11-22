@@ -1171,6 +1171,8 @@ class UsersLogic extends BaseLogic{
             'level',
             'attention_num',
             'good_num',
+            'country',
+            'city',
             'collection_num'
         ];
         $user = self::field($baseFields)->find($userId);
