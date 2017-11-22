@@ -10,7 +10,7 @@
       <h1>{$guide.title}</h1>
       <div class="hcon_remarks">
         <span>{$guide.timeFmt}</span>
-        <span>法国•巴黎</span>
+        <span>{$guide.city}</span>
         <span>{$guide.ownerName}</span>
         <span>{$guide.read_num}次阅读</span>
       </div>
@@ -18,19 +18,19 @@
         <p>{$guide.summary}</p>
       </div>
     </div>
+
     <div class="image_text">
-        <div class="imgandtext">
-            <img src="{$guide.cover_img|default='/application/web/view/static/image/2.png'}" alt="">
-            <p>现在是静态页面，需要调真实的数据的话，请找后台！现在是假的数据，看到了此类问题直接找后台让他们添加。</p>
-        </div>
-        <div class="imgandtext">
-            <img src="{$guide.cover_img|default='/application/web/view/static/image/2.png'}" alt="">
-            <p>现在是静态页面，需要调真实的数据的话，请找后台！现在是假的数据，看到了此类问题直接找后台让他们添加。</p>
-        </div>
-        <div class="imgandtext">
-            <img src="{$guide.cover_img|default='/application/web/view/static/image/2.png'}" alt="">
-            <p>现在是静态页面，需要调真实的数据的话，请找后台！现在是假的数据，看到了此类问题直接找后台让他们添加。</p>
-        </div>
+      {if $guide.is_admin eq 0}
+      {volist name="guide.content" id="vo"}
+      <div class="imgandtext">
+        <img src="{$vo.img|default='/application/web/view/static/image/2.png'}" alt="">
+        <p>{$vo.content}</p>
+      </div>
+      {/volist}
+      {else /}
+      {$guide.content}
+      {/if}
+
     </div>
     <!--<div class="detail_img">-->
       <!--<img src="{$guide.cover_img|default='/application/web/view/static/image/2.png'}" alt="">-->

@@ -20,6 +20,7 @@ class Guide extends WebBase{
             $de_json=html_json($guide['content']);
             $guide['content'] =object_to_array($de_json);
         }
+
         //dd($guide);
         $this->assign('guide',$guide);
         return $this->fetch();
