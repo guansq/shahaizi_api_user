@@ -131,6 +131,6 @@ class RegionLogic extends BaseLogic{
         return M('region')->where([
             'country_id' => ['neq', 7],
             'level' => 2
-        ])->select();
+        ])->order("is_hot desc")->select();
     }
 }
