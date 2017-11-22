@@ -71,10 +71,14 @@ class PackCarInfoLogic extends BaseLogic{
         $seat_list = array_unique(get_arr_column($list,'seat_num'));
         $seat = [];
         foreach($seat_list as $val){
-            $seat[] = $val;
+            if(!empty($val)){
+                $seat[] = $val;
+            }
         }
-
+        sort($seat);//进行排序
         $level_list = array_unique(get_arr_column($list,'car_level'));
+        sort($level_list);
+        //print_r($level_list);die;
         $level = [];
         foreach($level_list as $val){
             $temp = [];
@@ -82,6 +86,7 @@ class PackCarInfoLogic extends BaseLogic{
             $temp['name'] = self::LEVEL_ARR[$val];
             $level[] = $temp;
         }
+
         //print_r($seat_list);die;
 
         return resultArray(1,'成功',['seat_list'=>$seat,'level_list'=>$level]);
