@@ -47,7 +47,7 @@ class LocalTalentLogic extends BaseLogic{
                 ->where("l.is_admin = 1 OR s.enabled = 1 OR u.is_lock = 0")
                 ->where(['is_del'=>0])
                 ->limit(10)
-                ->order('good_num asc')
+                ->order('good_num desc')
                 ->limit($Page->firstRow.','.$Page->listRows)
                 ->select();//当地达人
             //echo $localList;die;
@@ -60,7 +60,7 @@ class LocalTalentLogic extends BaseLogic{
                 ->where(['l.city'=>['like',"%{$city}%"],'is_del'=>0])
                 ->where("l.is_admin = 1 OR s.enabled = 1 OR u.is_lock = 0")
                 ->limit(10)
-                ->order('good_num asc')
+                ->order('good_num desc')
                 ->limit($Page->firstRow.','.$Page->listRows)
                 ->select();//当地达人
         }
