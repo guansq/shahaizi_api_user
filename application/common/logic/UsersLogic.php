@@ -315,6 +315,24 @@ class UsersLogic extends BaseLogic{
         } // 记录日志流水
         $user = M('users')->where("user_id = {$user_id}")->find();
         $user['expireTime'] = $user['last_login'] + C('APP_TOKEN_TIME');
+        $coupon = M('coupon')->where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2 and is_del = 0")
+            ->order("add_time ASC")->limit(1)->select();//取第一个优惠券
+        //给推荐人以及注册的用户发放优惠券
+        if(!empty($coupon)){
+            if(!empty($map['first_leader'])){//推荐人不为空
+                foreach ($coupon as $key => $val)
+                {
+                    M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$map['first_leader'],'send_time'=>time()));
+                    M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
+                }
+            }
+            foreach ($coupon as $key => $val)
+            {
+                M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$user_id,'send_time'=>time()));
+                M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
+            }
+        }
+
         //        // 会员注册送优惠券
         //        $coupon = M('coupon')->where("send_end_time > ".time()." and ((createnum - send_num) > 0 or createnum = 0) and type = 2")->select();
         //        if(!empty($coupon)){
