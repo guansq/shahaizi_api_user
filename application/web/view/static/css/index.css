@@ -114,10 +114,10 @@ body{
 }
 .hcon_remarks span{
     float: left;
-    width: 33.3%;
-    text-align: left;
+    width: 25%;
+    text-align: center;
     color: #999;
-    font-size: 13px;
+    font-size: 10px;
 }
 .detail_img{
     padding: 20px 0;
@@ -1002,6 +1002,32 @@ body{
 }
 .dr_imgbox img{
     width: 30%;
+}
+/*
+    攻略详情
+*/
+.detail_brief{
+    padding: 0 0 10px;
+}
+.detail_brief p{
+    color: #666;
+    font-size: 13px;
+    line-height: 18px;
+}
+.image_text{
+    padding: 10px 0;
+}
+.imgandtext{
+    padding-bottom: 10px;
+}
+.imgandtext img{
+    width: 100%;
+}
+.imgandtext p{
+    font-size: 13px;
+    padding: 10px 0;
+    color: #666;
+    line-height: 16px;
 }
 
 
