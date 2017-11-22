@@ -1022,10 +1022,10 @@ body{
 .imgandtext{
     padding-bottom: 10px;
 }
-.imgandtext img{
+.image_text .imgandtext img{
     width: 100%;
 }
-.imgandtext p{
+.image_text .imgandtext .guide_text{
     font-size: 13px;
     padding: 10px 0;
     color: #666;
