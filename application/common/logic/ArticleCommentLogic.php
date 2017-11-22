@@ -52,9 +52,14 @@ class ArticleCommentLogic extends BaseLogic{
             'is_anonymous' => 'isAnonymous',
             'parent_id' => 'parentId',
         ];
+        $where = [
+            'parent_id' => 0,
+            'deleted' => 0,
+            'is_show' => 1,//评论显示
+        ];
         $list = self::where('type', $type)
             ->where('article_id', $articleId)
-            ->where('parent_id', 0)
+            ->where($where)
             ->field($field)
             ->select();
         if(empty($list)){
