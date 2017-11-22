@@ -14,9 +14,9 @@ use think\Request;
 class PackLine extends WebBase{
 
     const LEVEL_ARR = [
-        self::LEVEL_ONE => '经济型',//1=>jinji,2=>shushi         2=>'shushixing'
-        self::LEVEL_TWO => '舒适型',
-        self::LEVEL_THREE => '豪华型',
+        1 => '经济型',//1=>jinji,2=>shushi         2=>'shushixing'
+        2 => '舒适型',
+        3 => '豪华型',
     ];
 
     public function detail(Request $request){
