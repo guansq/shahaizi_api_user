@@ -7,10 +7,17 @@ use app\common\logic\OrderCommentLogic;
 use app\common\logic\PackCommentLogic;
 use app\common\logic\PackLineLogic;
 use app\common\logic\SellerLogic;
+use app\common\logic\PackCarInfo;
+use app\common\logic\PackCarInfoLogic;
 use think\Request;
 
 class PackLine extends WebBase{
 
+    const LEVEL_ARR = [
+        self::LEVEL_ONE => '经济型',//1=>jinji,2=>shushi         2=>'shushixing'
+        self::LEVEL_TWO => '舒适型',
+        self::LEVEL_THREE => '豪华型',
+    ];
 
     public function detail(Request $request){
         $id = input('id');
@@ -58,8 +65,10 @@ class PackLine extends WebBase{
                 'car_type' => $carType['car_info'],
                 'car_brand' => $carBrand['car_info'],
                 'car_seat_num' => $carInfo['seat_num'],
+                'car_level_name' => self::LEVEL_ARR[$carInfo['car_level']],
             ];
         }
+
         $this->assign('car',$car);
         $this->assign('comments',$comments);
         return $this->fetch();
