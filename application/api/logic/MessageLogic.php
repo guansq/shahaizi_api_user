@@ -124,7 +124,7 @@ class MessageLogic extends BaseLogic{
     }
 
     public function readMessage($id){
-        $result = M('system_messge')->where("id=$id")->update(['is_read'=>1]);
+        $result = M('system_message')->where("id=$id")->update(['is_read'=>1]);
         if($result !== false){
             return ['status'=>1,'msg'=>'成功','result'=>[]];
         }
