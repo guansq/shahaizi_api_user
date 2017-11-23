@@ -121,6 +121,12 @@ body{
     height: 15px;
     line-height: 15px;
 }
+.hcon_remarks span:nth-of-type(1){
+    text-align: left;
+}
+.hcon_remarks span:nth-last-of-type(1){
+    text-align: right;
+}
 .detail_img{
     padding: 20px 0;
 }
