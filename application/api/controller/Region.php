@@ -180,4 +180,20 @@ class Region extends Base{
         $list = $regionLogic->get_all_country_city();
         $this->ajaxReturn(['status'=>1,'msg'=>'成功','result'=>$list]);
     }
+
+    /**
+     * @api {GET}   /index.php?m=Api&c=Region&a=getCountryInfo      通过城市ID得到国家信息
+     * @apiName      getCountryInfo
+     * @apiGroup    Region
+     * @apiParam    {Number}    id      城市ID
+     */
+    public function getCountryInfo(){
+        $id = input('id');
+        if(empty($id)){
+            $this->ajaxReturn(['status'=>-1,'msg'=>'失败']);
+        }
+        $regionLogic = new RegionLogic();
+        $result = $regionLogic->get_country_info($id);
+        $this->ajaxReturn($result);
+    }
 }

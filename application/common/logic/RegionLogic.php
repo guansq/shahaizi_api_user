@@ -17,7 +17,7 @@ class RegionLogic extends BaseLogic{
      * 得到城市信息
      */
     public function get_city_info($where){
-        $result = M('region_country')->where($where)->order("is_hot desc,name asc")->select();
+        $result = M('region_country')->where($where)->order("is_hot DESC,convert(name using gb2312) ASC")->select();
         return $result;
     }
 
@@ -88,7 +88,9 @@ class RegionLogic extends BaseLogic{
      * @param $countryId
      */
     public function getAllCityByCountryId($countryId){
-        return $this->where('country_id', $countryId)->where('level', 2)->select();
+        return $this->where('country_id', $countryId)
+            ->order("is_hot DESC,convert(name using gb2312) ASC")
+            ->where('level', 2)->select();
     }
 
     /**
@@ -131,6 +133,18 @@ class RegionLogic extends BaseLogic{
         return M('region')->where([
             'country_id' => ['neq', 7],
             'level' => 2
-        ])->order("is_hot desc,name asc")->select();
+        ])->order("is_hot DESC,convert(name using gb2312) ASC")->select();
+    }
+
+    public function get_country_info($id){
+        $city = M('region')->where("id=$id")->find();
+        if(empty($city)){
+           return ['status'=>-1,'msg'=>'暂无数据'];
+        }
+        $country = M('region_country')->where("id={$city['country_id']}")->select();
+        if(empty($country)){
+            return ['status'=>-1,'msg'=>'暂无数据'];
+        }
+        return ['status'=>1,'msg'=>'成功','result'=>$country];
     }
 }

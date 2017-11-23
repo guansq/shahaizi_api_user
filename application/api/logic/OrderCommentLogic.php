@@ -100,6 +100,7 @@ class OrderCommentLogic extends BaseLogic{
             'img' => 'imgs',
             'commemt_time' => 'commentTime',
             'user_id' => 'comm_user_id',
+            'seller_id',
             'is_anonymous' => 'isAnonymous',
         ];
         $usersFields = [
@@ -138,7 +139,6 @@ class OrderCommentLogic extends BaseLogic{
             $comm['imgs'] = explode('|', $comm['imgs']);
             $comm['commentTimeFmt'] = date('Y-m-d H:s', $comm['commentTime']);
         }
-
         $userComm['owner'] =  UserLogic::getBaseInfoById($userComm['comm_user_id'],0,$userComm['isAnonymous'])['result'];
         return resultArray(2000, '', $ret);
     }
