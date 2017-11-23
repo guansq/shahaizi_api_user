@@ -105,9 +105,8 @@ class MessageLogic extends BaseLogic{
             $val['content'] = htmlspecialchars_decode($val['content']);
             $val['create_at'] = shzDate($val['create_at']);
         }
-        $ret = new PageVo($page,$list);
-        $ret['unread'] = $unread;//未读数量
-        return resultArray(1,'成功',$ret);
+        $result = ['totalPages' => $page->totalPages,'unread'=>$unread, 'list' => $list];
+        return resultArray(1,'成功',$result);
     }
 
     //得到系统消息详情
