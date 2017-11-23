@@ -17,7 +17,7 @@ class RegionLogic extends BaseLogic{
      * 得到城市信息
      */
     public function get_city_info($where){
-        $result = M('region_country')->where($where)->order("is_hot desc,name asc")->select();
+        $result = M('region_country')->where($where)->order("is_hot DESC,convert(name using gb2312) ASC")->select();
         return $result;
     }
 
@@ -131,6 +131,6 @@ class RegionLogic extends BaseLogic{
         return M('region')->where([
             'country_id' => ['neq', 7],
             'level' => 2
-        ])->order("is_hot desc,name asc")->select();
+        ])->order("is_hot DESC,convert(name using gb2312) ASC")->select();
     }
 }
