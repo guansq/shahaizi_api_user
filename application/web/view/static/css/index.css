@@ -1025,13 +1025,16 @@ body{
 .image_text .imgandtext img{
     width: 100%;
 }
-.image_text span{
+.image_text .imgandtext .guide_text{
     font-size: 13px;
     padding: 10px 0;
     color: #666;
     line-height: 16px;
 }
-.image_text .imgandtext .guide_text{
+.pt_guide img{
+    width: 100%;
+}
+.pt_guide p span{
     font-size: 13px;
     padding: 10px 0;
     color: #666;
