@@ -9,26 +9,26 @@
 <div class="route_box">
     <!--行程名称-->
     <div class="route_head mt_10">
-        <h1>大凡2成人2儿童二日定制服务</h1>
-        <p>￥<span>2600.00</span></p>
+        <h1>{$info.title|default='私人定制订单'}</h1>
+        <p>￥<span>{$info.total_price}</span></p>
     </div>
 
     <!--行程详情-->
     <div class="route_con mt_10 box2">
         <ul>
-            <li><span class="s-head">出行时间</span><span class="s-con">2017-11-06 12.23</span></li>
-            <li><span class="s-head">出发地</span><span class="s-con">苏州和平路</span></li>
-            <li><span class="s-head">目的地</span><span class="s-con">日本大阪田子元街</span></li>
-            <li><span class="s-head">游玩时间</span><span class="s-con">2天</span></li>
-            <li><span class="s-head">出行人数</span><span class="s-con">2成人2儿童</span></li>
-            <li><span class="s-head">行程车型</span><span class="s-con">5人座舒适型</span></li>
+            <li><span class="s-head">出行时间</span><span class="s-con">{$info.tour_time}</span></li>
+            <li><span class="s-head">出发地</span><span class="s-con">{$info.work_address}</span></li>
+            <li><span class="s-head">目的地</span><span class="s-con">{$info.dest_address}</span></li>
+            <li><span class="s-head">游玩时间</span><span class="s-con">{$info.tour_days}天</span></li>
+            <li><span class="s-head">出行人数</span><span class="s-con">{$info.use_car_adult}成人{$info.use_car_children}儿童</span></li>
+            <li><span class="s-head">行程车型</span><span class="s-con">{$info.req_car_seat_num}人座{$info.req_car_level_name}</span></li>
         </ul>
     </div>
 
     <!--游玩说明-->
     <div class="cir_con route_imgtext">
         <h1>游玩说明</h1>
-        <ul>
+        <!--<ul>
             <li>
                 <img src="/application/web/view/static/image/1.png" alt="">
                 <p>没错就是大阪，我们的第一站</p>
@@ -37,14 +37,15 @@
                 <img src="/application/web/view/static/image/1.png" alt="">
                 <p>美丽的大阪，充满樱花的大阪，美吧</p>
             </li>
-        </ul>
+        </ul>-->
+        {$info.play_message}
     </div>
 
     <!--信息说明-->
     <div class="route_bomb mt_10 box4 mb_10">
         <ul>
             <li><span class="s-head">费用说明</span><span id="fy_click" class="s-con">查看 <i></i></span></li>
-            <li><span class="s-head">退订政策</span><span id="zc_click" class="s-con">不支持 <i></i></span></li>
+            <li><span class="s-head">退订政策</span><span id="zc_click" class="s-con">{$info.costCompensationLevel} <i></i></span></li>
         </ul>
     </div>
 </div>
@@ -57,7 +58,7 @@
         </h1>
         <div class="bomb-div">
             <div class="two-con-div">
-                这是退订政策的内容
+                {$info.costStatement}
             </div>
         </div>
     </div>
@@ -68,7 +69,7 @@
         </h1>
         <div class="bomb-div">
             <div class="two-con-div">
-                这是费用说明的内容
+                {$info.costCompensation}
             </div>
         </div>
     </div>
