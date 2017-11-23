@@ -1031,6 +1031,15 @@ body{
     color: #666;
     line-height: 16px;
 }
+.pt_guide img{
+    width: 100%;
+}
+.pt_guide p span{
+    font-size: 13px;
+    padding: 10px 0;
+    color: #666;
+    line-height: 16px;
+}
 /*
     行程详情
 */
