@@ -135,4 +135,16 @@ class RegionLogic extends BaseLogic{
             'level' => 2
         ])->order("is_hot DESC,convert(name using gb2312) ASC")->select();
     }
+
+    public function get_country_info($id){
+        $city = M('region')->where("id=$id")->find();
+        if(empty($city)){
+           return ['status'=>-1,'msg'=>'暂无数据'];
+        }
+        $country = M('region_country')->where("id={$city['country_id']}")->select();
+        if(empty($country)){
+            return ['status'=>-1,'msg'=>'暂无数据'];
+        }
+        return ['status'=>1,'msg'=>'成功','result'=>$country];
+    }
 }

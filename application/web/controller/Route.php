@@ -9,6 +9,7 @@ use think\Request;
 class Route extends WebBase{
 
     public function detail(){
+        //$air_id = I('');
         return $this->fetch();
      }
 }
