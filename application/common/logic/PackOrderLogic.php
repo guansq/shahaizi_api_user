@@ -267,6 +267,59 @@ class PackOrderLogic extends BaseLogic{
         return $return;
     }
 
+    /*
+     * 得到私人定制订单详情
+     */
+    public function get_private_detail($air_id){
+        $carBarLogic = new PackCarBarLogic();
+        $sellerLogic = new SellerLogic();
+        $field = [
+            'o.title',
+            'o.total_price',
+            'p.tour_time',
+            'o.work_address',
+            'o.dest_address',
+            'p.tour_days',//游玩天数
+            'o.use_car_adult',//成人用车人数
+            'o.use_car_children',//儿童用车人数
+            'o.req_car_level',//要求的舒适度
+            'o.req_car_seat_num',//要求座位数
+            'p.play_message',//游玩说明
+            'o.cost_statement',//费用说明
+            'o.cost_compensation',//退订政策
+        ];
+        $info['costStatement'] = '';//费用说明
+        $info['costCompensation'] = '';//补偿改退
+        $info['costCompensationLevel'] = '';//补偿改退的等级
+        $map = [
+            'cover_img_k' => '宽松',
+            'cover_img_z' => '中等',
+            'cover_img_y' => '严格',
+            'cover_img_n' => '不退订',
+        ];
+        $info = M('pack_order')
+            ->field($field)
+            ->alias('o')
+            ->join('ruit_pack_base_private p','o.air_id=p.base_id')
+            ->where(['o.air_id' => $air_id,'o.type'=>5])->find();
+        if(empty($info)){
+            return [
+                'status' => -1,
+                'msg' => '数据为空'
+            ];
+        }
+        $info['costStatement'] = $info['cost_statement'];
+        $info['costCompensationLevel'] = $map[explode('###',$info['costCompensation'])[0]];
+        $info['costCompensation'] = explode('###',$info['costCompensation'])[1];
+        $info['tour_time'] = shzDate($info['tour_time']);
+        $info['req_car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$info['req_car_level']];
+        return [
+            'status' => 1,
+            'msg' => '成功',
+            'result' => $info,
+        ];
+
+    }
     /**
      * 获取订单 order_sn
      * @return string
