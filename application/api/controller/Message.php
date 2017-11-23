@@ -102,6 +102,7 @@ class Message extends Base{
     "msg": "成功",
     "result": {
     "p": 1,
+    "unread": 1,//未读数量
     "pageSize": 20,
     "totalRows": 1,
     "totalPages": 1,
@@ -122,6 +123,19 @@ class Message extends Base{
         $msgLgc = new MessageLogic();
         $user = $this->user_id;
         return $this->ajaxReturn($msgLgc->getSystemList($user));
+    }
+
+    /**
+     * @api     {GET}   /index.php?m=Api&c=Message&a=readMessage        设置系统消息已读      管少秋
+     * @apiName     readMessage
+     * @apiGroup    Message
+     * @apiParam    {Number}    id  消息ID
+     */
+    public function readMessage(){
+        $id = input('id');
+        $msgLgc = new MessageLogic();
+        $result = $msgLgc->readMessage($id);
+        return $this->ajaxReturn($result);
     }
 
     /**
