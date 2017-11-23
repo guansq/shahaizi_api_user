@@ -17,7 +17,8 @@ class ArticleCommentLogic extends BaseLogic{
         }
         $userLogic = new UserLogic();
         $user = $userLogic->find($data['publish_id']);
-        pushMessage('动态评论', '您有一条新动态被评论', $user['push_id'], $user['user_id'], 0);
+        $commentUser = $userLogic->find($data['user_id']);
+        pushMessage('动态评论', '您有一条新动态被'.$commentUser['nickname'].'评论了', $user['push_id'], $user['user_id'], 0);
         return ['status'=>1,'msg'=>'评论成功'];
     }
 }
