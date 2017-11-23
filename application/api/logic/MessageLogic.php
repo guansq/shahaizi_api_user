@@ -96,6 +96,7 @@ class MessageLogic extends BaseLogic{
         }
         $list =  M('system_message')->where($where)->order('create_at desc')->select();//echo die;->fetchSql(ture)
         $count = M('system_message')->where($where)->count();
+        $unread = M('system_message')->where($where)->where("is_read=0")->count();//未读
         if(empty($list)){
             return resultArray(-1,'没有数据',[]);
         }
@@ -105,6 +106,7 @@ class MessageLogic extends BaseLogic{
             $val['create_at'] = shzDate($val['create_at']);
         }
         $ret = new PageVo($page,$list);
+        $ret['unread'] = $unread;//未读数量
         return resultArray(1,'成功',$ret);
     }
 
@@ -120,5 +122,13 @@ class MessageLogic extends BaseLogic{
         $info['content'] = htmlspecialchars_decode($info['content']);
         $info['create_at'] = shzDate($info['create_at']);
         return resultArray(1,'成功',$info);
+    }
+
+    public function readMessage($id){
+        $result = M('system_messge')->where("id=$id")->update(['is_read'=>1]);
+        if($result !== false){
+            return ['status'=>1,'msg'=>'成功','result'=>[]];
+        }
+        return ['status'=>-1,'msg'=>'失败'];
     }
 }
