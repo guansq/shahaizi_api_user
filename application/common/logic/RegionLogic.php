@@ -88,7 +88,9 @@ class RegionLogic extends BaseLogic{
      * @param $countryId
      */
     public function getAllCityByCountryId($countryId){
-        return $this->where('country_id', $countryId)->where('level', 2)->select();
+        return $this->where('country_id', $countryId)
+            ->order("is_hot DESC,convert(name using gb2312) ASC")
+            ->where('level', 2)->select();
     }
 
     /**
