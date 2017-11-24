@@ -295,11 +295,8 @@ class DriverLogic extends BaseLogic{
             ->join('ruit_pack_base_private p','o.air_id = p.base_id','LEFT')
             ->where("o.air_id = $air_id")
             ->find();
-        if(!in_array($info['req_car_level'],PackCarInfoLogic::LEVEL_ARR)){
-            $info['req_car_level'] = '其他';
-        }else{
-            $info['req_car_level'] = PackCarInfoLogic::LEVEL_ARR[$info['req_car_level']];
-        }
+        $info['req_car_level'] = PackCarInfoLogic::LEVEL_ARR[$info['req_car_level']];
+
         $info['tour_time'] =shzDate($info['tour_time']);
         if(empty($info)){
             return resultArray(-1,'暂无数据',[]);
