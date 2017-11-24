@@ -54,6 +54,7 @@ function toCode(eve){
     url:API_SEND_CAPTCHA,
     data:codeParams
   }).done(function(res){
+    console.log(res);
     if(res.status == 1){
       settime(eve);
       layer.msg("发送成功", {"icon":1, time:1000});
