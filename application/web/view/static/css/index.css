@@ -255,6 +255,9 @@ body{
 .circuit_img .pack_carbox img{
     width: 100%;
 }
+.circuit_img .pack_lineimg img{
+    width: 100%;
+}
 .circuit_img .synopsis{
     padding: 0 20px;
     overflow: hidden;
