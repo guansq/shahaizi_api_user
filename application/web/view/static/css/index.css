@@ -100,7 +100,7 @@ body{
 }
 /*攻略详情*/
 .detail_head{
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #f8f8f8;
 }
 .detail_head h1{
     font-size: 19px;
@@ -252,7 +252,7 @@ body{
     width: 100%;
     background: #ffffff;
 }
-.circuit_img>img{
+.circuit_img .pack_carbox img{
     width: 100%;
 }
 .circuit_img .synopsis{
@@ -1107,6 +1107,9 @@ body{
 }
 .mb_10{
     margin-bottom: 10px;
+}
+.swiper-pagination-bullet-active{
+    background: #fff !important;
 }
 
 

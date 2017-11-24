@@ -1,12 +1,23 @@
 {extend name="public/web_html"}
 {block name="style"}
-
+<link rel="stylesheet" href="/application/web/view/static/lib/swiper/css/swiper.min.css">
 {/block}
 
 {block name="body"}
 <main class="cir_main">
   <div class="circuit_img">
-    <img src="{$packCarProduct.imgs[0]|default='/application/web/view/static/image/2.png'}" alt="">
+    <div class="pack_carbox swiper-container">
+      <!---->
+      <ul class="swiper-wrapper">
+        <li class="swiper-slide">
+          <img src="{$packCarProduct.imgs[0]|default='/application/web/view/static/image/2.png'}" alt="">
+        </li>
+        <li class="swiper-slide">
+          <img src="{$packCarProduct.imgs[0]|default='/application/web/view/static/image/2.png'}" alt="">
+        </li>
+      </ul>
+      <div class="swiper-pagination"></div>
+    </div>
     <div class="synopsis">
       <h3>
         <span class="syn_title">{$packCarProduct.title}</span>
@@ -143,7 +154,14 @@
 {/block}
 
 {block name="script"}
+<script src="/application/web/view/static/lib/swiper/js/swiper.min.js"></script>
 <script>
+
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+    });
+
   $(function(){
     // 遍历 显示两个 其余隐藏
     function eachAppraiseList(ele, eleT, num){
