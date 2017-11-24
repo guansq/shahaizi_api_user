@@ -1085,6 +1085,17 @@ body{
     color: #666;
     line-height: 17px;
 }
+.route_imgtext img{
+    width: 100% !important;
+}
+.route_imgtext p{
+    padding: 8px 0;
+}
+.route_imgtext p,.route_imgtext p span,.route_imgtext p a{
+    font-size: 14px;
+    color: #666;
+    line-height: 17px;
+}
 .route_bomb{
     background: #fff;
 }
