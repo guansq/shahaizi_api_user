@@ -310,8 +310,8 @@ class PackOrderLogic extends BaseLogic{
             ];
         }
         $info['costStatement'] = $info['cost_statement'];
-        $info['costCompensationLevel'] = $map[explode('###',$info['costCompensation'])[0]];
-        $info['costCompensation'] = explode('###',$info['costCompensation'])[1];
+        $info['costCompensationLevel'] = $map[explode('###',$info['cost_compensation'])[0]];
+        $info['costCompensation'] = explode('###',$info['cost_compensation'])[1];
         $info['tour_time'] = shzDate($info['tour_time']);
         $info['req_car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$info['req_car_level']];
         return [
