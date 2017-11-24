@@ -1234,7 +1234,7 @@ class UsersLogic extends BaseLogic{
         if(empty($fans_list)){
             return resultArray(-1,'数据为空',[]);
         }
-        foreach($fans_list as $val){
+        foreach($fans_list as &$val){
             $val['is_attention'] = UserAttentionLogic::isAttention($val['user_id'], $me);  //是否关注
         }
         $fans_list = new  PageVo($page, $fans_list);
