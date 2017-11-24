@@ -105,6 +105,7 @@ class PackCarProductLogic extends BaseLogic{
             'cost_compensation' => 'costCompensation',             // 补偿改退.
             'car_level',             // 舒适度.
             'car_seat_num',             // 座位数.
+            'full_cityname',             // 城市.
         ];
         $pcar = $this->field($fields)->find($id);
         if(empty($pcar)){

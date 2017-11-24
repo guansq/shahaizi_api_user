@@ -116,6 +116,10 @@ class PackOrder extends Base{
      * "drv_code": "121540215",
      * "req_car_id": 11245,
      * "req_car_type": "大众桑塔纳",
+     * "req_car_level": "1",//舒适度级别
+     * "req_car_seat_num": "1",//车辆运动
+     * "car_level_name": "1",//车辆运动
+     * "req_car_type": "大众桑塔纳",
      * "con_car_id": 1,
      * "con_car_type": "2",
      * "con_car_seat_num": null,

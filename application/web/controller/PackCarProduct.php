@@ -23,6 +23,7 @@ class PackCarProduct extends WebBase{
         ];
         $pcpRet['result']['costCompensationLevel'] = $map[explode('###',$pcpRet['result']['costCompensation'])[0]];
         $pcpRet['result']['costCompensation'] = explode('###',$pcpRet['result']['costCompensation'])[1];
+        //print_r($pcpRet['result']);die;
         $this->assign('packCarProduct',$pcpRet['result']);
 
         $where =[

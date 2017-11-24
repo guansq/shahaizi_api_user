@@ -238,11 +238,12 @@ class PackOrderLogic extends BaseLogic{
             }
         }
         $carBar = $carBarLogic->find($info['req_car_type']);
-        $info['req_car_type'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
+        //$info['req_car_type'] = empty($carBar['car_info']) ? '' : $carBar['car_info'];
         $info['hx_user_name'] = empty($seller['hx_user_name']) ? '' : $seller['hx_user_name'];
         $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
         $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
         $info['user_money_fmt'] = moneyFormat($seller['user_money']);
+        $info['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$info['car_level']];
         if($info['type'] == 6){
             $base_day = M('pack_base_by_day')->where(['base_id'=>$air_id])->find();
             $info['pack_start_time'] = [];
