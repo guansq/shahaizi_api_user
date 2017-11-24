@@ -9,12 +9,11 @@
     <div class="pack_carbox swiper-container">
       <!---->
       <ul class="swiper-wrapper">
+        {volist name="packCarProduct.imgs" id="img"}
         <li class="swiper-slide">
-          <img src="{$packCarProduct.imgs[0]|default='/application/web/view/static/image/2.png'}" alt="">
+          <img src="{$img}" alt="">
         </li>
-        <li class="swiper-slide">
-          <img src="{$packCarProduct.imgs[0]|default='/application/web/view/static/image/2.png'}" alt="">
-        </li>
+        {/volist}
       </ul>
       <div class="swiper-pagination"></div>
     </div>
