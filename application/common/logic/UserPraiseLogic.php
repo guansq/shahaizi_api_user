@@ -143,10 +143,11 @@ class UserPraiseLogic extends BaseLogic{
             if(!empty($ownerId)){
                 $userLogic = new UserLogic();
                 $user = $userLogic->find($ownerId);
+                $title = '您发布的动态被'.$user['nickname'].'点赞';
                 $content = '您发布的动态被'.$user['nickname'].'点赞';
             }
-            //send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_DYNAMIC);
-            pushMessage($title, $content, $user['push_id'],$user['user_id'], 0);//进行点赞推送
+            send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_DYNAMIC);
+            //pushMessage($title, $content, $user['push_id'],$user['user_id'], 0);//进行点赞推送
         }
         if($type == self::TYPE_GUIDE){
             $title = '攻略点赞';
@@ -154,10 +155,11 @@ class UserPraiseLogic extends BaseLogic{
             if(!empty($ownerId)){
                 $userLogic = new UserLogic();
                 $user = $userLogic->find($ownerId);
+                $title = '您发布的攻略被'.$user['nickname'].'点赞';
                 $content = '您发布的攻略被'.$user['nickname'].'点赞';
             }
-            //send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_GUIDE);
-            pushMessage($title, $content, $user['push_id'],$user['user_id'], 0);//进行点赞推送
+            send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_GUIDE);
+            //pushMessage($title, $content, $user['push_id'],$user['user_id'], 0);//进行点赞推送
         }
         return resultArray(2000);
 
