@@ -222,12 +222,12 @@ class PackOrderLogic extends BaseLogic{
             }
         }
         if(in_array($info['type'],[4,5]) ){//1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游7快捷订单
-            if($info['car_product_id']){//车产品ID
+            //if($info['car_product_id']){}
                 //$car_product = M('pack_car_product')->where("id={$info['car_product_id']}")->find();
-                $info['costStatement'] = $info['cost_statement'];
-                $info['costCompensationLevel'] = $map[explode('###',$info['cost_compensation'])[0]];
-                $info['costCompensation'] = htmlspecialchars_decode(explode('###',$info['cost_compensation'])[1]);
-            }
+            $info['costStatement'] = $info['cost_statement'];
+            $info['costCompensationLevel'] = $map[explode('###',$info['cost_compensation'])[0]];
+            $info['costCompensation'] = htmlspecialchars_decode(explode('###',$info['cost_compensation'])[1]);
+
         }
         if($info['type'] == 3){//线路单独进行取出退订政策和费用说明
             if($info['line_id']){//线路ID
