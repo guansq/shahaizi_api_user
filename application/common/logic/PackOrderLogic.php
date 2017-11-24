@@ -218,7 +218,7 @@ class PackOrderLogic extends BaseLogic{
                 $car_product = M('pack_car_product')->where("id={$info['car_product_id']}")->find();
                 $info['costStatement'] = $car_product['cost_statement'];
                 $info['costCompensationLevel'] = $map[explode('###',$car_product['cost_compensation'])[0]];
-                $info['costCompensation'] = explode('###',$car_product['cost_compensation'])[1];
+                $info['costCompensation'] = htmlspecialchars_decode(explode('###',$car_product['cost_compensation'])[1]);
             }
         }
         if(in_array($info['type'],[4,5]) ){//1是接机 2是送机 3线路订单 4单次接送 5私人订制 6按天包车游7快捷订单
@@ -226,7 +226,7 @@ class PackOrderLogic extends BaseLogic{
                 //$car_product = M('pack_car_product')->where("id={$info['car_product_id']}")->find();
                 $info['costStatement'] = $info['cost_statement'];
                 $info['costCompensationLevel'] = $map[explode('###',$info['cost_compensation'])[0]];
-                $info['costCompensation'] = explode('###',$info['cost_compensation'])[1];
+                $info['costCompensation'] = htmlspecialchars_decode(explode('###',$info['cost_compensation'])[1]);
             }
         }
         if($info['type'] == 3){//线路单独进行取出退订政策和费用说明
@@ -234,7 +234,7 @@ class PackOrderLogic extends BaseLogic{
                 $car_line = M('pack_line')->where("line_id={$info['line_id']}")->find();
                 $info['costStatement'] = $car_line['cost_statement'];
                 $info['costCompensationLevel'] = $map[explode('###',$car_line['cost_compensation'])[0]];
-                $info['costCompensation'] = explode('###',$car_line['cost_compensation'])[1];
+                $info['costCompensation'] = htmlspecialchars_decode(explode('###',$car_line['cost_compensation'])[1]);
             }
         }
         $carBar = $carBarLogic->find($info['req_car_type']);
