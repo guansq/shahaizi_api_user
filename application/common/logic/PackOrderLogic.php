@@ -243,7 +243,7 @@ class PackOrderLogic extends BaseLogic{
         $info['nickname'] = empty($seller['nickname']) ? '' : $seller['nickname'];
         $info['avatar'] = empty($seller['head_pic']) ? '' : $seller['head_pic'];
         $info['user_money_fmt'] = moneyFormat($seller['user_money']);
-        $info['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$info['car_level']];
+        $info['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$info['req_car_level']];
         if($info['type'] == 6){
             $base_day = M('pack_base_by_day')->where(['base_id'=>$air_id])->find();
             $info['pack_start_time'] = [];
