@@ -133,6 +133,9 @@ class PackCarProduct extends Base{
      * @apiSuccess {String} car_level   车的舒适度.
      * @apiSuccess {String} car_level_name   舒适度名称.
      * @apiSuccess {String} car_seat_num   车的座位数.
+     * @apiSuccess {String} costStatement   费用说明.
+     * @apiSuccess {String} costCompensationLevel   退订政策级别.
+     * @apiSuccess {String} costCompensation   退订政策.
      */
     private function getDetail($id){
         $this->checkToken();
