@@ -714,6 +714,7 @@ body{
 .car_con .swiper-wrapper .swiper-slide img{
     float: left;
     width: 60%;
+    max-height: 150px;
 }
 .car_con .swiper-wrapper .swiper-slide .car_info{
     width: 40%;
