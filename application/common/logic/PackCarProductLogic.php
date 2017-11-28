@@ -111,7 +111,16 @@ class PackCarProductLogic extends BaseLogic{
         if(empty($pcar)){
             return resultArray(4004);
         }
+        $map = [
+            'cover_img_k' => '宽松',
+            'cover_img_z' => '中等',
+            'cover_img_y' => '严格',
+            'cover_img_n' => '不退订',
+        ];
         $pcar = $pcar->toArray();
+        $pcar['costStatement'] = $pcar['costStatement'];
+        $pcar['costCompensationLevel'] = $map[explode('###',$pcar['costCompensation'])[0]];
+        $pcar['costCompensation'] = htmlspecialchars_decode(explode('###',$pcar['costCompensation'])[1]);
         $pcar['publishTimeFmt'] = date('Y-m-d', $pcar['publishTime']);
         $pcar['priceFmt'] = moneyFormat($pcar['price']);
         $pcar['childSeatPriceFmt'] = moneyFormat($pcar['childSeatPrice']);

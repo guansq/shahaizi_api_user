@@ -228,6 +228,12 @@ class PackLine extends Base{
         }
         $this->checkToken();
         $pkgLine = $pkgLineLogic->getDetailByModel($pkgLine,$this->user);
+        $map = [
+            'cover_img_k' => '宽松',
+            'cover_img_z' => '中等',
+            'cover_img_y' => '严格',
+            'cover_img_n' => '不退订',
+        ];
         $ret = [
             'id'=>$pkgLine['line_id'],
             'title'=>$pkgLine['line_title'],
@@ -238,7 +244,8 @@ class PackLine extends Base{
             'isPraise'=>$pkgLine['is_praise'],
             'playDay'=>intval($pkgLine['play_day']),
             'costStatement'=>$pkgLine['cost_statement'],
-            'costCompensation'=>$pkgLine['cost_compensation'],
+            'costCompensation'=>$map[explode('###',$pkgLine['costCompensation'])[0]],
+            'costCompensationLevel'=>htmlspecialchars_decode(explode('###',$pkgLine['costCompensation'])[1]),
         ];
         return $this->returnJson(2000,'',$ret);
 
