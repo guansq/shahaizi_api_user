@@ -560,7 +560,12 @@ class User extends Base{
                 returnJson(-1, $result['msg']);
             }
         }
-
+        if(!empty($apply_code)){
+            $up_user = M('users')->where("apply_code = '{$apply_code}'")->value('user_id'); // 得到推荐人id
+            if(empty($up_user)){
+                returnJson(-1, '抱歉，您输入的推荐码有误');
+            }
+        }
         $data = $this->userLogic->reg($username, $password, $password, $push_id, $countroy_code,$apply_code);
         if($data['status'] == 1){
             $cartLogic = new CartLogic();

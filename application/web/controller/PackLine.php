@@ -28,9 +28,16 @@ class PackLine extends WebBase{
         if(empty($line)){
             return $this->error('你要查看的路线已经不存在');
         }
-
-
         $line = $line->toArray();
+        $map = [
+            'cover_img_k' => '宽松',
+            'cover_img_z' => '中等',
+            'cover_img_y' => '严格',
+            'cover_img_n' => '不退订',
+        ];
+        $line['costStatement'] = $line['cost_statement'];
+        $line['costCompensationLevel'] = $map[explode('###',$line['cost_compensation'])[0]];
+        $line['costCompensation'] = explode('###',$line['cost_compensation'])[1];
         $line_detail=$line['line_detail'];
         $de_json=html_json($line_detail);
         $line['line_detail'] =object_to_array($de_json);

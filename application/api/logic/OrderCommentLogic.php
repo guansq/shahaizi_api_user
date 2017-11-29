@@ -57,7 +57,7 @@ class OrderCommentLogic extends BaseLogic{
         //进行评价后的推送
         $seller = SellerLogic::findByDrvId($order['seller_id']);
         if(!empty($seller)){
-            pushMessage('客人评价订单', '您有一条订单，客人已评价，请尽快评价，评价完成才能获得收益哦', $seller['device_no'], $seller['seller_id'], 1);
+            pushMessage('客人评价订单', '您有一条订单，客人已评价，请尽快评价', $seller['device_no'], $seller['seller_id'], 1);
         }
         $order->user_order_status = 1;
         if( $order->seller_order_status){
