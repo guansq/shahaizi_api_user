@@ -124,19 +124,46 @@
       {/volist}
     </div>
     {/volist}
-
-
+  </div>
+  <div class="route_bomb mt_10 box4 mb_10">
+    <ul>
+      <li><span class="s-head">费用说明</span><span id="fy_click" class="s-con">查看 <i></i></span></li>
+      <li><span class="s-head">退订政策</span><span id="zc_click" class="s-con">{$info.costCompensationLevel} <i></i></span></li>
+    </ul>
   </div>
   <div class="cir_con box5">
     <h1>温馨提示</h1>
     <p>下单前可以先与客服联系哦</p>
   </div>
 </main>
+<div class="bomb_box">
+  <div class="bomb_con">
+    <h1 class="title-h1">
+      退订政策
+      <i></i>
+    </h1>
+    <div class="bomb-div">
+      <div class="two-con-div">
+        {$info.costCompensation}
+      </div>
+    </div>
+  </div>
+  <div class="bomb_con2">
+    <h1 class="title-h1">
+      费用说明
+      <i></i>
+    </h1>
+    <div class="bomb-div">
+      <div class="two-con-div">
+        {$info.costStatement}
+      </div>
+    </div>
+  </div>
+</div>
 {/block}
 
 {block name="script"}
 <script>
-
     $(function(){
         // 遍历 显示两个 其余隐藏
         function eachAppraiseList(){
@@ -159,6 +186,39 @@
                eachAppraiseList();
            }
        })
+
+      // 费用说明
+      $("#zc_click").click(function(){
+          $(document).on("touchmove",function(e) {
+              if(e.target.className.indexOf("bomb_box") >= 0) {
+                  e.preventDefault();
+              } else {
+                  e.stopPropagation();
+              }
+          })
+          $(".bomb_box").css("display", "block");
+          $(".bomb_con").css("display", "block");
+          $(".bomb_con2").css("display", "none");
+          var h = $(".bomb_con .bomb-div").height() + $(".bomb_con .title-h1").height();
+          $(".bomb_con").height(h);
+      })
+      $("#fy_click").click(function(){
+          $(document).on("touchmove",function(e) {
+              if(e.target.className.indexOf("bomb_box") >= 0) {
+                  e.preventDefault();
+              } else {
+                  e.stopPropagation();
+              }
+          })
+          $(".bomb_box").css("display", "block");
+          $(".bomb_con").css("display", "none")
+          $(".bomb_con2").css("display", "block");
+          var h = $(".bomb_con2 .bomb-div").height() + $(".bomb_con2 .title-h1").height();
+          $(".bomb_con2").height(h);
+      })
+      $(".title-h1 i").click(function(){
+          $(".bomb_box").css("display", "none");
+      })
     });
 </script>
 {/block}
