@@ -5,32 +5,49 @@
 {/block}
 
 {block name="body"}
-<main class="main-reg">
+<div class="reg_box">
   <div class="hsh-page">
+    <div class="head_imgbox">
+      <img src="/application/web/view/static/image/bj_zhuce1@2x.png" alt="">
+    </div>
     <ul class="hsh-login-list">
-      <li>
-        <span>区号</span>
+      <li class="bor_ra">
+        <span class="qh_id">区号</span>
         <select id="country_code_slc" class="code_select">
           {foreach $country_code as $code}
           <option value="{$code.mobile_prefix}">{$code.country}+{$code.mobile_prefix}</option>
           {/foreach}
         </select>
       </li>
-      <li>
-        <span>手机号</span><input id="phone" type="tel" placeholder="请输入手机号码"/></li>
-      <li>
-        <span>验证码</span><input class="code" id="register_code_ipt" type="number" placeholder="请输入验证码"/>
+      <li class="bor_ra">
+        <!--<span>手机号</span>-->
+        <input id="phone" type="tel" placeholder="请输入手机号码"/>
+      </li>
+      <li class="bor_ra">
+        <!--<span>验证码</span>-->
+        <input class="code" id="register_code_ipt" type="number" placeholder="请输入验证码"/>
         <input type="button" class="code-btn btn-blue" id="send_captcha_btn" value="获取验证码">
       </li>
-      <li><span>密码</span><input id="password" type="password" placeholder="请输入密码"/></li>
-      <li><span>邀请码</span><input id="apply_code" type="text" value="{:input('apply_code')}" placeholder="必填"/></li>
-      <li class="explain">点击注册，即表示您同意 <a href="/index.php/web/user/regProtocol">《傻孩子注册协议》</a></li>
+      <li class="bor_ra">
+        <!--<span>密码</span>-->
+        <input id="password" type="password" placeholder="请输入密码"/>
+      </li>
+      <li class="bor_ra">
+        <span class="qh_id">邀请码</span>
+        <input id="apply_code" class="invite" type="text" value="{:input('apply_code')}" placeholder="必填"/>
+      </li>
+      <li class="explain">
+        点击注册，即表示您同意 <a href="/index.php/web/user/regProtocol">《傻孩子注册协议》</a>
+      </li>
       <li id="register" class="register">
-        <button class="btn-blue reg_btn" id="reg_sub">注册</button>
+        <button class="btn-blue reg_btn" id="reg_sub">注册并下载</button>
       </li>
     </ul>
+    <div class="foot_imgbox">
+      <img src="/application/web/view/static/image/bj_zhuce2@2x.png" alt="">
+    </div>
   </div>
-</main>
+</div>
 
 {/block}
 

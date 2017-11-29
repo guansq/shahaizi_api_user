@@ -949,9 +949,10 @@ body{
 }
 .code_select{
     height: 30px;
-    font-size: 1.0rem;
+    font-size: .9rem;
     padding: 0 6px;
     border: none;
+    color: #666;
 }
 .reg_btn{
     font-size: 1.1rem;
@@ -1125,6 +1126,79 @@ body{
 }
 .swiper-pagination-bullet-active{
     background: #fff !important;
+}
+/*
+    注册
+*/
+.reg_box{
+    height: 100vh;
+    background: url("../image/bj_zhuce@2x.png") no-repeat;
+    background-size: 100% 100%;
+}
+.hsh-page{
+    padding-top: 50px;
+}
+.head_imgbox{
+    text-align: center;
+}
+.head_imgbox img{
+    width: 90%;
+}
+.hsh-login-list li.bor_ra{
+    border: 1px solid #ccc;
+    margin-bottom: .6rem;
+    border-radius: .6rem;
+    padding: 2px 5px;
+    line-height: 38px;
+}
+.hsh-login-list li .qh_id{
+    display: inline-block;
+    width: 26%;
+    color: #666;
+    padding-left: 6px;
+    font-size: .9rem;
+}
+.hsh-login-list li input{
+    width: 100%;
+    height: 35px;
+    vertical-align: middle;
+}
+.hsh-login-list .code{
+    width: 58%;
+}
+.hsh-login-list .code-btn{
+    background: none;
+    color: #666;
+    border-left: 1px solid #ddd;
+    border-radius: 0;
+    margin-top: 2px;
+    padding-top: 2px;
+}
+.hsh-login-list li input.invite{
+    text-align: right;
+    width: 50%;
+    float: right;
+    color: #666;
+}
+.hsh-login-list .explain{
+    border-bottom: none;
+    color: #999999;
+    font-size: 0.8rem;
+    line-height: 35px;
+}
+.hsh-login-list .explain a{
+    color: #2cd052;
+}
+.hsh-login-list .register .reg_btn{
+    background-color: #2cd052;
+    font-size: 0.9rem;
+    color: #fff;
+}
+.foot_imgbox{
+    /*padding-top: .8rem;*/
+}
+.foot_imgbox img{
+    width: 100%;
 }
 
 
