@@ -244,8 +244,8 @@ class PackLine extends Base{
             'isPraise'=>$pkgLine['is_praise'],
             'playDay'=>intval($pkgLine['play_day']),
             'costStatement'=>$pkgLine['cost_statement'],
-            'costCompensation'=>$map[explode('###',$pkgLine['costCompensation'])[0]],
-            'costCompensationLevel'=>htmlspecialchars_decode(explode('###',$pkgLine['costCompensation'])[1]),
+            'costCompensation'=>htmlspecialchars_decode(explode('###',$pkgLine['cost_compensation'])[1]),
+            'costCompensationLevel'=>$map[explode('###',$pkgLine['cost_compensation'])[0]],
         ];
         return $this->returnJson(2000,'',$ret);
 
