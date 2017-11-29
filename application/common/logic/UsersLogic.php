@@ -319,18 +319,19 @@ class UsersLogic extends BaseLogic{
             ->order("add_time ASC")->limit(1)->select();//取第一个优惠券
         //给推荐人以及注册的用户发放优惠券
         //print_r($coupon);die;
+
         if(!empty($coupon)){
             if(!empty($map['first_leader'])){//推荐人不为空
                 foreach ($coupon as $key => $val)
                 {
                     M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$map['first_leader'],'send_time'=>time()));
-                    M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
+                    M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 推荐人优惠券领取数量加一
+
+                    if($map['first_leader'] != $user_id){
+                        M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$user_id,'send_time'=>time()));
+                        M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 给自己的优惠券数量增加 1
+                    }
                 }
-            }
-            foreach ($coupon as $key => $val)
-            {
-                M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$user_id,'send_time'=>time()));
-                M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 优惠券领取数量加一
             }
         }
 
