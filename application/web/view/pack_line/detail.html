@@ -55,6 +55,14 @@
   </div>
   {/notempty}
 
+  {eq name='line.is_admin' value='1'}
+  <div class="cir_con box2">
+    <h1>车辆信息</h1>
+    <ul>
+      <li><span class="s-head">车型</span><span class="s-con">{$line.seat_num}人座{$line.car_level_name}</span></li>
+    </ul>
+  </div>
+  {/eq}
   <div class="cir_con taste">
     <h1>体验亮点</h1>
     <p class="taste_text">
