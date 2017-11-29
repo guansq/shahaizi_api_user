@@ -73,6 +73,10 @@ class Push extends Base{
     }
 
     public function test(){
-        pushMessage('推送的标题', '推送的内容', '140fe1da9e932ec8628', 35, 0);
+        //pushMessage('推送的标题', '推送的内容', '140fe1da9e932ec8628', 35, 0);
+        $mobile = input('mobile');
+        $content = input('content');
+        sendSMSbyApi($mobile,$content);
+        echo '发送成功！';
     }
 }

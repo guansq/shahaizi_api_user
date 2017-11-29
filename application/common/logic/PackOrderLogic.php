@@ -132,6 +132,14 @@ class PackOrderLogic extends BaseLogic{
             //把自动转化的create_at转化时间戳
             if($val['status'] == 0 && (time() - strtotime($val['create_at'])) > 1800){//未支付的订单 且大于1800秒的时候 自动取消
                 $result = $this->where(['air_id' => $val['air_id']])->update(['status' => 10]);//取消操作
+                $push_info = M('users')->field('nickname,push_id,mobile,countroy_code')->where('user_id', $user_id)->find();
+                //$title = '超时未支付';
+                $content = $push_info['nickname'].'，您好，订单'.$val['order_sn'].'超过30分钟未支付，已将订单关闭。';
+                //pushMessage($title, $content, $push_info['push_id'], $user_id, 0);
+                if(!empty($push_info['mobile'])){
+                    $mobile = $push_info['countroy_code'].$push_info['mobile'];
+                    sendSMSbyApi($mobile,$content);
+                }
                 if($result !== fasle){
                     $val['status'] = 10;
                 }

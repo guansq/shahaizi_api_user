@@ -55,6 +55,7 @@ class UserCollectLogic extends BaseLogic{
             'model_type' => $type,
             'goods_id' => $id,
         ];
+
         if($this->where($where)->count() >= 1){
             return resultArray(4005, '您已经收藏过了。');
         }
@@ -64,7 +65,29 @@ class UserCollectLogic extends BaseLogic{
         }else{
             $owner = M(self::TYPE_TABLE_ARR[$type])->field(['user_id'])->find($id);
         }
-
+        if($type == self::TYPE_DYNAMIC){
+            $title = '动态收藏';
+            $content = '您发布的动态有新的收藏';
+            if(!empty($ownerId)){
+                $userLogic = new UserLogic();
+                $user = $userLogic->find($ownerId);
+                $title = '您发布的动态被'.$user['nickname'].'收藏';
+                $content = '您发布的动态被'.$user['nickname'].'收藏';
+            }
+            send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_DYNAMIC);
+        }
+        if($type == self::TYPE_STRATEGY){
+            $title = '攻略收藏';
+            $content = '您发布的攻略有新的收藏';
+            if(!empty($ownerId)){
+                $userLogic = new UserLogic();
+                $user = $userLogic->find($ownerId);
+                $title = '您发布的攻略被'.$user['nickname'].'收藏';
+                $content = '您发布的攻略被'.$user['nickname'].'收藏';
+            }
+            send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_STRATEGY);
+        }
+        //3=个人动态 4=个人攻略
         $ownerId = empty($owner) ? null : $owner['user_id'];
         $data = array_merge($where, ['add_time' => time(), 'obj_owner_id' => $ownerId]);
         if(!$this->create($data)){
