@@ -15,7 +15,7 @@ use think\Db;
 use DesUtils\DesUtils;
 use service\HttpService;
 use service\MsgService;
-
+use app\common\logic\SellerLogic;
 // 接口返回json 数据
 if(!function_exists('getCodeMsg')){
     function getCodeMsg($code = 'all'){

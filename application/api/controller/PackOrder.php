@@ -292,7 +292,7 @@ class PackOrder extends Base{
     }
 
     /**
-     * @api         {PUT}  /index.php?m=Api&c=PackOrder&a=confirmFinish   确认结束订单 ok wxx
+     * @api         {POST}  /index.php?m=Api&c=PackOrder&a=confirmFinish   确认结束订单 ok wxx
      * @apiName     confirmFinish
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token
