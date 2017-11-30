@@ -77,7 +77,12 @@
     </h1>
     {volist name="comments.list" id="comment"}
     <div class="ass_con">
-      <img src="{$comment.owner.avatar|default='/application/web/view/static/image/avatar@2x.png'}" alt="">
+      {empty name="comment.owner.avatar"}
+      <img src="{$comment.owner.head_pic}" alt="">
+      {else /}
+      <img src="{$comment.owner.avatar}" alt="">
+      {/empty}
+
       <div class="left_d">
         <p>{$comment.owner.nickname|default='****'}</p>
         <p><span>{$comment.commemt_time_fmt}</span> </p>
