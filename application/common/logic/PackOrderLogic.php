@@ -402,6 +402,16 @@ class PackOrderLogic extends BaseLogic{
             'create_at' => time(),
             'update_at' => time(),
         ];
+        if($line['is_admin']){
+            $order_data['req_car_level'] = $line['car_level'];
+            $order_data['seat_num'] = $line['seat_num'];
+        }else{
+            $car_info = M('pack_car_info')->field('b.seat_num,b.car_level')
+                ->alias('i')->join("pack_car_bar b","i.car_type_id = b.id","LEFT")
+                ->where("i.car_id = {$line['car_id']}")->find();
+            $order_data['req_car_level'] = $car_info['car_level'];
+            $order_data['seat_num'] = $car_info['seat_num'];
+        }
         if(!empty($line['city'])){
             $full_arr = explode('·',$line['city']);
             $order_data['country'] = $full_arr[1];//添加路线的出行国家
