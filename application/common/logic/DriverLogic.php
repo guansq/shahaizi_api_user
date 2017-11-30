@@ -177,6 +177,11 @@ class DriverLogic extends BaseLogic{
         !empty($data['city']) && $saveData['city'] = $data['city'];//出行城市
         !empty($data['car_level']) && $saveData['car_level'] = $data['car_level'];//舒适度
         !empty($data['seller_id']) && $saveData['seller_id'] = $data['seller_id'];//指定司导
+        if(!empty($data['seller_id'])){
+            //M('seller')->where()->find();
+            //$mobile = $push_info['countroy_code'].$push_info['mobile'];
+            //sendSMSbyApi($mobile,$content);
+        }
         M('pack_order')->save($saveData);
         $id = $this->getLastInsID();
         return $id;

@@ -633,6 +633,21 @@ function send_msg_by_article($title,$content,$receive_id,$article_id,$article_ty
     ];
     M('system_message')->save($data);//保存消息到数据库
 }
+/*
+ * 发送信息给用户或司导
+ */
+function send_drv_msg($title,$content,$receive_id){
+    $data = [
+        'title' => $title,
+        'message' => $content,
+        'push_users' => 2,
+        'type' => 1,
+        'create_at' => time(),
+        'content' => $content,
+        'receive_id' => $receive_id,
+    ];
+    M('system_message')->save($data);//保存消息到数据库
+}
 /**
  * 更新会员等级,折扣，消费总额
  * @param $user_id  用户ID

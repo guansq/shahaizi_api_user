@@ -123,9 +123,11 @@ class PackOrderLogic extends BaseLogic{
             ->join('ruit_seller sel', 'ord.seller_id = sel.seller_id', 'LEFT')
             ->field($field)
             ->where($where)
+            //->fetchSql(ture)
             ->limit($page->firstRow.','.$page->listRows)
             ->order('air_id DESC')
             ->select();
+        //echo $order_list;die;
         foreach($order_list as &$val){
             // $val['create_at'] = shzDate($val['create_at']);
             $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']] : $val['title'];
@@ -422,7 +424,10 @@ class PackOrderLogic extends BaseLogic{
             $order_data['seller_money'] = $line['line_price'] -  $commission_money; // 佣金金额
             $seller = SellerLogic::findByDrvId($line['seller_id']);
             if(!empty($seller)){
-                pushMessage('线路预订未支付', '您的线路已被客人预订，请保持通话畅通，随时与客人联系', $seller['device_no'], $seller['seller_id'], 1);
+                $title = '线路预订未支付';
+                $content = '您的线路已被客人预订，请保持通话畅通，随时与客人联系';
+                send_drv_msg($title,$content,$seller['seller_id']);
+                //pushMessage('线路预订未支付', '您的线路已被客人预订，请保持通话畅通，随时与客人联系', $seller['device_no'], $seller['seller_id'], 1);
             }
         }
         $result = M('pack_order')->save($order_data);
@@ -458,7 +463,10 @@ class PackOrderLogic extends BaseLogic{
 
         $seller = SellerLogic::findByDrvId($order['seller_id']);
         if(!empty($seller)){
-            pushMessage('订单确认结束', '您有一条订单，客人已确认结束', $seller['device_no'], $seller['seller_id'], 1);
+            $title = '订单确认结束';
+            $content = '您有一条订单，客人已确认结束';
+            send_drv_msg($title,$content,$seller['seller_id']);
+            //pushMessage('订单确认结束', '您有一条订单，客人已确认结束', $seller['device_no'], $seller['seller_id'], 1);
         }
         if($order["seller_confirm"])
         {
