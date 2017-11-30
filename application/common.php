@@ -426,9 +426,24 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
     }
 
-    if(!empty($pack_order['seller_id'] ) && $pack_order['type'] != 3){
+    if(!empty($pack_order['seller_id']) && $pack_order['type'] != 3){
         $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
     }
+
+    if($pack_order['type'] == 3){//对路线进行推送
+        $line_id = $pack_order['line_id'];
+        $line = M('pack_line')->where('line_id',$line_id)->find();
+        if(!empty($line) && $line['is_admin'] == 0){
+            $seller = SellerLogic::findByDrvId($line['seller_id']);
+            if(!empty($seller)){
+                $mobile = $seller['country_code'].$seller['mobile'];
+                $content = '您的线路，客人已支付，请及时处理';
+                sendSMSbyApi($mobile,$content);
+                pushMessage('线路已支付', $content, $seller['device_no'], $seller['seller_id'], 1);
+            }
+        }
+    }
+
     if($is_coupon){
         $order_arr['discount_id'] = $coupon_id;//优惠券ID
     }
