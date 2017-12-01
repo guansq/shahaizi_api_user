@@ -123,15 +123,25 @@ class PackOrderLogic extends BaseLogic{
             ->join('ruit_seller sel', 'ord.seller_id = sel.seller_id', 'LEFT')
             ->field($field)
             ->where($where)
+            //->fetchSql(ture)
             ->limit($page->firstRow.','.$page->listRows)
             ->order('air_id DESC')
             ->select();
+        //echo $order_list;die;
         foreach($order_list as &$val){
             // $val['create_at'] = shzDate($val['create_at']);
             $val['title'] = empty($val['title']) ? self::TYPE_ARR[$val['type']] : $val['title'];
             //把自动转化的create_at转化时间戳
             if($val['status'] == 0 && (time() - strtotime($val['create_at'])) > 1800){//未支付的订单 且大于1800秒的时候 自动取消
                 $result = $this->where(['air_id' => $val['air_id']])->update(['status' => 10]);//取消操作
+                $push_info = M('users')->field('nickname,push_id,mobile,countroy_code')->where('user_id', $user_id)->find();
+                //$title = '超时未支付';
+                $content = $push_info['nickname'].'，您好，订单'.$val['order_sn'].'超过30分钟未支付，已将订单关闭。';
+                //pushMessage($title, $content, $push_info['push_id'], $user_id, 0);
+                if(!empty($push_info['mobile'])){
+                    $mobile = $push_info['countroy_code'].$push_info['mobile'];
+                    sendSMSbyApi($mobile,$content);
+                }
                 if($result !== fasle){
                     $val['status'] = 10;
                 }
@@ -394,6 +404,16 @@ class PackOrderLogic extends BaseLogic{
             'create_at' => time(),
             'update_at' => time(),
         ];
+        if($line['is_admin']){
+            $order_data['req_car_level'] = $line['car_level'];
+            $order_data['req_car_seat_num'] = $line['seat_num'];
+        }else{
+            $car_info = M('pack_car_info')->field('b.seat_num,b.car_level')
+                ->alias('i')->join("pack_car_bar b","i.car_type_id = b.id","LEFT")
+                ->where("i.car_id = {$line['car_id']}")->find();
+            $order_data['req_car_level'] = $car_info['car_level'];
+            $order_data['req_car_seat_num'] = $car_info['seat_num'];
+        }
         if(!empty($line['city'])){
             $full_arr = explode('·',$line['city']);
             $order_data['country'] = $full_arr[1];//添加路线的出行国家
@@ -404,7 +424,10 @@ class PackOrderLogic extends BaseLogic{
             $order_data['seller_money'] = $line['line_price'] -  $commission_money; // 佣金金额
             $seller = SellerLogic::findByDrvId($line['seller_id']);
             if(!empty($seller)){
-                pushMessage('线路预订未支付', '您的线路已被客人预订，请保持通话畅通，随时与客人联系', $seller['device_no'], $seller['seller_id'], 1);
+                $title = '线路预订未支付';
+                $content = '您的线路已被客人预订，请保持通话畅通，随时与客人联系';
+                send_drv_msg($title,$content,$seller['seller_id']);
+                //pushMessage('线路预订未支付', '您的线路已被客人预订，请保持通话畅通，随时与客人联系', $seller['device_no'], $seller['seller_id'], 1);
             }
         }
         $result = M('pack_order')->save($order_data);
@@ -440,7 +463,10 @@ class PackOrderLogic extends BaseLogic{
 
         $seller = SellerLogic::findByDrvId($order['seller_id']);
         if(!empty($seller)){
-            pushMessage('订单确认结束', '您有一条订单，客人已确认结束', $seller['device_no'], $seller['seller_id'], 1);
+            $title = '订单确认结束';
+            $content = '您有一条订单，客人已确认结束';
+            send_drv_msg($title,$content,$seller['seller_id']);
+            //pushMessage('订单确认结束', '您有一条订单，客人已确认结束', $seller['device_no'], $seller['seller_id'], 1);
         }
         if($order["seller_confirm"])
         {

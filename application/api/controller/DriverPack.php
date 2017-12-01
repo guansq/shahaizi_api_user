@@ -248,6 +248,7 @@ class DriverPack extends Base{
             if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004, '指定司导不存在。');
             }
+            $data['seller_id'] = $seller['seller_id'];
         }
         $pcp = $pcpLogic->find($pcpId);
         if(empty($pcp)){
@@ -329,6 +330,7 @@ class DriverPack extends Base{
             if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004, '指定司导不存在。');
             }
+            $data['seller_id'] = $seller['seller_id'];
         }
 
         $data['real_price'] = $data['total_price'] = $pcp['price'];
@@ -393,8 +395,9 @@ class DriverPack extends Base{
             if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004, '指定司导不存在。');
             }
-            $data['allot_seller_id'] = $seller['seller_id'];
-            pushMessage('客人指定司导', '您有一条新订单，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
+            //$data['allot_seller_id'] = $seller['seller_id'];
+            $data['seller_id'] = $seller['seller_id'];
+
         }
         //验证通过
         $data['start_time'] = $data['user_car_time'];
@@ -439,7 +442,7 @@ class DriverPack extends Base{
         $data = I('post.');
         $result = $this->validate($data, 'PackBase.privateMake');
         if($result !== true){
-            return $this->returnJson(4003);
+            return $this->returnJson(4003,$result);
         }
         // 校验指定司导
         if(!empty($data['drv_code'])){
@@ -447,8 +450,10 @@ class DriverPack extends Base{
             if(empty($seller) || empty($seller->is_driver)){
                 return $this->returnJson(4004, '指定司导不存在。');
             }
-            $data['allot_seller_id'] = $seller['seller_id'];
-            pushMessage('客人指定司导', '您有一条新订单，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
+            $data['seller_id'] = $seller['seller_id'];
+            //$data['allot_seller_id'] = $seller['seller_id'];
+            //pushMessage('客人指定司导', '您有一条新订单，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
+            //pushMessage('客人指定司导', '您有一条新订单，请及时处理', $seller['device_no'], $seller['seller_id'], 1);
         }
         //验证通过
         $data['start_time'] = $data['tour_time'];

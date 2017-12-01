@@ -292,7 +292,7 @@ class PackOrder extends Base{
     }
 
     /**
-     * @api         {PUT}  /index.php?m=Api&c=PackOrder&a=confirmFinish   确认结束订单 ok wxx
+     * @api         {POST}  /index.php?m=Api&c=PackOrder&a=confirmFinish   确认结束订单 ok wxx
      * @apiName     confirmFinish
      * @apiGroup    PackOrder
      * @apiParam    {String}    token   token
@@ -301,13 +301,14 @@ class PackOrder extends Base{
      * @apiParam    {Float}    work_pointlat  服务纬度
      */
     public function confirmFinish(Request $request){
-        if(!$request->isPut()){
+        if(!$request->isPost()){
             $this->returnJson(4000);
         }
         $data = I('post.');
         $id = I('id');
         $orderLogic = new PackOrderLogic();
         $order = $orderLogic->find($id);
+        //print_r($order);die;
         if(empty($order)){
             $this->returnJson(4004);
         }

@@ -64,7 +64,10 @@ class UserAttentionLogic extends BaseLogic{
         if(!$this->create($data)){
             return resultArray(5020);
         }
-        M('users')->where(['user_id'=>$userId])->setInc('attention_num');//增加关注数
+        M('users')->where(['user_id'=>$userId])->setInc('attention_num');//被关注的人增加关注数
+        $user = M('users')->where(['user_id'=>$id])->find();//读取被关注的人
+        $nickname = M('users')->where(['user_id'=>$userId])->value('nickname');
+        pushMessage('您被'.$nickname.'已关注', '您被'.$nickname.'已关注', $user['push_id'], $user['user_id'], 0);
         return resultArray(2000);
 
     }

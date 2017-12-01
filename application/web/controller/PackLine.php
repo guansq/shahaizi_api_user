@@ -35,6 +35,10 @@ class PackLine extends WebBase{
             'cover_img_y' => '严格',
             'cover_img_n' => '不退订',
         ];
+        if($line['is_admin']){
+            $line['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$line['car_level']];
+        }
+
         $line['costStatement'] = $line['cost_statement'];
         $line['costCompensationLevel'] = $map[explode('###',$line['cost_compensation'])[0]];
         $line['costCompensation'] = explode('###',$line['cost_compensation'])[1];
@@ -63,6 +67,7 @@ class PackLine extends WebBase{
             'total'=>count($list),
             'list'=>$list,
         ];
+        //print_r($comments);die;
         //得到车辆信息
         $carInfo = $sellerLogic->getCarInfo($line['car_id']);
         if(!empty($carInfo)){
@@ -71,11 +76,10 @@ class PackLine extends WebBase{
             $car = [
                 'car_type' => $carType['car_info'],
                 'car_brand' => $carBrand['car_info'],
-                'car_seat_num' => $carInfo['seat_num'],
-                'car_level_name' => self::LEVEL_ARR[$carInfo['car_level']],
+                'car_seat_num' => $carType['seat_num'],
+                'car_level_name' => self::LEVEL_ARR[$carType['car_level']],
             ];
         }
-
         $this->assign('car',$car);
         $this->assign('comments',$comments);
         return $this->fetch();

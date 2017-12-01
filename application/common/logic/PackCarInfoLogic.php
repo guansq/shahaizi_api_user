@@ -58,6 +58,16 @@ class PackCarInfoLogic extends BaseLogic{
         return $seller_car;
     }
 
+    public function getCarInfo($id){
+        $car =  M('pack_car_info')->alias('pci')
+            ->field('pci.*,cb.car_info as brand_name,ct.car_info as type_name')
+            ->join('ruit_pack_car_bar cb', 'pci.brand_id = cb.id', 'LEFT')
+            ->join('ruit_pack_car_bar ct', 'pci.car_type_id = ct.id', 'LEFT')
+            ->where("pci.car_id",$id)
+            ->where('pci.is_state',self::STATUS_PASS)
+            ->find();
+        return $car;
+    }
     /*
      * 得到车位数
      */

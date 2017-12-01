@@ -15,7 +15,7 @@ use think\Db;
 use DesUtils\DesUtils;
 use service\HttpService;
 use service\MsgService;
-
+use app\common\logic\SellerLogic;
 // 接口返回json 数据
 if(!function_exists('getCodeMsg')){
     function getCodeMsg($code = 'all'){
@@ -426,6 +426,24 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
     }
 
+    if(!empty($pack_order['seller_id']) && $pack_order['type'] != 3){
+        $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
+    }
+
+    if($pack_order['type'] == 3){//对路线进行推送
+        $line_id = $pack_order['line_id'];
+        $line = M('pack_line')->where('line_id',$line_id)->find();
+        if(!empty($line) && $line['is_admin'] == 0){
+            $seller = SellerLogic::findByDrvId($line['seller_id']);
+            if(!empty($seller)){
+                $mobile = $seller['country_code'].$seller['mobile'];
+                $content = '您的线路，客人已支付，请及时处理';
+                sendSMSbyApi($mobile,$content);
+                pushMessage('线路已支付', $content, $seller['device_no'], $seller['seller_id'], 1);
+            }
+        }
+    }
+
     if($is_coupon){
         $order_arr['discount_id'] = $coupon_id;//优惠券ID
     }
@@ -612,6 +630,21 @@ function send_msg_by_article($title,$content,$receive_id,$article_id,$article_ty
         'receive_id' => $receive_id,
         'article_id' => $article_id,
         'article_type' => $article_type,
+    ];
+    M('system_message')->save($data);//保存消息到数据库
+}
+/*
+ * 发送信息给用户或司导
+ */
+function send_drv_msg($title,$content,$receive_id){
+    $data = [
+        'title' => $title,
+        'message' => $content,
+        'push_users' => 2,
+        'type' => 1,
+        'create_at' => time(),
+        'content' => $content,
+        'receive_id' => $receive_id,
     ];
     M('system_message')->save($data);//保存消息到数据库
 }
