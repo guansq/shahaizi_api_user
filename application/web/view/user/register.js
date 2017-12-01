@@ -115,8 +115,9 @@ function postRegister(){
     data:registerParams
   }).done(function(res){
     if(res.status == 1){
+        $("#bb_code").show();
       // toRegister();
-      location.href = "regSuccess"
+      // location.href = "regSuccess"
       return false;
     }
     layer.msg("验证码错误", {"icon":2, time:1000})
