@@ -1221,7 +1221,7 @@ body{
     line-height: 22px;
 }
 /*弹框*/
-.bomb_box{
+.bomb_boxs{
     display: none;
     position: fixed;
     width: 100%;
