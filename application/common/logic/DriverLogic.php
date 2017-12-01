@@ -182,11 +182,12 @@ class DriverLogic extends BaseLogic{
             //$mobile = $push_info['countroy_code'].$push_info['mobile'];
             //sendSMSbyApi($mobile,$content);
         }
-        M('pack_order')->save($saveData);
+        $id = M('pack_order')->insertGetId($saveData);
         if(in_array($data['type'],[1,2,6])){
             M('pack_car_product')->where(['id'=>$data['pcpid']])->setInc('order_times');
         }
-        $id = $this->getLastInsID();
+        //$id = $this->getLastInsID();
+        //$id = M('pack_order')->getLastInsID();
         return $id;
     }
 

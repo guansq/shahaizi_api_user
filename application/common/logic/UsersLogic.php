@@ -324,11 +324,11 @@ class UsersLogic extends BaseLogic{
             if(!empty($map['first_leader'])){//推荐人不为空
                 foreach ($coupon as $key => $val)
                 {
-                    M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$map['first_leader'],'send_time'=>time()));
+                    M('coupon_list')->add(array('cid'=>$val['id'],'model_type'=>$val['model_type'],'type'=>$val['type'],'uid'=>$map['first_leader'],'send_time'=>time()));
                     M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 推荐人优惠券领取数量加一
 
                     if($map['first_leader'] != $user_id){
-                        M('coupon_list')->add(array('cid'=>$val['id'],'type'=>$val['type'],'uid'=>$user_id,'send_time'=>time()));
+                        M('coupon_list')->add(array('cid'=>$val['id'],'model_type'=>$val['model_type'],'type'=>$val['type'],'uid'=>$user_id,'send_time'=>time()));
                         M('Coupon')->where("id = {$val['id']}")->setInc('send_num'); // 给自己的优惠券数量增加 1
                     }
                 }
