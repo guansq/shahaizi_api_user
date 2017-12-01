@@ -15,7 +15,7 @@ body{
     width: 100%;
     height: 70px;
     background: #fff;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e8e8e8;
 }
 .head .head_b{
     padding: 0 20px;
@@ -48,7 +48,7 @@ body{
     width: 100%;
     height: auto;
     padding: 20px 30px 10px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #e8e8e8;
 }
 .con_model .cm_a{
     display: block;
@@ -176,7 +176,7 @@ body{
 }
 /*帮助中心*/
 .help-content li{
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #e8e8e8;
 }
 .help-content li:last-child{
     border: none;
@@ -471,11 +471,11 @@ body{
     display: inline-block;
     width: 20%;
     height: 1px;
-    background: #D4D4D4;
+    background: #e8e8e8;
     vertical-align: middle;
 }
 .days_con {
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #e8e8e8;
 }
 .days_con h2{
     color: #666666;
@@ -504,7 +504,7 @@ body{
 }
 .landlord,.home_info,.home-js{
     padding: 0 0 20px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #e8e8e8;
     overflow: hidden;
 }
 .home_repeat .landlord section{
@@ -633,7 +633,7 @@ body{
     color: #999;
     line-height: 25px;
     padding-bottom: 12px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #e8e8e8;
 }
 .skill{
     padding-top: 10px;
@@ -748,7 +748,7 @@ body{
     text-align: center;
 }
 .bor_r{
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #e8e8e8;
 }
 .box1 li h3{
     color: #333;
@@ -778,7 +778,7 @@ body{
 }
 .box4 ul{
     padding-bottom: 10px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #e8e8e8;
 }
 .box4 .s-con{
     float: right;
@@ -875,7 +875,7 @@ body{
     font-size: 14px;
     color: rgb(102, 102, 102);
     padding: 5px 0 10px 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e8e8e8;
 }
 /*注册*/
 .main-reg{
@@ -1106,7 +1106,7 @@ body{
     padding-bottom: 0;
 }
 .route_bomb li{
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e8e8e8;
     padding: 0 20px;
     line-height: 40px;
 }
@@ -1169,7 +1169,7 @@ body{
 .hsh-login-list .code-btn{
     background: none;
     color: #666;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid #e8e8e8;
     border-radius: 0;
     margin-top: 2px;
     padding-top: 2px;
