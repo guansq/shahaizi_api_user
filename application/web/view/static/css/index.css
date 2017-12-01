@@ -1220,7 +1220,61 @@ body{
 .terrace .ter_con{
     line-height: 22px;
 }
-
+/*弹框*/
+.bomb_box{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    z-index: 999;
+}
+.bomb_cons{
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    height: 18rem;
+    background: #ffffff;
+    border-radius: .5rem;
+    padding: .8rem .64rem;
+}
+.bomb_cons h1{
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: #333;
+    text-align: center;
+}
+.bomb_cons .b_img{
+    text-align: center;
+    padding: 1rem 0;
+}
+.bomb_cons .b_img img{
+    width: 7.5rem;
+}
+.bomb_cons p{
+    color: #999;
+    font-size: .85rem;
+    text-align: center;
+    padding-bottom: .4rem;
+}
+.bomb_cons .btn_a{
+    text-align: center;
+    padding-top: .8rem;
+}
+.bomb_cons .btn_a a{
+    font-size: .8rem;
+    color: #fff;
+    padding: .3rem 1rem;
+    border: 1px solid #2cd052;
+    text-decoration: none;
+    background: #2cd052;
+    border-radius: 1.5rem;
+}
 
 
 
