@@ -1200,6 +1200,26 @@ body{
 .foot_imgbox img{
     width: 100%;
 }
+.terrace{
+    font-size: 13px;
+    color: #333333;
+    padding: 8px 0 0 0;
+    margin-left: 60px;
+    border-top: 1px solid #f5f5f5;
+    margin-top: 10px;
+}
+.terrace .ter_name{
+    padding-bottom: 5px;
+    color: #2CD052;
+    line-height: 23px;
+}
+.terrace .ter_name span{
+    float: right;
+    color: #333;
+}
+.terrace .ter_con{
+    line-height: 22px;
+}
 
 
 

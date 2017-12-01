@@ -68,6 +68,7 @@
       <span>共{$comments.total}条</span>
     </h1>
     {volist name="comments.list" id="comment"}
+    {eq name="$comment.pid" value="0"}
     <div class="ass_con">
       <img src="{$comment.owner.avatar|default='/application/web/view/static/image/avatar@2x.png'}" alt="">
       <div class="left_d">
@@ -81,6 +82,16 @@
       <p class="dr_text">
         {$comment.content}
       </p>
+      <!--回复内容-->
+      {volist name="comments.list" id="reply"}
+      {if $reply.pid eq $comment.order_commemt_id}
+      <div class="terrace">
+        <p class="ter_name">傻孩子回复：<span>{$reply.commemt_time_fmt}</span></p>
+        <p class="ter_con">{$reply.content}</p>
+      </div>
+      {/if}
+      {/volist}
+      <!-- end 回复内容-->
       <div class="dr_imgbox">
         {volist name="comment.imgs" id="img"}
         {notempty name="img"}
@@ -89,6 +100,7 @@
         {/volist}
       </div>
     </div>
+    {/eq}
     {/volist}
 
     {if condition="$comments.total>2"}
