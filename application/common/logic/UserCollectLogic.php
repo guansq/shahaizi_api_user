@@ -15,7 +15,7 @@
 
 namespace app\common\logic;
 
-
+use app\api\logic\UserLogic;
 /**
  * Class CatsLogic
  * @package common\Logic
@@ -65,30 +65,30 @@ class UserCollectLogic extends BaseLogic{
         }else{
             $owner = M(self::TYPE_TABLE_ARR[$type])->field(['user_id'])->find($id);
         }
+        $ownerId = empty($owner) ? null : $owner['user_id'];
         if($type == self::TYPE_DYNAMIC){
             $title = '动态收藏';
             $content = '您发布的动态有新的收藏';
-            if(!empty($ownerId)){
+            if(!empty($user_id)){
                 $userLogic = new UserLogic();
-                $user = $userLogic->find($ownerId);
+                $user = $userLogic->find($user_id);
                 $title = '您发布的动态被'.$user['nickname'].'收藏';
                 $content = '您发布的动态被'.$user['nickname'].'收藏';
             }
-            send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_DYNAMIC);
+            send_msg_by_article($title,$content,$owner['user_id'],$id,UserPraiseLogic::TYPE_DYNAMIC);
         }
         if($type == self::TYPE_STRATEGY){
             $title = '攻略收藏';
             $content = '您发布的攻略有新的收藏';
-            if(!empty($ownerId)){
+            if(!empty($user_id)){
                 $userLogic = new UserLogic();
-                $user = $userLogic->find($ownerId);
+                $user = $userLogic->find($user_id);
                 $title = '您发布的攻略被'.$user['nickname'].'收藏';
                 $content = '您发布的攻略被'.$user['nickname'].'收藏';
             }
-            send_msg_by_article($title,$content,$ownerId,$id,self::TYPE_STRATEGY);
+            send_msg_by_article($title,$content,$owner['user_id'],$id,UserPraiseLogic::TYPE_GUIDE);
         }
         //3=个人动态 4=个人攻略
-        $ownerId = empty($owner) ? null : $owner['user_id'];
         $data = array_merge($where, ['add_time' => time(), 'obj_owner_id' => $ownerId]);
         if(!$this->create($data)){
             return resultArray(5020);

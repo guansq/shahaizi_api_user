@@ -140,9 +140,9 @@ class UserPraiseLogic extends BaseLogic{
         if($type == self::TYPE_DYNAMIC){
             $title = '动态点赞';
             $content = '您发布的动态有新的点赞';
-            if(!empty($ownerId)){
+            if(!empty($userId)){
                 $userLogic = new UserLogic();
-                $user = $userLogic->find($ownerId);
+                $user = $userLogic->find($userId);
                 $title = '您发布的动态被'.$user['nickname'].'点赞';
                 $content = '您发布的动态被'.$user['nickname'].'点赞';
             }
@@ -152,7 +152,7 @@ class UserPraiseLogic extends BaseLogic{
         if($type == self::TYPE_GUIDE){
             $title = '攻略点赞';
             $content = '您发布的攻略有新的点赞';
-            if(!empty($ownerId)){
+            if(!empty($userId)){
                 $userLogic = new UserLogic();
                 $user = $userLogic->find($ownerId);
                 $title = '您发布的攻略被'.$user['nickname'].'点赞';
