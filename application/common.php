@@ -426,7 +426,7 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
     }
 
-    if(!empty($pack_order['seller_id']) && $pack_order['type'] != 3){
+    if(!empty($pack_order['allot_seller_id']) && $pack_order['type'] != 3){
         $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
     }
 
