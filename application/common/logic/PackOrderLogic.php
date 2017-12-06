@@ -260,7 +260,8 @@ class PackOrderLogic extends BaseLogic{
             if(!empty($base_day)){
                 $info['pack_start_time'] = explode('|',$base_day['pack_time']);
                 foreach($info['pack_start_time'] as &$val){
-                    $val = shzDate($val);
+                    $val = strval(date('Y-m-d', $val));
+//                    $val = shzDate($val);
                 }
             }
         }
