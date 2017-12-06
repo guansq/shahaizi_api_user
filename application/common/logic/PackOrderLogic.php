@@ -427,7 +427,7 @@ class PackOrderLogic extends BaseLogic{
             if(!empty($seller)){
                 $title = '线路预订未支付';
                 $content = '您的线路已被客人预订，请保持通话畅通，随时与客人联系';
-                send_drv_msg($title,$content,$seller['device_no']);
+                send_drv_msg($title,$content,$seller['seller_id']);
                 //pushMessage('线路预订未支付', '您的线路已被客人预订，请保持通话畅通，随时与客人联系', $seller['device_no'], $seller['seller_id'], 1);
             }
         }

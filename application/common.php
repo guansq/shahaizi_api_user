@@ -426,8 +426,13 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
     }
 
-    if(!empty($pack_order['allot_seller_id']) && $pack_order['type'] != 3){
-        $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;
+    if(!empty($pack_order['allot_seller_id']) && $pack_order['type'] != 3){//分配司导逻辑
+        $order_arr['seller_id'] = explode(',',$pack_order['allot_seller_id'])[1];
+        //$order_arr['allot_seller_id'] = '';
+        $config_str = M('config')->where(array("name"=>"name_car"))->find();
+        $order_arr['commission_money'] = round($pack_order['real_price']*$config_str['value']/100);//佣金金额
+        $order_arr['seller_money'] = $pack_order['real_price']-$pack_order['commission_money'];//司导金额
+        $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNSTART;//进行中
     }
 
     if($pack_order['type'] == 3){//对路线进行推送
