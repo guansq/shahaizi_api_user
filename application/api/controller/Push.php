@@ -53,7 +53,7 @@ class Push extends Base{
         }
         //$push = $push->message($content, $message);
         //$push = $push->setNotificationAlert($content);//单独推送标题
-        $push = $push->androidNotification($content, $message);
+        $push = $push->androidNotification($content, $message)->iosNotification($content, $message);//推送安卓
         try {
             $response = $push->send();
             if($response['http_code'] == 200){
@@ -73,10 +73,11 @@ class Push extends Base{
     }
 
     public function test(){
-        //pushMessage('推送的标题', '推送的内容', '140fe1da9e932ec8628', 35, 0);
-        $mobile = input('mobile');
-        $content = input('content');
-        sendSMSbyApi($mobile,$content);
-        echo '发送成功！';
+        $result = pushMessage('推送的标题', '推送的内容', '1114a8979297c0e17ee', 7, 0);
+        //print_r($result);
+//        $mobile = input('mobile');
+//        $content = input('content');
+//        sendSMSbyApi($mobile,$content);
+//        echo '发送成功！';
     }
 }

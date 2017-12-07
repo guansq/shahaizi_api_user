@@ -433,6 +433,7 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         $mobile = $push_info['country_code'].$push_info['mobile'];
         $content = '您有一条新订单，请及时处理';
         sendSMSbyApi($mobile,$content);
+        trace('发送短信');
         $config_str = M('config')->where(array("name"=>"name_car"))->find();
         $order_arr['commission_money'] = round($pack_order['real_price']*$config_str['value']/100);//佣金金额
         $order_arr['seller_money'] = $pack_order['real_price']-$order_arr['commission_money'];//司导金额
