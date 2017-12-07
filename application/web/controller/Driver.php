@@ -32,6 +32,7 @@ class Driver extends WebBase{
         $this->assign('seller',$seller);
         $CarInfo = new PackCarInfoLogic();
         $seller_car = $CarInfo->getMyCar($id);
+        //$seller_car['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$seller_car['car_level']];
         //$seller_car =  $CarInfo->field()->where("seller_id",$id)->where('is_state',PackCarInfoLogic::STATUS_PASS)->select();
         //print_r(collection($seller_car)->toArray());die;
         $this->assign('seller_car',$seller_car);
