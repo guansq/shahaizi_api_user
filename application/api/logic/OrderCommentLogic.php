@@ -40,9 +40,9 @@ class OrderCommentLogic extends BaseLogic{
             'line_id' => $order['line_id'],
             'car_product_id' => $order['car_product_id'],
             'seller_id' => $order['seller_id'],
-            'pack_order_score' => $reqParams['score'],
-            'drv_rank' => $reqParams['drv_rank'],
-            'line_rank' => $reqParams['line_rank'],
+            'pack_order_score' => $reqParams['score'],//产品以及订单评分
+            'drv_rank' => $reqParams['drv_rank'],//司导评分
+            'line_rank' => $reqParams['line_rank'],//路线评分
             'is_anonymous' => $reqParams['isAnonymous'],
             'commemt_time' => time(),
             'deleted' => 0,

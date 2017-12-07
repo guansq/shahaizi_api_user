@@ -346,6 +346,7 @@ body{
     background: #ffffff;
     overflow: hidden;
 
+
 }
 .cir_con h1{
     font-size: 17px;
@@ -1269,10 +1270,7 @@ body{
     text-align: center;
     padding-bottom: .4rem;
 }
-.bomb_cons .btn_a{
-    text-align: center;
-    padding-top: .8rem;
-}
+
 .bomb_cons .btn_a a{
     font-size: .8rem;
     color: #fff;
@@ -1282,8 +1280,10 @@ body{
     background: #2cd052;
     border-radius: 1.5rem;
 }
-
-
+.bomb_cons .btn_a{
+    text-align: center;
+    padding-top: .8rem;
+}
 
 
 

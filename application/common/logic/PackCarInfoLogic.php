@@ -49,12 +49,15 @@ class PackCarInfoLogic extends BaseLogic{
 
     public function getMyCar($id){
         $seller_car =  M('pack_car_info')->alias('pci')
-            ->field('pci.*,cb.car_info as brand_name,ct.car_info as type_name')
+            ->field('pci.*,cb.car_info as brand_name,ct.car_info as type_name,ct.seat_num,ct.car_level')
             ->join('ruit_pack_car_bar cb', 'pci.brand_id = cb.id', 'LEFT')
             ->join('ruit_pack_car_bar ct', 'pci.car_type_id = ct.id', 'LEFT')
             ->where("pci.seller_id",$id)
             ->where('pci.is_state',self::STATUS_PASS)
             ->select();
+        foreach($seller_car as &$val){
+            $val['car_level_name'] = PackCarInfoLogic::LEVEL_ARR[$val['car_level']];
+        }
         return $seller_car;
     }
 
