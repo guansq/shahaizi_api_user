@@ -263,6 +263,7 @@ body{
     overflow: hidden;
 }
 .circuit_img .synopsis h3{
+    overflow: hidden;
     font-weight: normal;
     font-size: 16px;
     padding: 15px 0;
@@ -284,6 +285,7 @@ body{
     font-size: 14px;
 }
 .synopsis .syn_title{
+    float: left;
     display: inline-block;
     width: 70%;
     line-height: 23px;
@@ -312,6 +314,7 @@ body{
     overflow: hidden;
     word-break: break-all;
     line-height: 21px;
+    color: #333333;
 }
 .rig_d{
     float: right;
@@ -322,9 +325,11 @@ body{
     padding-bottom: 10px;
 }
 .pri {
+    overflow: hidden;
     font-size: 14px;
 }
 .pri .w30b{
+    float: left;
     display: inline-block;
     width: 30%;
 }
@@ -340,6 +345,8 @@ body{
     margin-top: 10px;
     background: #ffffff;
     overflow: hidden;
+
+
 }
 .cir_con h1{
     font-size: 17px;
@@ -746,6 +753,7 @@ body{
     width: 33%;
     box-sizing: border-box;
     text-align: center;
+    border-right:1px solid #e8e8e8;
 }
 .bor_r{
     border-right: 1px solid #e8e8e8;
@@ -1262,10 +1270,7 @@ body{
     text-align: center;
     padding-bottom: .4rem;
 }
-.bomb_cons .btn_a{
-    text-align: center;
-    padding-top: .8rem;
-}
+
 .bomb_cons .btn_a a{
     font-size: .8rem;
     color: #fff;
@@ -1275,10 +1280,10 @@ body{
     background: #2cd052;
     border-radius: 1.5rem;
 }
-
-
-
-
+.bomb_cons .btn_a{
+    text-align: center;
+    padding-top: .8rem;
+}
 
 
 
