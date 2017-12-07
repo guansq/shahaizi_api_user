@@ -180,8 +180,8 @@ class DriverLogic extends BaseLogic{
             $saveData['allot_seller_id'] = ','.$data['seller_id'].',';//分配的司导
         }
         if(!empty($data['seller_id'])){
-            $push_info = M('seller')->where()->find();
-            $mobile = $push_info['countroy_code'].$push_info['mobile'];
+            //$push_info = M('seller')->where()->find();
+            //$mobile = $push_info['countroy_code'].$push_info['mobile'];
             //$content = '';
             //sendSMSbyApi($mobile,$content);
         }
