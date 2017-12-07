@@ -176,10 +176,13 @@ class DriverLogic extends BaseLogic{
         !empty($data['country']) && $saveData['country'] = $data['country'];//出行国家
         !empty($data['city']) && $saveData['city'] = $data['city'];//出行城市
         !empty($data['car_level']) && $saveData['car_level'] = $data['car_level'];//舒适度
-        !empty($data['seller_id']) && $saveData['allot_seller_id'] = ','.$data['seller_id'].',';//分配的司导
         if(!empty($data['seller_id'])){
-            //M('seller')->where()->find();
-            //$mobile = $push_info['countroy_code'].$push_info['mobile'];
+            $saveData['allot_seller_id'] = ','.$data['seller_id'].',';//分配的司导
+        }
+        if(!empty($data['seller_id'])){
+            $push_info = M('seller')->where()->find();
+            $mobile = $push_info['countroy_code'].$push_info['mobile'];
+            //$content = '';
             //sendSMSbyApi($mobile,$content);
         }
         $id = M('pack_order')->insertGetId($saveData);

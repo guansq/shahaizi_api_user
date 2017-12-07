@@ -431,8 +431,12 @@ function payPackOrder($pack_order, $user_info, $discount_price, $pay_way, $is_co
         //$order_arr['allot_seller_id'] = '';
         $config_str = M('config')->where(array("name"=>"name_car"))->find();
         $order_arr['commission_money'] = round($pack_order['real_price']*$config_str['value']/100);//佣金金额
-        $order_arr['seller_money'] = $pack_order['real_price']-$pack_order['commission_money'];//司导金额
+        $order_arr['seller_money'] = $pack_order['real_price']-$order_arr['commission_money'];//司导金额
         $order_arr['status'] = \app\common\logic\PackOrderLogic::STATUS_UNJXDJ;//已派单_待接单
+        trace('佣金金额======》');
+        trace($order_arr['commission_money']);
+        trace('司导金额======》');
+        trace($order_arr['seller_money']);
     }
 
     if($pack_order['type'] == 3){//对路线进行推送
