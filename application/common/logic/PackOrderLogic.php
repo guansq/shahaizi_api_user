@@ -424,6 +424,7 @@ class PackOrderLogic extends BaseLogic{
             $order_data['commission_money'] = $commission_money = floatval($line['line_price'])*intval(ConfigLogic::getSysconf('name_line'))/100 ; // 佣金金额
             $order_data['seller_money'] = $line['line_price'] -  $commission_money; // 佣金金额
             $seller = SellerLogic::findByDrvId($line['seller_id']);
+            //print_r($seller['seller_id']);die;
             if(!empty($seller)){
                 $title = '线路预订未支付';
                 $content = '您的线路已被客人预订，请保持通话畅通，随时与客人联系';

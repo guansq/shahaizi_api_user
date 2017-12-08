@@ -41,6 +41,7 @@ class Driver extends WebBase{
         $this->assign('line_array',$line);
         $where =[
             'seller_id'=>$id,
+            'user_id'=>['<>',$id],
             'deleted'=>0
         ];
         $commentLogic = new OrderCommentLogic();
