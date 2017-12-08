@@ -177,11 +177,11 @@ class PackOrder extends Base{
             $where = [
                 'l.id' => $coupon_id,
                 'l.uid' => $this->user_id,
-                'l.model_type' => 0, //代表包车订单
+                'l.model_type' => ['like','%0%'], //代表包含包车订单
                 'c.condition' => ['lt', $pack_order['total_price']],//订单金额 要 大于优惠券的条件
                 'c.status' => 1,//是否可使用
                 'l.status' => 0,
-                'c.use_start_time' => ['lt', $time],//是否开始 开始时间小于当前时间
+                //'c.use_start_time' => ['lt', $time],//是否开始 开始时间小于当前时间
                 'c.use_end_time' => ['gt', $time]//是否过期    过期时间大于当前时间
             ];
 
