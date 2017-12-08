@@ -200,15 +200,13 @@ function getLineStar($line_id){
 function autoNumberLevel($user_id,$total_amount){
     $level = M('user_level')->order('amount desc')->select();
     $level_id = 1;
-    //print_r($level);die;
     foreach($level as $val){
         if($total_amount >= $val['amount']){
             $level_id = $val['level_id'];
             break;
-            //return $level_id;//取到对应的等级ID
+
         }
     }
-    //echo $level_id;die;
     //保存level_id入库
     M('users')->where(['user_id'=>$user_id])->update(['level'=>$level_id]);
     $levelName = M("user_level")->cache(true)->where("level_id = {$level_id}")->getField("level_name");
