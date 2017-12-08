@@ -209,8 +209,7 @@ function autoNumberLevel($user_id,$total_amount){
     //保存level_id入库
     M('users')->where(['user_id'=>$user_id])->update(['level'=>$level_id]);
     $levelName = M("user_level")->cache(true)->where("level_id = {$level_id}")->getField("level_name");
-    return $levelName;
-    //$user['level_name'] = $levelName;
+    return ['level' => $level_id,'level_name' => $levelName];
 }
 /*
  * 发送短信
