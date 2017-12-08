@@ -463,7 +463,7 @@ class UsersLogic extends BaseLogic{
         $user['collection_num'] = $info['collection_num'];
         //echo $user['user_id'];die;
         //得到用户等级并进行自动更新
-        $result = autoNumberLevel($user['user_id'],$info['level']);
+        $result = autoNumberLevel($user['user_id'],$user['total_amount']);
         $user['level_name'] = $result['level_name'];
         $user['level'] = $result['level'];
         return ['status' => 1, 'msg' => '获取成功', 'result' => $user];
