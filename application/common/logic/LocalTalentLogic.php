@@ -124,8 +124,10 @@ class LocalTalentLogic extends BaseLogic{
         $user_praise = new UserPraiseLogic();
         $info['praiseNum'] = $user_praise->countLocalTalent($info['id']);
         //$info['city'] = getCountryName($info['country_id']).'·'.getCityName($info['city_id']);
+        //print_r(session('user')['user_id']);die;
+        $user_id = session('user')['user_id'];
         if(!empty($user_id)){
-            $info['is_good'] = $user_praise->isPraised($info['talent_id'],$info['user_id'],UserPraiseLogic::TYPE_TALENT);
+            $info['is_good'] = $user_praise->isPraised($info['talent_id'],$user_id,UserPraiseLogic::TYPE_TALENT);
         }
         $info['good_num'] = $user_praise->countLocalTalent($info['talent_id']);
         $info['content'] = htmlspecialchars_decode($info['content']);
